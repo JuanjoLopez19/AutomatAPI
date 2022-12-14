@@ -1,0 +1,5 @@
+{
+    "project_name": "Django",
+    "app": "djangoApp",
+    "type": "service"
+}
