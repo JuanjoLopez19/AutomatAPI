@@ -3,6 +3,38 @@ from cookiecutter.main import cookiecutter
 import shutil
 import os
 
+
+DEFAULT_CONFIG = {
+    'cookiecutter':{
+        'tecnology_args':{
+        },
+        'endpoints_args':{
+            'flask':{
+                "endpoint_name": "endpoint",
+                "endpoint_url": "/endpoint",
+                "get": "yes",
+                "put": "no",
+                "post": "no",
+                "delete": "no",
+                'template_path': './Templates/endponts/flask',
+            },
+            'express':{
+                "endpoint_name": "endpoint",
+                "endpoint_url": "/endpoint",
+                "method":["get","post","put","delete"],
+                'template_path': './Templates/endponts/express',
+            },
+            'django':{
+
+                'template_path': './Templates/endponts/django',
+            },
+            'output_path': './temp_templates'
+        },
+        
+    }
+}
+
+
 def main():
     
     cookiecutter('django/')

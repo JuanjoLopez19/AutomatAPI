@@ -1,0 +1,8 @@
+{
+    "endpoint_name": "endpoint",
+    "endpoint_url": "/endpoint",
+    "get": "yes",
+    "put": "no",
+    "post": "no",
+    "delete": "no"
+}

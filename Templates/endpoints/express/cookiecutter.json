@@ -1,0 +1,5 @@
+{
+    "endpoint_name": "endpoint",
+    "endpoint_url": "/endpoint",
+    "method":["get","post","put","delete"]
+}
