@@ -48,7 +48,7 @@ DEFAULT_CONFIG = {
     }
 }
 
-def temp_creator(template_args: dict) -> str:
+def temp_creator(template_args: dict = None) -> str:
     """
         @param: template_args: Dictionary with the arguments to create the template 
 
