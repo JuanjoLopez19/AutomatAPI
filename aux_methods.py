@@ -1,4 +1,3 @@
-
 import json
 from cookiecutter.main import cookiecutter
 from cookiecutter import exceptions
@@ -61,6 +60,7 @@ DEFAULT_CONFIG = {
     }
 }
 
+
 def temp_creator(template_args: dict = None) -> str:
     """
         @param: template_args: Dictionary with the arguments to create the template 
@@ -106,8 +106,9 @@ def temp_creator(template_args: dict = None) -> str:
 
     add_app_run(args,template_path+'/'+args['app_name']+'.py', DEFAULT_CONFIG['cookiecutter']['aux_stuff']['flask_app_run_path'])
 
-   # path = compress_api(template_path, args['app_name'], args['app_name'])
-    #return path
+    path = compress_api(template_path, args['app_name'], args['app_name'])
+    return path
+
     
 def endpoint_creator(template_args: dict = None, template_path:str = None, endpoint_type:str = None) -> str:
     """
@@ -150,6 +151,7 @@ def endpoint_creator(template_args: dict = None, template_path:str = None, endpo
     except FileNotFoundError as e:
         print(e)
 
+
 def add_app_run(args: dict = None, template_path: str = None, aux_path: str = None) -> None:
     """
         @param: args: Dictionary with the arguments to create the template
@@ -176,6 +178,7 @@ def add_app_run(args: dict = None, template_path: str = None, aux_path: str = No
         remove_temp_files(run_path)
     except FileNotFoundError as e:
         print(e)
+
           
 def compress_api(workingDir: str, projectName: str, fileName: str) -> None:
     """
@@ -187,7 +190,7 @@ def compress_api(workingDir: str, projectName: str, fileName: str) -> None:
         These function zip the project and delete the folder to save space on the server
     """
     print(workingDir)
-    print(projectName)
+    print(projectName.split('_')[0])
     print(fileName) 
     try:
         path = shutil.make_archive(workingDir+projectName.split('_')[0], 'zip', workingDir )
