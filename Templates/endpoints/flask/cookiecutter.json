@@ -1,0 +1,1 @@
+{"endpoint_name": "prueba3", "endpoint_url": "/prueba3", "get": "no", "put": "yes", "post": "no", "delete": "yes", "template_path": "./Templates/endpoints/flask", "file_name": "prueba3_0ef6663b-4fba-4f76-9c72-ca11f3aff009"}
