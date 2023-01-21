@@ -22,6 +22,12 @@ def temp_creator(template_args: dict = None) -> str:
     if template_args['tecnology'] == 'flask':
         args = DEFAULT_CONFIG['cookiecutter']['tecnology_args'][template_args.get('tecnology')][template_args.get('type')]
         args['app_folder_name'] = template_args['app_name'] + '_' + str(uuid.uuid4())
+        for key, value in template_args.items():
+            if key == 'secrets':
+                args['secret'] = secrets.token_hex(16)
+            else:
+                args[key] = value
+        """ Dejo esto por si se jode pero a priori no hace falta con el for se hace bien
         args['app_name'] = template_args['app_name']
         args['port'] = template_args['port']
         args['connect_DB'] = template_args['connect_DB']
@@ -37,9 +43,9 @@ def temp_creator(template_args: dict = None) -> str:
             args['bp_list'] = template_args['bp_list']
             args['handle_404'] = template_args['handle_404']
         
+        """
         args.pop('endpoints')
         endpoints = template_args['endpoints']
-    
     # If not exists, create the output path
     if not os.path.exists(output_path):
         os.makedirs(output_path)
@@ -70,9 +76,9 @@ def temp_creator(template_args: dict = None) -> str:
         add_app_run(args,template_path+'/'+args.get('app_name')+'.py', DEFAULT_CONFIG['cookiecutter']['aux_stuff']['flask_app_run_path'])
 
     # Compress the template and delete the temp files
-    path = compress_api(template_path, args['app_name'], args['app_name'])
-    return path
-
+    #path = compress_api(template_path, args['app_name'], args['app_name'])
+    #return path
+    
     
 def endpoint_creator(template_args: dict = None, template_path:str = None, endpoint_type:str = None, endpoint_use:str = None) -> str:
     """
