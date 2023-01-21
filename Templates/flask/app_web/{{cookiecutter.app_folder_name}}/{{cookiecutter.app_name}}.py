@@ -1,10 +1,10 @@
-from flask import Flask
+from flask import Flask{%- if cookiecutter.handle_404 == 'yes' %}, render_template {% endif %}
 {%- if cookiecutter.connect_DB == 'yes' %}
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, migrate
 {% endif %}
 {%- if cookiecutter.use_bp %}
-{%- for i in cookiecutter.bp_list.lista %}
+{%- for i in cookiecutter.bp_list.list %}
 {%- for key, value in i.items() %}
 from {{key}} import {{key}}
 {% endfor %}
@@ -37,7 +37,7 @@ class {{cookiecutter.table_name}}(db.Model):
         self.el_4 = el_4
 {% endif %}
 {% if cookiecutter.use_bp %}
-{% for i in cookiecutter.bp_list.lista %}
+{% for i in cookiecutter.bp_list.list %}
 {% for key, value in i.items() %}
 app.register_blueprint({{key}})
 {% endfor %}

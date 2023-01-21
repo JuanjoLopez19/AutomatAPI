@@ -8,7 +8,7 @@
 - Templates (1/6)
 	- Flask (1/2)
   		- Services ✅ 
-  		- App Web
+  		- App Web ✅
  	- Express (0/2)
 		- Services  
   		- App Web

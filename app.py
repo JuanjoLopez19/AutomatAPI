@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from aux_methods import *
+from template_methods import *
 
 
 
