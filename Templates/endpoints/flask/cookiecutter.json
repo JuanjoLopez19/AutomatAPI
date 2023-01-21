@@ -1,1 +1,1 @@
-{"endpoint_name": "prueba3", "endpoint_url": "/prueba3", "get": "no", "put": "yes", "post": "no", "delete": "yes", "template_path": "./Templates/endpoints/flask", "file_name": "prueba3_0ef6663b-4fba-4f76-9c72-ca11f3aff009"}
+{"endpoint_name": "prueba3", "endpoint_url": "/prueba3", "use_bp": "no", "bp_name": "", "endpoint_comment": "This is a test endpoint", "get": "no", "put": "yes", "post": "no", "delete": "yes", "template_path": "./Templates/endpoints/flask", "file_name": "prueba3_c14baa60-31b1-4e94-9697-b62cfb9e4f4d", "endpoint_use": "services"}

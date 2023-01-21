@@ -15,6 +15,7 @@ DEFAULT_CONFIG = {
                     'app_name': '',
                     'port': '',
                     'connect_DB': '',
+                    'table_name': '',
                     'config_file': '',
                     'type_config_file': '',
                     'secret':'',
@@ -22,7 +23,20 @@ DEFAULT_CONFIG = {
                     'endpoints':[],
                     'template_path': './Templates/flask/services',
                 },
-                'app_web':{},  
+                'app_web':{
+                    'app_name': '',
+                    'port': '',
+                    'connect_DB': '',
+                    'table_name': '',
+                    'config_file': '',
+                    'type_config_file': '',
+                    'secret':'',
+                    'host': '',
+                    'use_bp': '',
+                    'bp_list':'',
+                    'endpoints':[],
+                    'template_path': './Templates/flask/app_web',
+                },  
             },
             'express':{
                 'services':{},
@@ -37,6 +51,9 @@ DEFAULT_CONFIG = {
             'flask':{
                 "endpoint_name": "endpoint",
                 "endpoint_url": "/endpoint",
+                "use_bp":"no",
+                "bp_name": "",
+                "endpoint_comment": "",
                 "get": "yes",
                 "put": "no",
                 "post": "no",
@@ -52,10 +69,10 @@ DEFAULT_CONFIG = {
             'django':{
                 'template_path': './Templates/endpoints/django',
             },
-            'output_path': './temp_templates/'
         },
         'aux_stuff':{
             'flask_app_run_path': './Templates/flask/aux_stuff',
+            'output_path': './temp_templates/'
         }
     }
 }
@@ -72,28 +89,36 @@ def temp_creator(template_args: dict = None) -> str:
     """
 
     template_args['tecnology']='flask'
-    args = DEFAULT_CONFIG['cookiecutter']['tecnology_args'][template_args['tecnology']]['services']
+    template_args['type']='app_web'
+
+    args = DEFAULT_CONFIG['cookiecutter']['tecnology_args'][template_args['tecnology']][template_args['type']]
     args['app_name'] = template_args['app_name'] + '_' + str(uuid.uuid4())
     args['port'] = template_args['port']
     args['connect_DB'] = template_args['connect_DB']
+    args['table_name'] = template_args['table_name']
     args['config_file'] = template_args['config_file']
     args['type_config_file'] = template_args['type_config_file']
     args['secret'] = secrets.token_hex(16)
     args['host'] = template_args['host']
     
+    # app web flask args
+    if template_args['type'] == 'app_web':
+        args['use_bp'] = template_args['use_bp']
+        args['bp_list'] = template_args['bp_list'] # Creo que tiene que inyectarse uno a uno igualmente 
+       
 
-    endpoints = template_args['endpoints']
     args.pop('endpoints')
+    endpoints = template_args['endpoints']
+    
+    cookiecutter_template_path = DEFAULT_CONFIG['cookiecutter']['tecnology_args'][template_args['tecnology']][template_args['type']]['template_path']
+    output_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['output_path']
 
-    cookiecutter_template_path = DEFAULT_CONFIG['cookiecutter']['tecnology_args'][template_args['tecnology']]['services']['template_path']
-    output_path = DEFAULT_CONFIG['cookiecutter']['endpoints_args']['output_path']
-
-    if not os.path.exists(DEFAULT_CONFIG['cookiecutter']['endpoints_args']['output_path']):
-        os.makedirs(DEFAULT_CONFIG['cookiecutter']['endpoints_args']['output_path'])
-
+    if not os.path.exists(DEFAULT_CONFIG['cookiecutter']['aux_stuff']['output_path']):
+        os.makedirs(DEFAULT_CONFIG['cookiecutter']['aux_stuff']['output_path'])
+    """
     cookiecutteJsonFile = os.path.join(cookiecutter_template_path, 'cookiecutter.json')
     with open(cookiecutteJsonFile, 'w') as f:
-        json.dump(args, f)
+        json.dump(args, f)"""
     try:
         template_path = cookiecutter(cookiecutter_template_path, no_input=True, extra_context=args, output_dir=output_path)
     except exceptions.OutputDirExistsException as e:
@@ -101,16 +126,17 @@ def temp_creator(template_args: dict = None) -> str:
         args['app_name'] = args['app_name'] + str(uuid.uuid4())
         cookiecutter(cookiecutter_template_path, no_input=True, extra_context=args, output_dir=output_path)
     
-    for endpoint in endpoints:
-        endpoint_creator(endpoint, template_path+'/'+args['app_name']+'.py', template_args['tecnology'])
+    if template_args['tecnology'] == 'dev':
+        for endpoint in endpoints:
+            endpoint_creator(endpoint, template_path+'/'+args['app_name']+'.py', template_args['tecnology'], template_args['type'])
 
-    add_app_run(args,template_path+'/'+args['app_name']+'.py', DEFAULT_CONFIG['cookiecutter']['aux_stuff']['flask_app_run_path'])
+        add_app_run(args,template_path+'/'+args['app_name']+'.py', DEFAULT_CONFIG['cookiecutter']['aux_stuff']['flask_app_run_path'])
 
-    path = compress_api(template_path, args['app_name'], args['app_name'])
-    return path
+    #path = compress_api(template_path, args['app_name'], args['app_name'])
+    #return path
 
     
-def endpoint_creator(template_args: dict = None, template_path:str = None, endpoint_type:str = None) -> str:
+def endpoint_creator(template_args: dict = None, template_path:str = None, endpoint_type:str = None, endpoint_use:str = None) -> str:
     """
         @param: template_args: Dictionary with the arguments to create the template
         @param: template_path: Path to the template to use
@@ -119,22 +145,37 @@ def endpoint_creator(template_args: dict = None, template_path:str = None, endpo
         @return: For the moment nothing is returned
     """
     config =  DEFAULT_CONFIG['cookiecutter']['endpoints_args'][endpoint_type]
+    output_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['output_path']
     temp_path = config['template_path']
 
-    config['file_name'] = template_args['endpoint_name'] + '_' + str(uuid.uuid4())
-    config['endpoint_name'] = template_args['endpoint_name']
-    config['endpoint_url'] = template_args['endpoint_url']
-    config['get'] = template_args['get']
-    config['put'] = template_args['put']
-    config['post'] = template_args['post']
-    config['delete'] = template_args['delete']
+    if endpoint_type == 'flask':
+        if endpoint_use == 'services':
+            config['file_name'] = template_args['endpoint_name'] + '_' + str(uuid.uuid4())
+            config['endpoint_name'] = template_args['endpoint_name']
+            config['endpoint_url'] = template_args['endpoint_url']
+            config['endpoint_use'] = endpoint_use 
+            config['endpoint_comment'] = template_args['endpoint_comment']
+            config['get'] = template_args['get']
+            config['put'] = template_args['put']
+            config['post'] = template_args['post']
+            config['delete'] = template_args['delete']
+        elif endpoint_use == 'app_web':
+            config['file_name'] = template_args['endpoint_name'] + '_' + str(uuid.uuid4())
+            config['endpoint_name'] = template_args['endpoint_name']
+            config['endpoint_url'] = template_args['endpoint_url']
+            config['endpoint_use'] = endpoint_use 
+            config['use_bp']= template_args['use_bp']
+            config['bp_name']= template_args['bp_name']
+            config['endpoint_comment'] = template_args['endpoint_comment']
+            config['get'] = template_args['get']
+            config['put'] = template_args['put']
+            config['post'] = template_args['post']
+            config['delete'] = template_args['delete']
 
     cookiecutteJsonFile = os.path.join(temp_path, 'cookiecutter.json')
     with open(cookiecutteJsonFile, 'w') as f:
         json.dump(config, f)
-
-    output_path = DEFAULT_CONFIG['cookiecutter']['endpoints_args']['output_path']
-    
+  
     try:
         aux_path = cookiecutter(temp_path, no_input=True, extra_context=config, output_dir=output_path)
     except exceptions.OutputDirExistsException as e:
@@ -157,7 +198,7 @@ def add_app_run(args: dict = None, template_path: str = None, aux_path: str = No
         @param: args: Dictionary with the arguments to create the template
         @param: template_path: Path to the template to use
     """
-    output_path = DEFAULT_CONFIG['cookiecutter']['endpoints_args']['output_path']
+    output_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['output_path']
 
     cookiecutteJsonFile = os.path.join(aux_path, 'cookiecutter.json')
     with open(cookiecutteJsonFile, 'w') as f:
@@ -180,7 +221,7 @@ def add_app_run(args: dict = None, template_path: str = None, aux_path: str = No
         print(e)
 
           
-def compress_api(workingDir: str, projectName: str, fileName: str) -> None:
+def compress_api(workingDir: str, projectName: str, fileName: str) -> str:
     """
         @param: workingDir: Directory where the project is located
         @param projectName: Name of the project to compress
@@ -189,11 +230,10 @@ def compress_api(workingDir: str, projectName: str, fileName: str) -> None:
 
         These function zip the project and delete the folder to save space on the server
     """
-    print(workingDir)
-    print(projectName.split('_')[0])
-    print(fileName) 
+    output_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['output_path']
+
     try:
-        path = shutil.make_archive(workingDir+projectName.split('_')[0], 'zip', workingDir )
+        path = shutil.make_archive(output_path+projectName.split('_')[0], 'zip', workingDir)
         shutil.rmtree(workingDir) 
     except (OSError, FileNotFoundError) as e:
         path = None
@@ -211,18 +251,20 @@ def remove_temp_files(workingDir: str) -> None:
     shutil.rmtree(workingDir)
 
 if __name__ == '__main__':
-    test ={
+    flask_test_serv ={
         'app_name': 'prueba',
         'port': '5000',
         'connect_DB': 'yes',
+        'table_name': 'aux',
         'config_file': 'yes',
-        'type_config_file': 'prod',
+        'type_config_file': 'dev',
         'secret':'',
         'host': '0.0.0.0',
         'endpoints':[
             {
                 "endpoint_name": "prueba1",
                 "endpoint_url": "/prueba1",
+                "endpoint_comment": "",
                 "get": "yes",
                 "put": "yes",
                 "post": "no",
@@ -231,6 +273,7 @@ if __name__ == '__main__':
             {
                 "endpoint_name": "prueba2",
                 "endpoint_url": "/prueba2",
+                "endpoint_comment": "This is a test endpoint",
                 "get": "yes",
                 "put": "yes",
                 "post": "no",
@@ -239,6 +282,7 @@ if __name__ == '__main__':
             {
                 "endpoint_name": "prueba3",
                 "endpoint_url": "/prueba3",
+                "endpoint_comment": "This is a test endpoint",
                 "get": "no",
                 "put": "yes",
                 "post": "no",
@@ -246,4 +290,45 @@ if __name__ == '__main__':
             },
         ],
     }
-    temp_creator(test)
+    flask_test_app ={
+        'app_name': 'prueba',
+        'port': '5000',
+        'connect_DB': 'yes',
+        'table_name': 'aux',
+        'config_file': 'yes',
+        'use_bp':'yes',
+        'bp_list':{'lista':[{'bp_1':[]},{'bp_2':[]},{'bp_3':[]}]},
+        'type_config_file': 'dev',
+        'secret':'',
+        'host': '0.0.0.0',
+        'endpoints':[
+            {
+                "endpoint_name": "prueba1",
+                "endpoint_url": "/prueba1",
+                "endpoint_comment": "",
+                "get": "yes",
+                "put": "yes",
+                "post": "no",
+                "delete": "no",
+            },
+            {
+                "endpoint_name": "prueba2",
+                "endpoint_url": "/prueba2",
+                "endpoint_comment": "This is a test endpoint",
+                "get": "yes",
+                "put": "yes",
+                "post": "no",
+                "delete": "yes",
+            },
+            {
+                "endpoint_name": "prueba3",
+                "endpoint_url": "/prueba3",
+                "endpoint_comment": "This is a test endpoint",
+                "get": "no",
+                "put": "yes",
+                "post": "no",
+                "delete": "yes",
+            },
+        ],
+    }
+    temp_creator(flask_test_app)

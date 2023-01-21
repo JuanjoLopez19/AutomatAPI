@@ -1,7 +1,14 @@
 from flask import Flask
-{% if cookiecutter.connect_DB == 'yes' %}
+{%- if cookiecutter.connect_DB == 'yes' %}
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, migrate
+{% endif %}
+{%- if cookiecutter.use_bp %}
+{%- for i in cookiecutter.bp_list.lista %}
+{%- for key, value in i.items() %}
+from {{key}} import {{key}}
+{% endfor %}
+{% endfor %}
 {% endif %}
 
 app = Flask(__name__)
@@ -28,6 +35,13 @@ class {{cookiecutter.table_name}}(db.Model):
         self.el_2 = el_2
         self.el_3 = el_3
         self.el_4 = el_4
+{% endif %}
+{% if cookiecutter.use_bp %}
+{% for i in cookiecutter.bp_list.lista %}
+{% for key, value in i.items() %}
+app.register_blueprint({{key}})
+{% endfor %}
+{% endfor %}
 {% endif %}
 
 #Here goes the endpoinst to be added

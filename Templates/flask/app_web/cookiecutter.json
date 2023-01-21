@@ -1,0 +1,1 @@
+{"app_name": "prueba_e197c842-954b-4d0c-8e0a-bf199d68fe03", "port": "5000", "connect_DB": "yes", "table_name": "aux", "config_file": "yes", "type_config_file": "dev", "secret": "54e421ef26002e9b7b3cb82273a2ff56", "host": "0.0.0.0", "use_bp": "yes", "bp_list": "prueba1", "template_path": "./Templates/flask/app_web"}

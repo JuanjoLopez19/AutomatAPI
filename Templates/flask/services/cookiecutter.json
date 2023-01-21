@@ -1,1 +1,1 @@
-{"app_name": "prueba_9a8fffc4-3d51-44f2-87b9-b7fa068e0bb8", "port": "5000", "connect_DB": "yes", "config_file": "yes", "type_config_file": "prod", "secret": "f7bcd0438c588c33bf24c008a50935b3", "host": "0.0.0.0", "template_path": "./Templates/flask/services"}
+{"app_name": "prueba_89d96ee1-6829-4ae3-af1c-30e9ae833530", "port": "5000", "connect_DB": "yes", "table_name": "aux", "config_file": "yes", "type_config_file": "dev", "secret": "957eb2deaf1eb62ed7709d888fbf6868", "host": "0.0.0.0", "template_path": "./Templates/flask/services"}
