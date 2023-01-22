@@ -13,7 +13,7 @@ def temp_creator(template_args: dict = None) -> str:
         and returns the path to the zip file, to the main rutine
     """
     template_args['tecnology']='flask'
-    template_args['type']='services'
+    template_args['type']='app_web'
     # Statics paths
     cookiecutter_template_path = DEFAULT_CONFIG['cookiecutter']['tecnology_args'][template_args.get('tecnology')][template_args.get('type')]['template_path']
     output_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['output_path']
@@ -24,7 +24,7 @@ def temp_creator(template_args: dict = None) -> str:
         args['app_folder_name'] = template_args['app_name'] + '_' + str(uuid.uuid4())
         for key, value in template_args.items():
             if key == 'secrets':
-                args['secret'] = secrets.token_hex(16)
+                args[key] = secrets.token_hex(16)
             else:
                 args[key] = value
         """ Dejo esto por si se jode pero a priori no hace falta con el for se hace bien
@@ -93,8 +93,11 @@ def endpoint_creator(template_args: dict = None, template_path:str = None, endpo
     temp_path = config['template_path']
 
     if endpoint_type == 'flask':
-        if endpoint_use == 'services':
-            config['file_name'] = template_args['endpoint_name'] + '_' + str(uuid.uuid4())
+        config['file_name'] = template_args['endpoint_name'] + '_' + str(uuid.uuid4())
+        config['endpoint_use'] = endpoint_use 
+        for key, value in template_args.items():
+            config[key] = value
+        """ aqui lo mismo
             config['endpoint_name'] = template_args['endpoint_name']
             config['endpoint_url'] = template_args['endpoint_url']
             config['endpoint_use'] = endpoint_use 
@@ -114,7 +117,7 @@ def endpoint_creator(template_args: dict = None, template_path:str = None, endpo
             config['put'] = template_args['put']
             config['post'] = template_args['post']
             config['delete'] = template_args['delete']
-
+            """
     cookiecutteJsonFile = os.path.join(temp_path, 'cookiecutter.json')
     with open(cookiecutteJsonFile, 'w') as f:
         json.dump(config, f)
@@ -240,4 +243,4 @@ def remove_temp_files(workingDir: str) -> None:
     shutil.rmtree(workingDir)
 
 if __name__ == '__main__':
-    temp_creator(flask_test_serv)
+    temp_creator(flask_test_app)

@@ -43,7 +43,6 @@ DEFAULT_CONFIG = {
             'flask':{
                 "endpoint_name": "endpoint",
                 "endpoint_url": "/endpoint",
-                "use_bp":"no",
                 "bp_name": "",
                 "endpoint_comment": "",
                 "get": "yes",
@@ -118,7 +117,11 @@ flask_test_app ={
     'connect_DB': 'yes',
     'table_name': 'aux',
     'config_file': 'yes',
+    'type_config_file': 'dev',
+    'secret':'',
+    'host': '0.0.0.0',
     'use_bp':'yes',
+    'handle_404': 'yes',
     'bp_list':{
         'list':[
             {
@@ -216,10 +219,6 @@ flask_test_app ={
             }
         ],
     },
-    'type_config_file': 'dev',
-    'secret':'',
-    'host': '0.0.0.0',
-    'handle_404': 'yes',
     'endpoints':[
         {
             "endpoint_name": "prueba1",
