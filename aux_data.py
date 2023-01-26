@@ -3,14 +3,14 @@ DEFAULT_CONFIG = {
         'tecnology_args':{
             'flask':{
                 'services':{
-                    'app_name': '',
-                    'port': '',
+                    'app_name': 'flask_services',
+                    'port': '5000',
                     'connect_DB': '',
                     'table_name': '',
                     'config_file': '',
                     'type_config_file': '',
                     'secret':'',
-                    'host': '',
+                    'host': '127.0.0.1',
                     'endpoints':[],
                     'template_path': './Templates/flask/services',
                 },
@@ -31,7 +31,10 @@ DEFAULT_CONFIG = {
                 },  
             },
             'express':{
-                'services':{},
+                'services':{
+                    'app_name': 'express_services',
+                    'port': '5000',
+                },
                 'app_web':{},
             },
             'django':{
