@@ -1,49 +1,56 @@
 DEFAULT_CONFIG = {
-    'cookiecutter':{
-        'tecnology_args':{
-            'flask':{
-                'services':{
-                    'app_name': 'flask_services',
-                    'port': '5000',
-                    'connect_DB': '',
-                    'table_name': '',
-                    'config_file': '',
-                    'type_config_file': '',
-                    'secret':'',
-                    'host': '127.0.0.1',
-                    'endpoints':[],
-                    'template_path': './Templates/flask/services',
+    "cookiecutter":{
+        "tecnology_args":{
+            "flask":{
+                "services":{
+                    "app_name": "flask_services",
+                    "port": "5000",
+                    "connect_DB": "",
+                    "table_name": "",
+                    "config_file": "",
+                    "type_config_file": "",
+                    "secret":"",
+                    "host": "127.0.0.1",
+                    "endpoints":[],
+                    "template_path": "./Templates/flask/services",
                 },
-                'app_web':{
-                    'app_name': '',
-                    'port': '',
-                    'connect_DB': '',
-                    'table_name': '',
-                    'config_file': '',
-                    'type_config_file': '',
-                    'secret':'',
-                    'host': '',
-                    'use_bp': '',
-                    'bp_list':'',
-                    'handle_404': '',
-                    'endpoints':[],
-                    'template_path': './Templates/flask/app_web',
+                "app_web":{
+                    "app_name": "",
+                    "port": "",
+                    "connect_DB": "",
+                    "table_name": "",
+                    "config_file": "",
+                    "type_config_file": "",
+                    "secret":"",
+                    "host": "",
+                    "use_bp": "",
+                    "bp_list":"",
+                    "handle_404": "",
+                    "endpoints":[],
+                    "template_path": "./Templates/flask/app_web",
                 },  
             },
-            'express':{
-                'services':{
-                    'app_name': 'express_services',
-                    'port': '5000',
+            "express":{
+                "services":{
+                    "app_name": "express_services",
+                    "port": "3000",
+                    "strict":"yes",
+                    "body_parser":"yes",
+                    "use_controllers":"",
+                    "controllers_list":"",
+                    "endpoints":[],
+                    "template_path": "./Templates/express/services",
+
                 },
-                'app_web':{},
+                "app_web":{},
             },
-            'django':{
-                'services':{},
-                'app_web':{},
+            "django":{
+                "services":{},
+                "app_web":{},
             },
         },
-        'endpoints_args':{
-            'flask':{
+        "endpoints_args":{
+            "flask":{
                 "endpoint_name": "endpoint",
                 "endpoint_url": "/endpoint",
                 "bp_name": "",
@@ -52,26 +59,28 @@ DEFAULT_CONFIG = {
                 "put": "no",
                 "post": "no",
                 "delete": "no",
-                'template_path': './Templates/endpoints/flask',
+                "template_path": "./Templates/endpoints/flask",
             },
-            'express':{
+            "express":{
                 "endpoint_name": "endpoint",
                 "endpoint_url": "/endpoint",
+                "endpoint_comment":"",
+                "handler_type":"",
                 "method":["get","post","put","delete"],
-                'template_path': './Templates/endpoints/express',
+                "template_path": "./Templates/endpoints/express",
             },
-            'django':{
-                'template_path': './Templates/endpoints/django',
+            "django":{
+                "template_path": "./Templates/endpoints/django",
             },
         },
-        'aux_stuff':{
-            'flask_app_run_path': './Templates/flask/aux_stuff/app_run',
-            'output_path': './temp_templates/',
-            'blueprints': './Templates/flask/aux_stuff/blueprints',
+        "aux_stuff":{
+            "flask_app_run_path": "./Templates/flask/aux_stuff/app_run",
+            "output_path": "./temp_templates/",
+            "blueprints": "./Templates/flask/aux_stuff/blueprints",
+            "controllers": "./Templates/express/aux_stuff/controllers",
         }
     }
 }
-
 
 flask_test_serv ={
     "app_name": "prueba",
@@ -113,22 +122,21 @@ flask_test_serv ={
     ]
 }
 
-
 flask_test_app ={
-    'app_name': 'prueba',
-    'port': '5000',
-    'connect_DB': 'yes',
-    'table_name': 'aux',
-    'config_file': 'yes',
-    'type_config_file': 'dev',
-    'secret':'',
-    'host': '0.0.0.0',
-    'use_bp':'yes',
-    'handle_404': 'yes',
-    'bp_list':{
-        'list':[
+    "app_name": "prueba",
+    "port": "5000",
+    "connect_DB": "yes",
+    "table_name": "aux",
+    "config_file": "yes",
+    "type_config_file": "dev",
+    "secret":"",
+    "host": "0.0.0.0",
+    "use_bp":"yes",
+    "handle_404": "yes",
+    "bp_list":{
+        "list":[
             {
-                'bp_1':[
+                "bp_1":[
                     {
                         "endpoint_name": "prueba1",
                         "endpoint_url": "/prueba1",
@@ -159,7 +167,7 @@ flask_test_app ={
                 ],
             },
             {
-                'bp_2':[
+                "bp_2":[
                     {
                         "endpoint_name": "prueba1",
                         "endpoint_url": "/prueba1",
@@ -190,7 +198,7 @@ flask_test_app ={
                 ]
             },
             {
-                'bp_3':[
+                "bp_3":[
                     {
                         "endpoint_name": "prueba1",
                         "endpoint_url": "/prueba1",
@@ -222,7 +230,7 @@ flask_test_app ={
             }
         ],
     },
-    'endpoints':[
+    "endpoints":[
         {
             "endpoint_name": "prueba1",
             "endpoint_url": "/prueba1",
@@ -251,4 +259,114 @@ flask_test_app ={
             "delete": "yes",
         },
     ],
+}
+
+express_service_test ={
+        "app_name": "express_services",
+        "port": "3000",
+        "strict":"yes",
+        "body_parser":"yes",
+        "use_controllers":"yes",
+        "controllers_list":{
+            "list":[
+                {
+                    "cont1":[
+                        {
+                            "endpoint_name": "prueba1",
+                            "endpoint_url": "/prueba1",
+                            "endpoint_comment":"Endpoint de prueba",
+                            "handler_type":"", # This could be assigned in code directly
+                            "method":"get",
+                        },
+                        {
+                            "endpoint_name": "prueba2",
+                            "endpoint_url": "/prueba2",
+                            "endpoint_comment":"Endpoint de prueba",
+                            "handler_type":"", # This could be assigned in code directly
+                            "method":"delete",
+                        },
+                        {
+                            "endpoint_name": "prueba3",
+                            "endpoint_url": "/prueba3",
+                            "endpoint_comment":"Endpoint de prueba",
+                            "handler_type":"", # This could be assigned in code directly
+                            "method":"get",
+                        }
+                    ]  
+                },
+                {
+                    "cont2":[
+                        {
+                            "endpoint_name": "prueba1",
+                            "endpoint_url": "/prueba1",
+                            "endpoint_comment":"Endpoint de prueba",
+                            "handler_type":"", # This could be assigned in code directly
+                            "method":"get",
+                        },
+                        {
+                            "endpoint_name": "prueba2",
+                            "endpoint_url": "/prueba2",
+                            "endpoint_comment":"Endpoint de prueba",
+                            "handler_type":"", # This could be assigned in code directly
+                            "method":"delete",
+                        },
+                        {
+                            "endpoint_name": "prueba3",
+                            "endpoint_url": "/prueba3",
+                            "endpoint_comment":"Endpoint de prueba",
+                            "handler_type":"", # This could be assigned in code directly
+                            "method":"get",
+                        }
+                    ]   
+                },
+                {
+                    "cont3":[
+                        {
+                            "endpoint_name": "prueba1",
+                            "endpoint_url": "/prueba1",
+                            "endpoint_comment":"Endpoint de prueba",
+                            "handler_type":"", # This could be assigned in code directly
+                            "method":"get",
+                        },
+                        {
+                            "endpoint_name": "prueba2",
+                            "endpoint_url": "/prueba2",
+                            "endpoint_comment":"Endpoint de prueba",
+                            "handler_type":"", # This could be assigned in code directly
+                            "method":"delete",
+                        },
+                        {
+                            "endpoint_name": "prueba3",
+                            "endpoint_url": "/prueba3",
+                            "endpoint_comment":"Endpoint de prueba",
+                            "handler_type":"", # This could be assigned in code directly
+                            "method":"get",
+                        }
+                    ]
+                }
+            ]
+        },
+        "endpoints":[
+            {
+                "endpoint_name": "prueba1",
+                "endpoint_url": "/prueba1",
+                "endpoint_comment":"Endpoint de prueba",
+                "handler_type":"", # This could be assigned in code directly
+                "method":"get",
+            },
+            {
+                "endpoint_name": "prueba2",
+                "endpoint_url": "/prueba2",
+                "endpoint_comment":"Endpoint de prueba",
+                "handler_type":"", # This could be assigned in code directly
+                "method":"delete",
+            },
+            {
+                "endpoint_name": "prueba3",
+                "endpoint_url": "/prueba3",
+                "endpoint_comment":"Endpoint de prueba",
+                "handler_type":"", # This could be assigned in code directly
+                "method":"get",
+            }
+        ],
 }

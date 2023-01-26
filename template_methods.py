@@ -1,9 +1,9 @@
 import json,shutil,os,uuid,secrets
 from cookiecutter.main import cookiecutter
 from cookiecutter import exceptions
-from aux_data import flask_test_app, DEFAULT_CONFIG, flask_test_serv
-
-def temp_creator(template_args: dict = None) -> str:
+from aux_data import * 
+from pprint import pprint
+def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -> str:
     """
         @param: template_args: Dictionary with the arguments to create the template 
 
@@ -12,8 +12,8 @@ def temp_creator(template_args: dict = None) -> str:
         This function is the one that calls the cookiecutter function to create the template 
         and returns the path to the zip file, to the main rutine
     """
-    template_args['tecnology']='flask'
-    template_args['type']='app_web'
+    template_args['tecnology']=tech
+    template_args['type']=type
     # Statics paths
     cookiecutter_template_path = DEFAULT_CONFIG['cookiecutter']['tecnology_args'][template_args.get('tecnology')][template_args.get('type')]['template_path']
     output_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['output_path']
@@ -27,25 +27,18 @@ def temp_creator(template_args: dict = None) -> str:
                 args[key] = secrets.token_hex(16)
             else:
                 args[key] = value
-        """ Dejo esto por si se jode pero a priori no hace falta con el for se hace bien
-        args['app_name'] = template_args['app_name']
-        args['port'] = template_args['port']
-        args['connect_DB'] = template_args['connect_DB']
-        args['table_name'] = template_args['table_name']
-        args['config_file'] = template_args['config_file']
-        args['type_config_file'] = template_args['type_config_file']
-        args['secret'] = secrets.token_hex(16)
-        args['host'] = template_args['host']
-        
-        # Subbranch if it is a web app
-        if template_args['type'] == 'app_web':
-            args['use_bp'] = template_args['use_bp']
-            args['bp_list'] = template_args['bp_list']
-            args['handle_404'] = template_args['handle_404']
-        
-        """
-        args.pop('endpoints')
-        endpoints = template_args['endpoints']
+    elif template_args['tecnology'] == 'django':
+        pass
+    elif template_args['tecnology'] == 'express':
+        args = DEFAULT_CONFIG['cookiecutter']['tecnology_args'][template_args.get('tecnology')][template_args.get('type')]
+        args['app_folder_name'] = template_args['app_name'] + '_' + str(uuid.uuid4())
+        for key, value in template_args.items():
+            args[key] = value
+
+    args.pop('endpoints')
+    endpoints = template_args['endpoints']
+
+
     # If not exists, create the output path
     if not os.path.exists(output_path):
         os.makedirs(output_path)
@@ -73,7 +66,17 @@ def temp_creator(template_args: dict = None) -> str:
 
         if template_args.get('handle_404'):
             add_404(template_path+'/'+args.get('app_name')+'.py')
+
         add_app_run(args,template_path+'/'+args.get('app_name')+'.py', DEFAULT_CONFIG['cookiecutter']['aux_stuff']['flask_app_run_path'])
+
+    elif template_args.get('tecnology') == 'django':
+        pass
+
+    elif template_args.get('tecnology') == 'express':
+        if template_args.get('use_controllers') =='yes':
+            pass
+        for endpoint in endpoints:
+            endpoint_creator(endpoint, template_path+'/'+args['app_name']+'.js', template_args.get('tecnology'), 'services')
 
     # Compress the template and delete the temp files
     #path = compress_api(template_path, args['app_name'], args['app_name'])
@@ -93,10 +96,22 @@ def endpoint_creator(template_args: dict = None, template_path:str = None, endpo
     temp_path = config['template_path']
 
     if endpoint_type == 'flask':
-        config['file_name'] = template_args['endpoint_name'] + '_' + str(uuid.uuid4())
+        config['file_folder_name'] = template_args['endpoint_name'] + '_' + str(uuid.uuid4())
+        config['file_name'] = template_args['endpoint_name']
         config['endpoint_use'] = endpoint_use 
         for key, value in template_args.items():
             config[key] = value
+    elif endpoint_type == 'django':
+        pass
+    elif endpoint_type == 'express':
+        config['file_folder_name'] = template_args['endpoint_name'] + '_' + str(uuid.uuid4())
+        config['file_name'] = template_args['endpoint_name']
+        config['endpoint_use'] = endpoint_use 
+        for key, value in template_args.items():
+            if key == 'handler_type':
+                config[key] = 'app'
+            else:
+                config[key] = value
         """ aqui lo mismo
             config['endpoint_name'] = template_args['endpoint_name']
             config['endpoint_url'] = template_args['endpoint_url']
@@ -126,13 +141,20 @@ def endpoint_creator(template_args: dict = None, template_path:str = None, endpo
         aux_path = cookiecutter(temp_path, no_input=True, extra_context=config, output_dir=output_path)
     except exceptions.OutputDirExistsException as e:
         # In fact this exception is never raised because of the uuid but I will leave it here just in case
-        config['file_name'] = config['file_name'] + str(uuid.uuid4())
+        config['file_folder_name'] = config['file_folder_name'] + str(uuid.uuid4())
         aux_path = cookiecutter(temp_path, no_input=True, extra_context=config, output_dir=output_path)
 
     try:
-        with open(template_path, 'a+') as f:
-            with open(aux_path+"/"+config['file_name']+'.py', 'r') as f2:
-                f.write(f2.read())
+        if(endpoint_type == 'flask'):
+            with open(template_path, 'a+') as f:
+                with open(aux_path+"/"+config['file_name']+'.py', 'r') as f2:
+                    f.write(f2.read())
+        elif endpoint_type == 'express':
+            with open(template_path, 'a+') as f:
+                with open(aux_path+"/"+config['file_name']+'.js', 'r') as f2:
+                    f.write(f2.read())
+        elif endpoint_type == 'django':
+            pass
 
         remove_temp_files(aux_path)
     except FileNotFoundError as e:
@@ -243,4 +265,5 @@ def remove_temp_files(workingDir: str) -> None:
     shutil.rmtree(workingDir)
 
 if __name__ == '__main__':
-    temp_creator(flask_test_app)
+    # pprint(express_service_test)
+    temp_creator(express_service_test, "express", "services")

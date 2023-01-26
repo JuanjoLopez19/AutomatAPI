@@ -1,5 +1,1 @@
-{
-    "endpoint_name": "endpoint",
-    "endpoint_url": "/endpoint",
-    "method":["get","post","put","delete"]
-}
+{"endpoint_name": "prueba3", "endpoint_url": "/prueba3", "endpoint_comment": "Endpoint de prueba", "handler_type": "app", "method": "get", "template_path": "./Templates/endpoints/express", "file_folder_name": "prueba3_ad9698f4-e0f3-4dd9-b487-949f2dee1757", "file_name": "prueba3", "endpoint_use": "services"}
