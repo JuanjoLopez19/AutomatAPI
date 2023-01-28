@@ -45,3 +45,5 @@ Thumbs.db
 # Virtual Env
 venv/
 __pycache__/
+temp_templates/
+

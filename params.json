@@ -1,0 +1,94 @@
+{
+	"cookiecutter": {
+		"tecnology_args": {
+			"flask": {
+				"services": {
+					"app_name": "flask_services",
+					"port": "5000",
+					"connect_DB": "",
+					"table_name": "",
+					"config_file": "",
+					"type_config_file": "",
+					"secret": "",
+					"host": "127.0.0.1",
+					"endpoints": [],
+					"template_path": "./Templates/flask/services"
+				},
+				"app_web": {
+					"app_name": "",
+					"port": "",
+					"connect_DB": "",
+					"table_name": "",
+					"config_file": "",
+					"type_config_file": "",
+					"secret": "",
+					"host": "",
+					"use_bp": "",
+					"bp_list": "",
+					"handle_404": "",
+					"endpoints": [],
+					"template_path": "./Templates/flask/app_web"
+				}
+			},
+			"express": {
+				"services": {
+					"app_name": "express_services",
+					"port": "3000",
+					"host": "127.0.0.1",
+					"strict": "yes",
+					"body_parser": "yes",
+					"cors": "yes",
+					"connect_DB": "",
+					"db":{
+						"db_host": "localhost",
+						"db_type": "",
+						"db_port": "",
+						"db_name": "",
+						"db_user": "",
+						"db_pwd": ""
+					},
+					"use_controllers": "",
+					"controllers_list": "",
+					"endpoints": [],
+					"template_path": "./Templates/express/services"
+				},
+				"app_web": {}
+			},
+			"django": {
+				"services": {},
+				"app_web": {}
+			}
+		},
+		"endpoints_args": {
+			"flask": {
+				"endpoint_name": "endpoint",
+				"endpoint_url": "/endpoint",
+				"bp_name": "",
+				"endpoint_comment": "",
+				"get": "yes",
+				"put": "no",
+				"post": "no",
+				"delete": "no",
+				"template_path": "./Templates/endpoints/flask"
+			},
+			"express": {
+				"endpoint_name": "endpoint",
+				"endpoint_url": "/endpoint",
+				"endpoint_comment": "",
+				"handler_type": "",
+				"method": ["get", "post", "put", "delete"],
+				"template_path": "./Templates/endpoints/express"
+			},
+			"django": {
+				"template_path": "./Templates/endpoints/django"
+			}
+		},
+		"aux_stuff": {
+			"flask_app_run_path": "./Templates/flask/aux_stuff/app_run",
+			"output_path": "./temp_templates/",
+			"blueprints": "./Templates/flask/aux_stuff/blueprints",
+			"controllers": "./Templates/express/aux_stuff/controllers",
+			"app_listen": "./Templates/express/aux_stuff/listen"
+		}
+	}
+}

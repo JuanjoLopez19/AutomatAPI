@@ -4,3 +4,4 @@
         {% endif -%}
         res.send('{{cookiecutter.endpoint_name}}')
 });
+

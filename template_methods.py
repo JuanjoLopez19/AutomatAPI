@@ -2,8 +2,9 @@ import json,shutil,os,uuid,secrets
 from cookiecutter.main import cookiecutter
 from cookiecutter import exceptions
 from aux_data import * 
-from pprint import pprint
+
 def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -> str:
+
     """
         @param: template_args: Dictionary with the arguments to create the template 
 
@@ -12,6 +13,7 @@ def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -
         This function is the one that calls the cookiecutter function to create the template 
         and returns the path to the zip file, to the main rutine
     """
+    DEFAULT_CONFIG = get_default_config()
     template_args['tecnology']=tech
     template_args['type']=type
     # Statics paths
@@ -74,9 +76,12 @@ def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -
 
     elif template_args.get('tecnology') == 'express':
         if template_args.get('use_controllers') =='yes':
-            pass
+            for controller in template_args.get('controllers_list').get('list'):
+                create_controllers(controller, template_path, template_args.get('tecnology'), template_args.get('type'), template_args.get('strict'))
         for endpoint in endpoints:
             endpoint_creator(endpoint, template_path+'/'+args['app_name']+'.js', template_args.get('tecnology'), 'services')
+
+        add_app_listen(args, template_path+'/'+args.get('app_name')+'.js', DEFAULT_CONFIG['cookiecutter']['aux_stuff']['app_listen'], output_path )
 
     # Compress the template and delete the temp files
     #path = compress_api(template_path, args['app_name'], args['app_name'])
@@ -84,6 +89,7 @@ def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -
     
     
 def endpoint_creator(template_args: dict = None, template_path:str = None, endpoint_type:str = None, endpoint_use:str = None) -> str:
+
     """
         @param: template_args: Dictionary with the arguments to create the template
         @param: template_path: Path to the template to use
@@ -91,6 +97,8 @@ def endpoint_creator(template_args: dict = None, template_path:str = None, endpo
 
         @return: For the moment nothing is returned
     """
+    DEFAULT_CONFIG = get_default_config()
+
     config =  DEFAULT_CONFIG['cookiecutter']['endpoints_args'][endpoint_type]
     output_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['output_path']
     temp_path = config['template_path']
@@ -108,31 +116,13 @@ def endpoint_creator(template_args: dict = None, template_path:str = None, endpo
         config['file_name'] = template_args['endpoint_name']
         config['endpoint_use'] = endpoint_use 
         for key, value in template_args.items():
-            if key == 'handler_type':
+            if key == 'handler_type' and value == '':
                 config[key] = 'app'
             else:
                 config[key] = value
-        """ aqui lo mismo
-            config['endpoint_name'] = template_args['endpoint_name']
-            config['endpoint_url'] = template_args['endpoint_url']
-            config['endpoint_use'] = endpoint_use 
-            config['endpoint_comment'] = template_args['endpoint_comment']
-            config['get'] = template_args['get']
-            config['put'] = template_args['put']
-            config['post'] = template_args['post']
-            config['delete'] = template_args['delete']
-        elif endpoint_use == 'app_web':
-            config['file_name'] = template_args['endpoint_name'] + '_' + str(uuid.uuid4())
-            config['endpoint_name'] = template_args['endpoint_name']
-            config['endpoint_url'] = template_args['endpoint_url']
-            config['endpoint_use'] = endpoint_use 
-            config['bp_name']= template_args['bp_name']
-            config['endpoint_comment'] = template_args['endpoint_comment']
-            config['get'] = template_args['get']
-            config['put'] = template_args['put']
-            config['post'] = template_args['post']
-            config['delete'] = template_args['delete']
-            """
+            
+            
+        
     cookiecutteJsonFile = os.path.join(temp_path, 'cookiecutter.json')
     with open(cookiecutteJsonFile, 'w') as f:
         json.dump(config, f)
@@ -162,10 +152,13 @@ def endpoint_creator(template_args: dict = None, template_path:str = None, endpo
 
 
 def add_app_run(args: dict = None, template_path: str = None, aux_path: str = None) -> None:
+
     """
         @param: args: Dictionary with the arguments to create the template
         @param: template_path: Path to the template to use
     """
+    DEFAULT_CONFIG = get_default_config()
+
     output_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['output_path']
     args['run_folder_name'] = args['app_name']+ str(uuid.uuid4())
     cookiecutteJsonFile = os.path.join(aux_path, 'cookiecutter.json')
@@ -189,6 +182,7 @@ def add_app_run(args: dict = None, template_path: str = None, aux_path: str = No
         print(e)
 
 def create_blueprint(args: dict = None, template_path: str = None, endpoint_type:str = None, endpoint_use:str = None) -> None:
+
     """
         @param: args: Dictionary with the arguments to create the bluepritn template
         @param: template_path: Path to the base folder
@@ -197,9 +191,10 @@ def create_blueprint(args: dict = None, template_path: str = None, endpoint_type
 
         @return: For the moment nothing is returned
     """
-    blueprint_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['blueprints']
-    
 
+    DEFAULT_CONFIG = get_default_config()
+
+    blueprint_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['blueprints']
     aux_dict = {"bp_folder_name":list(args.keys())[0]+"_"+str(uuid.uuid4()),"bp_name":list(args.keys())[0]}
     blueprint_Json = os.path.join(blueprint_path, 'cookiecutter.json')
     with open(blueprint_Json, 'w') as f:
@@ -209,7 +204,7 @@ def create_blueprint(args: dict = None, template_path: str = None, endpoint_type
         template = cookiecutter(blueprint_path, no_input=True, extra_context=aux_dict, output_dir=template_path)
     except exceptions.OutputDirExistsException as e:
         # In fact this exception is never raised because of the uuid but I will leave it here just in case
-        aux_dict['bp_name'] = aux_dict['bp_name'] + str(uuid.uuid4())
+        aux_dict['bp_folder_name'] = aux_dict['bp_folder_name'] + str(uuid.uuid4())
         template = cookiecutter(blueprint_path, no_input=True, extra_context=aux_dict, output_dir=template_path)
 
     bp_endpoints = list(args.values())
@@ -235,7 +230,70 @@ def page_not_found(e):
 ''')
     
 
+def create_controllers(args: dict = None, template_path: str = None, endpoint_type:str = None, endpoint_use:str = None, strict_mode:str = None) -> None:
+
+    """
+        @param: args: Dictionary with the arguments to create the controller template
+        @param: template_path: Path to the base folder
+        @param: endpoint_type: Type of endpoint to create
+        @param: endpoint_use: Use of the endpoint to create
+
+    """
+
+    DEFAULT_CONFIG = get_default_config()
+
+    controller_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['controllers']
+
+    aux_dict = {"controller_folder_name":list(args.keys())[0], "controller_name":list(args.keys())[0], 'strict':strict_mode}
+    controller_Json = os.path.join(controller_path, 'cookiecutter.json')
+    with open(controller_Json, 'w') as f:
+        json.dump(aux_dict, f)
+
+    try:
+        template = cookiecutter(controller_path, no_input=True, extra_context=aux_dict, output_dir=template_path)
+    except exceptions.OutputDirExistsException as e:
+        # In fact this exception is never raised because of the uuid but I will leave it here just in case
+        aux_dict['controller_folder_name'] = aux_dict['controller_folder_name'] + str(uuid.uuid4())
+        template = cookiecutter(controller_path, no_input=True, extra_context=aux_dict, output_dir=template_path)
+
+    controller_endpoints = list(args.values())   
+    for endpoints in controller_endpoints:
+        for endpoint in endpoints:
+            endpoint['endpoint_name'] = aux_dict['controller_name']
+            endpoint['handler_type'] = aux_dict.get('controller_name')
+            endpoint_creator(endpoint, template+'/'+aux_dict['controller_name']+'.js', endpoint_type, endpoint_use)
+
+    with open(template+'/'+aux_dict.get('controller_name')+'.js', 'a+') as f:
+        f.write('''module.exports = {}'''.format(aux_dict.get('controller_name')))
+
+def add_app_listen(args: dict = None, template_path: str = None, aux_path:str = None, output_path:str = None) -> None:
+    
+    """
+        @param: args: Dictionary with the arguments to create the controller template
+        @param: template_path: Path to the base folder
+    """
+   
+    args["listen_folder_name"] = args.get("app_name") + "_" + str(uuid.uuid4())
+    args["listen_name"] = args.get("app_name")
+    listen_Json = os.path.join(aux_path, 'cookiecutter.json')
+    with open(listen_Json, 'w') as f:
+        json.dump(args, f)
+
+    try:
+        template = cookiecutter(aux_path, no_input=True, extra_context=args, output_dir=output_path)
+    except exceptions.OutputDirExistsException as e:
+        # In fact this exception is never raised because of the uuid but I will leave it here just in case
+        args['listen_folder_name'] = args['listen_folder_name'] + str(uuid.uuid4())
+        template = cookiecutter(aux_path, no_input=True, extra_context=args, output_dir=output_path)
+
+    with open(template_path, 'a+') as f:
+        with open(template+"/"+args.get("listen_name")+".js", 'r') as f2:
+            f.write(f2.read())
+
+    remove_temp_files(template)    
+
 def compress_api(workingDir: str, projectName: str, fileName: str) -> str:
+
     """
         @param: workingDir: Directory where the project is located
         @param projectName: Name of the project to compress
@@ -244,6 +302,9 @@ def compress_api(workingDir: str, projectName: str, fileName: str) -> str:
 
         These function zip the project and delete the folder to save space on the server
     """
+
+    DEFAULT_CONFIG = get_default_config()
+
     output_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['output_path']
 
     try:
@@ -257,12 +318,23 @@ def compress_api(workingDir: str, projectName: str, fileName: str) -> str:
 
 
 def remove_temp_files(workingDir: str) -> None:
+
     """
         @param: workingDir: Directory where the temp files are located
         @return: None
     """
 
     shutil.rmtree(workingDir)
+
+def get_default_config() -> dict:
+
+    """
+        @return: The default configuration for the cookiecutter
+    """
+
+    with open('params.json', 'r') as f:
+        config = json.load(f)
+    return config
 
 if __name__ == '__main__':
     # pprint(express_service_test)
