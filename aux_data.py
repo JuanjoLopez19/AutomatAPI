@@ -203,21 +203,18 @@ express_service_test ={
                             "endpoint_name": "prueba1",
                             "endpoint_url": "/prueba1",
                             "endpoint_comment":"Endpoint de prueba",
-                            "handler_type":"", # This could be assigned in code directly
                             "method":"get",
                         },
                         {
                             "endpoint_name": "prueba2",
                             "endpoint_url": "/prueba2",
                             "endpoint_comment":"Endpoint de prueba",
-                            "handler_type":"", # This could be assigned in code directly
                             "method":"delete",
                         },
                         {
                             "endpoint_name": "prueba3",
                             "endpoint_url": "/prueba3",
                             "endpoint_comment":"Endpoint de prueba",
-                            "handler_type":"", # This could be assigned in code directly
                             "method":"get",
                         }
                     ]  
@@ -228,21 +225,18 @@ express_service_test ={
                             "endpoint_name": "prueba1",
                             "endpoint_url": "/prueba1",
                             "endpoint_comment":"Endpoint de prueba",
-                            "handler_type":"", # This could be assigned in code directly
                             "method":"get",
                         },
                         {
                             "endpoint_name": "prueba2",
                             "endpoint_url": "/prueba2",
                             "endpoint_comment":"Endpoint de prueba",
-                            "handler_type":"", # This could be assigned in code directly
                             "method":"delete",
                         },
                         {
                             "endpoint_name": "prueba3",
                             "endpoint_url": "/prueba3",
                             "endpoint_comment":"Endpoint de prueba",
-                            "handler_type":"", # This could be assigned in code directly
                             "method":"get",
                         }
                     ]   
@@ -253,21 +247,18 @@ express_service_test ={
                             "endpoint_name": "prueba1",
                             "endpoint_url": "/prueba1",
                             "endpoint_comment":"Endpoint de prueba",
-                            "handler_type":"", # This could be assigned in code directly
                             "method":"get",
                         },
                         {
                             "endpoint_name": "prueba2",
                             "endpoint_url": "/prueba2",
                             "endpoint_comment":"Endpoint de prueba",
-                            "handler_type":"", # This could be assigned in code directly
                             "method":"delete",
                         },
                         {
                             "endpoint_name": "prueba3",
                             "endpoint_url": "/prueba3",
                             "endpoint_comment":"Endpoint de prueba",
-                            "handler_type":"", # This could be assigned in code directly
                             "method":"get",
                         }
                     ]
@@ -279,21 +270,18 @@ express_service_test ={
                 "endpoint_name": "prueba1",
                 "endpoint_url": "/prueba1",
                 "endpoint_comment":"Endpoint de prueba",
-                "handler_type":"", # This could be assigned in code directly
                 "method":"get",
             },
             {
                 "endpoint_name": "prueba2",
                 "endpoint_url": "/prueba2",
                 "endpoint_comment":"Endpoint de prueba",
-                "handler_type":"", # This could be assigned in code directly
                 "method":"delete",
             },
             {
                 "endpoint_name": "prueba3",
                 "endpoint_url": "/prueba3",
                 "endpoint_comment":"Endpoint de prueba",
-                "handler_type":"", # This could be assigned in code directly
                 "method":"get",
             }
         ],

@@ -79,6 +79,7 @@ def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -
             for controller in template_args.get('controllers_list').get('list'):
                 create_controllers(controller, template_path, template_args.get('tecnology'), template_args.get('type'), template_args.get('strict'))
         for endpoint in endpoints:
+            endpoint['handler_type']="app"
             endpoint_creator(endpoint, template_path+'/'+args['app_name']+'.js', template_args.get('tecnology'), 'services')
 
         add_app_listen(args, template_path+'/'+args.get('app_name')+'.js', DEFAULT_CONFIG['cookiecutter']['aux_stuff']['app_listen'], output_path )
@@ -244,17 +245,17 @@ def create_controllers(args: dict = None, template_path: str = None, endpoint_ty
 
     controller_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['controllers']
 
-    aux_dict = {"controller_folder_name":list(args.keys())[0], "controller_name":list(args.keys())[0], 'strict':strict_mode}
+    aux_dict = {"controller_folder_name":list(args.keys())[0]+ "_" + str(uuid.uuid4()), "controller_name":list(args.keys())[0], 'strict':strict_mode}
     controller_Json = os.path.join(controller_path, 'cookiecutter.json')
     with open(controller_Json, 'w') as f:
         json.dump(aux_dict, f)
 
     try:
-        template = cookiecutter(controller_path, no_input=True, extra_context=aux_dict, output_dir=template_path)
+        template = cookiecutter(controller_path, no_input=True, extra_context=aux_dict, output_dir=template_path+'/controllers')
     except exceptions.OutputDirExistsException as e:
         # In fact this exception is never raised because of the uuid but I will leave it here just in case
         aux_dict['controller_folder_name'] = aux_dict['controller_folder_name'] + str(uuid.uuid4())
-        template = cookiecutter(controller_path, no_input=True, extra_context=aux_dict, output_dir=template_path)
+        template = cookiecutter(controller_path, no_input=True, extra_context=aux_dict, output_dir=template_path +'/controllers')
 
     controller_endpoints = list(args.values())   
     for endpoints in controller_endpoints:
@@ -265,6 +266,9 @@ def create_controllers(args: dict = None, template_path: str = None, endpoint_ty
 
     with open(template+'/'+aux_dict.get('controller_name')+'.js', 'a+') as f:
         f.write('''module.exports = {}'''.format(aux_dict.get('controller_name')))
+
+    shutil.move(template+'/'+aux_dict['controller_name']+'.js', template_path +'/controllers')
+    remove_temp_files(template)
 
 def add_app_listen(args: dict = None, template_path: str = None, aux_path:str = None, output_path:str = None) -> None:
     
@@ -338,4 +342,4 @@ def get_default_config() -> dict:
 
 if __name__ == '__main__':
     # pprint(express_service_test)
-    temp_creator(express_service_test, "express", "services")
+    temp_creator(flask_test_app, "flask", "app_web")

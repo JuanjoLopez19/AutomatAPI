@@ -38,6 +38,7 @@
 					"strict": "yes",
 					"body_parser": "yes",
 					"cors": "yes",
+					"config_file": "",
 					"connect_DB": "",
 					"db":{
 						"db_host": "localhost",
