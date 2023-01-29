@@ -188,7 +188,7 @@ express_service_test ={
         "connect_DB":"yes",
         "db":{
             "db_host": "localhost",
-            "db_type": "sql",
+            "db_type": "postgres",
             "db_port": "123",
             "db_name": "prueba",
             "db_user": "pruebaUser",

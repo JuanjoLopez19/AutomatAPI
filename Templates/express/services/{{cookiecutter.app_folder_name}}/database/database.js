@@ -1,14 +1,14 @@
-import sequilize from 'sequelize';
+const { Sequelize } = require('sequelize');
 {%- if cookiecutter.config_file %}
-import { db } from '../config';
+const config = require('../config');
 
-const sequelize = new Sequelize(db.database, db.dbUser, db.password, {
-    host: db.host,
-    dialect: db.environment,/* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-    port: db.port
+const db = new Sequelize(config.db.database, config.db.dbUser, config.db.password, {
+    host: config.db.host,
+    dialect: config.db.environment,/* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
+    port: config.db.port
 });
 {%- else %}
-const sequelize = new Sequelize({{cookiecutter.db.db_name}}, {{cookiecutter.db.db_user}}, {{cookiecutter.db.db_pwd}}, {
+const db = new Sequelize({{cookiecutter.db.db_name}}, {{cookiecutter.db.db_user}}, {{cookiecutter.db.db_pwd}}, {
     host: {{cookiecutter.db.db_host}},
     dialect: {{cookiecutter.db.db_type}},/* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
     port: {{cookiecutter.db.db_port}}
@@ -18,8 +18,8 @@ const sequelize = new Sequelize({{cookiecutter.db.db_name}}, {{cookiecutter.db.d
 async function testConnection(){
     try {
         //alter = true updates the database if schema has changed
-        await sequelize.sync({alter:true});
-        await sequelize.authenticate();
+        await db.sync({alter:true});
+        await db.authenticate();
         console.log('Connection has been established successfully.');
     } catch (error) {
         console.error('Unable to connect to the database:', error);
@@ -27,4 +27,4 @@ async function testConnection(){
 }
 testConnection();
 
-module.exports = sequelize;
+module.exports = db;

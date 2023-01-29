@@ -1,20 +1,23 @@
 {%if cookiecutter.strict %}'use strict'{% endif %}
-import express from 'express';
+const Express = require('express')
 {%- if cookiecutter.body_parser %}
-import bodyParser from 'body-parser';
+const bodyParser = require('body-parser')
 {% endif %}
 {%- if cookiecutter.cors %}
-import cors from 'cors';
+const cors = require('cors')
 {% endif %}
 {%- if cookiecutter.config_file %}
-import config from './config';
+const config = require('./config')
 {% endif %}
-app = express();
+const app = Express();
 {%- if cookiecutter.body_parser %}
 app.use(bodyParser.json());
 {% endif %}
 {%- if cookiecutter.cors %}
 app.use(cors());
+{% endif %}
+{%- if cookiecutter.connect_DB %}
+const db = require('./database/database')
 {% endif %}
 {%- if cookiecutter.use_controllers %}
 {%- for i in cookiecutter.controllers_list.list %}
