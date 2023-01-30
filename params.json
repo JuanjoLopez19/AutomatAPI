@@ -53,7 +53,30 @@
 					"endpoints": [],
 					"template_path": "./Templates/express/services"
 				},
-				"app_web": {}
+				"app_web": {
+					"app_name": "express_services",
+					"port": "3000",
+					"host": "127.0.0.1",
+					"strict": "yes",
+					"body_parser": "yes",
+					"cors": "yes",
+					"config_file": "",
+					"connect_DB": "",
+					"view_engine": "ejs",
+					"css_engine": "css",
+					"db":{
+						"db_host": "localhost",
+						"db_type": "",
+						"db_port": "",
+						"db_name": "",
+						"db_user": "",
+						"db_pwd": ""
+					},
+					"use_controllers": "",
+					"controllers_list": "",
+					"endpoints": [],
+					"template_path": "./Templates/express/app_web"
+				}
 			},
 			"django": {
 				"services": {},
@@ -89,7 +112,8 @@
 			"output_path": "./temp_templates/",
 			"blueprints": "./Templates/flask/aux_stuff/blueprints",
 			"controllers": "./Templates/express/aux_stuff/controllers",
-			"app_listen": "./Templates/express/aux_stuff/listen"
+			"app_listen": "./Templates/express/aux_stuff/listen",
+			"app_ending": "./Templates/express/aux_stuff/app_ending"
 		}
 	}
 }

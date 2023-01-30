@@ -80,9 +80,14 @@ def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -
                 create_controllers(controller, template_path, template_args.get('tecnology'), template_args.get('type'), template_args.get('strict'))
         for endpoint in endpoints:
             endpoint['handler_type']="app"
-            endpoint_creator(endpoint, template_path+'/'+args['app_name']+'.js', template_args.get('tecnology'), 'services')
+            endpoint_creator(endpoint, template_path+'/'+args.get('app_name')+'.js', template_args.get('tecnology'), 'services')
 
-        add_app_listen(args, template_path+'/'+args.get('app_name')+'.js', DEFAULT_CONFIG['cookiecutter']['aux_stuff']['app_listen'], output_path )
+        if template_args.get('type') == "services":
+            add_app_listen(args, template_path+'/'+args.get('app_name')+'.js', DEFAULT_CONFIG['cookiecutter']['aux_stuff']['app_listen'], output_path )
+        else:
+            with open(template_path+'/'+args.get('app_name')+'.js', 'a+') as f:
+                with open(DEFAULT_CONFIG.get('cookiecutter').get('aux_stuff').get('app_ending')+"/app_ending.js", 'r') as f2:
+                    f.write(f2.read())
 
     # Compress the template and delete the temp files
     #path = compress_api(template_path, args['app_name'], args['app_name'])
@@ -342,4 +347,4 @@ def get_default_config() -> dict:
 
 if __name__ == '__main__':
     # pprint(express_service_test)
-    temp_creator(express_service_test, "express", "services")
+    temp_creator(express_test_app, "express", "app_web")

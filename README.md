@@ -5,13 +5,13 @@
 ## TO DO LIST
 
 - Databases --> Mongo and PosgresSQL created ✅
-- Templates (3/6)
+- Templates (4/6)
 	- Flask (2/2)
   		- Services ✅ 
   		- App Web ✅
- 	- Express (1/2)
+ 	- Express (2/2)
 		- Services ✅
-  		- App Web
+  		- App Web ✅
  	- Django (0/2)
 		- Services  
   		- App Web

@@ -1,0 +1,32 @@
+{%- if cookiecutter.view_engine == "ejs" %}
+<h1><%= message %></h1>
+<h2><%= error.status %></h2>
+<pre><%= error.stack %></pre>
+{%- elif cookiecutter.view_engine == "hjs" or cookiecutter.view_engine == "hbs" %}
+<h1>{{ message }}</h1>
+<h2>{{ error.status }}</h2>
+<pre>{{ error.stack }}</pre>
+{%- elif cookiecutter.view_engine == "pug" or cookiecutter.view_engine == "jade" %}
+extends layout
+
+block content
+  h1= message
+  h2= error.status
+  pre #{error.stack}
+{%- elif cookiecutter.view_engine == "twig" %}
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <h1>{{message}}</h1>
+  <h2>{{error.status}}</h2>
+  <pre>{{error.stack}}</pre>
+{% endblock %}
+{%- elif cookiecutter.view_engine == "vash" %}
+@html.extend('layout', function(model) {
+  @html.block('content', function(model) {
+    <h1>@model.message</h1>
+    <h2>@model.error.status</h2>
+    <pre>@model.error.stack</pre>
+  })
+})
+{% endif %}

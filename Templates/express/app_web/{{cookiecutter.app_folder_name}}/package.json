@@ -1,0 +1,40 @@
+{
+  "name": "{{cookiecutter.app_name}}",
+  "version": "1.0.0",
+  "description": "",
+  "main": "{{cookiecutter.app_name}}.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./bin/www"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    {%- if cookiecutter.cors %}
+    "cors": "^2.8.5",
+    {%- endif -%}
+    {%- if cookiecutter.connect_DB %}
+    "sequelize": "^6.28.0",
+    {%- endif -%}
+    {%- if cookiecutter.view_engine == "ejs" %}
+    "ejs": "~2.6.1",
+    {%- elif cookiecutter.view_engine == "hbs" %}
+    "hbs": "~4.0.4",
+    {%- elif cookiecutter.view_engine == "hjs" %}
+    "hjs": "~0.0.6",
+    {%- elif cookiecutter.view_engine == "jade" %}
+    "jade": "~1.11.0",
+    {%- elif cookiecutter.view_engine == "pug" %}
+    "pug": "2.0.0-beta11",
+    {%- elif cookiecutter.view_engine == "twig" %}
+    "twig": "~0.10.3",
+    {%- elif cookiecutter.view_engine == "vash" %}
+    "vash": "~0.12.6",
+    {% endif -%}
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "express": "^4.18.2"
+  }
+}
