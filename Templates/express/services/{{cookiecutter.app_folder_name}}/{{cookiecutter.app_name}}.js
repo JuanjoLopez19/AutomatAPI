@@ -25,4 +25,4 @@ app.use(cors());
 app.use('/{{key}}/', require('./controllers/{{key}}'));
 {%- endfor %}
 {%- endfor %}
-{%- endif %}
+{% endif %}

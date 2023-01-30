@@ -8,4 +8,3 @@
         res.render('index', { title: 'Express' });
         {% endif %}
 });
-

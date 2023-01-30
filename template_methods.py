@@ -270,6 +270,7 @@ def create_controllers(args: dict = None, template_path: str = None, endpoint_ty
             endpoint_creator(endpoint, template+'/'+aux_dict['controller_name']+'.js', endpoint_type, endpoint_use)
 
     with open(template+'/'+aux_dict.get('controller_name')+'.js', 'a+') as f:
+        f.write('\n')
         f.write('''module.exports = {}'''.format(aux_dict.get('controller_name')))
 
     shutil.move(template+'/'+aux_dict['controller_name']+'.js', template_path +'/controllers')
@@ -347,4 +348,4 @@ def get_default_config() -> dict:
 
 if __name__ == '__main__':
     # pprint(express_service_test)
-    temp_creator(express_test_service, "express", "services")
+    temp_creator(express_test_app, "express", "app_web")
