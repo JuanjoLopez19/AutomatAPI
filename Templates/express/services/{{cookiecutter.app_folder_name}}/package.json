@@ -12,10 +12,10 @@
   "dependencies": {
     {%- if cookiecutter.cors %}
     "cors": "^2.8.5",
-    {% endif %}
+    {%- endif %}
     {%- if cookiecutter.connect_DB %}
     "sequelize": "^6.28.0",
-    {% endif %}
+    {%- endif %}
     "express": "^4.18.2"
   }
 }

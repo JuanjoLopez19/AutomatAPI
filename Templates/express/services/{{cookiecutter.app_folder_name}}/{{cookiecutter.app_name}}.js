@@ -2,12 +2,15 @@
 const Express = require('express')
 {%- if cookiecutter.body_parser %}
 const bodyParser = require('body-parser')
-{% endif %}
+{%- endif %}
 {%- if cookiecutter.cors %}
 const cors = require('cors')
-{% endif %}
+{%- endif %}
 {%- if cookiecutter.config_file %}
 const config = require('./config')
+{%- endif %}
+{%- if cookiecutter.connect_DB %}
+const db = require('./database/database')
 {% endif %}
 const app = Express();
 {%- if cookiecutter.body_parser %}
@@ -16,13 +19,10 @@ app.use(bodyParser.json());
 {%- if cookiecutter.cors %}
 app.use(cors());
 {% endif %}
-{%- if cookiecutter.connect_DB %}
-const db = require('./database/database')
-{% endif %}
 {%- if cookiecutter.use_controllers %}
 {%- for i in cookiecutter.controllers_list.list %}
 {%- for key, value in i.items() %}
 app.use('/{{key}}/', require('./controllers/{{key}}'));
 {%- endfor %}
 {%- endfor %}
-{% endif %}
+{%- endif %}

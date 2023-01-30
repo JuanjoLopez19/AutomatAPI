@@ -5,6 +5,7 @@
 				"services": {
 					"app_name": "flask_services",
 					"port": "5000",
+					"cors":"yes",
 					"connect_DB": "",
 					"table_name": "",
 					"config_file": "",
@@ -18,6 +19,7 @@
 					"app_name": "",
 					"port": "",
 					"connect_DB": "",
+					"cors":"yes",
 					"table_name": "",
 					"config_file": "",
 					"type_config_file": "",

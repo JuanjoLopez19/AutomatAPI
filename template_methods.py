@@ -347,4 +347,4 @@ def get_default_config() -> dict:
 
 if __name__ == '__main__':
     # pprint(express_service_test)
-    temp_creator(express_test_app, "express", "app_web")
+    temp_creator(express_test_service, "express", "services")

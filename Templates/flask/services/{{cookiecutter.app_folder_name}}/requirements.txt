@@ -1,5 +1,8 @@
 Flask==2.2.2
-{% if cookiecutter.connect_DB %}
+{%- if cookiecutter.connect_DB %}
 Flask-SQLAlchemy==3.0.2
 Flask-Migrate==3.1.0
+{% endif %}
+{%- if cookiecutter.cors %}
+Flask-Cors==3.0.10
 {% endif %}

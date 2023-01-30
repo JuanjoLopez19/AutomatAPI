@@ -2,20 +2,26 @@ from flask import Flask{%- if cookiecutter.handle_404 == 'yes' %}, render_templa
 {%- if cookiecutter.connect_DB == 'yes' %}
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, migrate
-{% endif %}
+{%- endif %}
+{%- if cookiecutter.cors %}
+from flask_cors import CORS
+{%- endif %}
 {%- if cookiecutter.use_bp %}
 {%- for i in cookiecutter.bp_list.list %}
 {%- for key, value in i.items() %}
 from {{key}} import {{key}}
-{% endfor %}
-{% endfor %}
-{% endif %}
+{%- endfor %}
+{%- endfor %}
+{%- endif %}
 
 app = Flask(__name__)
+{%- if cookiecutter.cors %}
+CORS(app)
+{%- endif %}
 {% if cookiecutter.config_file == 'yes' %}
 # Here goes if theres config file
 app.config.from_pyfile('./config.cfg')
-{% endif %}
+{%- endif %}
 {% if cookiecutter.connect_DB == 'yes' %}
 # Creating an SQLAlchemy instance
 db = SQLAlchemy(app)
@@ -36,12 +42,12 @@ class {{cookiecutter.table_name}}(db.Model):
         self.el_3 = el_3
         self.el_4 = el_4
 {% endif %}
-{% if cookiecutter.use_bp %}
-{% for i in cookiecutter.bp_list.list %}
-{% for key, value in i.items() %}
+{%- if cookiecutter.use_bp %}
+{%- for i in cookiecutter.bp_list.list %}
+{%- for key, value in i.items() %}
 app.register_blueprint({{key}})
-{% endfor %}
-{% endfor %}
-{% endif %}
+{%- endfor %}
+{%- endfor %}
+{%- endif %}
 
 #Here goes the endpoinst to be added

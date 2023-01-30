@@ -1,14 +1,20 @@
 from flask import Flask
-{% if cookiecutter.connect_DB == 'yes' %}
+{%- if cookiecutter.connect_DB == 'yes' %}
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, migrate
-{% endif %}
+{%- endif %}
+{%- if cookiecutter.cors %}
+from flask_cors import CORS
+{%- endif %}
 
 app = Flask(__name__)
+{%- if cookiecutter.cors %}
+CORS(app)
+{%- endif %}
 {% if cookiecutter.config_file == 'yes' %}
 # Here goes if theres config file
 app.config.from_pyfile('./config.cfg')
-{% endif %}
+{%- endif %}
 {% if cookiecutter.connect_DB == 'yes' %}
 # Creating an SQLAlchemy instance
 db = SQLAlchemy(app)
@@ -28,6 +34,6 @@ class {{cookiecutter.table_name}}(db.Model):
         self.el_2 = el_2
         self.el_3 = el_3
         self.el_4 = el_4
-{% endif %}
+{%- endif %}
 
 #Here goes the endpoinst to be added

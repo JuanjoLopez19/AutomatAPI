@@ -2,6 +2,7 @@ flask_test_service ={
     "app_name": "flask_service",
     "port": "5000",
     "connect_DB": "yes",
+    "cors": "yes",
     "table_name": "aux",
     "config_file": "yes",
     "type_config_file": "dev",
@@ -41,6 +42,7 @@ flask_test_service ={
 flask_test_app ={
     "app_name": "flask_app",
     "port": "5000",
+    "cors": "yes",
     "connect_DB": "yes",
     "table_name": "aux",
     "config_file": "yes",
