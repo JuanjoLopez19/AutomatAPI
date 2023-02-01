@@ -1,4 +1,4 @@
-flask_test_service ={
+flask_test_service = {
     "app_name": "flask_service",
     "port": "5000",
     "connect_DB": "yes",
@@ -39,7 +39,7 @@ flask_test_service ={
     ]
 }
 
-flask_test_app ={
+flask_test_app = {
     "app_name": "flask_app",
     "port": "5000",
     "cors": "yes",
@@ -179,7 +179,7 @@ flask_test_app ={
     ],
 }
 
-express_test_service ={
+express_test_service = {
         "app_name": "express_services",
         "port": "3000",
         "host": "localhost",
@@ -289,7 +289,7 @@ express_test_service ={
         ],
 }
 
-express_test_app ={
+express_test_app = {
         "app_name": "express_app",
         "port": "3000",
         "host": "localhost",
@@ -400,3 +400,42 @@ express_test_app ={
             }
         ],
 }
+
+django_test_service = {
+    "app_name": "django_app",
+    "port": "8000",
+    "language_code": "en-us",
+    "admin_url": "yes",
+    "admin_url_name": "admin",
+    "web_browser": "yes",
+    "web_browser_url": "firefox",
+    "use_routers":"",
+    "db":{
+        "db_host": "localhost",
+        "db_type": "django.db.backends.postgresql",
+        "db_port": "5432",
+        "db_name": "Pruebas",
+        "db_user": "Admin",
+        "db_pwd": "root"
+    },
+    "endpoints":[],
+    "sub_apps":{
+        "apps":[
+            {
+                "sub_app1":{
+                    "app_name": "",
+                    "middleware":"sub_app1",
+                    "logged_in":"yes",
+                    "model":{
+                        "model_name":"app1",
+                        "model_fields":[]
+				    },
+                    "endpoint_name": "app1",
+                    "methods": [],
+                }
+            }
+        ]
+    }
+}
+
+django_test_app = {}

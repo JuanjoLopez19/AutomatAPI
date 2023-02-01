@@ -30,7 +30,10 @@ def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -
             else:
                 args[key] = value
     elif template_args['tecnology'] == 'django':
-        pass
+        args = DEFAULT_CONFIG['cookiecutter']['tecnology_args'][template_args.get('tecnology')][template_args.get('type')]
+        args['app_folder_name'] = template_args['app_name'] + '_' + str(uuid.uuid4())
+        for key, value in template_args.items():
+            args[key] = value
     elif template_args['tecnology'] == 'express':
         args = DEFAULT_CONFIG['cookiecutter']['tecnology_args'][template_args.get('tecnology')][template_args.get('type')]
         args['app_folder_name'] = template_args['app_name'] + '_' + str(uuid.uuid4())
@@ -348,4 +351,4 @@ def get_default_config() -> dict:
 
 if __name__ == '__main__':
     # pprint(express_service_test)
-    temp_creator(express_test_app, "express", "app_web")
+    temp_creator(django_test_service, "django", "services")
