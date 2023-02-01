@@ -1,7 +1,9 @@
 import json,shutil,os,uuid,secrets
+import pprint
 from cookiecutter.main import cookiecutter
 from cookiecutter import exceptions
 from aux_data import * 
+from file_management import *
 
 def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -> str:
 
@@ -43,7 +45,6 @@ def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -
     args.pop('endpoints')
     endpoints = template_args['endpoints']
 
-
     # If not exists, create the output path
     if not os.path.exists(output_path):
         os.makedirs(output_path)
@@ -75,7 +76,10 @@ def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -
         add_app_run(args,template_path+'/'+args.get('app_name')+'.py', DEFAULT_CONFIG['cookiecutter']['aux_stuff']['flask_app_run_path'])
 
     elif template_args.get('tecnology') == 'django':
-        pass
+        if template_args.get('sub_apps').get('apps'):
+            for app in template_args.get('sub_apps').get('apps'):
+                app.get(list(app.keys())[0])['subapp_name']=list(app.keys())[0]
+                create_sub_app(app.get(list(app.keys())[0]), template_path, DEFAULT_CONFIG['cookiecutter']['aux_stuff']['sub_app']['template_path'])
 
     elif template_args.get('tecnology') == 'express':
         if template_args.get('use_controllers') =='yes':
@@ -129,9 +133,7 @@ def endpoint_creator(template_args: dict = None, template_path:str = None, endpo
                 config[key] = 'app'
             else:
                 config[key] = value
-            
-            
-        
+                
     cookiecutteJsonFile = os.path.join(temp_path, 'cookiecutter.json')
     with open(cookiecutteJsonFile, 'w') as f:
         json.dump(config, f)
@@ -303,51 +305,26 @@ def add_app_listen(args: dict = None, template_path: str = None, aux_path:str = 
         with open(template+"/"+args.get("listen_name")+".js", 'r') as f2:
             f.write(f2.read())
 
-    remove_temp_files(template)    
+    remove_temp_files(template) 
 
-def compress_api(workingDir: str, projectName: str, fileName: str) -> str:
-
+def create_sub_app(args: dict = None, template_path: str = None, aux_path:str= None) -> None:
     """
-        @param: workingDir: Directory where the project is located
-        @param projectName: Name of the project to compress
-        @param fileName: Name of the zip file
-        @return: The path to the zip file
-
-        These function zip the project and delete the folder to save space on the server
+        @param: args: Dictionary with the arguments to create the sub app template
+        @param: template_path: Path to the base folder
+        @param: aux_path: Path to the aux folder of the sub app template
     """
 
-    DEFAULT_CONFIG = get_default_config()
-
-    output_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['output_path']
+    args["subapp_folder_name"] = args.get("subapp_name") # Here isn't needed the uuid bc the unique name will be controlled in the front
+    subapp_json = os.path.join(aux_path, 'cookiecutter.json')
+    with open(subapp_json, 'w') as f:
+        json.dump(args, f)
 
     try:
-        path = shutil.make_archive(output_path+projectName.split('_')[0], 'zip', workingDir)
-        remove_temp_files(workingDir) 
-    except (OSError, FileNotFoundError) as e:
-        path = None
-        print(e)
-    return path
-
-
-
-def remove_temp_files(workingDir: str) -> None:
-
-    """
-        @param: workingDir: Directory where the temp files are located
-        @return: None
-    """
-
-    shutil.rmtree(workingDir)
-
-def get_default_config() -> dict:
-
-    """
-        @return: The default configuration for the cookiecutter
-    """
-
-    with open('params.json', 'r') as f:
-        config = json.load(f)
-    return config
+        template = cookiecutter(aux_path, no_input=True, extra_context=args, output_dir=template_path+'/subapps')
+    except exceptions.OutputDirExistsException as e:
+        # In fact this exception is never raised because of the uuid but I will leave it here just in case
+        args['subapp_folder_name'] = args['subapp_folder_name'] + str(uuid.uuid4())
+        template = cookiecutter(aux_path, no_input=True, extra_context=args, output_dir=template_path+'/subapps')
 
 if __name__ == '__main__':
     # pprint(express_service_test)

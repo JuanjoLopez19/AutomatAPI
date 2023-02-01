@@ -137,6 +137,7 @@
 			"app_listen": "./Templates/express/aux_stuff/listen",
 			"app_ending": "./Templates/express/aux_stuff/app_ending",
 			"sub_app":{
+				"subapp_name":"",
 				"middleware_name":"",
 				"logged_in":"",
 				"model":{
@@ -144,7 +145,12 @@
 					"model_fields":[]
 				},
 				"endpoint_name": "",
-				"methods": [],
+				"methods":{
+					"get": "yes",
+					"put": "no",
+					"post": "no",
+					"delete": "no"
+				},
 				"template_path": "./Templates/django/aux_stuff/sub_app"
 			},
 			"model_fields":{

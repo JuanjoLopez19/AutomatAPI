@@ -423,7 +423,7 @@ django_test_service = {
         "apps":[
             {
                 "sub_app1":{
-                    "app_name": "",
+                    "subapp_name": "",
                     "middleware":"sub_app1",
                     "logged_in":"yes",
                     "model":{
@@ -431,7 +431,12 @@ django_test_service = {
                         "model_fields":[]
 				    },
                     "endpoint_name": "app1",
-                    "methods": [],
+                    "methods":{
+                        "get":"yes",
+                        "post":"yes",
+                        "put":"yes",
+                        "delete":"yes"
+                    },
                 }
             }
         ]
