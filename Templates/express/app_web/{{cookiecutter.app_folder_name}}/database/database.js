@@ -1,5 +1,5 @@
 const { Sequelize } = require('sequelize');
-{%- if cookiecutter.config_file %}
+{%- if cookiecutter.config_file == "yes%}
 const config = require('../config');
 
 const db = new Sequelize(config.db.database, config.db.dbUser, config.db.password, {

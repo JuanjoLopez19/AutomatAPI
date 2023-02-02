@@ -66,7 +66,7 @@ def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -
     if template_args.get('tecnology') == 'flask':
         if template_args.get('type') == 'app_web' and template_args.get('use_bp') == 'yes':
             for bp in template_args.get('bp_list').get('list'):
-                create_blueprint(bp, template_path, template_args.get('tecnology'), template_args.get('type'))
+                create_blueprint(bp, template_path+'/blueprints', template_args.get('tecnology'), template_args.get('type'))
         for endpoint in endpoints:
             endpoint_creator(endpoint, template_path+'/'+args['app_name']+'.py', template_args.get('tecnology'), 'services')
 
@@ -78,8 +78,9 @@ def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -
     elif template_args.get('tecnology') == 'django':
         if template_args.get('sub_apps').get('apps'):
             for app in template_args.get('sub_apps').get('apps'):
-                app.get(list(app.keys())[0])['subapp_name']=list(app.keys())[0]
-                create_sub_app(app.get(list(app.keys())[0]), template_path, DEFAULT_CONFIG['cookiecutter']['aux_stuff']['sub_app']['template_path'])
+                for key, value in app.items():
+                    value.update({'subapp_name':key})
+                    create_sub_app(value, template_path, DEFAULT_CONFIG['cookiecutter']['aux_stuff']['sub_app']['template_path'])
 
     elif template_args.get('tecnology') == 'express':
         if template_args.get('use_controllers') =='yes':
@@ -326,6 +327,7 @@ def create_sub_app(args: dict = None, template_path: str = None, aux_path:str= N
         args['subapp_folder_name'] = args['subapp_folder_name'] + str(uuid.uuid4())
         template = cookiecutter(aux_path, no_input=True, extra_context=args, output_dir=template_path+'/subapps')
 
+
 if __name__ == '__main__':
     # pprint(express_service_test)
-    temp_creator(django_test_service, "django", "services")
+    temp_creator(flask_test_app, "flask", "app_web")

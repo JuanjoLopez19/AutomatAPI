@@ -294,12 +294,12 @@ express_test_app = {
         "port": "3000",
         "host": "localhost",
         "strict":"yes",
-        "body_parser":"",
-        "cors":"",
+        "body_parser":"no",
+        "cors":"no",
         "view_engine":"pug",
         "css_engine":"css",
         "config_file":"yes",
-        "connect_DB":"",
+        "connect_DB":"no",
         "db":{
             "db_host": "localhost",
             "db_type": "postgres",
@@ -428,14 +428,58 @@ django_test_service = {
                     "logged_in":"yes",
                     "model":{
                         "model_name":"app1",
-                        "model_fields":[]
+                        "model_fields":[
+                            {"name":"fiedl1","type":"Binary","null":"True","blank":"True","default":"1"},
+                            {"name":"field2","type":"Boolean","null":"False","blank":"True","default":"11-12-2001"},
+                            {"name":"field3","type":"URL","null":"False","blank":"False","default":"usuario"}
+                        ]
 				    },
                     "endpoint_name": "app1",
                     "methods":{
-                        "get":"yes",
+                        "get_m":"yes",
                         "post":"yes",
                         "put":"yes",
                         "delete":"yes"
+                    },
+                },
+                "sub_app2":{
+                    "subapp_name": "",
+                    "middleware":"sub_app2",
+                    "logged_in":"yes",
+                    "model":{
+                        "model_name":"app2",
+                        "model_fields":[
+                            {"name":"fiedl1","type":"Binary","null":"True","blank":"True","default":"1"},
+                            {"name":"field2","type":"Boolean","null":"False","blank":"True","default":"11-12-2001"},
+                            {"name":"field3","type":"URL","null":"False","blank":"False","default":"usuario"}
+                        ]
+				    },
+                    "endpoint_name": "app2",
+                    "methods":{
+                        "get_m":"no",
+                        "post":"yes",
+                        "put":"yes",
+                        "delete":"no"
+                    },
+                },
+                "sub_app3":{
+                    "subapp_name": "",
+                    "middleware":"sub_app3",
+                    "logged_in":"no",
+                    "model":{
+                        "model_name":"app3",
+                        "model_fields":[
+                            {"name":"fiedl1","type":"Binary","null":"True","blank":"True","default":"1"},
+                            {"name":"field2","type":"Boolean","null":"False","blank":"True","default":"11-12-2001"},
+                            {"name":"field3","type":"URL","null":"False","blank":"False","default":"usuario"}
+                        ]
+				    },
+                    "endpoint_name": "app3",
+                    "methods":{
+                        "get_m":"yes",
+                        "post":"yes",
+                        "put":"no",
+                        "delete":"no"
                     },
                 }
             }

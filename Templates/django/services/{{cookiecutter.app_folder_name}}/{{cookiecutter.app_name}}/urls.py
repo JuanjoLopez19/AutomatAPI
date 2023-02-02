@@ -13,16 +13,27 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-{%- if cookiecutter.admin_url %}
+{%- if cookiecutter.admin_url == "yes" %}
 from django.contrib import admin
 {%- endif %}
 from django.urls import path, include
+{% for app in cookiecutter.sub_apps.apps %}
+{%- for key, value in app.items() %}
+from subapps.{{key}} import urls as {{key}}_urls
+{{value['middleware']}}
+{%- endfor %}
+{%- endfor %}
 
 urlpatterns = [
-    {%- if cookiecutter.admin_url %}
+    {%- if cookiecutter.admin_url == "yes" %}
     path('{{cookiecutter.admin_url_name}}/', admin.site.urls),
     {%- endif %}
-    {%- if cookiecutter.web_browser %}
+    {%- if cookiecutter.web_browser == "yes" %}
     path('{{cookiecutter.web_browser_url}}/', include('rest_framework.urls')),
     {%- endif %}
+    {%- for app in cookiecutter.sub_apps.apps %}
+    {%- for key, value in app.items() %}
+    path('{{value['middleware']}}/', include('{{key}}_urls'), name='{{key}}'),
+    {%- endfor %}
+    {%- endfor %}
 ]

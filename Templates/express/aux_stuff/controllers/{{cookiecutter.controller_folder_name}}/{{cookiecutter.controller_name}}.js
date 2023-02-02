@@ -1,4 +1,4 @@
-{%if cookiecutter.strict %}'use strict'{% endif %}
+{%if cookiecutter.strict == "yes" %}'use strict'{% endif %}
 const express = require('express');
 let {{cookiecutter.controller_name}} = express.Router();
 

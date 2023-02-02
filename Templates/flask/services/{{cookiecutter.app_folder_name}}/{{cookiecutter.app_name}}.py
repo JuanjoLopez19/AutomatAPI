@@ -3,7 +3,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, migrate
 {%- endif %}
-{%- if cookiecutter.cors %}
+{%- if cookiecutter.cors == "yes" %}
 from flask_cors import CORS
 {%- endif %}
 

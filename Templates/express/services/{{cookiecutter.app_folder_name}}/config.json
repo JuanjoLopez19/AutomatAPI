@@ -1,5 +1,5 @@
 {
-    {%- if cookiecutter.connect_DB %}
+    {%- if cookiecutter.connect_DB == "yes" %}
     "db":{
         "environment":"{{cookiecutter.db.db_type}}",
         "database":"{{cookiecutter.db.db_name}}",

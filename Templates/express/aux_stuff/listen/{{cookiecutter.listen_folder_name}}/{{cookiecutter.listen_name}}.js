@@ -1,4 +1,4 @@
-{%- if cookiecutter.config_file %}
+{%- if cookiecutter.config_file == "yes" %}
 let port = config.settings.port
 {%- else %}
 let port = {{cookiecutter.port}}

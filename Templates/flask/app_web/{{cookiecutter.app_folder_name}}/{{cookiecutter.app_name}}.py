@@ -3,13 +3,13 @@ from flask import Flask{%- if cookiecutter.handle_404 == 'yes' %}, render_templa
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, migrate
 {%- endif %}
-{%- if cookiecutter.cors %}
+{%- if cookiecutter.cors == "yes" %}
 from flask_cors import CORS
 {%- endif %}
-{%- if cookiecutter.use_bp %}
+{%- if cookiecutter.use_bp == "yes" %}
 {%- for i in cookiecutter.bp_list.list %}
 {%- for key, value in i.items() %}
-from {{key}} import {{key}}
+from blueprints.{{key}} import {{key}}
 {%- endfor %}
 {%- endfor %}
 {%- endif %}

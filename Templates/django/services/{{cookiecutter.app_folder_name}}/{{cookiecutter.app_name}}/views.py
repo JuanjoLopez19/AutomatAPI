@@ -1,4 +1,4 @@
-{%- if cookiecutter.use_routers == '' %}
+{%- if cookiecutter.use_routers == 'no' %}
 from rest_framework.views import APIView # esta si no es router
 {%- else %}
 from rest_framework import viewsets # Esta si es router

@@ -7,14 +7,14 @@
 var app = require('../{{cookiecutter.app_name}}');
 var debug = require('debug')('{{cookiecutter.app_name}}:server');
 var http = require('http');
-{%- if cookiecutter.config_file %}
+{%- if cookiecutter.config_file == "yes" %}
 const config = require('../config')
 {%- endif %}
 
 /**
  * Get port from environment and store in Express.
  */
-{%- if cookiecutter.config_file %}
+{%- if cookiecutter.config_file == "yes" %}
 var port = normalizePort(process.env.PORT || config.settings.port);
 {%- else %}
 var port = normalizePort(process.env.PORT || '{{cookiecutter.port}}');

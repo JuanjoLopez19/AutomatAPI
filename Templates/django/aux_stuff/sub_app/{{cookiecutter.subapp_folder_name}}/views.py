@@ -6,11 +6,13 @@ from .models import {{cookiecutter.model.model_name|capitalize}}
 from .serializers import {{cookiecutter.model.model_name|capitalize}}Seralizer
 
 # Create your views here.
-
+{%- if cookiecutter.methods.get_m == "yes" or cookiecutter.methods.post == "yes" %}
 class {{cookiecutter.model.model_name|capitalize}}View(APIView):
-    # Add permission to check only if authenticated --> Posible param
+    {%- if cookiecutter.logged_in == "yes" %}
+    # Add permission to check only if authenticated 
     permission_classes = [permissions.IsAuthenticated]
-
+    {% endif %}
+    {%- if cookiecutter.methods.get_m == "yes" %}
     # 1. list all --> Get Method
     def get(self,request, *args, **kwargs):
         '''
@@ -20,7 +22,8 @@ class {{cookiecutter.model.model_name|capitalize}}View(APIView):
         {{cookiecutter.model.model_name}}_list = {{cookiecutter.model.model_name|capitalize}}.objects.filter(user = request.user.id)
         serializer = {{cookiecutter.model.model_name|capitalize}}Seralizer({{cookiecutter.model.model_name}}_list, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
+    {%- endif %}
+    {% if cookiecutter.methods.post == "yes" %}
     # 2. Create --> Post method
     def post(self, request, *args, **kwargs):
         '''
@@ -28,8 +31,9 @@ class {{cookiecutter.model.model_name|capitalize}}View(APIView):
         '''
 
         data = {
-            'task': request.data.get('task'),
-            'completed': request.data.get('completed'),
+            {%- for field in cookiecutter.model.model_fields %}
+            '{{field['name']}}': request.data.get('{{field['name']}}'),
+            {%- endfor %}
             'user': request.user.id
         }
 
@@ -39,10 +43,14 @@ class {{cookiecutter.model.model_name|capitalize}}View(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    {%- endif %}
+{%- endif %}
+{% if cookiecutter.methods.put == "yes" or cookiecutter.methods.delete == "yes" %}
 class {{cookiecutter.model.model_name|capitalize}}DetailView(APIView):
-    # Add permission to check only if authenticated --> Posible param
+    {%- if cookiecutter.logged_in == "yes" %}
+    # Add permission to check only if authenticated 
     permission_classes = [permissions.IsAuthenticated]
+    {%- endif %}
 
     def get_object(self, {{cookiecutter.model.model_name}}_id, user_id):
         '''
@@ -67,7 +75,7 @@ class {{cookiecutter.model.model_name|capitalize}}DetailView(APIView):
 
         serializer = {{cookiecutter.model.model_name|capitalize}}Seralizer({{cookiecutter.model.model_name}}_instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
+    {% if cookiecutter.methods.put == "yes" %}
     def put(self, request, {{cookiecutter.model.model_name}}_id, *args, **kwargs):
         '''
             Updates the {{cookiecutter.model.model_name}} item with given {{cookiecutter.model.model_name}}_id if exists
@@ -80,8 +88,9 @@ class {{cookiecutter.model.model_name|capitalize}}DetailView(APIView):
             )
 
         data = {
-            'task': request.data.get('task'),
-            'completed': request.data.get('completed'), 
+            {%- for field in cookiecutter.model.model_fields %}
+            '{{field['name']}}': request.data.get('{{field['name']}}'),
+            {%- endfor %} 
             'user': request.user.id
         }
         serializer = {{cookiecutter.model.model_name|capitalize}}Seralizer(instance = {{cookiecutter.model.model_name}}_instance, data=data, partial = True)
@@ -89,7 +98,8 @@ class {{cookiecutter.model.model_name|capitalize}}DetailView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    {%- endif %}
+    {% if cookiecutter.methods.delete == "yes" %}
     # 5. Delete
     def delete(self, request, {{cookiecutter.model.model_name}}_id, *args, **kwargs):
         '''
@@ -106,3 +116,5 @@ class {{cookiecutter.model.model_name|capitalize}}DetailView(APIView):
             {"res": "Object deleted!"},
             status=status.HTTP_200_OK
         )
+    {%- endif %}
+{%- endif %}

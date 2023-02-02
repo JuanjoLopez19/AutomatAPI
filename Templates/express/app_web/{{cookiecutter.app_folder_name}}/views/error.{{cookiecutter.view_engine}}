@@ -29,4 +29,4 @@ block content
     <pre>@model.error.stack</pre>
   })
 })
-{% endif %}
+{%- endif %}
