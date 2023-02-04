@@ -403,22 +403,51 @@ express_test_app = {
 
 django_test_service = {
     "app_name": "django_app",
-    "port": "8000",
+    "port": "8001",
     "language_code": "en-us",
     "admin_url": "yes",
     "admin_url_name": "admin",
     "web_browser": "yes",
     "web_browser_url": "firefox",
-    "use_routers":"",
-    "db":{
-        "db_host": "localhost",
-        "db_type": "django.db.backends.postgresql",
-        "db_port": "5432",
-        "db_name": "Pruebas",
-        "db_user": "Admin",
-        "db_pwd": "root"
-    },
-    "endpoints":[],
+    "db":"",
+    "endpoints":[
+        {
+            "endpoint_name": "endpoint1",
+            "logged_in":"yes",
+            "endpoint_url": "endpoint1",
+            "endpoint_comment": "Comment for the endpoint 1",
+            "methods":{
+                "get_m": "yes",
+                "put": "yes",
+                "post": "no",
+                "delete": "no"
+            },
+        },
+        {
+            "endpoint_name": "endpoint2",
+            "logged_in":"no",
+            "endpoint_url": "endpoint2",
+            "endpoint_comment": "Comment for the endpoint 2",
+            "methods":{
+                "get_m": "no",
+                "put": "yes",
+                "post": "no",
+                "delete": "yes"
+            },
+        },
+        {
+            "endpoint_name": "endpoint3",
+            "logged_in":"yes",
+            "endpoint_url": "endpoint3",
+            "endpoint_comment": "Comment for the endpoint 3",
+            "methods":{
+                "get_m": "no",
+                "put": "no",
+                "post": "yes",
+                "delete": "no"
+            },
+        },
+    ],
     "sub_apps":{
         "apps":[
             {
@@ -429,7 +458,7 @@ django_test_service = {
                     "model":{
                         "model_name":"app1",
                         "model_fields":[
-                            {"name":"fiedl1","type":"Binary","null":"True","blank":"True","default":"1"},
+                            {"name":"fiedl1","type":"Integer","null":"True","blank":"True","default":"1"},
                             {"name":"field2","type":"Boolean","null":"False","blank":"True","default":"11-12-2001"},
                             {"name":"field3","type":"URL","null":"False","blank":"False","default":"usuario"}
                         ]
@@ -449,7 +478,7 @@ django_test_service = {
                     "model":{
                         "model_name":"app2",
                         "model_fields":[
-                            {"name":"fiedl1","type":"Binary","null":"True","blank":"True","default":"1"},
+                            {"name":"fiedl1","type":"Integer","null":"True","blank":"True","default":"1"},
                             {"name":"field2","type":"Boolean","null":"False","blank":"True","default":"11-12-2001"},
                             {"name":"field3","type":"URL","null":"False","blank":"False","default":"usuario"}
                         ]
@@ -469,7 +498,7 @@ django_test_service = {
                     "model":{
                         "model_name":"app3",
                         "model_fields":[
-                            {"name":"fiedl1","type":"Binary","null":"True","blank":"True","default":"1"},
+                            {"name":"fiedl1","type":"Integer","null":"True","blank":"True","default":"1"},
                             {"name":"field2","type":"Boolean","null":"False","blank":"True","default":"11-12-2001"},
                             {"name":"field3","type":"URL","null":"False","blank":"False","default":"usuario"}
                         ]

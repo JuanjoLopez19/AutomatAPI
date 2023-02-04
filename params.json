@@ -89,7 +89,6 @@
 					"admin_url_name":"",
 					"web_browser":"yes",
 					"web_browser_url":"",
-					"use_routers":"",
 					"db":{
 						"db_host": "localhost",
 						"db_type": "",
@@ -126,6 +125,16 @@
 				"template_path": "./Templates/endpoints/express"
 			},
 			"django": {
+				"endpoint_name": "endpoint",
+				"logged_in":"",
+				"endpoint_url": "/endpoint",
+				"endpoint_comment": "",
+				"methods":{
+					"get_m": "yes",
+					"put": "no",
+					"post": "no",
+					"delete": "no"
+				},
 				"template_path": "./Templates/endpoints/django"
 			}
 		},
@@ -146,7 +155,7 @@
 				},
 				"endpoint_name": "",
 				"methods":{
-					"get": "yes",
+					"get_m": "yes",
 					"put": "no",
 					"post": "no",
 					"delete": "no"

@@ -19,9 +19,11 @@ from django.contrib import admin
 from django.urls import path, include
 {% for app in cookiecutter.sub_apps.apps %}
 {%- for key, value in app.items() %}
-from subapps.{{key}} import urls as {{key}}_urls
-{{value['middleware']}}
+from subApps.{{key}} import urls as {{key}}_urls
 {%- endfor %}
+{%- endfor %}
+{%- for value in cookiecutter.endpoints.list %}
+from .views import {{value['endpoint_name'] | capitalize}}
 {%- endfor %}
 
 urlpatterns = [
@@ -33,7 +35,10 @@ urlpatterns = [
     {%- endif %}
     {%- for app in cookiecutter.sub_apps.apps %}
     {%- for key, value in app.items() %}
-    path('{{value['middleware']}}/', include('{{key}}_urls'), name='{{key}}'),
+    path('{{value['middleware']}}/', include({{key}}_urls), name='{{key}}'),
     {%- endfor %}
+    {%- endfor %}
+    {%- for value in cookiecutter.endpoints.list %}
+    path('{{value['endpoint_url']}}/', {{value['endpoint_name'] | capitalize}}.as_view(), name='{{value['endpoint_name']}}'),
     {%- endfor %}
 ]

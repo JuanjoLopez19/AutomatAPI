@@ -37,7 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Añadir las apps que creamos
+    {%- for app in cookiecutter.sub_apps.apps %}
+    {%- for key, value in app.items() %}
+    'subApps.{{key}}',
+    {%- endfor %}
+    {%- endfor %}
     'rest_framework'
     
 ]
@@ -77,14 +81,21 @@ WSGI_APPLICATION = '{{cookiecutter.app_name}}.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+    {%- if cookiecutter.db %}
     'default': {
-        'ENGINE': '{{cookiecutter.db.db_type}}',
+        'ENGINE': 'django.db.backends.{{cookiecutter.db.db_type}}',
         'NAME': '{{cookiecutter.db.db_name}}',
         'USER': '{{cookiecutter.db.db_user}}',
         'PASSWORD': '{{cookiecutter.db.db_pwd}}',
         'HOST': '{{cookiecutter.db.db_host}}',
         'PORT': '{{cookiecutter.db.db_port}}',
     }
+    {%- else %}
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': '{{cookiecutter.app_name}}_database.sqlite3',
+    }
+    {%- endif %}
 }
 
 
