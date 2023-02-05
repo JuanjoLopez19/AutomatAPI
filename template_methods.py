@@ -7,7 +7,9 @@ from file_management import *
 def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -> str:
 
     """
-        @param: template_args: Dictionary with the arguments to create the template 
+        @param: template_args -> Dictionary with the arguments to create the template 
+        @param: tech -> The tecnology of the template
+        @param: type -> The type of the template
 
         @return: The path to the zip file that contains the filled template
 
@@ -26,25 +28,14 @@ def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -
     output_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['output_path']
 
     # Set the values to the dictionary that will be used to create the template
-    if template_args['tecnology'] == 'flask': # Flask template branch
-        args = DEFAULT_CONFIG['cookiecutter']['tecnology_args'][template_args.get('tecnology')][template_args.get('type')]
-        args['app_folder_name'] = template_args['app_name'] + '_' + str(uuid.uuid4())
-        for key, value in template_args.items():
-            if key == 'secrets':
-                args[key] = secrets.token_hex(16)
-            else:
-                args[key] = value
-    elif template_args['tecnology'] == 'django': # Django template branch
-        args = DEFAULT_CONFIG['cookiecutter']['tecnology_args'][template_args.get('tecnology')][template_args.get('type')]
-        args['app_folder_name'] = template_args['app_name'] + '_' + str(uuid.uuid4())
-        for key, value in template_args.items():
+    args = DEFAULT_CONFIG['cookiecutter']['tecnology_args'][template_args.get('tecnology')][template_args.get('type')]
+    args['app_folder_name'] = "{}_{}".format(template_args.get('app_name'), str(uuid.uuid4()))
+    for key, value in template_args.items():
+        if template_args['type'] == "flask" and key == 'secrets':
+            args[key] = secrets.token_hex(16)
+        else:
             args[key] = value
-    elif template_args['tecnology'] == 'express': # Express template branch
-        args = DEFAULT_CONFIG['cookiecutter']['tecnology_args'][template_args.get('tecnology')][template_args.get('type')]
-        args['app_folder_name'] = template_args['app_name'] + '_' + str(uuid.uuid4())
-        for key, value in template_args.items():
-            args[key] = value
-
+         
     # Get the endpoints from the template_args dict and delete it from the dict to avoid errors
     endpoints = template_args['endpoints']
     if template_args['tecnology'] == 'django':
@@ -74,24 +65,24 @@ def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -
     # Adding additional files to the template
     if template_args.get('tecnology') == 'flask': # Flask template branch
         if template_args.get('type') == 'app_web' and template_args.get('use_bp') == 'yes': # Flask web app branch and use blueprints
-            for bp in template_args.get('bp_list').get('list'):
-                create_blueprint(bp, template_path+'/blueprints', template_args.get('tecnology'), template_args.get('type')) # Create the blueprints and added to the folder
+            for bp in template_args.get('bp_list').get('list'): 
+                create_blueprint(bp,"{}/blueprints".format(template_path), template_args.get('tecnology'), template_args.get('type')) # Create the blueprints and added to the folder 
         for endpoint in endpoints: 
-            endpoint_creator(endpoint, template_path+'/'+args['app_name']+'.py', template_args.get('tecnology'), 'services') # Create the endpoints and added to the file
+            endpoint_creator(endpoint, "{}/{}.py".format(template_path, args.get('app_name')), template_args.get('tecnology'), 'services') # Create the endpoints and added to the file
 
         if template_args.get('handle_404'): # If the user wants to handle the 404 error
-            add_404(template_path+'/'+args.get('app_name')+'.py') # Add the 404 handler to the file
+            add_404("{}/{}.py".format(template_path, args.get('app_name'))) # Add the 404 handler to the file
 
-        add_app_run(args,template_path+'/'+args.get('app_name')+'.py', DEFAULT_CONFIG['cookiecutter']['aux_stuff']['flask_app_run_path']) # Add the app.run() to the file
+        add_app_run(args, "{}/{}.py".format(template_path, args.get('app_name')), DEFAULT_CONFIG['cookiecutter']['aux_stuff']['flask_app_run_path']) # Add the app.run() to the file
 
     elif template_args.get('tecnology') == 'django': # Django template branch
         if template_args.get('sub_apps').get('apps'): # If the user wants to create sub apps
             for app in template_args.get('sub_apps').get('apps'):
                 for key, value in app.items():
                     value.update({'subapp_name':key})
-                    create_sub_app(value, template_path, DEFAULT_CONFIG['cookiecutter']['aux_stuff']['sub_app']['template_path']) # Create the sub apps and added to the folder
+                    create_sub_app(value, template_path) # Create the sub apps and added to the folder
         for endpoint in endpoints:
-            endpoint_creator(endpoint, template_path+'/'+args.get('app_name')+'/views.py', template_args.get('tecnology'), 'services')
+            endpoint_creator(endpoint, "{}/{}/views.py".format(template_path, args.get('app_name')), template_args.get('tecnology'), 'services')
 
     elif template_args.get('tecnology') == 'express': # Express template branch
         if template_args.get('use_controllers') == 'yes': # If the user wants to create controllers
@@ -99,62 +90,57 @@ def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -
                 create_controllers(controller, template_path, template_args.get('tecnology'), template_args.get('type'), template_args.get('strict')) # Create the controllers and added to the folder
         for endpoint in endpoints:
             endpoint['handler_type']="app"
-            endpoint_creator(endpoint, template_path+'/'+args.get('app_name')+'.js', template_args.get('tecnology'), 'services') # Create the endpoints and added to the file
+            endpoint_creator(endpoint, "{}/{}.js".format(template_path, args.get('app_name')), template_args.get('tecnology'), 'services') # Create the endpoints and added to the file
 
         if template_args.get('type') == "services": # If the app is a services app
-            add_app_listen(args, template_path+'/'+args.get('app_name')+'.js', DEFAULT_CONFIG['cookiecutter']['aux_stuff']['app_listen'], output_path ) # Add the app.listen() to the file
+            add_app_listen(args, "{}/{}.js".format(template_path, args.get('app_name'))) # Add the app.listen() to the file
         else:
-            with open(template_path+'/'+args.get('app_name')+'.js', 'a+') as f: # If the app is a web app
-                with open(DEFAULT_CONFIG.get('cookiecutter').get('aux_stuff').get('app_ending')+"/app_ending.js", 'r') as f2: # Add the app ending to the file
+            with open("{}/{}.js".format(template_path, args.get('app_name')), 'a+') as f: # If the app is a web app
+                with open("{}/app_ending.js".format(DEFAULT_CONFIG.get('cookiecutter').get('aux_stuff').get('app_ending')), 'r') as f2: # Add the app ending to the file
                     f.write(f2.read())
-
+    
     # Compress the template and delete the temp files
     #path = compress_api(template_path, args['app_name'], args['app_name'])
     #return path
     
     
 
-def endpoint_creator(template_args: dict = None, template_path:str = None, endpoint_type:str = None, endpoint_use:str = None) -> str:
+def endpoint_creator(endpoint_args: dict = None, main_template_path:str = None, endpoint_type:str = None, endpoint_use:str = None) -> str:
 
     """
-        @param: template_args: Dictionary with the arguments to create the template
-        @param: template_path: Path to the template to use
-        @param: endpoint_type: Type of endpoint to create
+        @param: endpoint_args -> Dictionary with the arguments to create the endpoint
+        @param: main_template_path -> Path to the main template to add the endpoint
+        @param: endpoint_type -> Type of endpoint to create
+        @param: endpoint_use -> Use of the endpoint (services or web)
 
-        @return: For the moment nothing is returned
+        @return: None
     """
 
-    DEFAULT_CONFIG = get_default_config()
+    DEFAULT_CONFIG = get_default_config() # Get the default config
 
-    config =  DEFAULT_CONFIG['cookiecutter']['endpoints_args'][endpoint_type]
+    config =  DEFAULT_CONFIG['cookiecutter']['endpoints_args'][endpoint_type] # Get the config for the endpoint type
+    # Get the path to the template and the output path
     output_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['output_path']
     temp_path = config['template_path']
 
-    if endpoint_type == 'flask':
-        config['file_folder_name'] = template_args['endpoint_name'] + '_' + str(uuid.uuid4())
-        config['file_name'] = template_args['endpoint_name']
-        config['endpoint_use'] = endpoint_use 
-        for key, value in template_args.items():
-            config[key] = value
-    elif endpoint_type == 'django':
-        config['file_folder_name'] = template_args['endpoint_name'] + '_' + str(uuid.uuid4())
-        config['file_name'] = template_args['endpoint_name']
-        for key, value in template_args.items():
-            config[key] = value
-    elif endpoint_type == 'express':
-        config['file_folder_name'] = template_args['endpoint_name'] + '_' + str(uuid.uuid4())
-        config['file_name'] = template_args['endpoint_name']
-        config['endpoint_use'] = endpoint_use 
-        for key, value in template_args.items():
-            if key == 'handler_type' and value == '':
+    # Set the arguments for the template
+    config['file_folder_name'] = endpoint_args['endpoint_name'] + '_' + str(uuid.uuid4())
+    config['file_name'] = endpoint_args['endpoint_name']
+    if endpoint_type == 'flask' or endpoint_type == 'express':
+        config['endpoint_use'] = endpoint_use
+
+    for key, value in endpoint_args.items():
+        if endpoint_type == 'express' and key == 'handler_type' and value == '':
                 config[key] = 'app'
-            else:
-                config[key] = value
-                
+        else:
+            config[key] = value
+
+    # Create the cookiecutter.json file     
     cookiecutteJsonFile = os.path.join(temp_path, 'cookiecutter.json')
     with open(cookiecutteJsonFile, 'w') as f:
         json.dump(config, f)
   
+    # Create the template
     try:
         aux_path = cookiecutter(temp_path, no_input=True, extra_context=config, output_dir=output_path)
     except exceptions.OutputDirExistsException as e:
@@ -162,99 +148,123 @@ def endpoint_creator(template_args: dict = None, template_path:str = None, endpo
         config['file_folder_name'] = config['file_folder_name'] + str(uuid.uuid4())
         aux_path = cookiecutter(temp_path, no_input=True, extra_context=config, output_dir=output_path)
 
+    # Add the endpoint to the main template
     try:
-        if(endpoint_type == 'flask'):
-            with open(template_path, 'a+') as f:
-                with open(aux_path+"/"+config['file_name']+'.py', 'r') as f2:
+        if(endpoint_type == 'flask'): # If the endpoint is for flask
+            with open(main_template_path, 'a+') as f:
+                with open('{}/{}.py'.format(aux_path, config['file_name']), 'r') as f2: 
                     f.write(f2.read())
-        elif endpoint_type == 'express':
-            with open(template_path, 'a+') as f:
-                with open(aux_path+"/"+config['file_name']+'.js', 'r') as f2:
+        elif endpoint_type == 'express': # If the endpoint is for express
+            with open(main_template_path, 'a+') as f:
+                with open('{}/{}.js'.format(aux_path, config['file_name']), 'r') as f2:
                     f.write(f2.read())
-        elif endpoint_type == 'django':
-            with open(template_path, 'a+') as f:
-                with open(aux_path+"/"+config['file_name']+'.py', 'r') as f2:
+        elif endpoint_type == 'django': # If the endpoint is for django
+            with open(main_template_path, 'a+') as f:
+                with open('{}/{}.py'.format(aux_path, config['file_name']), 'r') as f2:
                     f.write(f2.read())
 
-        remove_temp_files(aux_path)
+        remove_temp_files(aux_path) # Remove the temp files
+
     except FileNotFoundError as e:
         print(e)
 
 
 
-def add_app_run(args: dict = None, template_path: str = None, aux_path: str = None) -> None:
+def add_app_run(app_run_args: dict = None, main_template_path: str = None, template_path: str = None) -> None:
 
     """
-        @param: args: Dictionary with the arguments to create the template
-        @param: template_path: Path to the template to use
-    """
-    DEFAULT_CONFIG = get_default_config()
+        @param: app_run_args -> Dictionary with the arguments to create the template
+        @param: main_template_path -> Path to the main template to add the app_run
+        @param: template_path -> Path to the template to create the app_run
 
+        @return: None
+    """
+
+    DEFAULT_CONFIG = get_default_config() # Get the default config
+
+    # Get the path to the template and the output path
     output_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['output_path']
-    args['run_folder_name'] = args['app_name']+ str(uuid.uuid4())
-    cookiecutteJsonFile = os.path.join(aux_path, 'cookiecutter.json')
-    with open(cookiecutteJsonFile, 'w') as f:
-        json.dump(args, f)
+    app_run_args['run_folder_name'] = app_run_args['app_name']+ str(uuid.uuid4())
 
+    # Create the cookiecutter.json file
+    cookiecutteJsonFile = os.path.join(template_path, 'cookiecutter.json')
+    with open(cookiecutteJsonFile, 'w') as f:
+        json.dump(app_run_args, f)
+
+    # Create the template
     try:
-        run_path = cookiecutter(aux_path, no_input=True, extra_context=args, output_dir=output_path)
+        run_path = cookiecutter(template_path, no_input=True, extra_context=app_run_args, output_dir=output_path)
     except exceptions.OutputDirExistsException as e:
         # In fact this exception is never raised because of the uuid but I will leave it here just in case
-        args['run_folder_name'] = args['run_folder_name'] + str(uuid.uuid4())
-        run_path = cookiecutter(aux_path, no_input=True, extra_context=args, output_dir=output_path)
+        app_run_args['run_folder_name'] = app_run_args['run_folder_name'] + str(uuid.uuid4())
+        run_path = cookiecutter(template_path, no_input=True, extra_context=app_run_args, output_dir=output_path)
     
+    # Add the app_run to the main template
     try:
-        with open(template_path, 'a+') as f:
-            with open(run_path+"/"+args['app_name']+'.py', 'r') as f2:
+        with open(main_template_path, 'a+') as f:
+            with open("{}/{}.py".format(run_path, app_run_args['app_name']), 'r') as f2: 
                 f.write(f2.read())
 
-        remove_temp_files(run_path)
+        remove_temp_files(run_path) # Remove the temp files
+
     except FileNotFoundError as e:
         print(e)
 
 
 
-def create_blueprint(args: dict = None, template_path: str = None, endpoint_type:str = None, endpoint_use:str = None) -> None:
+def create_blueprint(args: dict = None, main_template_path: str = None, endpoint_type:str = None, endpoint_use:str = None) -> None:
 
     """
-        @param: args: Dictionary with the arguments to create the bluepritn template
-        @param: template_path: Path to the base folder
+        @param: args -> Dictionary with the arguments to create the blueprint template
+        @param: main_template_path -> Path to the main template to add the blueprint
         @param: endpoint_type: Type of endpoint to create
         @param: endpoint_use: Use of the endpoint to create
 
-        @return: For the moment nothing is returned
+        @return: None
     """
 
-    DEFAULT_CONFIG = get_default_config()
+    DEFAULT_CONFIG = get_default_config() # Get the default config
 
+    # Get the path to the template
     blueprint_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['blueprints']
+
+    # Create the auxiliar dictionary for the blueprint
     aux_dict = {"bp_folder_name":list(args.keys())[0]+"_"+str(uuid.uuid4()),"bp_name":list(args.keys())[0]}
+
+    # Create the cookiecutter.json file
     blueprint_Json = os.path.join(blueprint_path, 'cookiecutter.json')
     with open(blueprint_Json, 'w') as f:
         json.dump(aux_dict, f)
 
+    # Create the blueprint
     try:
-        template = cookiecutter(blueprint_path, no_input=True, extra_context=aux_dict, output_dir=template_path)
+        template = cookiecutter(blueprint_path, no_input=True, extra_context=aux_dict, output_dir=main_template_path)
     except exceptions.OutputDirExistsException as e:
         # In fact this exception is never raised because of the uuid but I will leave it here just in case
         aux_dict['bp_folder_name'] = aux_dict['bp_folder_name'] + str(uuid.uuid4())
-        template = cookiecutter(blueprint_path, no_input=True, extra_context=aux_dict, output_dir=template_path)
+        template = cookiecutter(blueprint_path, no_input=True, extra_context=aux_dict, output_dir=main_template_path)
 
+    # Add the endpoints to the blueprint
     bp_endpoints = list(args.values())
     for endpoints in bp_endpoints:
         for endpoint in endpoints:
             endpoint['bp_name'] = aux_dict['bp_name']
-            endpoint_creator(endpoint, template+'/'+aux_dict['bp_name']+'.py', endpoint_type, endpoint_use)
+            endpoint_creator(endpoint, "{}/{}.py".format(template, aux_dict['bp_name']), endpoint_type, endpoint_use) # Create the endpoint
 
-    shutil.move(template+'/'+aux_dict['bp_name']+'.py', template_path)
-    remove_temp_files(template)
+    shutil.move("{}/{}.py".format(template, aux_dict['bp_name']), main_template_path) # Move the blueprint to the main template folder
+
+    remove_temp_files(template) # Remove the temp files
+
+
         
-def add_404(path:str = None) -> None:
+def add_404(main_template_path:str = None) -> None:
     """
-        @param: path: Path to the base template
+        @param: main_template_path -> Path to the base template
+
+        @return: None
     """
 
-    with open (path, 'a+') as f:
+    with open (main_template_path, 'a+') as f:
         f.write('''
 @app.errorhandler(404)
 def page_not_found(e):  
@@ -264,62 +274,76 @@ def page_not_found(e):
     
 
 
-
-def create_controllers(args: dict = None, template_path: str = None, endpoint_type:str = None, endpoint_use:str = None, strict_mode:str = None) -> None:
+def create_controllers(controller_args: dict = None, main_template_path: str = None, endpoint_type:str = None, endpoint_use:str = None, strict_mode:str = None) -> None:
 
     """
         @param: args: Dictionary with the arguments to create the controller template
         @param: template_path: Path to the base folder
         @param: endpoint_type: Type of endpoint to create
         @param: endpoint_use: Use of the endpoint to create
+        @param: strict_mode: Strict mode for the controller
 
+        @return: None
     """
 
-    DEFAULT_CONFIG = get_default_config()
+    DEFAULT_CONFIG = get_default_config() # Get the default config
+    controller_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['controllers'] # Get the path to the template
 
-    controller_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['controllers']
+    # Create the auxiliar dictionary for the controller
+    aux_dict = {"controller_folder_name":"{}_{}".format(list(controller_args.keys())[0], str(uuid.uuid4())), "controller_name":list(controller_args.keys())[0], 'strict':strict_mode}
 
-    aux_dict = {"controller_folder_name":list(args.keys())[0]+ "_" + str(uuid.uuid4()), "controller_name":list(args.keys())[0], 'strict':strict_mode}
+    # Create the cookiecutter.json file
     controller_Json = os.path.join(controller_path, 'cookiecutter.json')
     with open(controller_Json, 'w') as f:
         json.dump(aux_dict, f)
 
+    # Create the controller template 
     try:
-        template = cookiecutter(controller_path, no_input=True, extra_context=aux_dict, output_dir=template_path+'/controllers')
+        template = cookiecutter(controller_path, no_input=True, extra_context=aux_dict, output_dir=main_template_path+'/controllers')
     except exceptions.OutputDirExistsException as e:
         # In fact this exception is never raised because of the uuid but I will leave it here just in case
         aux_dict['controller_folder_name'] = aux_dict['controller_folder_name'] + str(uuid.uuid4())
-        template = cookiecutter(controller_path, no_input=True, extra_context=aux_dict, output_dir=template_path +'/controllers')
+        template = cookiecutter(controller_path, no_input=True, extra_context=aux_dict, output_dir=main_template_path +'/controllers')
 
-    controller_endpoints = list(args.values())   
+    controller_endpoints = list(controller_args.values()) # Get the endpoints for the controller
     for endpoints in controller_endpoints:
         for endpoint in endpoints:
             endpoint['endpoint_name'] = aux_dict['controller_name']
             endpoint['handler_type'] = aux_dict.get('controller_name')
-            endpoint_creator(endpoint, template+'/'+aux_dict['controller_name']+'.js', endpoint_type, endpoint_use)
+            endpoint_creator(endpoint, "{}/{}.js".format(template, aux_dict['controller_name']), endpoint_type, endpoint_use)  # Create the endpoint
 
     with open(template+'/'+aux_dict.get('controller_name')+'.js', 'a+') as f:
         f.write('\n')
         f.write('''module.exports = {}'''.format(aux_dict.get('controller_name')))
 
-    shutil.move(template+'/'+aux_dict['controller_name']+'.js', template_path +'/controllers')
-    remove_temp_files(template)
+    shutil.move("{}/{}.js".format(template, aux_dict['controller_name']), "{}/controllers".format(main_template_path)) # Move the controller to the main template folder
+    
+    remove_temp_files(template) # Remove the temp files
 
 
 
-def add_app_listen(args: dict = None, template_path: str = None, aux_path:str = None, output_path:str = None) -> None:
+def add_app_listen(args: dict = None, main_template_path: str = None) -> None:
     
     """
-        @param: args: Dictionary with the arguments to create the controller template
-        @param: template_path: Path to the base folder
+        @param: args: Dictionary with the arguments to create the app_listen template
+        @param: main_template_path: Path to the main template to add the app_listen
     """
-   
-    args["listen_folder_name"] = args.get("app_name") + "_" + str(uuid.uuid4())
+
+    DEFAULT_CONFIG = get_default_config() # Get the default config
+
+    # Get the output path and the path to the template
+    output_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['output_path'] 
+    aux_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['app_listen']
+
+    args["listen_folder_name"] = "{}_{}".format(args.get("app_name"), str(uuid.uuid4())) 
     args["listen_name"] = args.get("app_name")
+
+    # Create the cookiecutter.json file
     listen_Json = os.path.join(aux_path, 'cookiecutter.json')
     with open(listen_Json, 'w') as f:
         json.dump(args, f)
 
+    # Create the controller template
     try:
         template = cookiecutter(aux_path, no_input=True, extra_context=args, output_dir=output_path)
     except exceptions.OutputDirExistsException as e:
@@ -327,34 +351,44 @@ def add_app_listen(args: dict = None, template_path: str = None, aux_path:str = 
         args['listen_folder_name'] = args['listen_folder_name'] + str(uuid.uuid4())
         template = cookiecutter(aux_path, no_input=True, extra_context=args, output_dir=output_path)
 
-    with open(template_path, 'a+') as f:
-        with open(template+"/"+args.get("listen_name")+".js", 'r') as f2:
+    with open(main_template_path, 'a+') as f:
+        with open("{}/{}.js".format(template, args.get("listen_name")), 'r') as f2:  # Add the app_listen to the main template
             f.write(f2.read())
 
-    remove_temp_files(template) 
+    remove_temp_files(template)  # Remove the temp files
 
 
 
-def create_sub_app(args: dict = None, template_path: str = None, aux_path:str= None) -> None:
+def create_sub_app(subapp_args: dict = None, main_template_path: str = None) -> None:
     """
-        @param: args: Dictionary with the arguments to create the sub app template
-        @param: template_path: Path to the base folder
-        @param: aux_path: Path to the aux folder of the sub app template
+        @param: subapp_args: Dictionary with the arguments to create the sub app template
+        @param: main_template_path: Path to the base folder to add the sub app
+        
+        @return: None
     """
+    DEFAULT_CONFIG = get_default_config() # Get the default config
 
-    args["subapp_folder_name"] = args.get("subapp_name") # Here isn't needed the uuid bc the unique name will be controlled in the front
+    # Get the path to the template
+    aux_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['sub_app']['template_path']
+    subapp_args["subapp_folder_name"] = subapp_args.get("subapp_name") 
+    
+    # Create the cookiecutter.json file
     subapp_json = os.path.join(aux_path, 'cookiecutter.json')
     with open(subapp_json, 'w') as f:
-        json.dump(args, f)
+        json.dump(subapp_args, f)
 
+    # Create the subapp template
     try:
-        template = cookiecutter(aux_path, no_input=True, extra_context=args, output_dir=template_path+'/subapps')
+        cookiecutter(aux_path, no_input=True, extra_context=subapp_args, output_dir=main_template_path+'/subapps')
     except exceptions.OutputDirExistsException as e:
         # In fact this exception is never raised because of the uuid but I will leave it here just in case
-        args['subapp_folder_name'] = args['subapp_folder_name'] + str(uuid.uuid4())
-        template = cookiecutter(aux_path, no_input=True, extra_context=args, output_dir=template_path+'/subapps')
+        subapp_args['subapp_folder_name'] = subapp_args['subapp_folder_name'] + str(uuid.uuid4())
+        cookiecutter(aux_path, no_input=True, extra_context=subapp_args, output_dir=main_template_path+'/subapps')
 
 
 if __name__ == '__main__':
-    # pprint(express_service_test)
+    temp_creator(flask_test_service, "flask", "services")
+    temp_creator(flask_test_app, "flask", "app_web")
+    temp_creator(express_test_service, "express", "services")
+    temp_creator(express_test_app, "express", "app_web")
     temp_creator(django_test_service, "django", "services")

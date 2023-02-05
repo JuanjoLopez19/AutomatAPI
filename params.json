@@ -7,6 +7,14 @@
 					"port": "5000",
 					"cors":"yes",
 					"connect_DB": "",
+					"db":{
+						"db_host": "localhost",
+						"db_type": "",
+						"db_port": "",
+						"db_name": "",
+						"db_user": "",
+						"db_pwd": ""
+					},
 					"table_name": "",
 					"config_file": "",
 					"type_config_file": "",
@@ -19,6 +27,14 @@
 					"app_name": "",
 					"port": "",
 					"connect_DB": "",
+					"db":{
+						"db_host": "localhost",
+						"db_type": "",
+						"db_port": "",
+						"db_name": "",
+						"db_user": "",
+						"db_pwd": ""
+					},
 					"cors":"yes",
 					"table_name": "",
 					"config_file": "",

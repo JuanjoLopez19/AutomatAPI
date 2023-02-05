@@ -2,6 +2,7 @@ flask_test_service = {
     "app_name": "flask_service",
     "port": "5000",
     "connect_DB": "yes",
+    "db":"",
     "cors": "yes",
     "table_name": "aux",
     "config_file": "yes",
@@ -50,6 +51,14 @@ flask_test_app = {
     "port": "5000",
     "cors": "yes",
     "connect_DB": "yes",
+    "db":{
+        "db_host": "localhost",
+        "db_type": "postgresql",
+        "db_port": "123",
+        "db_name": "prueba",
+        "db_user": "pruebaUser",
+        "db_pwd": "123qwe"
+    },
     "table_name": "aux",
     "config_file": "yes",
     "type_config_file": "dev",
