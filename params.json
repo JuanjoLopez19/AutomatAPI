@@ -110,10 +110,12 @@
 				"endpoint_url": "/endpoint",
 				"bp_name": "",
 				"endpoint_comment": "",
-				"get": "yes",
-				"put": "no",
-				"post": "no",
-				"delete": "no",
+				"methods":{
+					"get_m": "yes",
+					"put": "no",
+					"post": "no",
+					"delete": "no"
+				},		
 				"template_path": "./Templates/endpoints/flask"
 			},
 			"express": {

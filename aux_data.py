@@ -13,28 +13,34 @@ flask_test_service = {
             "endpoint_name": "prueba1",
             "endpoint_url": "/prueba1",
             "endpoint_comment": "",
-            "get": "yes",
-            "put": "yes",
-            "post": "no",
-            "delete": "no"
+            "methods": {
+                "get_m": "yes",
+                "put": "yes",
+                "post": "no",
+                "delete": "no"
+            }
         },
         {
             "endpoint_name": "prueba2",
             "endpoint_url": "/prueba2",
             "endpoint_comment": "This is a test endpoint",
-            "get": "yes",
-            "put": "yes",
-            "post": "no",
-            "delete": "yes"
+            "methods": {
+                "get_m": "yes",
+                "put": "yes",
+                "post": "no",
+                "delete": "yes"
+            }
         },
         {
             "endpoint_name": "prueba3",
             "endpoint_url": "/prueba3",
-            "endpoint_comment": "This is a test endpoint",
-            "get": "no",
-            "put": "yes",
-            "post": "no",
-            "delete": "yes"
+            "endpoint_comment": "This is a test endpoint",  
+            "methods": {
+                "get_m": "no",
+                "put": "yes",
+                "post": "no",
+                "delete": "yes"
+            }
         }
     ]
 }
@@ -59,28 +65,34 @@ flask_test_app = {
                         "endpoint_name": "prueba1",
                         "endpoint_url": "/prueba1",
                         "endpoint_comment": "",
-                        "get": "yes",
-                        "put": "yes",
-                        "post": "no",
-                        "delete": "no",
+                        "methods": {
+                            "get_m": "yes",
+                            "put": "yes",
+                            "post": "no",
+                            "delete": "no",
+                        } 
                     },
                     {
                         "endpoint_name": "prueba2",
                         "endpoint_url": "/prueba2",
                         "endpoint_comment": "This is a test endpoint",
-                        "get": "yes",
-                        "put": "yes",
-                        "post": "no",
-                        "delete": "yes",
+                        "methods": {
+                            "get_m": "yes",
+                            "put": "yes",
+                            "post": "no",
+                            "delete": "yes"
+                        }
                     },
                     {
                         "endpoint_name": "prueba3",
                         "endpoint_url": "/prueba3",
                         "endpoint_comment": "This is a test endpoint",
-                        "get": "no",
-                        "put": "yes",
-                        "post": "no",
-                        "delete": "yes",
+                        "methods": {
+                             "get_m": "no",
+                            "put": "yes",
+                            "post": "no",
+                            "delete": "yes"
+                        }
                     }
                 ],
             },
@@ -90,28 +102,34 @@ flask_test_app = {
                         "endpoint_name": "prueba1",
                         "endpoint_url": "/prueba1",
                         "endpoint_comment": "",
-                        "get": "yes",
-                        "put": "yes",
-                        "post": "no",
-                        "delete": "no",
+                        "methods": {
+                            "get_m": "yes",
+                            "put": "yes",
+                            "post": "no",
+                            "delete": "no"
+                        }
                     },
                     {
                         "endpoint_name": "prueba2",
                         "endpoint_url": "/prueba2",
                         "endpoint_comment": "This is a test endpoint",
-                        "get": "yes",
-                        "put": "yes",
-                        "post": "no",
-                        "delete": "yes",
+                        "methods": {
+                            "get_m": "yes",
+                            "put": "yes",
+                            "post": "no",
+                            "delete": "yes"
+                        }
                     },
                     {
                         "endpoint_name": "prueba3",
                         "endpoint_url": "/prueba3",
                         "endpoint_comment": "This is a test endpoint",
-                        "get": "no",
-                        "put": "yes",
-                        "post": "no",
-                        "delete": "yes",
+                        "methods": {
+                            "get_m": "no",
+                            "put": "yes",
+                            "post": "no",
+                            "delete": "yes"
+                        }
                     },
                 ]
             },
@@ -121,28 +139,34 @@ flask_test_app = {
                         "endpoint_name": "prueba1",
                         "endpoint_url": "/prueba1",
                         "endpoint_comment": "",
-                        "get": "yes",
-                        "put": "yes",
-                        "post": "no",
-                        "delete": "no",
+                        "methods": {
+                            "get_m": "yes",
+                            "put": "yes",
+                            "post": "no",
+                            "delete": "no"
+                        }  
                     },
                     {
                         "endpoint_name": "prueba2",
                         "endpoint_url": "/prueba2",
                         "endpoint_comment": "This is a test endpoint",
-                        "get": "yes",
-                        "put": "yes",
-                        "post": "no",
-                        "delete": "yes",
+                        "methods": {
+                            "get_m": "yes",
+                            "put": "yes",
+                            "post": "no",
+                            "delete": "yes"
+                        }
                     },
                     {
                         "endpoint_name": "prueba3",
                         "endpoint_url": "/prueba3",
                         "endpoint_comment": "This is a test endpoint",
-                        "get": "no",
-                        "put": "yes",
-                        "post": "no",
-                        "delete": "yes",
+                        "methods": {
+                           "get_m": "no",
+                            "put": "yes",
+                            "post": "no",
+                            "delete": "yes"
+                        }
                     },
                 ]
             }
@@ -153,28 +177,34 @@ flask_test_app = {
             "endpoint_name": "prueba1",
             "endpoint_url": "/prueba1",
             "endpoint_comment": "",
-            "get": "yes",
-            "put": "yes",
-            "post": "no",
-            "delete": "no",
+            "methods": {
+                "get_m": "yes",
+                "put": "yes",
+                "post": "no",
+                "delete": "no",
+            } 
         },
         {
             "endpoint_name": "prueba2",
             "endpoint_url": "/prueba2",
             "endpoint_comment": "This is a test endpoint",
-            "get": "yes",
-            "put": "yes",
-            "post": "no",
-            "delete": "yes",
+            "methods": {
+                "get_m": "yes",
+                "put": "yes",
+                "post": "no",
+                "delete": "yes",      
+            } 
         },
         {
             "endpoint_name": "prueba3",
             "endpoint_url": "/prueba3",
             "endpoint_comment": "This is a test endpoint",
-            "get": "no",
-            "put": "yes",
-            "post": "no",
-            "delete": "yes",
+            "methods": {
+                "get_m": "no",
+                "put": "yes",
+                "post": "no",
+                "delete": "yes"
+            }
         },
     ],
 }

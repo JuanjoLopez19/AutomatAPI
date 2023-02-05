@@ -7,8 +7,8 @@ from flask_migrate import Migrate, migrate
 from flask_cors import CORS
 {%- endif %}
 {%- if cookiecutter.use_bp == "yes" %}
-{%- for i in cookiecutter.bp_list.list %}
-{%- for key, value in i.items() %}
+{%- for bp in cookiecutter.bp_list.list %}
+{%- for key, value in bp.items() %}
 from blueprints.{{key}} import {{key}}
 {%- endfor %}
 {%- endfor %}

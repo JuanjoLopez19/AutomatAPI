@@ -1,5 +1,5 @@
 {%- if cookiecutter.endpoint_use == 'services' %}
-@app.route('{{cookiecutter.endpoint_url}}', methods=[{%- if cookiecutter.get == "yes" -%}'GET',{% endif %}{%- if cookiecutter.post == "yes" -%}'POST',{% endif %}{%- if cookiecutter.put == "yes" -%}'PUT',{% endif %}{%- if cookiecutter.delete == "yes" -%}'DELETE'{% endif %}])
+@app.route('{{cookiecutter.endpoint_url}}', methods=[{%- if cookiecutter.methods.get_m == "yes" -%}'GET',{% endif %}{%- if cookiecutter.methods.post == "yes" -%}'POST',{% endif %}{%- if cookiecutter.methods.put == "yes" -%}'PUT',{% endif %}{%- if cookiecutter.methods.delete == "yes" -%}'DELETE'{% endif %}])
 def {{cookiecutter.endpoint_name}}():
 {%- if cookiecutter.endpoint_comment %}
     """
@@ -9,7 +9,7 @@ def {{cookiecutter.endpoint_name}}():
     return '{{cookiecutter.endpoint_name}}'
 {% endif %}
 {%- if cookiecutter.endpoint_use == 'app_web' %}
-@{{cookiecutter.bp_name}}.route('{{cookiecutter.endpoint_url}}', methods=[{%- if cookiecutter.get == "yes" -%}'GET',{% endif %}{%- if cookiecutter.post == "yes" -%}'POST',{% endif %}{%- if cookiecutter.put == "yes" -%}'PUT',{% endif %}{%- if cookiecutter.delete == "yes" -%}'DELETE'{% endif %}])
+@{{cookiecutter.bp_name}}.route('{{cookiecutter.endpoint_url}}', methods=[{%- if cookiecutter.methods.get_m == "yes" -%}'GET',{% endif %}{%- if cookiecutter.methods.post == "yes" -%}'POST',{% endif %}{%- if cookiecutter.methods.put == "yes" -%}'PUT',{% endif %}{%- if cookiecutter.methods.delete == "yes" -%}'DELETE'{% endif %}])
 def {{cookiecutter.endpoint_name}}():
 {%- if cookiecutter.endpoint_comment %}
     """

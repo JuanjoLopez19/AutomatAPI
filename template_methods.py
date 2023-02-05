@@ -48,9 +48,11 @@ def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -
     # Get the endpoints from the template_args dict and delete it from the dict to avoid errors
     endpoints = template_args['endpoints']
     if template_args['tecnology'] == 'django':
-        args.update({'endpoints':{'list':[{"endpoint_name":x.get('endpoint_name'), "endpoint_url":x.get('endpoint_url')} for x in endpoints]}})
+        args.update({'endpoints':{'list':[{"endpoint_name":x.get('endpoint_name'), "endpoint_url":x.get('endpoint_url'), "methods":x.get('methods')} for x in endpoints]}})
+    elif template_args['tecnology'] == 'flask':
+        args.update({'endpoints':{'list':[{"endpoint_url":x.get('endpoint_url'), "methods":x.get('methods')} for x in endpoints]}})
     else:
-        args.pop('endpoints')
+        args.update({'endpoints':{'list':[{"endpoint_url":x.get('endpoint_url'), "method":x.get('method')} for x in endpoints]}})
 
     # If not exists, create the output path
     if not os.path.exists(output_path):
