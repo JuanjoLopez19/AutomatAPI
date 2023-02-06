@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     {%- for app in cookiecutter.sub_apps.apps %}
     {%- for key, value in app.items() %}
-    'subApps.{{key}}',
+    'subapps.{{key}}',
     {%- endfor %}
     {%- endfor %}
     'rest_framework'

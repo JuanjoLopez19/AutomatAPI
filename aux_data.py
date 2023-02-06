@@ -443,6 +443,7 @@ express_test_app = {
 django_test_service = {
     "app_name": "django_app",
     "port": "8001",
+    "host": "0.0.0.0",
     "language_code": "en-us",
     "admin_url": "yes",
     "admin_url_name": "admin",

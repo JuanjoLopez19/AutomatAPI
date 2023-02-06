@@ -4,10 +4,11 @@ This is a Django web service API that has been generated using the cookiecutter-
 The API will run in the port {{cookiecutter.port}}. <br>
 {%- if cookiecutter.db%}
 This API uses a database and has implemented a ORM to interact with it. <br>
-{%- if cookiecutter.db.db_type == "oracle"}
+{%- if cookiecutter.db.db_type == "oracle" %}
 The database engine is an Oracle database, to use it you need to install an Oracle client. <br>
 {% else %}
 This API has a default connection to a sqlite3 database named {{cookiecutter.app_name}}_database.sqlite3.<br>
+{%- endif %}
 {%- endif %}
 {%- if cookiecutter.admin_url == "yes" %}
 The admin url is: http://localhost:{{cookiecutter.port}}/{{cookiecutter.admin_url_name}} <br>

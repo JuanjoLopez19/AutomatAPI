@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 {% for app in cookiecutter.sub_apps.apps %}
 {%- for key, value in app.items() %}
-from subApps.{{key}} import urls as {{key}}_urls
+from subapps.{{key}} import urls as {{key}}_urls
 {%- endfor %}
 {%- endfor %}
 {%- for value in cookiecutter.endpoints.list %}

@@ -100,6 +100,7 @@
 				"services": {
 					"app_name":"django_services",
 					"port": "8000",
+					"host": "localhost",
 					"language_code":"en-us",
 					"admin_url":"",
 					"admin_url_name":"",
