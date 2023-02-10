@@ -80,7 +80,7 @@ def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -
             for app in template_args.get('sub_apps').get('apps'):
                 for key, value in app.items():
                     value.update({'subapp_name':key})
-                    create_sub_app(value, template_path) # Create the sub apps and added to the folder
+                    create_sub_app(value, template_path, template_args.get('type')) # Create the sub apps and added to the folder
         for endpoint in endpoints:
             endpoint_creator(endpoint, "{}/{}/views.py".format(template_path, args.get('app_name')), template_args.get('tecnology'), 'services')
 
@@ -359,17 +359,17 @@ def add_app_listen(args: dict = None, main_template_path: str = None) -> None:
 
 
 
-def create_sub_app(subapp_args: dict = None, main_template_path: str = None) -> None:
+def create_sub_app(subapp_args: dict = None, main_template_path: str = None, type: str = None) -> None:
     """
         @param: subapp_args: Dictionary with the arguments to create the sub app template
         @param: main_template_path: Path to the base folder to add the sub app
-        
+        @param: type: Type of sub app to create
         @return: None
     """
     DEFAULT_CONFIG = get_default_config() # Get the default config
 
     # Get the path to the template
-    aux_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['sub_app']['template_path']
+    aux_path = DEFAULT_CONFIG['cookiecutter']['aux_stuff']['sub_app_{}'.format(type)]['template_path']
     subapp_args["subapp_folder_name"] = subapp_args.get("subapp_name") 
     
     # Create the cookiecutter.json file
@@ -379,16 +379,20 @@ def create_sub_app(subapp_args: dict = None, main_template_path: str = None) -> 
 
     # Create the subapp template
     try:
-        cookiecutter(aux_path, no_input=True, extra_context=subapp_args, output_dir=main_template_path+'/subapps')
+        temp_path = cookiecutter(aux_path, no_input=True, extra_context=subapp_args, output_dir=main_template_path+'/subapps')
     except exceptions.OutputDirExistsException as e:
         # In fact this exception is never raised because of the uuid but I will leave it here just in case
         subapp_args['subapp_folder_name'] = subapp_args['subapp_folder_name'] + str(uuid.uuid4())
-        cookiecutter(aux_path, no_input=True, extra_context=subapp_args, output_dir=main_template_path+'/subapps')
+        temp_path = cookiecutter(aux_path, no_input=True, extra_context=subapp_args, output_dir=main_template_path+'/subapps')
+
+    if type == "app_web": # If the template is a web app, add the endpoint to the subapp views.py        
+        endpoint_creator(subapp_args, "{}/views.py".format(temp_path), "django")
 
 
 if __name__ == '__main__':
     """temp_creator(flask_test_service, "flask", "services")
     temp_creator(flask_test_app, "flask", "app_web")
     temp_creator(express_test_service, "express", "services")
-    temp_creator(express_test_app, "express", "app_web")"""
-    temp_creator(django_test_service, "django", "services")
+    temp_creator(express_test_app, "express", "app_web")
+    temp_creator(django_test_service, "django", "services")"""
+    temp_creator(django_test_app, "django", "app_web")

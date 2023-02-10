@@ -441,7 +441,7 @@ express_test_app = {
 }
 
 django_test_service = {
-    "app_name": "django_app",
+    "app_name": "django_services",
     "port": "8001",
     "host": "0.0.0.0",
     "language_code": "en-us",
@@ -556,4 +556,121 @@ django_test_service = {
     }
 }
 
-django_test_app = {}
+django_test_app = {
+    "app_name": "django_app",
+    "port": "8001",
+    "host": "0.0.0.0",
+    "language_code": "en-us",
+    "admin_url": "yes",
+    "admin_url_name": "admin",
+    "web_browser": "yes",
+    "web_browser_url": "firefox",
+    "db":"",
+    "endpoints":[
+        {
+            "endpoint_name": "endpoint1",
+            "logged_in":"yes",
+            "endpoint_url": "endpoint1",
+            "endpoint_comment": "Comment for the endpoint 1",
+            "methods":{
+                "get_m": "yes",
+                "put": "yes",
+                "post": "no",
+                "delete": "no"
+            },
+        },
+        {
+            "endpoint_name": "endpoint2",
+            "logged_in":"no",
+            "endpoint_url": "endpoint2",
+            "endpoint_comment": "Comment for the endpoint 2",
+            "methods":{
+                "get_m": "no",
+                "put": "yes",
+                "post": "no",
+                "delete": "yes"
+            },
+        },
+        {
+            "endpoint_name": "endpoint3",
+            "logged_in":"yes",
+            "endpoint_url": "endpoint3",
+            "endpoint_comment": "Comment for the endpoint 3",
+            "methods":{
+                "get_m": "no",
+                "put": "no",
+                "post": "yes",
+                "delete": "no"
+            },
+        },
+    ],
+    "sub_apps":{
+        "apps":[
+            {
+                "sub_app1":{
+                    "subapp_name": "",
+                    "middleware":"sub_app1",
+                    "logged_in":"yes",
+                    "model_editable":"yes",
+                    "model":{
+                        "model_name":"app1",
+                        "model_fields":[
+                            {"name":"fiedl1","type":"Integer","null":"True","blank":"True","default":"1"},
+                            {"name":"field2","type":"Boolean","null":"False","blank":"True","default":"11-12-2001"},
+                            {"name":"field3","type":"URL","null":"False","blank":"False","default":"usuario"}
+                        ]
+				    },
+                    "endpoint_name": "endpoint1",
+                    "methods":{
+                        "get_m":"yes",
+                        "post":"yes",
+                        "put":"yes",
+                        "delete":"yes"
+                    },
+                },
+                "sub_app2":{
+                    "subapp_name": "",
+                    "middleware":"sub_app2",
+                    "logged_in":"yes",
+                    "model_editable":"no",
+                    "model":{
+                        "model_name":"app2",
+                        "model_fields":[
+                            {"name":"fiedl1","type":"Integer","null":"True","blank":"True","default":"1"},
+                            {"name":"field2","type":"Boolean","null":"False","blank":"True","default":"11-12-2001"},
+                            {"name":"field3","type":"URL","null":"False","blank":"False","default":"usuario"}
+                        ]
+				    },
+                    "endpoint_name": "endpoint2",
+                    "methods":{
+                        "get_m":"no",
+                        "post":"yes",
+                        "put":"yes",
+                        "delete":"no"
+                    },
+                },
+                "sub_app3":{
+                    "subapp_name": "",
+                    "middleware":"sub_app3",
+                    "logged_in":"no",
+                    "model_editable":"yes",
+                    "model":{
+                        "model_name":"app3",
+                        "model_fields":[
+                            {"name":"fiedl1","type":"Integer","null":"True","blank":"True","default":"1"},
+                            {"name":"field2","type":"Boolean","null":"False","blank":"True","default":"11-12-2001"},
+                            {"name":"field3","type":"URL","null":"False","blank":"False","default":"usuario"}
+                        ]
+				    },
+                    "endpoint_name": "endpoint3",
+                    "methods":{
+                        "get_m":"yes",
+                        "post":"yes",
+                        "put":"no",
+                        "delete":"no"
+                    },
+                }
+            }
+        ]
+    }
+}

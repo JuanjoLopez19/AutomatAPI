@@ -118,7 +118,27 @@
 					"sub_apps": "",
 					"template_path": "./Templates/django/services"
 				},
-				"app_web": {}
+				"app_web": {
+					"app_name":"django_services",
+					"port": "8000",
+					"host": "localhost",
+					"language_code":"en-us",
+					"admin_url":"",
+					"admin_url_name":"",
+					"web_browser":"yes",
+					"web_browser_url":"",
+					"db":{
+						"db_host": "localhost",
+						"db_type": "",
+						"db_port": "",
+						"db_name": "",
+						"db_user": "",
+						"db_pwd": ""
+					},
+					"endpoints": [],
+					"sub_apps": "",
+					"template_path": "./Templates/django/app_web"
+				}
 			}
 		},
 		"endpoints_args": {
@@ -164,7 +184,7 @@
 			"controllers": "./Templates/express/aux_stuff/controllers",
 			"app_listen": "./Templates/express/aux_stuff/listen",
 			"app_ending": "./Templates/express/aux_stuff/app_ending",
-			"sub_app":{
+			"sub_app_services":{
 				"subapp_name":"",
 				"middleware_name":"",
 				"logged_in":"",
@@ -179,7 +199,25 @@
 					"post": "no",
 					"delete": "no"
 				},
-				"template_path": "./Templates/django/aux_stuff/sub_app"
+				"template_path": "./Templates/django/aux_stuff/sub_app_services"
+			},
+			"sub_app_app_web":{
+				"subapp_name":"",
+				"middleware_name":"",
+				"logged_in":"",
+				"model_editable":"",
+				"model":{
+					"model_name":"",
+					"model_fields":[]
+				},
+				"endpoint_name": "",
+				"methods":{
+					"get_m": "yes",
+					"put": "no",
+					"post": "no",
+					"delete": "no"
+				},
+				"template_path": "./Templates/django/aux_stuff/sub_app_app_web"
 			},
 			"model_fields":{
 				"name":"",
