@@ -1,1 +1,0 @@
-{"endpoint_name": "prueba3", "endpoint_url": "/prueba3", "bp_name": "", "endpoint_comment": "This is a test endpoint", "get": "no", "put": "yes", "post": "no", "delete": "yes", "template_path": "./Templates/endpoints/flask", "file_folder_name": "prueba3_aa29b131-ffe1-414b-a83c-eb68a41a7b12", "file_name": "prueba3", "endpoint_use": "services"}

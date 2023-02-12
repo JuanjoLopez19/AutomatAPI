@@ -1,1 +1,0 @@
-{"endpoint_name": "prueba3", "endpoint_url": "/prueba3", "endpoint_comment": "Endpoint de prueba", "handler_type": "app", "method": "get", "template_path": "./Templates/endpoints/express", "file_folder_name": "prueba3_67c597bd-8a01-442e-b069-307e79dd87c7", "file_name": "prueba3", "endpoint_use": "services"}

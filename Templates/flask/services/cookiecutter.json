@@ -1,1 +1,0 @@
-{"app_name": "prueba", "port": "5000", "connect_DB": "yes", "table_name": "aux", "config_file": "yes", "type_config_file": "dev", "secret": "", "host": "0.0.0.0", "template_path": "./Templates/flask/services", "app_folder_name": "prueba_91eb773f-563d-4666-b910-d56628eb69bc", "tecnology": "flask", "type": "services"}
