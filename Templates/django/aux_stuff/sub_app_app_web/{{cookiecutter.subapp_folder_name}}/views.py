@@ -17,12 +17,25 @@ class {{cookiecutter.model.model_name|capitalize}}DetailView(DetailView):
 {%- if cookiecutter.methods.post == "yes"%}
 class {{cookiecutter.model.model_name|capitalize}}CreateView(CreateView):
     model = {{cookiecutter.model.model_name|capitalize}}
-    
+    {%- if cookiecutter.model.model_fields|length > 0 %}
+    fields = [
+        {%- for field in cookiecutter.model.model_fields %}
+        '{{field.name}}',
+        {%- endfor %}
+    ]
+    {%- endif %}
 {% endif %}
 
 {%- if cookiecutter.methods.put == "yes"%}
 class {{cookiecutter.model.model_name|capitalize}}UpdateView(UpdateView):
     model = {{cookiecutter.model.model_name|capitalize}}
+    {%- if cookiecutter.model.model_fields|length > 0 %}
+    fields = [
+        {%- for field in cookiecutter.model.model_fields %}
+        '{{field.name}}',
+        {%- endfor %}
+    ]
+    {%- endif %}
     
 {% endif %}
 
