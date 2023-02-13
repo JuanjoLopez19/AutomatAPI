@@ -1,8 +1,8 @@
 import json,shutil,os,uuid,secrets,pprint
 from cookiecutter.main import cookiecutter
 from cookiecutter import exceptions
-from .aux_data import *
-from .file_management import *
+from aux_data import *
+from file_management import *
 
 def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -> str:
 
