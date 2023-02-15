@@ -6,7 +6,12 @@
 
 var app = require('../{{cookiecutter.app_name}}');
 var debug = require('debug')('{{cookiecutter.app_name}}:server');
+{%- if coookiecutter.use_ssl == "yes" %}
+var fs = require('fs');
+var http = require('https');
+{%- else %}
 var http = require('http');
+{%- endif %}
 {%- if cookiecutter.config_file == "yes" %}
 const config = require('../config')
 {%- endif %}
@@ -24,8 +29,17 @@ app.set('port', port);
 /**
  * Create HTTP server.
  */
-
+{%- if coookiecutter.use_ssl == "no" %}
 var server = http.createServer(app);
+{%- else %}
+const privatekey = fs.readFileSync('privatekey.pem', 'utf8');
+const certificate = fs.readFileSync('certificate.pem', 'utf8');
+const options = {
+  key: privatekey,
+  cert: certificate
+}
+var server = https.createServer(options, app);
+{%- endif %}
 
 /**
  * Listen on provided port, on all network interfaces.
