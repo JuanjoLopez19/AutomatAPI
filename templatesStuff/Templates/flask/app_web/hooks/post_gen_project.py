@@ -4,6 +4,9 @@ REMOVE_FILES = ['{%if cookiecutter.config_file == "no" %}config.cfg{%endif%}']
 {%if cookiecutter.connect_DB == "no" %}
 REMOVE_FILES.append('models')
 {% endif %}
+{%if cookiecutter.use_ssl == "no" %}
+REMOVE_FILES.append('certificates')
+{% endif %}
 {%if cookiecutter.use_bp == "no" %}
 {% for i in cookiecutter.bp_list.list %}
 {% for key, value in i.items() %}

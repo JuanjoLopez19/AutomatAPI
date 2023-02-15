@@ -45,10 +45,17 @@ python manage.py migrate
 ```
 
 ## Running the API <br>
+{% if cookiecutter.use_ssl == "yes" %}
+To run the API with SSL, run: <br>
+```bash
+python manage.py runsslserver --certificate certificates/{{cookiecutter.certs.cert_name}}.pem --key certificates/{{cookiecutter.certs.key_name}}.pem
+```
+{% else %}
 To run the API, run: <br>
 ```bash 
 python manage.py runserver
 ```
+{% endif %}
 
 {%- if cookiecutter.sub_apps %}
 ## Sub Apps

@@ -4,6 +4,11 @@ flask_test_service = {
     "connect_DB": "yes",
     "db":"",
     "cors": "yes",
+    "use_ssl": "yes",
+    "certs":{
+        "cert_name": "cert",
+        "key_name": "key"
+    },
     "table_name": "aux",
     "config_file": "yes",
     "type_config_file": "dev",
@@ -50,6 +55,11 @@ flask_test_app = {
     "app_name": "flaskApp",
     "port": "5000",
     "cors": "yes",
+    "use_ssl": "no",
+    "certs":{
+        "cert_name": "cert",
+        "key_name": "key"
+    },
     "connect_DB": "yes",
     "db":{
         "db_host": "localhost",
@@ -225,8 +235,13 @@ express_test_service = {
         "strict":"yes",
         "body_parser":"yes",
         "cors":"yes",
+        "use_ssl": "yes",
+        "certs":{
+            "cert_name": "cert",
+            "key_name": "key"
+        },
         "config_file":"yes",
-        "connect_DB":"yes",
+        "connect_DB":"no",
         "db":{
             "db_host": "localhost",
             "db_type": "postgres",
@@ -335,6 +350,11 @@ express_test_app = {
         "strict":"yes",
         "body_parser":"no",
         "cors":"no",
+        "use_ssl": "yes",
+        "certs":{
+            "cert_name": "cert",
+            "key_name": "key"
+        },
         "view_engine":"pug",
         "css_engine":"css",
         "config_file":"yes",
@@ -445,6 +465,11 @@ django_test_service = {
     "port": "8001",
     "host": "0.0.0.0",
     "language_code": "en-us",
+    "use_ssl": "yes",
+    "certs":{
+        "cert_name": "cert",
+        "key_name": "key"
+    },
     "admin_url": "yes",
     "admin_url_name": "admin",
     "web_browser": "yes",
@@ -560,6 +585,11 @@ django_test_app = {
     "app_name": "djangoApp",
     "port": "8001",
     "host": "0.0.0.0",
+    "use_ssl": "no",
+    "certs":{
+        "cert_name": "cert",
+        "key_name": "key"
+    },
     "language_code": "en-us",
     "admin_url": "yes",
     "admin_url_name": "admin",

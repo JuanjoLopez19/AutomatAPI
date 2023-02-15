@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    {%- if cookiecutter.use_ssl %}
+    'sslserver',
+    {%- endif %}
     {%- for app in cookiecutter.sub_apps.apps %}
     {%- for key, value in app.items() %}
     'subapps.{{key}}',

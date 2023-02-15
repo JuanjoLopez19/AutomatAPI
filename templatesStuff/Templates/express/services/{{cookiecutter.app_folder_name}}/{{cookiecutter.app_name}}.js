@@ -6,9 +6,6 @@ const bodyParser = require('body-parser')
 {%- if cookiecutter.cors == "yes" %}
 const cors = require('cors')
 {%- endif %}
-{%- if cookiecutter.config_file == "yes" %}
-const config = require('./config')
-{%- endif %}
 {%- if cookiecutter.connect_DB == "yes" %}
 const db = require('./database/database')
 {% endif %}
@@ -16,6 +13,7 @@ const app = Express();
 {%- if cookiecutter.body_parser  == "yes" %}
 app.use(bodyParser.json());
 {% endif %}
+app.set('view engine', 'ejs');
 {%- if cookiecutter.cors == "yes" %}
 app.use(cors());
 {% endif %}

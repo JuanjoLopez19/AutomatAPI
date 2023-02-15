@@ -1,8 +1,8 @@
 import json,shutil,os,uuid,secrets,pprint
 from cookiecutter.main import cookiecutter
 from cookiecutter import exceptions
-from .aux_data import *
-from .file_management import *
+from aux_data import *
+from file_management import *
 
 def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -> str:
 
@@ -93,16 +93,13 @@ def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -
             endpoint['handler_type']="app"
             endpoint_creator(endpoint, "{}/{}.js".format(template_path, args.get('app_name')), template_args.get('tecnology'), 'services') # Create the endpoints and added to the file
 
-        if template_args.get('type') == "services": # If the app is a services app
-            add_app_listen(args, "{}/{}.js".format(template_path, args.get('app_name'))) # Add the app.listen() to the file
-        else:
-            with open("{}/{}.js".format(template_path, args.get('app_name')), 'a+') as f: # If the app is a web app
-                with open("{}/app_ending.js".format(add_base_path(DEFAULT_CONFIG.get('cookiecutter').get('aux_stuff').get('app_ending'))), 'r') as f2: # Add the app ending to the file
-                    f.write(f2.read())
+        with open("{}/{}.js".format(template_path, args.get('app_name')), 'a+') as f: # If the app is a web app
+            with open("{}/app_ending.js".format(add_base_path(DEFAULT_CONFIG.get('cookiecutter').get('aux_stuff').get('app_ending'))), 'r') as f2: # Add the app ending to the file
+                f.write(f2.read())
     
     # Compress the template and delete the temp files
-    path = compress_api(template_path, args['app_name'], args['app_name'])
-    return path
+    #path = compress_api(template_path, args['app_name'], args['app_name'])
+    #return path
     
     
 

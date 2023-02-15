@@ -1,13 +1,15 @@
 import os, sys, shutil
 REMOVE_FILES = []
-
-{%if cookiecutter.config_file == "" %}
+{%if cookiecutter.use_ssl == "no" %}
+REMOVE_FILES.append('certificates')
+{% endif %}
+{%if cookiecutter.config_file == "no" %}
 REMOVE_FILES.append('config.json')
 {%endif%}
-{%if cookiecutter.use_controllers == "" %}
+{%if cookiecutter.use_controllers == "no" %}
 REMOVE_FILES.append('controllers')
 {%endif%}
-{%if cookiecutter.connect_DB == "" %}
+{%if cookiecutter.connect_DB == "no" %}
 REMOVE_FILES.append('database')
 REMOVE_FILES.append('models')
 {%endif%}

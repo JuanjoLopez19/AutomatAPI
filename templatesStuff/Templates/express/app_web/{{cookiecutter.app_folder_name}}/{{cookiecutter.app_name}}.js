@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 {%- if cookiecutter.cors == "yes" %}
 app.use(cors());
 {% endif %}
-{%- if cookiecutter.view_engine == "yes" %}
+{%- if cookiecutter.view_engine %}
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', '{{cookiecutter.view_engine}}');
 {% endif %}

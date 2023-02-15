@@ -6,6 +6,7 @@
 					"app_name": "flask_services",
 					"port": "5000",
 					"cors":"yes",
+					"use_ssl":"no",
 					"connect_DB": "",
 					"db":{
 						"db_host": "localhost",
@@ -27,6 +28,7 @@
 					"app_name": "",
 					"port": "",
 					"connect_DB": "",
+					"use_ssl":"no",
 					"db":{
 						"db_host": "localhost",
 						"db_type": "",
@@ -56,6 +58,7 @@
 					"strict": "yes",
 					"body_parser": "yes",
 					"cors": "yes",
+					"use_ssl":"no",
 					"config_file": "",
 					"connect_DB": "",
 					"db":{
@@ -78,6 +81,7 @@
 					"strict": "yes",
 					"body_parser": "yes",
 					"cors": "yes",
+					"use_ssl":"no",
 					"config_file": "",
 					"connect_DB": "",
 					"view_engine": "ejs",
@@ -101,6 +105,7 @@
 					"app_name":"django_services",
 					"port": "8000",
 					"host": "localhost",
+					"use_ssl":"no",
 					"language_code":"en-us",
 					"admin_url":"",
 					"admin_url_name":"",
@@ -122,6 +127,7 @@
 					"app_name":"django_services",
 					"port": "8000",
 					"host": "localhost",
+					"use_ssl":"no",
 					"language_code":"en-us",
 					"admin_url":"",
 					"admin_url_name":"",
