@@ -139,6 +139,60 @@ paths:
                   tech_type: services
                   template_data:
                     app_name: flaskServices
+      responses:
+        '201':
+          description: Template created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: string
+          headers: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: string
+        '404':
+          description: User doesn't exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: string
+        '500':
+          description: The template cannot be created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: string
   '/templates/{templateId}':
     parameters:
       - schema:
