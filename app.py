@@ -1,6 +1,5 @@
-from flask import Flask, jsonify
-from templatesStuff.template_methods import *
-from models.model import db, Users, Templates
+from flask import Flask
+from models.model import db
 from flask_cors import CORS
 from routes.templates import templates
 from routes.users import users
@@ -14,4 +13,4 @@ if __name__ == '__main__':
     api.register_blueprint(users)
     db.init_app(api)
 
-    api.run(debug=True) 
+    api.run() 

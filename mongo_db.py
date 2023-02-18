@@ -1,24 +1,43 @@
 import pprint
 import time
-from pymongo import MongoClient, collection, results, cursor
+from bson import ObjectId
+from pymongo import MongoClient, collection, results, cursor, database
 from dotenv import load_dotenv
 import os
 
 
-def get_collection(db_name: str, collection_name: str) -> collection.Collection:
+def get_client() -> MongoClient:
     """
-        @params db_name: name of the database to connect
-        @params collection_name: name of the collection to connect
-        @return collection object: the collection object to work with
+        @return MongoClient object: the client object to work with
     """
 
     load_dotenv()
-    client = MongoClient(f"{os.getenv('MONGO_HOST')}:{os.getenv('MONGO_PORT')}")
+    return MongoClient(f"{os.getenv('MONGO_HOST')}:{os.getenv('MONGO_PORT')}")
     
-    db = client.get_database(db_name)
-    collection = db.get_collection(collection_name)
+
+def get_db(client: MongoClient, db_name: str) -> database.Database:
+    """
+        @params client: client object to work with
+        @params db_name: name of the database to connect
+        @return database object: the database object to work with
+    """
+    return client[db_name]
     
-    return collection
+   
+def get_collection(db: database.Database, collection_name: str) -> collection.Collection:
+    """
+        @params db: database object to work with
+        @params collection_name: name of the collection to connect
+        @return collection object: the collection object to work with
+    """
+    return db.get_collection(collection_name)
+    
+
+def close_connection(client: MongoClient) -> None:
+    """
+        @params client: client object to close the connection
+    """
+    client.close()
 
 def insert_one(collection: collection.Collection, data: dict) -> results.InsertOneResult:
     """
@@ -38,7 +57,7 @@ def insert_many(collection: collection.Collection, data: list) -> results.Insert
     """
     return collection.insert_many(data)
 
-def find_one(collection: collection.Collection, id: str) -> dict:
+def find_one(collection: collection.Collection, id: ObjectId) -> dict:
     """
         @params collection: collection object to work with
         @params id: id of the data to find
@@ -58,7 +77,7 @@ def find_many(collection: collection.Collection, query: dict) -> cursor.Cursor:
 
     return data
 
-def update_one(collection: collection.Collection, id: str, data: dict) -> results.UpdateResult:
+def update_one(collection: collection.Collection, id: ObjectId, data: dict) -> results.UpdateResult:
     """
         @params collection: collection object to work with
         @params query: query to find the data
@@ -78,7 +97,7 @@ def update_many(collection: collection.Collection, query: dict, data: dict) -> r
     """
     return collection.update_many(query, data)
 
-def delete_one(collection: collection.Collection, id: str) -> results.DeleteResult:
+def delete_one(collection: collection.Collection, id: ObjectId) -> results.DeleteResult:
     """
         @params collection: collection object to work with
         @params query: query to find the data
@@ -99,7 +118,8 @@ def delete_many(collection: collection.Collection, query: dict) -> results.Delet
 
 if __name__ == '__main__':
     # A simple test of the unitary functions
-    collect = get_collection("automatAPI", "pruebas")
+    client = get_client()
+    collect = get_collection(get_db(client,"automatAPI"), "pruebas")
 
     # Insert one
     a = insert_one(collect, {"nombre": "prueba", "apellido": "prueba", "edad": 20})
@@ -114,9 +134,11 @@ if __name__ == '__main__':
 
             time.sleep(5)
             # Delete the data
-            c = delete_one(collect, a.inserted_id)
-            if(c.acknowledged):
-                print("Correctly deleted")
+            # c = delete_one(collect, a.inserted_id)
+            # if(c.acknowledged):
+                # print("Correctly deleted")
     else:
         print("Not inserted")
+     
+    close_connection(client)
         

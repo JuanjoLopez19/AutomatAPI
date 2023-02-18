@@ -16,7 +16,7 @@ def compress_api(workingDir: str, projectName: str, fileName: str) -> str:
     output_path = add_base_path(DEFAULT_CONFIG['cookiecutter']['aux_stuff']['output_path'])
 
     try:
-        path = shutil.make_archive("{}{}".format(output_path, projectName.split('_')[0]), 'zip', workingDir) 
+        path = shutil.make_archive("{}{}".format(output_path, projectName), 'zip', workingDir) 
         remove_temp_files(workingDir) 
     except (OSError, FileNotFoundError) as e:
         path = None
