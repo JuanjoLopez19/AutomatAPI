@@ -15,7 +15,7 @@ info:
 servers:
   - url: 'http://localhost:5000'
 paths:
-  '/templates':
+  /templates:
     get:
       summary: Get templates from the database
       operationId: getTemplates
@@ -111,7 +111,34 @@ paths:
                     type: string
                   code:
                     type: integer
-    post: null
+    post:
+      summary: Create a new template
+      operationId: postTemplates
+      description: Create a template by the data given in the request body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                technology:
+                  type: string
+                tech_type:
+                  type: string
+                template_data:
+                  type: object
+                  properties:
+                    app_name:
+                      type: string
+              x-examples:
+                Example 1:
+                  user_id: 1
+                  technology: flask
+                  tech_type: services
+                  template_data:
+                    app_name: flaskServices
   '/templates/{templateId}':
     parameters:
       - schema:
