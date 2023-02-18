@@ -1,0 +1,293 @@
+openapi: 3.0.0
+x-stoplight:
+  id: 9f72ypxmjsz1e
+info:
+  title: backendApi
+  version: 0.0.0
+  license:
+    name: ''
+    url: 'https://github.com/JuanjoLopez19/AutomatAPI'
+  contact:
+    email: juanjoselopez@usal.es
+    name: ' Juanjo López'
+    url: 'https://github.com/JuanjoLopez19/AutomatAPI'
+  description: 'Backend API for the Final Degree Project called automatAPI, for the management of users and templates'
+servers:
+  - url: 'http://localhost:5000'
+paths:
+  /templates:
+    get:
+      summary: Get templates from the database
+      operationId: getTemplates
+      description: 'Get templates from the database based on the id provided in the body. If is a normal user returns his templates, if it is an admin returns all of them'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: number
+      responses:
+        '200':
+          description: templates retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        app_name:
+                          type: string
+                        port:
+                          type: number
+                        connect_DB:
+                          type: string
+                        db:
+                          type: object
+                        cors:
+                          type: string
+                        use_ssl:
+                          type: string
+                        certs:
+                          type: object
+                          properties:
+                            cert_name:
+                              type: string
+                            key_name:
+                              type: string
+                        config_file:
+                          type: string
+                        type_config_file:
+                          type: string
+                        host:
+                          type: string
+                        endpoints:
+                          type: array
+                          items:
+                            type: object
+        '204':
+          description: No templates found
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: number
+        '400':
+          description: Bad Request
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: number
+        '404':
+          description: The user does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+    post:
+      summary: Create a new template
+      operationId: postTemplates
+      description: Create a template by the data given in the request body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                technology:
+                  type: string
+                tech_type:
+                  type: string
+                template_data:
+                  type: object
+                  properties:
+                    app_name:
+                      type: string
+              x-examples:
+                Example 1:
+                  user_id: 1
+                  technology: flask
+                  tech_type: services
+                  template_data:
+                    app_name: flaskServices
+      responses:
+        '201':
+          description: Template created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: string
+          headers: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: string
+        '404':
+          description: User doesn't exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: string
+        '500':
+          description: The template cannot be created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: string
+  '/templates/{templateId}':
+    parameters:
+      - schema:
+          type: string
+        name: templateId
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-templates-templateId
+  '/templates/{templatesId}/update':
+    parameters:
+      - schema:
+          type: string
+        name: templatesId
+        in: path
+        required: true
+    put:
+      summary: ''
+      operationId: put-templates-templatesId-update
+      responses:
+        '200':
+          description: OK
+  '/templates/{templatesId}/delete':
+    parameters:
+      - schema:
+          type: string
+        name: templatesId
+        in: path
+        required: true
+    delete:
+      summary: ''
+      operationId: delete-templates-templatesId-delete
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      x-examples:
+        Alice Smith:
+          id: 142
+          firstName: Alice
+          lastName: Smith
+          email: alice.smith@gmail.com
+          dateOfBirth: '1997-10-31'
+          emailVerified: true
+          signUpDate: '2019-08-24'
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given user.
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+          format: email
+        date:
+          type: string
+          format: date
+          example: '1997-10-31'
+        role:
+          type: string
+          enum:
+            - admin
+            - client
+      required:
+        - id
+        - username
+        - password
+        - email
+        - date
+        - role
+    Templates:
+      title: Templates
+      x-stoplight:
+        id: ugdw8fpr67sgu
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        technology:
+          type: string
+        tech_type:
+          type: string
+        date_created:
+          type: string
+          format: date-time
+        template_ref:
+          type: string
