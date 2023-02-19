@@ -14,9 +14,23 @@ info:
   description: 'Backend API for the Final Degree Project called automatAPI, for the management of users and templates'
 servers:
   - url: 'http://localhost:5000'
+tags:
+  - name: Create Templates
+    description: Create Templates tag
+  - name: Delete Templates
+    description: Delete Templates tag
+  - name: List Templates
+    description: List Template tag
+  - name: Update Templates
+    description: Update Templates tag
+  - name: Templates
+    description: Templates tag
 paths:
   /templates:
     get:
+      tags:
+        - List Templates
+        - Templates
       summary: Get templates from the database
       operationId: getTemplates
       description: 'Get templates from the database based on the id provided in the body. If is a normal user returns his templates, if it is an admin returns all of them'
@@ -112,6 +126,9 @@ paths:
                   code:
                     type: integer
     post:
+      tags:
+        - Create Templates
+        - Templates
       summary: Create a new template
       operationId: postTemplates
       description: Create a template by the data given in the request body
@@ -197,40 +214,549 @@ paths:
     parameters:
       - schema:
           type: string
+        description: template Identifier
         name: templateId
         in: path
         required: true
     get:
       summary: Your GET endpoint
-      tags: []
-      responses: {}
+      tags:
+        - List Templates
+        - Templates
+      responses:
+        '200':
+          description: Template found with the templateId and the userId given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  template:
+                    type: object
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: Ok
+                    template: {}
+                    code: 200
+        '400':
+          description: 'Bad Request --> Body, userId or templateId not given'
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    - status: error
+                      message: No body provided
+                      code: 400
+                  Example 2:
+                    - status: error
+                      message: The body of the request is empty
+                      code: 400
+                  Example 3:
+                    - status: error
+                      message: The user does not have access to the template
+                      code: 400
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: error
+                    message: The body of the request is empty
+                    code: 400
+                Example 2:
+                  value:
+                    status: error
+                    message: No body provided
+                    code: 400
+                Example 3:
+                  value:
+                    status: error
+                    message: The user_id is required
+                    code: 400
+        '403':
+          description: The user does not have access to the template requested
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: erro
+                    message: The user does not have access to the template
+                    code: 403
+        '404':
+          description: The user or the template does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: error
+                    message: The user or the template does not exist
+                    code: 404
       operationId: get-templates-templateId
+      description: Retrieve a specigic template based on the id and the user id passed on the body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
   '/templates/{templatesId}/update':
     parameters:
       - schema:
           type: string
+        description: template Identifier
         name: templatesId
         in: path
         required: true
     put:
-      summary: ''
+      tags:
+        - Update Templates
+        - Templates
+      summary: Update a template
       operationId: put-templates-templatesId-update
       responses:
         '200':
-          description: OK
+          description: The template is updated sucessfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: OK
+                    message: The template was succesfully updated
+                    code: 200
+                Example 2:
+                  value:
+                    status: OK
+                    message: The template was succesfully updated and created
+                    code: 200
+        '400':
+          description: 'Bad Request --> Body, userId or templateId not given'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ' status':
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: error
+                    message: No body provided
+                    code: 400
+                Example 2:
+                  value:
+                    ' status': error
+                    message: The body of the request is empty
+                    code: 400
+                Example 3:
+                  value:
+                    ' status': error
+                    message: The user_id is required
+                    code: 400
+        '403':
+          description: The user has no access to the template
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: error
+                    message: The user does not have access to the template
+                    code: 403
+        '404':
+          description: The user or the template does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: error
+                    message: The user or the template does not exist
+                    code: 404
+        '500':
+          description: The template couldn't be created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: error
+                    messge: The template could not be created
+                    code: 400
+      description: Update a the template refered by the templateId and the userId in the request body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                template_data:
+                  type: object
+                create_temp:
+                  type: boolean
+            examples:
+              Example 1:
+                value:
+                  user_id: 5
+                  template_data: {}
+                  create_temp: true
+        description: ''
   '/templates/{templatesId}/delete':
     parameters:
       - schema:
           type: string
+        description: template Identifier
         name: templatesId
         in: path
         required: true
     delete:
-      summary: ''
+      tags:
+        - Delete Templates
+        - Templates
+      summary: Delete a template
       operationId: delete-templates-templatesId-delete
       responses:
         '200':
+          description: Template deleted succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: OK
+                    message: The template was deleted succesfully
+                    code: 200
+        '400':
+          description: 'Body, or userId not provided'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: error
+                    message: The user_id is required
+                    code: 400
+                Example 2:
+                  value:
+                    status: error
+                    message: The request's body is empty
+                    code: 400
+                Example 3:
+                  value:
+                    status: error
+                    message: No body provided
+                    code: 400
+        '403':
+          description: The user does not have access to the template
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: error
+                    message: The user does not have access to the template
+                    code: 403
+        '404':
+          description: The user or the template does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: error
+                    message: The user or the template does not exist
+                    code: 404
+        '500':
+          description: The template wasn't deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: error
+                    message: The template couldn't be deleted
+                    code: 500
+      description: Delete the template refered by the templateId and the userId in the request body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+            examples:
+              Example 1:
+                value:
+                  user_id: 4
+              Example 2:
+                value:
+                  user_id: 12
+              Example 3:
+                value:
+                  user_id: 43
+  '/templates/{templateId}/create':
+    parameters:
+      - schema:
+          type: string
+        description: Template Identificator
+        name: templateId
+        in: path
+        required: true
+    post:
+      summary: ''
+      operationId: post-templates-templateId-create
+      responses:
+        '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: OK
+                    message: The template was succesfully created
+                    code: 200
+        '400':
+          description: Body or userId not provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: error
+                    message: The body is missing
+                    code: 400
+                Example 2:
+                  value:
+                    status: error
+                    message: The body is empty
+                    code: 400
+                Example 3:
+                  value:
+                    status: error
+                    message: The user_id is missing
+                    code: 400
+        '403':
+          description: The user has no access to the template
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: error
+                    message: The user has no access to the template
+                    code: 403
+        '404':
+          description: The user or the template does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: error
+                    message: The user or the template does not exist
+                    code: 404
+        '500':
+          description: The template couldnt be created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              examples:
+                Example 1:
+                  value:
+                    status: error
+                    message: The template couldn't be created
+                    code: 500
+      description: Create again a template refered by the templateId and the userId in the request body
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+            examples:
+              Example 1:
+                value:
+                  user_id: 3
+              Example 2:
+                value:
+                  user_id: 43
+              Example 3:
+                value:
+                  user_id: 3
+        description: ''
+      tags:
+        - Create Templates
+        - Templates
 components:
   schemas:
     User:
@@ -291,3 +817,4 @@ components:
           format: date-time
         template_ref:
           type: string
+x-internal: false
