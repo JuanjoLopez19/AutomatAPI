@@ -243,3 +243,45 @@ def delete_template(template_id):
             return jsonify({'status': 'error', 'message': 'The template could not be deleted', 'code': 500})
     except Exception as e:
         return jsonify({'status': 'error', 'message': 'The user or the template does not exist', 'code': 404})
+
+
+@templates.route('/<int:template_id>/create', methods=['POST'])
+def create_template(template_id):
+    """
+        Method Post: Create the template with the given id
+            Body: user_id
+    """
+    try:
+        body = dict(request.get_json(force=True))
+    except Exception:
+        return jsonify({'status': 'error', 'message': 'No body provided', 'code': 400})
+    
+    if not body:
+        return jsonify({'status': 'error', 'message': 'The body of the request is empty', 'code': 400})
+    
+    user_id = body.get('user_id')
+    if not user_id:
+        return jsonify({'status': 'error', 'message': 'The user_id is required', 'code': 400})
+    try:
+        user = db.get_or_404(Users, user_id)
+        template = db.get_or_404(Templates, template_id)
+        if user['role'] != Role.admin and template['user_id'] != user_id:
+            return jsonify({'status': 'error', 'message': 'The user does not have access to the template', 'code': 403})
+        
+        mongo_client = get_client()
+        mongo_collection = get_collection(get_db(mongo_client,"automatAPI"),"templates")
+        ref = template['template_ref']
+        temp = find_one(mongo_collection, ObjectId(ref.replace(' ','')))
+        if temp:
+            temp.pop('_id')
+            try:
+                path = temp_creator(temp, template['technology'], template['tech_type'])
+                close_connection(mongo_client)
+                return jsonify({'status': 'ok', 'message': 'The template was created successfully: {}'.format(path) , 'code': 200})
+            except Exception as e:
+                return jsonify({'status': 'error', 'message': 'The template could not be created', 'code': 500})
+        else:
+            close_connection(mongo_client)
+            return jsonify({'status': 'error', 'message': 'The template could not be found', 'code': 404})
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': 'The user or the template does not exist', 'code': 404})
