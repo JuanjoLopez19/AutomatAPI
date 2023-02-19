@@ -13,10 +13,16 @@ class Tech(Enum):
     express = 2
     django = 3
     
+    def __str__(self):
+        return self.name
+    
 
 class TechType(Enum):
     services = 1
     app_web = 2
+    
+    def __str__(self):
+        return self.name
 
 class Users(db.Model):
     __tablename__ = 'users'

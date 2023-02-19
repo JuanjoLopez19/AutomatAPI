@@ -3,8 +3,9 @@ from cookiecutter.main import cookiecutter
 from cookiecutter import exceptions
 from templatesStuff.aux_data import *
 from templatesStuff.file_management import *
+from models.model import Tech, TechType
 
-def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -> str:
+def temp_creator(template_args: dict = None, tech:Tech = None, type:TechType = None) -> str:
 
     """
         @param: template_args -> Dictionary with the arguments to create the template 
@@ -16,13 +17,13 @@ def temp_creator(template_args: dict = None, tech:str = None, type:str = None) -
         This function is the one that calls the cookiecutter function to create the template 
         and returns the path to the zip file, to the main rutine
     """
-
+    
     # Get the default config from the json file
     DEFAULT_CONFIG = get_default_config()
 
     # Set the tech and type to the template_args dict
-    template_args['tecnology']=tech
-    template_args['type']=type
+    template_args['tecnology']=tech.name
+    template_args['type']=type.name
 
     # Statics paths for the main template and the output path
     cookiecutter_template_path = add_base_path(DEFAULT_CONFIG['cookiecutter']['tecnology_args'][template_args.get('tecnology')][template_args.get('type')]['template_path'])
