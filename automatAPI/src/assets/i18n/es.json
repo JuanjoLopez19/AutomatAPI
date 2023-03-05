@@ -1,0 +1,11 @@
+{
+  "T_AUTOMATAPI": "AutomatAPI",
+  "T_USERNAME": "Nombre de usuario",
+  "T_SIGN_IN": "Iniciar sesión",
+  "T_SIGN_UP": "Registrarse",
+  "T_NO_ACCOUNT": "¿No tienes cuenta?",
+  "T_HAVE_ACCOUNT": "¿Ya tienes cuenta?",
+  "T_REGISTER_NOW": "Registrate ahora!!",
+  "T_FORGET_PWD": "¿Contraseña olvidada?",
+  "T_REM_PWD": "Recupera la contraseña"
+}

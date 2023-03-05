@@ -1,0 +1,31 @@
+@import "src/shared/variables";
+
+.main {
+  border-radius: 40px;
+  background-color: $white;
+}
+
+.button-active {
+  color: $white;
+}
+
+button {
+  width: 90%;
+  border-radius: 20px;
+  padding: 1rem;
+}
+
+.btn-warning{
+  background-color: $primary-color;
+  color: $white;
+}
+.btn-light {
+  background-color: $white;
+  color: $black;
+  border: 0px;
+}
+
+.btn-light:hover{
+  background-color: $primary-color;
+  color: $white;
+}

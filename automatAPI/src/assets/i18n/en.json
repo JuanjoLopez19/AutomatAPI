@@ -1,0 +1,11 @@
+{
+  "T_AUTOMATAPI": "AutomatAPI",
+  "T_USERNAME": "Username",
+  "T_SIGN_IN": "Sign in",
+  "T_SIGN_UP": "Sign up",
+  "T_NO_ACCOUNT": "Don't have an account?",
+  "T_HAVE_ACCOUNT": "Already have an account?",
+  "T_REGISTER_NOW": "Register now!!",
+  "T_FORGET_PWD": "Forget password?",
+  "T_REM_PWD": "Remember password"
+}

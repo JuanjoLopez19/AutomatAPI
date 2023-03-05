@@ -1,0 +1,56 @@
+<div class="login-block h-100">
+  <div class="container">
+    <div class="row">
+      <div
+        class="login-sec"
+        [ngClass]="{
+          'col-8': currentSize === sizes.XL || currentSize === sizes.LG
+        }"
+      >
+        <h1 class="text-center">{{ "T_AUTOMATAPI" | translate }}</h1>
+        <div class="row">
+          <div class="col-12">
+            <app-login *ngIf="active === 'sign_in'"></app-login>
+            <app-register *ngIf="active === 'sign_up'"></app-register>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="text-center">
+                <span
+                  >{{ "T_NO_ACCOUNT" | translate }}
+                  <h2 (click)="active = 'sign_up'" class="d-inline">
+                    {{ "T_REGISTER_NOW" | translate }}
+                  </h2></span
+                >
+              </div>
+            </div>
+            <div class="row">
+              <app-selector
+                [active]="active"
+                (activeChange)="onActiveChange($event)"
+              ></app-selector>
+            </div>
+            <div class="row">
+              <div class="text-center">
+                <span
+                  >{{ "T_FORGET_PWD" | translate }}
+                  <h2 (click)="active = 'sign_up'" class="d-inline">
+                    {{ "T_REM_PWD" | translate }}
+                  </h2></span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="banner-sec"
+        [ngClass]="{
+          'col-4': currentSize === sizes.XL || currentSize === sizes.LG
+        }"
+      ></div>
+    </div>
+  </div>
+</div>
