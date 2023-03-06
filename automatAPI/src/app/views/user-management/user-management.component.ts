@@ -11,11 +11,12 @@ import { Sizes } from 'src/app/common/enums/enums';
 export class UserManagementComponent implements OnInit {
   readonly sizes: typeof Sizes = Sizes;
   currentSize!: string;
-  active: string = 'sign_in';
+  active: string;
   constructor(private router: Router, private translate: TranslateService) {
     translate.addLangs(['en', 'es']);
     translate.setDefaultLang('es');
     translate.use('es');
+    this.active = 'sign_in';
   }
 
   ngOnInit() {

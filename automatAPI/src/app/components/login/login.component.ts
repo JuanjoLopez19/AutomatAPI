@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-login',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-
+  faUser = faUser;
+  constructor() { /* */ }
 }

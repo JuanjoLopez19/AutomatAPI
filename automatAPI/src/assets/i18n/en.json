@@ -7,5 +7,16 @@
   "T_HAVE_ACCOUNT": "Already have an account?",
   "T_REGISTER_NOW": "Register now!!",
   "T_FORGET_PWD": "Forget password?",
-  "T_REM_PWD": "Remember password"
+  "T_REM_PWD": "Remember password",
+  "T_SIGN_IN_NOW": "Sign in now",
+  "T_SIGN_UP_NOW": "Register now",
+  "T_EMAIL": "Email",
+  "T_EMAIL_PLACEHOLDER": "Enter your email",
+  "T_PWD": "Password",
+  "T_PWD_PLACEHOLDER": "Enter your password",
+  "T_USERNAME_PLACEHOLDER": "Introduce your username",
+  "T_BIRTHDATE": "Datebirth",
+  "T_DATE_PLACEHOLDER": "mm/dd/yyyy",
+  "T_REPEAT_PWD": "Confirm password",
+  "T_REPEAT_PWD_PLACEHOLDER": "Repeat the password"
 }

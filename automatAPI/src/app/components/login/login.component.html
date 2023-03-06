@@ -1,1 +1,55 @@
-<p>login works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="row">
+        <span class="text-center">
+          <h3>{{ "T_SIGN_IN_NOW" | translate }}</h3>
+        </span>
+      </div>
+      <div class="row p-5">
+        <div class="col-12">
+          <div class="row">
+            <span class="text-center">
+              <h3>{{ "T_EMAIL" | translate }}</h3>
+            </span>
+          </div>
+          <div class="row">
+            <div class="col-3"></div>
+            <div class="field col-6">
+              <span class="p-input-icon-right">
+                <i class="pi pi-user"></i>
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="{{ 'T_EMAIL_PLACEHOLDER' | translate }}"
+                  pInputText
+                />
+              </span>
+            </div>
+            <div class="col-3"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <span class="text-center"
+              ><h3>{{ "T_PWD" | translate }}</h3>
+            </span>
+          </div>
+          <div class="row">
+            <div class="col-3"></div>
+            <div class="col-5 field">
+              <p-password
+                placeholder="{{ 'T_PWD_PLACEHOLDER' | translate }}"
+                [toggleMask]="true"
+                [feedback]="false"
+              ></p-password>
+            </div>
+            <div class="col-4"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

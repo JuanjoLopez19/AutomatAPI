@@ -1,1 +1,127 @@
-<p>register works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="row">
+        <span class="text-center">
+          <h3>{{ "T_SIGN_UP_NOW" | translate }}</h3>
+        </span>
+      </div>
+      <div class="row p-5">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-6">
+              <div class="row">
+                <span class="text-center">
+                  <h3>{{ "T_EMAIL" | translate }}</h3>
+                </span>
+              </div>
+              <div class="row">
+                <div class="field">
+                  <span class="p-input-icon-right">
+                    <i class="pi pi-envelope"></i>
+                    <input
+                      type="email"
+                      id="email"
+                      placeholder="{{ 'T_EMAIL_PLACEHOLDER' | translate }}"
+                      pInputText
+                    />
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="row">
+                <span class="text-center">
+                  <h3>{{ "T_USERNAME" | translate }}</h3>
+                </span>
+              </div>
+              <div class="row">
+                <div class="field">
+                  <span class="p-input-icon-right">
+                    <i class="pi pi-user"></i>
+                    <input
+                      type="text"
+                      id="username"
+                      placeholder="{{ 'T_USERNAME_PLACEHOLDER' | translate }}"
+                      pInputText
+                    />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-6">
+                  <div class="row">
+                    <span class="text-center"
+                      ><h3>{{ "T_BIRTHDATE" | translate }}</h3>
+                    </span>
+                  </div>
+                  <div class="row">
+                    <div class="field">
+                      <span class="p-input-icon-right">
+                        <i class="pi pi-calendar"></i>
+                        <input
+                          type="text"
+                          id="calendar"
+                          placeholder="{{ 'T_DATE_PLACEHOLDER' | translate }}"
+                          pInputText
+                        />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="row">
+                    <span class="text-center"
+                      ><h3>{{ "T_GENDER" | translate }}</h3>
+                    </span>
+                  </div>
+                  <div class="row"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-6">
+                <div class="row">
+                  <span class="text-center">
+                    <h3>{{ "T_PWD" | translate }}</h3>
+                  </span>
+                </div>
+                <div class="row">
+                  <p-password
+                    placeholder="{{ 'T_PWD_PLACEHOLDER' | translate }}"
+                    [toggleMask]="true"
+                    [feedback]="false"
+                  ></p-password>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="row">
+                  <span class="text-center"
+                    ><h3>{{ "T_REPEAT_PWD" | translate }}</h3>
+                  </span>
+                </div>
+                <div class="row">
+                  <div class="field">
+                    <p-password
+                      placeholder="{{ 'T_REPEAT_PWD_PLACEHOLDER' | translate }}"
+                      [toggleMask]="true"
+                      [feedback]="false"
+                    ></p-password>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

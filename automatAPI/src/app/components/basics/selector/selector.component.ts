@@ -6,9 +6,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./selector.component.scss'],
 })
 export class SelectorComponent {
-  @Input() active: string = 'sign_in';
-  @Output() onSignIn: EventEmitter<string> = new EventEmitter<string>();
-  @Output() onSignUp: EventEmitter<string> = new EventEmitter<string>();
+  @Input() active: string;
+  @Output() SignIn: EventEmitter<string> = new EventEmitter<string>();
+  @Output() SignUp: EventEmitter<string> = new EventEmitter<string>();
   @Output() activeChange: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {
@@ -16,11 +16,11 @@ export class SelectorComponent {
   }
 
   manageClick(event: MouseEvent) {
-    let target = (event.target as HTMLElement).id;
+    const target = (event.target as HTMLElement).id;
     if (this.active === target && this.active === 'sign_in')
-      this.onSignIn.emit(target);
+      this.SignIn.emit(target);
     else if (this.active === target && this.active === 'sign_up')
-      this.onSignUp.emit(target);
+      this.SignUp.emit(target);
     else {
       this.active = (event.target as HTMLElement).id;
       this.activeChange.emit(this.active);

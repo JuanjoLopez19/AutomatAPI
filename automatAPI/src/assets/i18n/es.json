@@ -7,5 +7,16 @@
   "T_HAVE_ACCOUNT": "¿Ya tienes cuenta?",
   "T_REGISTER_NOW": "Registrate ahora!!",
   "T_FORGET_PWD": "¿Contraseña olvidada?",
-  "T_REM_PWD": "Recupera la contraseña"
+  "T_REM_PWD": "Recupera la contraseña",
+  "T_SIGN_IN_NOW": "Inicia sesión ahora",
+  "T_SIGN_UP_NOW": "Registrate ahora",
+  "T_EMAIL": "Correo electrónico",
+  "T_EMAIL_PLACEHOLDER": "Introduce tu correo electrónico",
+  "T_PWD": "Contraseña",
+  "T_PWD_PLACEHOLDER": "Introduce tu contraseña",
+  "T_USERNAME_PLACEHOLDER": "Introduce tu nombre de usuario",
+  "T_BIRTHDATE": "Fecha de nacimiento",
+  "T_DATE_PLACEHOLDER": "dd/mm/yyyy",
+  "T_REPEAT_PWD": "Confirma la contraseña",
+  "T_REPEAT_PWD_PLACEHOLDER": "Repite tu contraseña"
 }

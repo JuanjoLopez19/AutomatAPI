@@ -6,6 +6,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+// Custom components and views
 import { UserManagementComponent } from './views/user-management/user-management.component';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
@@ -13,6 +15,16 @@ import { RegisterComponent } from './components/register/register.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { SelectorComponent } from './components/basics/selector/selector.component';
+
+// NG Prime components
+import {InputTextModule} from 'primeng/inputtext';
+import {PasswordModule} from 'primeng/password';
+import {CalendarModule} from 'primeng/calendar';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {DividerModule} from 'primeng/divider';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -41,6 +53,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient],
       },
     }),
+    InputTextModule,
+    FontAwesomeModule,
+    PasswordModule,
+    CalendarModule,
+    RadioButtonModule,
+    DividerModule
   ],
   providers: [],
   bootstrap: [AppComponent],
