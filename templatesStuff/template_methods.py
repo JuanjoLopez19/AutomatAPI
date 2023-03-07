@@ -1,8 +1,10 @@
 import json,shutil,os,uuid,secrets,pprint
 from cookiecutter.main import cookiecutter
 from cookiecutter import exceptions
-from templatesStuff.aux_data import *
-from templatesStuff.file_management import *
+from aux_data import *
+from file_management import *
+import sys
+sys.path.append('..')
 from models.model import Tech, TechType
 
 def temp_creator(template_args: dict = None, tech:Tech = None, type:TechType = None) -> str:
@@ -22,9 +24,10 @@ def temp_creator(template_args: dict = None, tech:Tech = None, type:TechType = N
     DEFAULT_CONFIG = get_default_config()
 
     # Set the tech and type to the template_args dict
+
     template_args['tecnology']=tech.name
     template_args['type']=type.name
-
+    
     # Statics paths for the main template and the output path
     cookiecutter_template_path = add_base_path(DEFAULT_CONFIG['cookiecutter']['tecnology_args'][template_args.get('tecnology')][template_args.get('type')]['template_path'])
     output_path = add_base_path(DEFAULT_CONFIG['cookiecutter']['aux_stuff']['output_path'])

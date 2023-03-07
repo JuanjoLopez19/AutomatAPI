@@ -241,7 +241,7 @@ express_test_service = {
             "key_name": "key"
         },
         "config_file":"yes",
-        "connect_DB":"no",
+        "connect_DB":"yes",
         "db":{
             "db_host": "localhost",
             "db_type": "postgres",
