@@ -46,3 +46,7 @@ Thumbs.db
 venv/
 __pycache__/
 temp_templates/
+
+# Frontend gitignore
+automatAPI/.angular
+automatAPI/node_modules
