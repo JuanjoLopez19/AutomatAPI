@@ -1,23 +1,35 @@
-import {Sequelize, Dialect} from 'sequelize';
-const dbName = process.env.DB_NAME || 'test';
-const dbUser = process.env.DB_USER || 'test';
-const dbPass = process.env.DB_PASS || 'test';
-const db = new Sequelize(dbName, dbUser, dbPass, {
-    host: process.env.DB_HOST,
-    dialect: process.env.DB_TYPE as Dialect ,
-    port: parseInt(process.env.DB_PORT || '3306'),
-})
+import { Sequelize, Dialect } from "sequelize";
+import config from "../config/config";
 
-async function testConnection(){
-    try {
-        //alter = true updates the database if schema has changed
-        await db.sync({alter:true});
-        await db.authenticate();
-        console.log('Connection has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
+const dbName = config.db.database || "test";
+const dbUser = config.db.username || "test";
+const dbPass = config.db.password || "test";
+const dbDialect: Dialect =
+	(config.db.dialect as Dialect) || ("mysql" as Dialect);
+const dbHost = config.db.host || "localhost";
+const dbPort = config.db.port || "5432";
+
+const db = new Sequelize(dbName, dbUser, dbPass, {
+	host: dbHost,
+	dialect: dbDialect,
+	port: parseInt(dbPort),
+	define: {
+		timestamps: false
+	},
+}, );
+
+
+async function testConnection() {
+	try {
+		//alter = true updates the database if schema has changed
+		await db.sync({ alter: true });
+		await db.authenticate();
+		console.log("Connection has been established successfully.");
+	} catch (error) {
+		console.error("Unable to connect to the database:", error);
+	}
 }
+
 testConnection();
 
 export default db;
