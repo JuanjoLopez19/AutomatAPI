@@ -1,12 +1,11 @@
 import db from "../database";
-import { DataTypes, Model, Optional } from "sequelize";
+import { DataTypes, ENUM, Model, Optional } from "sequelize";
 
-enum role{
+export enum role{
 	"admin" = "admin",
 	"client" = "client"
 }
-
-interface UserAttributes {
+export interface UserAttributes {
 	id: number;
 	username: string;
 	password: string;
@@ -18,7 +17,7 @@ interface UserAttributes {
 export interface UserInput extends Optional<UserAttributes, "id"> {}
 export interface UserOuput extends Required<UserAttributes> {}
 
-class user extends Model<UserAttributes, UserInput> implements UserAttributes {
+class User extends Model<UserAttributes, UserInput> implements UserAttributes {
 	public id!: number;
 	public username!: string;
 	public password!: string;
@@ -27,10 +26,10 @@ class user extends Model<UserAttributes, UserInput> implements UserAttributes {
 	public role!: role;
 }
 
-user.init(
+User.init(
 	{
 		id: {
-			type: DataTypes.INTEGER.UNSIGNED,
+			type: DataTypes.INTEGER,
 			autoIncrement: true,
 			primaryKey: true,
 		},
@@ -51,7 +50,7 @@ user.init(
 			allowNull: false,
 		},
 		role: {
-			type: DataTypes.ENUM(...Object.values(role)),
+			type:  DataTypes.ENUM("admin", "client"),
 			allowNull: false,
 			field: "role",
 		},
@@ -62,4 +61,4 @@ user.init(
 	}
 );
 
-export default user;
+export default User;

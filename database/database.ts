@@ -13,6 +13,7 @@ const db = new Sequelize(dbName, dbUser, dbPass, {
 	host: dbHost,
 	dialect: dbDialect,
 	port: parseInt(dbPort),
+	logging: false,
 	define: {
 		timestamps: false
 	},
@@ -22,7 +23,7 @@ const db = new Sequelize(dbName, dbUser, dbPass, {
 async function testConnection() {
 	try {
 		//alter = true updates the database if schema has changed
-		await db.sync({ alter: true });
+		await db.sync();
 		await db.authenticate();
 		console.log("Connection has been established successfully.");
 	} catch (error) {
