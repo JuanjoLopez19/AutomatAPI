@@ -1,6 +1,6 @@
 {
 	"name": "automatapi",
-	"version": "1.0.0",
+	"version": "0.0.0",
 	"description": "Final degree project based on a complete system that allows the user create from templates APIs",
 	"main": "index.js",
 	"scripts": {
@@ -21,6 +21,7 @@
 	"homepage": "https://github.com/JuanjoLopez19/AutomatAPI#readme",
 	"dependencies": {
 		"@types/cors": "^2.8.13",
+		"bcryptjs": "^2.4.3",
 		"cors": "^2.8.5",
 		"dotenv": "^16.0.3",
 		"express": "^4.18.2",

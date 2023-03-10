@@ -11,6 +11,7 @@ const config = {
 		database: process.env.DB_NAME || "postgres",
 		dialect: process.env.DB_DIALECT || "postgres",
 	},
+	backend_url: process.env.BACKEND_URL || "http://localhost:5000",
 };
 
 export default config;
