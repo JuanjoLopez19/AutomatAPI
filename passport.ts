@@ -1,34 +1,34 @@
-import bcrypt from "bcryptjs";
-import passport, { PassportStatic } from "passport";
-import { Strategy as LocalStrategy } from "passport-local";
-import User from "./database/models/user";
+import { Request } from "express";
+import passport from "passport";
+import passportJWT from "passport-jwt";
+const JWTStrategy = passportJWT.Strategy;
+import config from "./config/config";
 
-const auth: PassportStatic = passport;
+const cookieExtractor = (req: Request) => {
+	let jwt = null;
 
-auth.use(
-	new LocalStrategy(
+	if (req && req.cookies) {
+		jwt = req.cookies["jwt"];
+	}
+
+	return jwt;
+};
+
+passport.use(
+	"jwt",
+	new JWTStrategy(
 		{
-			usernameField: "email",
-			passwordField: "password",
+			jwtFromRequest: cookieExtractor,
+			secretOrKey: config.secretKey,
 		},
-		function (username, password, done) {
-			return User.findOne({ where: { email: username } })
-				.then((user) => {
-					if (!user) {
-						return done(null, false, { message: "Incorrect email!" });
-					}
-					return bcrypt.compare(password, user.password).then((result) => {
-						if (!result) {
-							return done(null, false, { message: "Incorrect password!" });
-						}
-						return done(null, user);
-					});
-				})
-				.catch((err) => {
-					return done(err);
-				});
+		(jwtPayload, done) => {
+			const { expiration } = jwtPayload;
+
+			if (Date.now() > expiration) {
+				done("Unauthorized", false);
+			}
+
+			done(null, jwtPayload);
 		}
 	)
 );
-
-export default auth;

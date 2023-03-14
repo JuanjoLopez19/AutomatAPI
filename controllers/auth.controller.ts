@@ -2,7 +2,6 @@ import db from "../database/database";
 import User, { UserAttributes } from "../database/models/user";
 import { Request, Response } from "express";
 import config from "../config/config";
-import { Op } from "sequelize";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { generateToken } from "../middleware/auxiliaryFunctions";
@@ -68,59 +67,54 @@ export const Signup = (req: Request, res: Response) => {
 };
 
 export const Signin = async (req: Request, res: Response) => {
-	if (req.body.username != undefined && req.body.password != undefined) {
-		try {
-			let user: User | null = await User.findOne({
-				where: {
-					username: req.body.username,
-				},
-			});
-			if (!user) {
-				res.status(404).send({ message: "User Not found." });
-			}
-			let passwordIsValid = bcrypt.compareSync(
-				req.body.password,
-				// @ts-ignore: Object is possibly 'null'.
-				user.password || ""
-			);
-			if (!passwordIsValid) {
-				return res.status(401).send({
-					accessToken: null,
-					message: "Invalid Password!",
-				});
-			}
-			// Posibility to add the user account activation
-			let sessionObject = formatSessionObject(user);
-			if (
-				sessionObject &&
-				Object.keys(sessionObject).length !== 0 &&
-				Object.getPrototypeOf(sessionObject) === Object.prototype
-			) {
-				return res.status(200).send(sessionObject);
-			} else {
-				return res.status(500).send({ message: "Internal server error" });
-			}
-		} catch (err) {
-			console.log("error: ", err);
-			return res.status(500).send({ message: "Internal server error" });
-		}
+	let user: User;
+	if (!res.locals.user) {
+		res.status(400).json({
+			error: "user not found",
+		});
+	}
+	user = res.locals.user;
+	// Posibility to add the user account activation
+	let sessionObject = formatSessionObject(user);
+	let token = jwt.sign(
+		{
+			id: user.id,
+			username: user.username,
+			expiration: Date.now() + config.expiration,
+		},
+		config.secretKey
+	);
+	if (
+		sessionObject &&
+		Object.keys(sessionObject).length !== 0 &&
+		Object.getPrototypeOf(sessionObject) === Object.prototype
+	) {
+		return res
+			.cookie("jwt", token, { httpOnly: true, secure: false })
+			.status(200)
+			.send(sessionObject);
 	} else {
-		res.status(400).send({ message: "Bad Request" });
+		return res.status(500).send({ message: "Internal server error" });
 	}
 };
 
+export const Signout = (req: Request, res: Response) => {
+	if (req.cookies.jwt) {
+		res.clearCookie("jwt").status(200).send({ message: "User logged out" });
+	} else {
+		res.status(400).send({ message: "Invalid JWT" });
+	}
+};
 const formatSessionObject = (user: User | null) => {
 	let sessionObject = {};
 	if (user) {
 		try {
-			let token = jwt.sign({ id: user.id }, config.secretKey, {});
 			sessionObject = {
 				id: user.id,
 				username: user.username,
 				email: user.email,
 				role: user.role,
 				date: user.date,
-				access_token: token,
 			};
 		} catch (err) {
 			console.log("Error on formatting the session Object", err);

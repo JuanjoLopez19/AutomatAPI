@@ -5,6 +5,7 @@ const config = {
 	port: process.env.PORT || "3000",
 	secretKey: process.env.SECRET_KEY || "secretKey",
 	saltRounds: Number(process.env.SALT_ROUNDS) || 10,
+	expiration: Number(process.env.EXPIRATION_TIME) || 180,
 	db: {
 		host: process.env.DB_HOST || "localhost",
 		port: process.env.DB_PORT || "5432",
