@@ -15,10 +15,9 @@ const db = new Sequelize(dbName, dbUser, dbPass, {
 	port: parseInt(dbPort),
 	logging: false,
 	define: {
-		timestamps: false
+		timestamps: false,
 	},
-}, );
-
+});
 
 async function testConnection() {
 	try {

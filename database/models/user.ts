@@ -1,13 +1,13 @@
 import db from "../database";
 import { DataTypes, ENUM, Model, Optional } from "sequelize";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 
 export enum role {
 	"admin" = "admin",
 	"client" = "client",
 }
 export interface UserAttributes {
-	id: number;
+	id?: number;
 	username: string;
 	password: string;
 	email: string;
@@ -66,19 +66,12 @@ User.init(
 		password_token: {
 			type: DataTypes.STRING(200),
 			allowNull: false,
-		}
+		},
 	},
 	{
 		sequelize: db,
-		tableName: "pruebas",
+		tableName: "users",
 	}
 );
-
-User.beforeSave((user) => {
-	if (user.changed("password")) {
-		user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
-	}
-});
-
 
 export default User;

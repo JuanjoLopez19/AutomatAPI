@@ -38,40 +38,42 @@ class Templates
 	public template_ref!: string;
 }
 
-Templates.init({
-	id: {
-		type: DataTypes.INTEGER,
-		autoIncrement: true,
-		primaryKey: true,
+Templates.init(
+	{
+		id: {
+			type: DataTypes.INTEGER,
+			autoIncrement: true,
+			primaryKey: true,
+		},
+		user_id: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+		},
+		app_name: {
+			type: DataTypes.STRING(200),
+			allowNull: false,
+		},
+		date_created: {
+			type: DataTypes.DATE,
+			allowNull: false,
+		},
+		tech_type: {
+			type: DataTypes.ENUM("services", "app_web"),
+			allowNull: false,
+		},
+		technology: {
+			type: DataTypes.ENUM("flask", "django", "express"),
+			allowNull: false,
+		},
+		template_ref: {
+			type: DataTypes.STRING(200),
+			allowNull: false,
+		},
 	},
-    user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
-    app_name: {
-        type: DataTypes.STRING(200),
-        allowNull: false,
-    },
-    date_created: {
-        type: DataTypes.DATE,
-        allowNull: false,
-    },
-    tech_type: {
-        type: DataTypes.ENUM("services", "app_web"),
-        allowNull: false,
-    },
-    technology: {
-        type: DataTypes.ENUM("flask", "django", "express"),
-        allowNull: false,
-    },
-    template_ref: {
-        type: DataTypes.STRING(200),
-        allowNull: false,
-    },
-}, {
-    sequelize: db,
-    tableName: "templates",
-});
-
+	{
+		sequelize: db,
+		tableName: "templates",
+	}
+);
 
 export default Templates;
