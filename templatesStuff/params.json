@@ -5,10 +5,10 @@
 				"services": {
 					"app_name": "flask_services",
 					"port": "5000",
-					"cors":"yes",
-					"use_ssl":"no",
+					"cors": "yes",
+					"use_ssl": "no",
 					"connect_DB": "",
-					"db":{
+					"db": {
 						"db_host": "localhost",
 						"db_type": "",
 						"db_port": "",
@@ -28,8 +28,8 @@
 					"app_name": "",
 					"port": "",
 					"connect_DB": "",
-					"use_ssl":"no",
-					"db":{
+					"use_ssl": "no",
+					"db": {
 						"db_host": "localhost",
 						"db_type": "",
 						"db_port": "",
@@ -37,7 +37,7 @@
 						"db_user": "",
 						"db_pwd": ""
 					},
-					"cors":"yes",
+					"cors": "yes",
 					"table_name": "",
 					"config_file": "",
 					"type_config_file": "",
@@ -58,10 +58,10 @@
 					"strict": "yes",
 					"body_parser": "yes",
 					"cors": "yes",
-					"use_ssl":"no",
+					"use_ssl": "no",
 					"config_file": "",
 					"connect_DB": "",
-					"db":{
+					"db": {
 						"db_host": "localhost",
 						"db_type": "",
 						"db_port": "",
@@ -81,12 +81,12 @@
 					"strict": "yes",
 					"body_parser": "yes",
 					"cors": "yes",
-					"use_ssl":"no",
+					"use_ssl": "no",
 					"config_file": "",
 					"connect_DB": "",
 					"view_engine": "ejs",
 					"css_engine": "css",
-					"db":{
+					"db": {
 						"db_host": "localhost",
 						"db_type": "",
 						"db_port": "",
@@ -102,16 +102,16 @@
 			},
 			"django": {
 				"services": {
-					"app_name":"django_services",
+					"app_name": "django_services",
 					"port": "8000",
 					"host": "localhost",
-					"use_ssl":"no",
-					"language_code":"en-us",
-					"admin_url":"",
-					"admin_url_name":"",
-					"web_browser":"yes",
-					"web_browser_url":"",
-					"db":{
+					"use_ssl": "no",
+					"language_code": "en-us",
+					"admin_url": "",
+					"admin_url_name": "",
+					"web_browser": "yes",
+					"web_browser_url": "",
+					"db": {
 						"db_host": "localhost",
 						"db_type": "",
 						"db_port": "",
@@ -124,16 +124,16 @@
 					"template_path": "./Templates/django/services"
 				},
 				"app_web": {
-					"app_name":"django_services",
+					"app_name": "django_services",
 					"port": "8000",
 					"host": "localhost",
-					"use_ssl":"no",
-					"language_code":"en-us",
-					"admin_url":"",
-					"admin_url_name":"",
-					"web_browser":"yes",
-					"web_browser_url":"",
-					"db":{
+					"use_ssl": "no",
+					"language_code": "en-us",
+					"admin_url": "",
+					"admin_url_name": "",
+					"web_browser": "yes",
+					"web_browser_url": "",
+					"db": {
 						"db_host": "localhost",
 						"db_type": "",
 						"db_port": "",
@@ -153,12 +153,12 @@
 				"endpoint_url": "/endpoint",
 				"bp_name": "",
 				"endpoint_comment": "",
-				"methods":{
+				"methods": {
 					"get_m": "yes",
 					"put": "no",
 					"post": "no",
 					"delete": "no"
-				},		
+				},
 				"template_path": "./Templates/endpoints/flask"
 			},
 			"express": {
@@ -171,10 +171,10 @@
 			},
 			"django": {
 				"endpoint_name": "endpoint",
-				"logged_in":"",
+				"logged_in": "",
 				"endpoint_url": "/endpoint",
 				"endpoint_comment": "",
-				"methods":{
+				"methods": {
 					"get_m": "yes",
 					"put": "no",
 					"post": "no",
@@ -190,16 +190,16 @@
 			"controllers": "./Templates/express/aux_stuff/controllers",
 			"app_listen": "./Templates/express/aux_stuff/listen",
 			"app_ending": "./Templates/express/aux_stuff/app_ending",
-			"sub_app_services":{
-				"subapp_name":"",
-				"middleware_name":"",
-				"logged_in":"",
-				"model":{
-					"model_name":"",
-					"model_fields":[]
+			"sub_app_services": {
+				"subapp_name": "",
+				"middleware_name": "",
+				"logged_in": "",
+				"model": {
+					"model_name": "",
+					"model_fields": []
 				},
 				"endpoint_name": "",
-				"methods":{
+				"methods": {
 					"get_m": "yes",
 					"put": "no",
 					"post": "no",
@@ -207,17 +207,17 @@
 				},
 				"template_path": "./Templates/django/aux_stuff/sub_app_services"
 			},
-			"sub_app_app_web":{
-				"subapp_name":"",
-				"middleware_name":"",
-				"logged_in":"",
-				"model_editable":"",
-				"model":{
-					"model_name":"",
-					"model_fields":[]
+			"sub_app_app_web": {
+				"subapp_name": "",
+				"middleware_name": "",
+				"logged_in": "",
+				"model_editable": "",
+				"model": {
+					"model_name": "",
+					"model_fields": []
 				},
 				"endpoint_name": "",
-				"methods":{
+				"methods": {
 					"get_m": "yes",
 					"put": "no",
 					"post": "no",
@@ -225,14 +225,13 @@
 				},
 				"template_path": "./Templates/django/aux_stuff/sub_app_app_web"
 			},
-			"model_fields":{
-				"name":"",
-				"type":"",
-				"null":"",
-				"blank":"",
-				"default":""
+			"model_fields": {
+				"name": "",
+				"type": "",
+				"null": "",
+				"blank": "",
+				"default": ""
 			}
-
 		}
 	}
 }
