@@ -1,9 +1,10 @@
 import db from "../database";
 import { DataTypes, ENUM, Model, Optional } from "sequelize";
+import bcrypt from "bcryptjs";
 
-export enum role{
+export enum role {
 	"admin" = "admin",
-	"client" = "client"
+	"client" = "client",
 }
 export interface UserAttributes {
 	id: number;
@@ -12,6 +13,8 @@ export interface UserAttributes {
 	email: string;
 	date: Date;
 	role: role;
+	access_token: string;
+	password_token: string;
 }
 
 export interface UserInput extends Optional<UserAttributes, "id"> {}
@@ -24,6 +27,8 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
 	public email!: string;
 	public date!: Date;
 	public role!: role;
+	public access_token!: string;
+	public password_token!: string;
 }
 
 User.init(
@@ -50,15 +55,30 @@ User.init(
 			allowNull: false,
 		},
 		role: {
-			type:  DataTypes.ENUM("admin", "client"),
+			type: DataTypes.ENUM("admin", "client"),
 			allowNull: false,
 			field: "role",
 		},
+		access_token: {
+			type: DataTypes.STRING(200),
+			allowNull: false,
+		},
+		password_token: {
+			type: DataTypes.STRING(200),
+			allowNull: false,
+		}
 	},
 	{
 		sequelize: db,
-		tableName: "users",
+		tableName: "pruebas",
 	}
 );
+
+User.beforeSave((user) => {
+	if (user.changed("password")) {
+		user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
+	}
+});
+
 
 export default User;
