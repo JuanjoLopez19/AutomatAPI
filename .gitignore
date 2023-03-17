@@ -41,6 +41,7 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+.env
 
 # Virtual Env
 venv/
@@ -50,3 +51,6 @@ temp_templates/
 # Frontend gitignore
 automatAPI/.angular
 automatAPI/node_modules
+
+# Backend gitignore
+dist/*

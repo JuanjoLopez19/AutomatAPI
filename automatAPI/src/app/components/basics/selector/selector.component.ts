@@ -15,14 +15,13 @@ export class SelectorComponent {
     /* */
   }
 
-  manageClick(event: MouseEvent) {
-    const target = (event.target as HTMLElement).id;
-    if (this.active === target && this.active === 'sign_in')
-      this.SignIn.emit(target);
-    else if (this.active === target && this.active === 'sign_up')
-      this.SignUp.emit(target);
-    else {
-      this.active = (event.target as HTMLElement).id;
+  manageClick(event: MouseEvent, target: number) {
+    console.log(target, this.active);
+    if (!target) {
+      this.active = 'sign_in';
+      this.activeChange.emit(this.active);
+    } else {
+      this.active = 'sign_up';
       this.activeChange.emit(this.active);
     }
   }

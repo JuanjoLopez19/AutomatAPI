@@ -22,6 +22,7 @@ import {PasswordModule} from 'primeng/password';
 import {CalendarModule} from 'primeng/calendar';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {DividerModule} from 'primeng/divider';
+import { ButtonModule } from 'primeng/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
@@ -58,7 +59,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PasswordModule,
     CalendarModule,
     RadioButtonModule,
-    DividerModule
+    DividerModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent],

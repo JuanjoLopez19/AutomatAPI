@@ -54,6 +54,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   onActiveChange(active: string) {
+    console.log(active);
     this.active = active;
   }
 }

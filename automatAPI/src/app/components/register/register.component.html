@@ -6,12 +6,13 @@
           <h3>{{ "T_SIGN_UP_NOW" | translate }}</h3>
         </span>
       </div>
-      <div class="row p-5">
-        <div class="col-12">
-          <div class="row">
+      <form class="row py-3 px-3">
+        <div class="col-1"></div>
+        <div class="col-10">
+          <div class="row mb-2">
             <div class="col-6">
               <div class="row">
-                <span class="text-center">
+                <span>
                   <h3>{{ "T_EMAIL" | translate }}</h3>
                 </span>
               </div>
@@ -31,7 +32,7 @@
             </div>
             <div class="col-6">
               <div class="row">
-                <span class="text-center">
+                <span>
                   <h3>{{ "T_USERNAME" | translate }}</h3>
                 </span>
               </div>
@@ -50,13 +51,104 @@
               </div>
             </div>
           </div>
+          <div class="row mb-2">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-6">
+                  <div class="row">
+                    <span>
+                      <h3>{{ "T_FIRST_NAME" | translate }}</h3>
+                    </span>
+                  </div>
+                  <div class="row">
+                    <div class="field">
+                      <span class="p-input-icon-right">
+                        <i class="pi pi-user"></i>
+                        <input
+                          type="text"
+                          id="username"
+                          placeholder="{{
+                            'T_FIRST_NAME_PLACEHOLDER' | translate
+                          }}"
+                          pInputText
+                        />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="row">
+                    <span>
+                      <h3>{{ "T_LAST_NAME" | translate }}</h3>
+                    </span>
+                  </div>
+                  <div class="row">
+                    <div class="field">
+                      <span class="p-input-icon-right">
+                        <i class="pi pi-user"></i>
+                        <input
+                          type="text"
+                          id="username"
+                          placeholder="{{
+                            'T_LAST_NAME_PLACEHOLDER' | translate
+                          }}"
+                          pInputText
+                        />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-6">
+                  <div class="row">
+                    <span>
+                      <h3>{{ "T_PWD" | translate }}</h3>
+                    </span>
+                  </div>
+                  <div class="row">
+                    <div class="field">
+                      <p-password
+                        placeholder="{{ 'T_PWD_PLACEHOLDER' | translate }}"
+                        [toggleMask]="true"
+                        [feedback]="false"
+                      ></p-password>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="row">
+                    <span>
+                      <h3>{{ "T_REPEAT_PWD" | translate }}</h3>
+                    </span>
+                  </div>
+                  <div class="row">
+                    <div class="field">
+                      <p-password
+                        placeholder="{{
+                          'T_REPEAT_PWD_PLACEHOLDER' | translate
+                        }}"
+                        [toggleMask]="true"
+                        [feedback]="false"
+                      ></p-password>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="row">
             <div class="col-12">
               <div class="row">
                 <div class="col-6">
                   <div class="row">
-                    <span class="text-center"
-                      ><h3>{{ "T_BIRTHDATE" | translate }}</h3>
+                    <span>
+                      <h3>{{ "T_BIRTHDATE" | translate }}</h3>
                     </span>
                   </div>
                   <div class="row">
@@ -74,54 +166,24 @@
                   </div>
                 </div>
                 <div class="col-6">
+                  <div class="row mb-4"></div>
                   <div class="row">
-                    <span class="text-center"
-                      ><h3>{{ "T_GENDER" | translate }}</h3>
-                    </span>
-                  </div>
-                  <div class="row"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <div class="row">
-              <div class="col-6">
-                <div class="row">
-                  <span class="text-center">
-                    <h3>{{ "T_PWD" | translate }}</h3>
-                  </span>
-                </div>
-                <div class="row">
-                  <p-password
-                    placeholder="{{ 'T_PWD_PLACEHOLDER' | translate }}"
-                    [toggleMask]="true"
-                    [feedback]="false"
-                  ></p-password>
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="row">
-                  <span class="text-center"
-                    ><h3>{{ "T_REPEAT_PWD" | translate }}</h3>
-                  </span>
-                </div>
-                <div class="row">
-                  <div class="field">
-                    <p-password
-                      placeholder="{{ 'T_REPEAT_PWD_PLACEHOLDER' | translate }}"
-                      [toggleMask]="true"
-                      [feedback]="false"
-                    ></p-password>
+                    <div class="field w-75">
+                      <button type="submit" class="btn btn-warning w-100">
+                        <span>
+                          {{ "T_SIGN_UP" | translate }}
+                          <i class="pi pi-check ml-5"></i>
+                        </span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+        <div class="col-1"></div>
+      </form>
     </div>
   </div>
 </div>

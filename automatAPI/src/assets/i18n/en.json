@@ -6,7 +6,7 @@
   "T_NO_ACCOUNT": "Don't have an account?",
   "T_HAVE_ACCOUNT": "Already have an account?",
   "T_REGISTER_NOW": "Register now!!",
-  "T_FORGET_PWD": "Forget password?",
+  "T_FORGET_PWD": "Forgotted password?",
   "T_REM_PWD": "Remember password",
   "T_SIGN_IN_NOW": "Sign in now",
   "T_SIGN_UP_NOW": "Register now",
@@ -18,5 +18,9 @@
   "T_BIRTHDATE": "Datebirth",
   "T_DATE_PLACEHOLDER": "mm/dd/yyyy",
   "T_REPEAT_PWD": "Confirm password",
-  "T_REPEAT_PWD_PLACEHOLDER": "Repeat the password"
+  "T_REPEAT_PWD_PLACEHOLDER": "Repeat the password",
+  "T_FIRST_NAME": "Name",
+  "T_FIRST_NAME_PLACEHOLDER": "Introduce your name",
+  "T_LAST_NAME": "Surname",
+  "T_LAST_NAME_PLACEHOLDER": "Introduce your surname"
 }
