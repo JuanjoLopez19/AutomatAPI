@@ -14,9 +14,9 @@ export class UserManagementComponent implements OnInit {
   currentSize!: string;
   active: string;
   constructor(private router: Router, private translate: TranslateService) {
-    translate.addLangs(['en', 'es']);
-    translate.setDefaultLang('es');
-    translate.use('es');
+    translate.addLangs(['en', 'es-Es']);
+    translate.setDefaultLang('es-ES');
+    translate.use('es-ES');
     this.active = 'sign_in';
   }
 

@@ -3,15 +3,15 @@ import BodyParser from "body-parser";
 import cors from "cors";
 import routes from "./routes";
 import passport from "passport";
-import cookieParser from 'cookie-parser'
+import cookieParser from "cookie-parser";
 
 const app: Express = express();
 
 app.use(BodyParser.json());
 
-app.use(cors());
+
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(passport.initialize());

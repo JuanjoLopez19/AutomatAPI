@@ -23,11 +23,7 @@ export class LoginComponent {
   }
 
   onLoginSubmit($event: SubmitEvent): void {
-    if(this.loginForm.invalid) {
-      return;
-    }else{
+    console.log("entre");
 
-
-    }
   }
 }
