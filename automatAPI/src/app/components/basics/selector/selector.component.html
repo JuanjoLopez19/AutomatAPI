@@ -3,13 +3,13 @@
     <div class="main">
       <div class="row">
         <div class="col-6 p-3 d-flex justify-content-center">
-          <button type="button" class="btn" id="sign_in" [ngClass]="{'button-active btn-warning': active === 'sign_in', 'btn-light': active !== 'sign_in' }" (click)="manageClick($event)">
-            {{ "T_SIGN_IN" | translate }}
+          <button type="button" class="btn" id="sign_in" [ngClass]="{'button-active btn-warning': active === 'sign_in', 'btn-light': active !== 'sign_in' }" (click)="manageClick($event, 0)">
+            <h4>{{ "T_SIGN_IN" | translate }}</h4>
           </button>
         </div>
         <div class="col-6 p-3 d-flex justify-content-center">
-          <button type="button" class="btn" id="sign_up" [ngClass]="{'button-active btn-warning': active === 'sign_up', 'btn-light': active !== 'sign_up'}" (click)="manageClick($event)">
-            {{ "T_SIGN_UP" | translate }}
+          <button type="button" class="btn" id="sign_up" [ngClass]="{'button-active btn-warning': active === 'sign_up', 'btn-light': active !== 'sign_up'}" (click)="manageClick($event, 1)">
+            <h4>{{ "T_SIGN_UP" | translate }}</h4>
           </button>
         </div>
       </div>

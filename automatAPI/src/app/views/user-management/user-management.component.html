@@ -10,12 +10,12 @@
         <h1 class="text-center">{{ "T_AUTOMATAPI" | translate }}</h1>
         <div class="row">
           <div class="col-12">
-            <div class="row">
+            <div class="row" [ngClass]="{ 'pb-5': active === 'sign_in' }">
               <div class="col-12" *ngIf="active === 'sign_in'">
-                <app-login class="p-5"></app-login>
+                <app-login class=""></app-login>
               </div>
               <div class="col-12" *ngIf="active === 'sign_up'">
-                <app-register class="p-5"></app-register>
+                <app-register></app-register>
               </div>
               <div class="col-12" *ngIf="active === 'forgot_pwd'">
                 <app-forgot-password></app-forgot-password>
@@ -23,9 +23,9 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row" [ngClass]="{ 'mt-2': active === 'sign_up' }">
           <div class="col-12">
-            <div class="row">
+            <div class="row mb-2" *ngIf="active !== 'sign_up'">
               <div class="text-center">
                 <span
                   >{{ "T_NO_ACCOUNT" | translate }}
@@ -36,25 +36,23 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-2"></div>
-              <div class="col-8">
+              <div class="col-1"></div>
+              <div class="col-10">
                 <div class="row w-100">
                   <app-selector
+                    class="d-flex justify-content-end"
                     [active]="active"
                     (activeChange)="onActiveChange($event)"
                   ></app-selector>
                 </div>
               </div>
-              <div class="col-2"></div>
+              <div class="col-1"></div>
             </div>
-            <div class="row">
+            <div class="row mt-2" *ngIf="active !== 'forgot_pwd'">
               <div class="text-center">
-                <span
-                  >{{ "T_FORGET_PWD" | translate }}
-                  <h2 (click)="active = 'forgot_pwd'" class="d-inline">
-                    {{ "T_REM_PWD" | translate }}
-                  </h2>
-                </span>
+                <small (click)="active = 'forgot_pwd'" class="d-inline">
+                  {{ "T_REM_PWD" | translate }}
+                </small>
               </div>
             </div>
           </div>
