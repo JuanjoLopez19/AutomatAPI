@@ -22,5 +22,10 @@
   "T_FIRST_NAME": "Nombre",
   "T_FIRST_NAME_PLACEHOLDER": "Introduce tu nombre",
   "T_LAST_NAME": "Apellidos",
-  "T_LAST_NAME_PLACEHOLDER": "Introduce tus apellidos"
+  "T_LAST_NAME_PLACEHOLDER": "Introduce tus apellidos",
+  "error":{
+    "T_EMAIL_REQ": "El correo electrónico es obligatorio",
+    "T_EMAIL_INVALID": "El correo electrónico no es válido",
+    "T_PWD_REQ": "La contraseña es obligatoria"
+  }
 }

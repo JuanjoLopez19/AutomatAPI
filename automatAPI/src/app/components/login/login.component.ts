@@ -1,12 +1,33 @@
 import { Component } from '@angular/core';
-import { faUser } from '@fortawesome/free-regular-svg-icons';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { LoginService } from 'src/app/api/auth/login/login.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  faUser = faUser;
-  constructor() { /* */ }
+  loginForm: FormGroup;
+  constructor(private loginService: LoginService) {
+    this.loginForm = new FormGroup({
+      email: new FormControl(undefined, {
+        validators: [Validators.required, Validators.email],
+        updateOn: 'submit',
+      }),
+      password: new FormControl(undefined, {
+        validators: [Validators.required],
+        updateOn: 'submit',
+      }),
+    });
+  }
+
+  onLoginSubmit($event: SubmitEvent): void {
+    if(this.loginForm.invalid) {
+      return;
+    }else{
+
+
+    }
+  }
 }

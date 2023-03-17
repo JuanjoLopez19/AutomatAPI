@@ -1,4 +1,16 @@
+@import "src/shared/variables";
+
 h3{
   font-size: 1.25rem;
   font-weight: 600;
+}
+
+button {
+  border-radius: 20px;
+  padding: 1rem;
+}
+
+.btn-warning{
+  background-color: $primary-color;
+  color: $white;
 }

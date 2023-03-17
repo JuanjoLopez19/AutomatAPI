@@ -22,5 +22,10 @@
   "T_FIRST_NAME": "Name",
   "T_FIRST_NAME_PLACEHOLDER": "Introduce your name",
   "T_LAST_NAME": "Surname",
-  "T_LAST_NAME_PLACEHOLDER": "Introduce your surname"
+  "T_LAST_NAME_PLACEHOLDER": "Introduce your surname",
+  "error":{
+    "T_EMAIL_REQ": "The email is required",
+    "T_EMAIL_INVALID": "The email is invalid",
+    "T_PWD_REQ": "The password is required"
+  }
 }

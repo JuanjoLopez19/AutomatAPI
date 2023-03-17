@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Sizes } from 'src/app/common/enums/enums';
 
+
 @Component({
   selector: 'app-user-management',
   templateUrl: './user-management.component.html',
