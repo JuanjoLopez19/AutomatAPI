@@ -1,3 +1,4 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Compiled output
 /dist
@@ -53,7 +54,6 @@ automatAPI/node_modules
 
 # Backend gitignore
 dist/*
-nodeBack/
 nodeBack/node_modules
 nodeBack/.env
 nodeBack/dist
