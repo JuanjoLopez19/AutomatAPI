@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/env';
 import { loginParms } from 'src/app/common/interfaces/interfaces';
-import { Observable } from 'rxjs';
+import { catchError, Observable, ObservableInput } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,10 +10,18 @@ import { Observable } from 'rxjs';
 export class LoginService {
   constructor(private http: HttpClient) {
     /**/
-    console.log(environment)
+    console.log(environment);
   }
 
   login(loginData: loginParms): Observable<any> {
-    return this.http.post(`${environment.apiHost}${environment.apiPort}/api/auth/sign in`, loginData);
+    return this.http.post(
+      `${environment.apiHost}${environment.apiPort}/api/auth/signin`,
+      loginData
+    );
+  }
+
+  private handleError(error: HttpErrorResponse): any {
+    console.log(error);
+    return error;
   }
 }
