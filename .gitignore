@@ -54,6 +54,7 @@ automatAPI/node_modules
 
 # Backend gitignore
 dist/*
+nodeBack/
 nodeBack/node_modules
 nodeBack/.env
 nodeBack/dist

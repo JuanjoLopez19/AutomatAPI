@@ -1,0 +1,15 @@
+Django==4.1.6
+django-rest-framework==0.1.0
+djangorestframework==3.14.0
+{%- if cookiecutter.use_ssl%}
+django-sslserver==0.22
+{%- endif %}
+{%- if cookiecutter.db %}
+{%- if cookiecutter.db.db_type == "postgresql" %}
+psycopg2==2.9.5
+{%- elif cookiecutter.db.db_type == "mysql" %}
+mysqlclient==2.1.1
+{%- elif cookiecutter.db.db_tpe == "oracle" %}
+cx-Oracle==8.3.0
+{%- endif %}
+{% endif %}

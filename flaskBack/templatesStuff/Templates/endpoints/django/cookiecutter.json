@@ -1,0 +1,1 @@
+{"endpoint_name": "endpoint3", "logged_in": "yes", "endpoint_url": "endpoint3", "endpoint_comment": "Comment for the endpoint 3", "methods": {"get_m": "no", "put": "no", "post": "yes", "delete": "no"}, "template_path": "./Templates/endpoints/django", "file_folder_name": "endpoint3_3956b04f-c2e9-4420-88c3-3d71e3ae2ecf", "file_name": "endpoint3"}
