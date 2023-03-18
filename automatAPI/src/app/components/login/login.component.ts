@@ -24,7 +24,7 @@ export class LoginComponent {
   }
 
   onLoginSubmit($event: SubmitEvent): void {
-    if (this.loginForm.invalid) {
+   if (this.loginForm.invalid) {
       return;
     } else {
       this.loginService.login(this.loginForm.value).subscribe({

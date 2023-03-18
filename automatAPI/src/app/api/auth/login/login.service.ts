@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/env';
 import { loginParms } from 'src/app/common/interfaces/interfaces';
-import { catchError, Observable, ObservableInput } from 'rxjs';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,6 @@ import { catchError, Observable, ObservableInput } from 'rxjs';
 export class LoginService {
   constructor(private http: HttpClient) {
     /**/
-    console.log(environment);
   }
 
   login(loginData: loginParms): Observable<any> {
