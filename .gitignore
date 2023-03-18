@@ -49,5 +49,11 @@ __pycache__/
 temp_templates/
 
 # Frontend gitignore
-automatAPI/.angular
+automatAPI/
 automatAPI/node_modules
+
+# Backend gitignore
+dist/*
+nodeBack/node_modules/
+nodeBack/.env
+nodeBack/dist

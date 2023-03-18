@@ -92,7 +92,7 @@ export const Signin = async (req: Request, res: Response) => {
 		return res
 			.cookie("jwt", token, { httpOnly: true, secure: false })
 			.status(200)
-			.send(sessionObject);
+			.send({ data: sessionObject, status: 200, message: "User logged in" });
 	} else {
 		return res.status(500).send({ message: "Internal server error" });
 	}
