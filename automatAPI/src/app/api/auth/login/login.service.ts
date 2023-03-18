@@ -16,7 +16,13 @@ export class LoginService {
   login(loginData: loginParms): Observable<any> {
     return this.http.post(
       `${environment.apiHost}${environment.apiPort}/api/auth/signin`,
-      loginData
+      loginData,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      }
     );
   }
 

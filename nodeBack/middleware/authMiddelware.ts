@@ -63,30 +63,37 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 };
 
 export const verifySignIn = (req: Request, res: Response, next: any) => {
-	if (req.body.username != undefined && req.body.password != undefined) {
+	if (req.body.email != undefined && req.body.password != undefined) {
 		try {
 			User.findOne({
 				where: {
-					username: req.body.username,
+					email: req.body.email,
 				},
 			})
 				.then((user: User | null) => {
-					console.log("Pre select pwf")
-					let passwordIsValid = bcrypt.compareSync(
-						req.body.password,
-						// @ts-ignore: Object is possibly 'null'.
-						user.password || ""
-					);
+					if (user) {
+						let passwordIsValid = bcrypt.compareSync(
+							req.body.password,
+							// @ts-ignore: Object is possibly 'null'.
+							user.password || ""
+						);
 
-					if (!passwordIsValid) {
-						return res.status(401).send({
-							message: "Invalid Password!",
-						});
+						if (!passwordIsValid) {
+							return res.status(401).send({
+								message: "Invalid Password!",
+							});
+						}
+
+						res.locals.user = user;
+						next();
+					} else {
+						res
+							.status(404)
+							.contentType("application/json")
+							.json({ error: 'User not found' })
+							.send();
+						return;
 					}
-
-					res.locals.user = user;
-					console.log("Post select user")
-					next();
 				})
 				.catch((err: any) => {
 					res

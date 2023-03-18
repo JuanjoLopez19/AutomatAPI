@@ -25,14 +25,17 @@ export class LoginComponent {
 
   onLoginSubmit($event: SubmitEvent): void {
     if (this.loginForm.invalid) {
-      console.log('invalid form');
       return;
     } else {
-      console.log('valid form');
-      this.loginService.login(this.loginForm.value).subscribe((res: HttpErrorResponse) => {
-        if (res.status !== 200 && !res.ok) {
-          console.error(res.message);
-        }
+      this.loginService.login(this.loginForm.value).subscribe({
+        next: (response: HttpResponse<any>) => {
+          console.log('next');
+          console.log(response);
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log('error');
+          console.log(error);
+        },
       });
     }
   }
