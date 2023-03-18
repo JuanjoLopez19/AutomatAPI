@@ -1,3 +1,4 @@
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from 'src/app/api/auth/login/login.service';
@@ -23,11 +24,16 @@ export class LoginComponent {
   }
 
   onLoginSubmit($event: SubmitEvent): void {
-    if(this.loginForm.invalid) {
+    if (this.loginForm.invalid) {
+      console.log('invalid form');
       return;
-    }else{
-
-
+    } else {
+      console.log('valid form');
+      this.loginService.login(this.loginForm.value).subscribe((res: HttpErrorResponse) => {
+        if (res.status !== 200 && !res.ok) {
+          console.error(res.message);
+        }
+      });
     }
   }
 }
