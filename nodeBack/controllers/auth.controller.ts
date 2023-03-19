@@ -12,13 +12,17 @@ export const Signup = (req: Request, res: Response) => {
 		req.body.username != undefined &&
 		req.body.email != undefined &&
 		req.body.role != undefined &&
-		req.body.date != undefined
+		req.body.date != undefined &&
+		req.body.firstName != undefined &&
+		req.body.lastName != undefined
 	) {
 		let user: UserAttributes = {
 			username: req.body.username,
 			email: req.body.email,
 			role: req.body.role,
 			date: req.body.date,
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
 			password: "",
 			access_token: "",
 			password_token: "",
@@ -36,10 +40,35 @@ export const Signup = (req: Request, res: Response) => {
 
 						User.create(user)
 							.then((createdUser) => {
-								res.status(201).send({
-									message: "User created successfully.",
-									status: 201,
-								});
+								if (createdUser) {
+									const sessionObject = formatSessionObject(createdUser);
+									if (
+										sessionObject &&
+										Object.keys(sessionObject).length !== 0 &&
+										Object.getPrototypeOf(sessionObject) === Object.prototype
+									) {
+										const token = jwt.sign(
+											{
+												id: user.id,
+												username: user.username,
+												expiration: Date.now() + config.expiration,
+											},
+											config.secretKey
+										);
+										res
+											.status(201)
+											.cookie("jwt", token, { httpOnly: true, secure: false })
+											.send({
+												message: "User created successfully.",
+												status: 201,
+												data: sessionObject,
+											});
+									} else {
+										return res
+											.status(500)
+											.send({ message: "Internal server error", status: 500 });
+									}
+								}
 							})
 							.catch((err) => {
 								res.status(500).send({
@@ -123,6 +152,8 @@ const formatSessionObject = (user: User | null) => {
 			sessionObject = {
 				id: user.id,
 				username: user.username,
+				firstName: user.firstName,
+				lastName: user.lastName,
 				email: user.email,
 				role: user.role,
 				date: user.date,

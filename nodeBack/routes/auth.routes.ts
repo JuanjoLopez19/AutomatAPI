@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { Request, Response } from "express";
 import { Signin, Signout, Signup } from "../controllers/auth.controller";
-import { verifySignUp, verifySignIn } from "../middleware/authMiddelware";
+import { verifySignUp, verifySignIn } from "../middleware/auth.middelware";
 
 const routerAuth = Router();
 
