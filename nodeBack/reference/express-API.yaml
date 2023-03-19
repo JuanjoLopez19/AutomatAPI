@@ -8,106 +8,143 @@ info:
     name: Juanjo Lopez
     email: juanjoselopez@usal.es
     url: 'https://github.com/JuanjoLopez19/AutomatAPI'
-  description: 'Express + Nodejs backend for auth and user management'
+  description: Express + Nodejs backend for auth and user management
 servers:
   - url: 'http://localhost:3486'
 tags:
-  - name: Create Templates
-    description: Create Templates tag
-  - name: Delete Templates
-    description: Delete Templates tag
-  - name: List Templates
-    description: List Template tag
-  - name: Update Templates
-    description: Update Templates tag
-  - name: Templates
-    description: Templates tag
+  - name: Login
+    description: Login tag
+  - name: Register
+    description: Register tag
 paths:
-  '/users/{userId}':
-    parameters:
-      - schema:
-          type: integer
-        name: userId
-        in: path
-        required: true
-        description: Id of an existing user.
-    get:
-      summary: Get User Info by User ID
-      tags: []
+  /api/auth/signin:
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-auth-signin
       responses:
         '200':
-          description: User Found
+          description: User logged in
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-              examples:
-                Get User Alice Smith:
-                  value:
-                    id: 142
-                    firstName: Alice
-                    lastName: Smith
-                    email: alice.smith@gmail.com
-                    dateOfBirth: '1997-10-31'
-                    emailVerified: true
-                    signUpDate: '2019-08-24'
-        '404':
-          description: User Not Found
-      operationId: get-users-userId
-      description: Retrieve the information of the user with the matching user ID.
-    patch:
-      summary: Update User Information
-      operationId: patch-users-userId
-      responses:
-        '200':
-          description: User Updated
+                type: object
+                properties:
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: 48pbgts2djprp
+                  status:
+                    type: string
+                    x-stoplight:
+                      id: k2hd7um4zcyde
+                  data:
+                    $ref: '#/components/schemas/User'
+                    x-stoplight:
+                      id: yy9lhi7p75twd
+          headers:
+            JWT:
+              schema:
+                type: string
+              description: JWT token to authenticate the user
+        '400':
+          description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                type: object
+                properties:
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: 3rsd81wkik2k4
+                  status:
+                    type: integer
+                    x-stoplight:
+                      id: obgb2pch2pr0k
               examples:
-                Updated User Rebecca Baker:
+                Example 1:
                   value:
-                    id: 13
-                    firstName: Rebecca
-                    lastName: Baker
-                    email: rebecca@gmail.com
-                    dateOfBirth: '1985-10-02'
-                    emailVerified: false
-                    createDate: '2019-08-24'
+                    message: Bad Request
+                    status: 400
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: qynic4mu0d1n3
+                  status:
+                    type: integer
+                    x-stoplight:
+                      id: qd8eg2ebz439l
+              examples:
+                Example 1:
+                  value:
+                    message: Invalid password
+                    status: 401
         '404':
-          description: User Not Found
-        '409':
-          description: Email Already Taken
-      description: Update the information of an existing user.
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: 5m4okn3fid7bq
+                  status:
+                    type: integer
+                    x-stoplight:
+                      id: 5of2umcwqyf9n
+              examples:
+                Example 1:
+                  value:
+                    message: User not found
+                    status: 404
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: u3te5gxk3topa
+                  status:
+                    type: integer
+                    x-stoplight:
+                      id: zzrl2jut1b0s1
+              examples:
+                Example 1:
+                  value:
+                    message: Internal Server error
+                    status: 500
+      description: Endpoint that allow the user to sign up on the platform
+      parameters: []
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                firstName:
-                  type: string
-                lastName:
-                  type: string
                 email:
                   type: string
-                  description: 'If a new email is given, the user''s email verified property will be set to false.'
-                dateOfBirth:
+                  x-stoplight:
+                    id: mj776vn2rjq3i
+                password:
                   type: string
-            examples:
-              Update First Name:
-                value:
-                  firstName: Rebecca
-              Update Email:
-                value:
-                  email: rebecca@gmail.com
-              Update Last Name & Date of Birth:
-                value:
-                  lastName: Baker
-                  dateOfBirth: '1985-10-02'
-        description: Patch user properties to update.
-  /user:
+                  x-stoplight:
+                    id: adh4xfz6a3a0p
+        description: The data of the login form
+  /api/auth/signup:
     post:
       summary: Create New User
       operationId: post-user
@@ -161,12 +198,46 @@ paths:
                   dateOfBirth: '1996-08-24'
         description: Post the necessary fields for the API to create a new user.
       description: Create a new user.
+    parameters: []
+  /api/auth/logout:
+    post:
+      summary: ''
+      operationId: post-api-auth-logout
+      responses:
+        '200':
+          description: User logged out
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+              examples:
+                Example 1:
+                  value:
+                    message: User logged out
+                    status: 200
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+              examples:
+                Example 1:
+                  value:
+                    message: Invalid JWT token
+                    status: 400
+      description: Endpoint that makes the user logout of the platform
+      parameters:
+        - schema:
+            type: string
+          in: cookie
+          name: JWT
+          description: JWT toke that allow the platform to authenticate the user
 components:
   schemas:
     User:
       title: User
       type: object
-      description: ''
       x-examples:
         Alice Smith:
           id: 142
@@ -176,33 +247,64 @@ components:
           dateOfBirth: '1997-10-31'
           emailVerified: true
           signUpDate: '2019-08-24'
+      description: User model that identifies it by role
       properties:
         id:
           type: integer
           description: Unique identifier for the given user.
         firstName:
           type: string
+          description: Name of the user
         lastName:
           type: string
+          description: Last name of the user
         email:
           type: string
           format: email
-        dateOfBirth:
+          description: email given on the sign up for the platform
+        date:
           type: string
           format: date
           example: '1997-10-31'
-        emailVerified:
-          type: boolean
-          description: Set to true if the user's email has been verified.
-        createDate:
+          x-stoplight:
+            id: mzjp642louwxx
+          description: Date birth of the user
+        username:
           type: string
-          format: date
-          description: The date that the user was created.
+          x-stoplight:
+            id: gnyww40qmzuuj
+          description: Nickname that the user has provided
+        role:
+          type: string
+          x-stoplight:
+            id: 88cfi4yo2pyyk
+          description: Role that is used to navigate on the platform
       required:
         - id
         - firstName
         - lastName
         - email
-        - emailVerified
+    Response:
+      title: Response
+      x-stoplight:
+        id: 1kvfxmsq6fb7c
+      type: object
+      properties:
+        message:
+          type: string
+          x-stoplight:
+            id: rjbivm6ej7s5o
+        status:
+          type: integer
+          x-stoplight:
+            id: sizk9akq4ceby
+        data:
+          type: object
+          x-stoplight:
+            id: y6paqxtaa51lp
+      required:
+        - message
+        - status
+      description: Response model is not a real model just for simplicity
 x-internal: false
 x-extension-1: null
