@@ -13,14 +13,17 @@ servers:
   - url: 'http://localhost:3486'
 tags:
   - name: Login
-    description: Login tag
+    description: ""
   - name: Register
-    description: Register tag
+    description: ""
+  - name: Auth
+    description: ""
 paths:
   /api/auth/signin:
-    parameters: []
     post:
-      summary: ''
+      tags:
+        [Auth, Login]
+      summary: 'Validate an user'
       operationId: post-auth-signin
       responses:
         '200':
@@ -146,6 +149,8 @@ paths:
         description: The data of the login form
   /api/auth/signup:
     post:
+      tags:
+        [Auth, Register]
       summary: Create New User
       operationId: post-user
       responses:
@@ -208,7 +213,9 @@ paths:
     parameters: []
   /api/auth/logout:
     post:
-      summary: ''
+      tags:
+        [Auth]
+      summary: 'Log out an user'
       operationId: post-api-auth-logout
       responses:
         '200':
