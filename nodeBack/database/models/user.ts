@@ -10,6 +10,8 @@ export interface UserAttributes {
 	id?: number;
 	username: string;
 	password: string;
+	firstName: string;
+	lastName: string;
 	email: string;
 	date: Date;
 	role: role;
@@ -24,6 +26,8 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
 	public id!: number;
 	public username!: string;
 	public password!: string;
+	public firstName!: string;
+	public lastName!: string;
 	public email!: string;
 	public date!: Date;
 	public role!: role;
@@ -43,6 +47,14 @@ User.init(
 			allowNull: false,
 		},
 		password: {
+			type: DataTypes.STRING(200),
+			allowNull: false,
+		},
+		firstName: {
+			type: DataTypes.STRING(200),
+			allowNull: false,
+		},
+		lastName: {
 			type: DataTypes.STRING(200),
 			allowNull: false,
 		},
