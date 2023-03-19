@@ -3,9 +3,25 @@ x-stoplight:
   id: 7v8y864cukbqy
 info:
   title: express API
-  version: '1.0'
+  version: '0.0'
+  contact:
+    name: Juanjo Lopez
+    email: juanjoselopez@usal.es
+    url: 'https://github.com/JuanjoLopez19/AutomatAPI'
+  description: 'Express + Nodejs backend for auth and user management'
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'http://localhost:3486'
+tags:
+  - name: Create Templates
+    description: Create Templates tag
+  - name: Delete Templates
+    description: Delete Templates tag
+  - name: List Templates
+    description: List Template tag
+  - name: Update Templates
+    description: Update Templates tag
+  - name: Templates
+    description: Templates tag
 paths:
   '/users/{userId}':
     parameters:
@@ -188,3 +204,5 @@ components:
         - lastName
         - email
         - emailVerified
+x-internal: false
+x-extension-1: null
