@@ -38,6 +38,7 @@ export const Signup = (req: Request, res: Response) => {
 							.then((createdUser) => {
 								res.status(201).send({
 									message: "User created successfully.",
+									status: 201,
 								});
 							})
 							.catch((err) => {
@@ -45,12 +46,14 @@ export const Signup = (req: Request, res: Response) => {
 									message:
 										err.message ||
 										"Some error occurred while creating the User.",
+									status: 500,
 								});
 							});
 					} else {
 						res.status(500).send({
 							message:
 								err.message || "Some error occurred while creating the User.",
+							status: 500,
 						});
 					}
 				});
@@ -58,19 +61,21 @@ export const Signup = (req: Request, res: Response) => {
 				res.status(500).send({
 					message:
 						err.message || "Some error occurred while creating the User.",
+					status: 500,
 				});
 			}
 		});
 	} else {
-		res.status(400).send({ message: "Content can not be empty!" });
+		res.status(400).send({ message: "Content can not be empty!", status: 400 });
 	}
 };
 
 export const Signin = async (req: Request, res: Response) => {
 	let user: User;
 	if (!res.locals.user) {
-		res.status(400).json({
-			error: "user not found",
+		res.status(404).json({
+			message: "user not found",
+			status: 404,
 		});
 	}
 	user = res.locals.user;
@@ -94,17 +99,23 @@ export const Signin = async (req: Request, res: Response) => {
 			.status(200)
 			.send({ data: sessionObject, status: 200, message: "User logged in" });
 	} else {
-		return res.status(500).send({ message: "Internal server error" });
+		return res
+			.status(500)
+			.send({ message: "Internal server error", status: 500 });
 	}
 };
 
 export const Signout = (req: Request, res: Response) => {
 	if (req.cookies.jwt) {
-		res.clearCookie("jwt").status(200).send({ message: "User logged out" });
+		res
+			.clearCookie("jwt")
+			.status(200)
+			.send({ message: "User logged out", status: 200 });
 	} else {
-		res.status(400).send({ message: "Invalid JWT" });
+		res.status(400).send({ message: "Invalid JWT", status: 400 });
 	}
 };
+
 const formatSessionObject = (user: User | null) => {
 	let sessionObject = {};
 	if (user) {
