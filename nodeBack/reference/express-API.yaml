@@ -149,55 +149,62 @@ paths:
       summary: Create New User
       operationId: post-user
       responses:
-        '200':
-          description: User Created
+        '201':
+          description: User created and return the jwt token with the data of the user created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/Response'
               examples:
-                New User Bob Fellow:
+                Example 1:
                   value:
-                    id: 12
-                    firstName: Bob
-                    lastName: Fellow
-                    email: bob.fellow@gmail.com
-                    dateOfBirth: '1996-08-24'
-                    emailVerified: false
-                    createDate: '2020-11-18'
+                    message: User created succesfully
+                    status: 201
+                    data:
+                      id: 10
+                      firstName: User
+                      lastName: Name
+                      email: user@example.com
+                      date: '1997-10-31'
+                      username: Usernmae
+                      role: client
         '400':
-          description: Missing Required Information
-        '409':
-          description: Email Already Taken
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+              examples:
+                Example 1:
+                  value:
+                    message: Username or email not provided
+                    status: 400
+                Example 2:
+                  value:
+                    message: Username or email in used
+                    status: 400
+                Example 3:
+                  value:
+                    message: Content cannot be empty
+                    status: 400
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+              examples:
+                Example 1:
+                  value:
+                    message: Some error ocurred while creating the user
+                    status: 500
       requestBody:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                firstName:
-                  type: string
-                lastName:
-                  type: string
-                email:
-                  type: string
-                dateOfBirth:
-                  type: string
-                  format: date
-              required:
-                - firstName
-                - lastName
-                - email
-                - dateOfBirth
-            examples:
-              Create User Bob Fellow:
-                value:
-                  firstName: Bob
-                  lastName: Fellow
-                  email: bob.fellow@gmail.com
-                  dateOfBirth: '1996-08-24'
+              $ref: '#/components/schemas/User'
         description: Post the necessary fields for the API to create a new user.
-      description: Create a new user.
+      description: Validate the data for the new user and if it proceed create a new one
     parameters: []
   /api/auth/logout:
     post:
@@ -284,6 +291,9 @@ components:
         - firstName
         - lastName
         - email
+        - date
+        - username
+        - role
     Response:
       title: Response
       x-stoplight:
