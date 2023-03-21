@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Sizes } from 'src/app/common/enums/enums';
 
-
 @Component({
   selector: 'app-user-management',
   templateUrl: './user-management.component.html',
@@ -14,9 +13,9 @@ export class UserManagementComponent implements OnInit {
   currentSize!: string;
   active: string;
   constructor(private router: Router, private translate: TranslateService) {
-    translate.addLangs(['en', 'es']);
-    translate.setDefaultLang('es');
-    translate.use('es');
+    translate.addLangs(['en', 'es-ES']);
+    translate.setDefaultLang('es-ES');
+    translate.use('es-ES');
     this.active = 'sign_in';
   }
 
@@ -55,7 +54,6 @@ export class UserManagementComponent implements OnInit {
   }
 
   onActiveChange(active: string) {
-    console.log(active);
     this.active = active;
   }
 }

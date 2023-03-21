@@ -21,7 +21,7 @@
                 </span>
               </div>
               <div class="row">
-                <div class="field">
+                <div class="field col-12">
                   <span class="p-input-icon-right">
                     <i class="pi pi-envelope"></i>
                     <input
@@ -32,6 +32,21 @@
                       pInputText
                     />
                   </span>
+                  <div class="row">
+                    <small
+                      id="email-help"
+                      class="p-error block"
+                      *ngIf="registerForm.get('email').errors?.[ 'required' ] && registerForm.get('email').touched"
+                      >{{ "error.T_EMAIL_REQ" | translate }}
+                    </small>
+                    <small
+                      id="email-help"
+                      class="p-error block"
+                      *ngIf="registerForm.get('email').errors?.[ 'email' ]"
+                    >
+                      {{ "error.T_EMAIL_INVALID" | translate }}
+                    </small>
+                  </div>
                 </div>
               </div>
             </div>
@@ -42,7 +57,7 @@
                 </span>
               </div>
               <div class="row">
-                <div class="field">
+                <div class="field col-12">
                   <span class="p-input-icon-right">
                     <i class="pi pi-user"></i>
                     <input
@@ -53,6 +68,14 @@
                       pInputText
                     />
                   </span>
+                  <div class="row">
+                    <small
+                      id="username-help"
+                      class="p-error block"
+                      *ngIf="registerForm.get('username').errors?.[ 'required' ] && registerForm.get('username').touched"
+                      >{{ "error.T_USERNAME_REQ" | translate }}
+                    </small>
+                  </div>
                 </div>
               </div>
             </div>
@@ -73,11 +96,19 @@
                         <input
                           formControlName="name"
                           type="text"
-                          id="username"
+                          id="name"
                           placeholder="{{ 'T_NAME_PLACEHOLDER' | translate }}"
                           pInputText
                         />
                       </span>
+                      <div class="row">
+                        <small
+                          id="name-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('name').errors?.[ 'required' ] && registerForm.get('name').touched"
+                          >{{ "error.T_NAME_REQ" | translate }}
+                        </small>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -94,13 +125,21 @@
                         <input
                           formControlName="surname"
                           type="text"
-                          id="username"
+                          id="lastName"
                           placeholder="{{
                             'T_LAST_NAME_PLACEHOLDER' | translate
                           }}"
                           pInputText
                         />
                       </span>
+                      <div class="row">
+                        <small
+                          id="surname-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('surname').errors?.[ 'required' ] && registerForm.get('surname').touched"
+                          >{{ "error.T_SURNAME_REQ" | translate }}
+                        </small>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -124,6 +163,20 @@
                         [toggleMask]="true"
                         [feedback]="false"
                       ></p-password>
+                      <div class="row">
+                        <small
+                          id="pwd-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('password').errors?.[ 'required' ] && registerForm.get('password').touched"
+                          >{{ "error.T_PWD_REQ" | translate }}
+                        </small>
+                        <small
+                          id="pwd-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('password').errors?.[ 'pattern' ] && registerForm.get('password').touched"
+                          >{{ "error.T_PWD_INVALID" | translate }}
+                        </small>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -143,13 +196,27 @@
                         [toggleMask]="true"
                         [feedback]="false"
                       ></p-password>
+                      <div class="row">
+                        <small
+                          id="pwd2-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('repeatPassword').errors?.[ 'required' ] && registerForm.get('repeatPassword').touched"
+                          >{{ "error.T_PWD_REQ" | translate }}
+                        </small>
+                        <small
+                          id="pwd2-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('repeatPassword').errors?.[ 'pattern' ] && registerForm.get('repeatPassword').touched"
+                          >{{ "error.T_PWD_INVALID" | translate }}
+                        </small>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row mb-2">
             <div class="col-12">
               <div class="row">
                 <div class="col-6">
@@ -160,7 +227,7 @@
                   </div>
                   <div class="row">
                     <div class="field">
-                      <span class="p-input-icon-right p-float-label">
+                      <span class="p-input-icon-right">
                         <i class="pi pi-calendar"></i>
                         <input
                           formControlName="birthdate"
@@ -170,8 +237,21 @@
                           pInputText
                         />
                       </span>
+                      <div class="row">
+                        <small
+                          id="date-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('birthdate').errors?.[ 'required' ] && registerForm.get('birthdate').touched"
+                          >{{ "error.T_DATE_REQ" | translate }}
+                        </small>
+                        <small
+                          id="date-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('birthdate').errors?.[ 'pattern' ] && registerForm.get('birthdate').touched"
+                          >{{ "error.T_DATE_INVALID" | translate }}
+                        </small>
+                      </div>
                     </div>
-
                   </div>
                 </div>
                 <div class="col-6">

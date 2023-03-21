@@ -23,9 +23,17 @@
   "T_FIRST_NAME_PLACEHOLDER": "Introduce your name",
   "T_LAST_NAME": "Surname",
   "T_LAST_NAME_PLACEHOLDER": "Introduce your surname",
+  "T_NAME":"Name",
+  "T_NAME_PLACEHOLDER": "Introduce your name",
   "error":{
     "T_EMAIL_REQ": "The email is required",
     "T_EMAIL_INVALID": "The email is invalid",
-    "T_PWD_REQ": "The password is required"
+    "T_PWD_REQ": "The password is required",
+    "T_PWD_INVALID":"The password is invalid",
+    "T_DATE_REQ": "The date is required",
+    "T_DATE_INVALID": "The date is invalid",
+    "T_NAME_REQ": "The name is required",
+    "T_SURNAME_REQ": "The surname is required",
+    "T_USERNAME_REQ": "The username is required"
   }
 }
