@@ -4,7 +4,10 @@ import { Request, Response } from "express";
 import config from "../config/config";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { generateToken } from "../middleware/auxiliaryFunctions";
+import {
+	generateToken,
+	sendActivationEmail,
+} from "../middleware/auxiliaryFunctions";
 
 export const Signup = (req: Request, res: Response) => {
 	if (
@@ -24,6 +27,7 @@ export const Signup = (req: Request, res: Response) => {
 			firstName: req.body.firstName,
 			lastName: req.body.lastName,
 			password: "",
+			activeUser: false,
 			access_token: "",
 			password_token: "",
 		};
@@ -41,32 +45,33 @@ export const Signup = (req: Request, res: Response) => {
 						User.create(user)
 							.then((createdUser) => {
 								if (createdUser) {
-									const sessionObject = formatSessionObject(createdUser);
-									if (
-										sessionObject &&
-										Object.keys(sessionObject).length !== 0 &&
-										Object.getPrototypeOf(sessionObject) === Object.prototype
-									) {
-										const token = jwt.sign(
-											{
-												id: user.id,
-												username: user.username,
-												expiration: Date.now() + config.expiration,
-											},
-											config.secretKey
-										);
-										res
-											.status(201)
-											.cookie("jwt", token, { httpOnly: true, secure: false })
-											.send({
-												message: "User created successfully.",
-												status: 201,
-												data: sessionObject,
-											});
+									const response: any = sendActivationEmail(
+										createdUser.email,
+										createdUser.access_token
+									);
+									if (response === 200) {
+										res.status(200).send({
+											message: "User created successfully",
+											status: 200,
+										});
 									} else {
-										return res
-											.status(500)
-											.send({ message: "Internal server error", status: 500 });
+										createdUser
+											.destroy()
+											.then(() => {
+												res.status(500).send({
+													message:
+														"Some error occurred while creating the User.",
+													status: 500,
+												});
+											})
+											.catch((err) => {
+												res.status(500).send({
+													message:
+														err.message ||
+														"Some error occurred while creating the User.",
+													status: 500,
+												});
+											});
 									}
 								}
 							})

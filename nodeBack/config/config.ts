@@ -15,6 +15,15 @@ const config = {
 		dialect: process.env.DB_DIALECT || "postgres",
 	},
 	backend_url: process.env.BACKEND_URL || "http://localhost:5000",
+	smtp:{
+		host: process.env.SMTP_HOST || "smtp.gmail.com",
+		port: Number(process.env.SMTP_PORT) || 587,
+		email: process.env.SMTP_EMAIL || "email",
+		password: process.env.SMTP_PWD || "password",
+	},
+	host: process.env.HOST || "http://localhost:3000",
+	activateRoute: process.env.ACTIVATION_ROUTE || "/activate",
+	resetRoute: process.env.RESET_ROUTE || "/reset",
 };
 
 export default config;

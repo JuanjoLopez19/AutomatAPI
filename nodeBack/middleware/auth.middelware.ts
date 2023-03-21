@@ -44,7 +44,7 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 						res
 							.status(500)
 							.contentType("application/json")
-							.json({ message: err.message, status: 500 })
+							.json({ message: err.message,a:"dasd", status: 500 })
 							.send();
 					});
 			})
@@ -52,7 +52,7 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 				res
 					.status(500)
 					.contentType("application/json")
-					.json({ message: err.message, status: 500 })
+					.json({ message: err.message, a:"aaa", status: 500 })
 					.send();
 				return;
 			});
