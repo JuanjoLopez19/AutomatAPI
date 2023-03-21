@@ -15,6 +15,7 @@ export interface UserAttributes {
 	email: string;
 	date: Date;
 	role: role;
+	activeUser: boolean;
 	access_token: string;
 	password_token: string;
 }
@@ -31,6 +32,7 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
 	public email!: string;
 	public date!: Date;
 	public role!: role;
+	public activeUser!: boolean;
 	public access_token!: string;
 	public password_token!: string;
 }
@@ -70,6 +72,11 @@ User.init(
 			type: DataTypes.ENUM("admin", "client"),
 			allowNull: false,
 			field: "role",
+		},
+		activeUser: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: false
 		},
 		access_token: {
 			type: DataTypes.STRING(200),
