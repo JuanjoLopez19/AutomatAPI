@@ -25,8 +25,4 @@ export class LoginService {
     );
   }
 
-  private handleError(error: HttpErrorResponse): any {
-    console.log(error);
-    return error;
-  }
 }
