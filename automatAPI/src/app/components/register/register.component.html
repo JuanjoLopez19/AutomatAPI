@@ -6,7 +6,11 @@
           <h3>{{ "T_SIGN_UP_NOW" | translate }}</h3>
         </span>
       </div>
-      <form class="row py-3 px-3">
+      <form
+        class="row py-3 px-3"
+        (ngSubmit)="OnRegisterSubmit($event)"
+        [formGroup]="registerForm"
+      >
         <div class="col-1"></div>
         <div class="col-10">
           <div class="row mb-2">
@@ -21,6 +25,7 @@
                   <span class="p-input-icon-right">
                     <i class="pi pi-envelope"></i>
                     <input
+                      formControlName="email"
                       type="email"
                       id="email"
                       placeholder="{{ 'T_EMAIL_PLACEHOLDER' | translate }}"
@@ -41,6 +46,7 @@
                   <span class="p-input-icon-right">
                     <i class="pi pi-user"></i>
                     <input
+                      formControlName="username"
                       type="text"
                       id="username"
                       placeholder="{{ 'T_USERNAME_PLACEHOLDER' | translate }}"
@@ -57,7 +63,7 @@
                 <div class="col-6">
                   <div class="row">
                     <span>
-                      <h3>{{ "T_FIRST_NAME" | translate }}</h3>
+                      <h3>{{ "T_NAME" | translate }}</h3>
                     </span>
                   </div>
                   <div class="row">
@@ -65,11 +71,10 @@
                       <span class="p-input-icon-right">
                         <i class="pi pi-user"></i>
                         <input
+                          formControlName="name"
                           type="text"
                           id="username"
-                          placeholder="{{
-                            'T_FIRST_NAME_PLACEHOLDER' | translate
-                          }}"
+                          placeholder="{{ 'T_NAME_PLACEHOLDER' | translate }}"
                           pInputText
                         />
                       </span>
@@ -87,6 +92,7 @@
                       <span class="p-input-icon-right">
                         <i class="pi pi-user"></i>
                         <input
+                          formControlName="surname"
                           type="text"
                           id="username"
                           placeholder="{{
@@ -113,6 +119,7 @@
                   <div class="row">
                     <div class="field">
                       <p-password
+                        formControlName="password"
                         placeholder="{{ 'T_PWD_PLACEHOLDER' | translate }}"
                         [toggleMask]="true"
                         [feedback]="false"
@@ -129,6 +136,7 @@
                   <div class="row">
                     <div class="field">
                       <p-password
+                        formControlName="repeatPassword"
                         placeholder="{{
                           'T_REPEAT_PWD_PLACEHOLDER' | translate
                         }}"
@@ -152,9 +160,10 @@
                   </div>
                   <div class="row">
                     <div class="field">
-                      <span class="p-input-icon-right">
+                      <span class="p-input-icon-right p-float-label">
                         <i class="pi pi-calendar"></i>
                         <input
+                          formControlName="birthdate"
                           type="text"
                           id="calendar"
                           placeholder="{{ 'T_DATE_PLACEHOLDER' | translate }}"
@@ -162,6 +171,7 @@
                         />
                       </span>
                     </div>
+
                   </div>
                 </div>
                 <div class="col-6">
