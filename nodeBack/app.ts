@@ -4,6 +4,8 @@ import cors from "cors";
 import routes from "./routes";
 import passport from "passport";
 import cookieParser from 'cookie-parser'
+import swaggerUi from "swagger-ui-express";
+import * as swaggerdocs from "./reference/express-API.json";
 
 const app: Express = express();
 
@@ -15,6 +17,7 @@ app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }));
 
 app.use(passport.initialize());
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerdocs));
 app.use("/api", routes);
 
 app.get("/", (req: Request, res: Response) => {
