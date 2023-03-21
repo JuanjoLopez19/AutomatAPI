@@ -217,13 +217,13 @@ def temp_creator(
 
     # Compress the template and delete the temp files
     path = compress_api(template_path, args["app_folder_name"])
-    if path:
+    """if path:
         key = upload_to_S3(path, args["app_folder_name"])
         if key:
             remove_temp_files(output_path)
             return key
     else:
-        return None
+        return None"""
     #return path
 
 
@@ -625,9 +625,9 @@ def create_sub_app(
 
 
 if __name__ == "__main__":
-    temp_creator(flask_test_service, "flask", "services")
+    """temp_creator(flask_test_service, "flask", "services")
     temp_creator(flask_test_app, "flask", "app_web")
-    temp_creator(express_test_service, "express", "services")
+    temp_creator(express_test_service, "express", "services")"""
     temp_creator(express_test_app, "express", "app_web")
-    temp_creator(django_test_service, "django", "services")
-    temp_creator(django_test_app, "django", "app_web")
+    """temp_creator(django_test_service, "django", "services")
+    temp_creator(django_test_app, "django", "app_web")"""
