@@ -47,7 +47,7 @@
             </div>
             <div class="row mt-2" *ngIf="active !== 'forgot_pwd'">
               <div class="text-center">
-                <small (click)="active = 'forgot_pwd'" class="d-inline">
+                <small (click)="goToRemPwd()" class="d-inline">
                   {{ "T_REM_PWD" | translate }}
                 </small>
               </div>

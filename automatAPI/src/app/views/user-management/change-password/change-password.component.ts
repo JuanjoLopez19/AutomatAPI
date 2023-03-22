@@ -6,10 +6,10 @@ import { Sizes } from 'src/app/common/enums/enums';
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
-  styleUrls: ['./change-password.component.scss']
+  styleUrls: ['./change-password.component.scss'],
 })
 export class ChangePasswordComponent implements OnInit {
-private token: string = undefined;
+  private token: string = undefined;
   readonly sizes: typeof Sizes = Sizes;
   currentSize!: string;
   constructor(
@@ -62,5 +62,19 @@ private token: string = undefined;
 
   chooseLanguage(language: string) {
     this.translate.use(language);
+  }
+
+  goToRegister() {
+    this.router.navigate([''], {
+      skipLocationChange: false,
+      state: { active: 'sign_up' },
+    });
+  }
+
+  goToLogin() {
+    this.router.navigate([''], {
+      skipLocationChange: false,
+      state: { active: 'sign_in' },
+    });
   }
 }
