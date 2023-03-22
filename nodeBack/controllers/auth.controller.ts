@@ -1,4 +1,3 @@
-import db from "../database/database";
 import User, { UserAttributes } from "../database/models/user";
 import { Request, Response } from "express";
 import config from "../config/config";
@@ -9,7 +8,7 @@ import {
 	sendActivationEmail,
 } from "../middleware/auxiliaryFunctions";
 
-export const Signup = (req: Request, res: Response) => {
+export const Signup = async (req: Request, res: Response) => {
 	if (
 		req.body.password != undefined &&
 		req.body.username != undefined &&
@@ -45,34 +44,36 @@ export const Signup = (req: Request, res: Response) => {
 						User.create(user)
 							.then((createdUser) => {
 								if (createdUser) {
-									const response: any = sendActivationEmail(
+									sendActivationEmail(
 										createdUser.email,
-										createdUser.access_token
-									);
-									if (response === 200) {
-										res.status(200).send({
-											message: "User created successfully",
-											status: 200,
-										});
-									} else {
-										createdUser
-											.destroy()
-											.then(() => {
-												res.status(500).send({
-													message:
-														"Some error occurred while creating the User.",
-													status: 500,
-												});
-											})
-											.catch((err) => {
-												res.status(500).send({
-													message:
-														err.message ||
-														"Some error occurred while creating the User.",
-													status: 500,
-												});
+										createdUser.access_token,
+										createdUser.username
+									).then((response) => {
+										if (response === 200) {
+											res.status(200).send({
+												message: "User created successfully",
+												status: 200,
 											});
-									}
+										} else {
+											createdUser
+												.destroy()
+												.then(() => {
+													res.status(500).send({
+														message:
+															"Some error occurred while creating the User.",
+														status: 500,
+													});
+												})
+												.catch((err) => {
+													res.status(500).send({
+														message:
+															err.message ||
+															"Some error occurred while creating the User.",
+														status: 500,
+													});
+												});
+										}
+									});
 								}
 							})
 							.catch((err) => {

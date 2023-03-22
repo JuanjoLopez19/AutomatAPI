@@ -1,6 +1,5 @@
 import db from "../database";
-import { DataTypes, ENUM, Model, Optional } from "sequelize";
-import bcrypt from "bcrypt";
+import { DataTypes, Model, Optional } from "sequelize";
 
 export enum role {
 	"admin" = "admin",

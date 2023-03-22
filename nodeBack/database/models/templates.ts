@@ -1,5 +1,5 @@
 import db from "../database";
-import { DataTypes, ENUM, Model, Optional } from "sequelize";
+import { DataTypes, Model, Optional } from "sequelize";
 
 export enum techType {
 	"services" = "services",

@@ -13,28 +13,31 @@ export const generateToken = (length: number) => {
 
 export const sendActivationEmail = async (
 	userEmail: string,
-	accessToken: string
+	accessToken: string,
+	username: string
 ) => {
 	const options: mailOptions = {
 		from: config.smtp.email,
 		to: userEmail,
 		subject: "AutomatAPI - Account activation",
-		html:
-			'Welcome to AutomatAPI! Here is the link for activating your user account: <a href="' +
+		html:'<h1> Welcome to AutomatAPI!</h1></br>' + 
+			username +', here is the link for activating your user account: <a href="' +
 			config.host +
 			config.activateRoute +
 			"?token=" +
 			accessToken +
-			'">Activate account</a>. If you cannot use previous link, please just acccess this url ' +
+			'">Activate account</a>.</br> <div>' +
+			username +
+			", if you cannot use previous link, please just acccess this url: <span> " +
 			config.host +
 			config.activateRoute +
 			"?token=" +
-			accessToken,
+			accessToken +
+			"</span></div>",
 	};
 
 	const emailResponse: any = await sendMail(options);
 	if (emailResponse.status === 200) {
 		return 200;
-	}else
-		return 500;
+	} else return 500;
 };
