@@ -65,6 +65,6 @@ export class UserManagementComponent implements OnInit {
   }
 
   goToRemPwd() {
-    this.router.navigate(['remember_password']);
+    this.router.navigate(['remember_password'], { });
   }
 }

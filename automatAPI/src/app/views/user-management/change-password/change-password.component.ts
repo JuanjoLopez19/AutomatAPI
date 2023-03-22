@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Sizes } from 'src/app/common/enums/enums';
@@ -9,6 +10,7 @@ import { Sizes } from 'src/app/common/enums/enums';
   styleUrls: ['./change-password.component.scss'],
 })
 export class ChangePasswordComponent implements OnInit {
+  changePasswordForm: FormGroup;
   private token: string = undefined;
   readonly sizes: typeof Sizes = Sizes;
   currentSize!: string;
@@ -20,6 +22,27 @@ export class ChangePasswordComponent implements OnInit {
     translate.addLangs(['en', 'es-ES']);
     translate.setDefaultLang('es-ES');
     translate.use('es-ES');
+
+    this.changePasswordForm = new FormGroup({
+      password: new FormControl(undefined, {
+        validators: [
+          Validators.required,
+          Validators.pattern(
+            '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$'
+          ),
+        ],
+        updateOn: 'submit',
+      }),
+      repeatPassword: new FormControl(undefined, {
+        validators: [
+          Validators.required,
+          Validators.pattern(
+            '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$'
+          ),
+        ],
+        updateOn: 'submit',
+      }),
+    });
   }
 
   ngOnInit(): void {

@@ -1,4 +1,5 @@
 import { Component, HostListener } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Sizes } from 'src/app/common/enums/enums';
@@ -9,12 +10,24 @@ import { Sizes } from 'src/app/common/enums/enums';
   styleUrls: ['./remember-password.component.scss'],
 })
 export class RememberPasswordComponent {
+  remPasswordForm: FormGroup;
   readonly sizes: typeof Sizes = Sizes;
   currentSize!: string;
   constructor(private router: Router, private translate: TranslateService) {
     translate.addLangs(['en', 'es-ES']);
     translate.setDefaultLang('es-ES');
     translate.use('es-ES');
+
+    this.remPasswordForm = new FormGroup({
+      email: new FormControl(undefined, {
+        validators: [Validators.required, Validators.email],
+        updateOn: 'submit',
+      }),
+      username: new FormControl(undefined, {
+        validators: [Validators.required],
+        updateOn: 'submit',
+      }),
+    });
   }
 
   ngOnInit(): void {

@@ -36,5 +36,16 @@
     "T_NAME_REQ": "The name is required",
     "T_SURNAME_REQ": "The surname is required",
     "T_USERNAME_REQ": "The username is required"
-  }
+  },
+  "T_REM_PWD_PROCESS": "Problems to access your account?",
+  "T_REM_PWD_STEPS": "Introduce your email and we will send you a link to reset your password",
+  "T_SEND_EMAIL": "Send email",
+  "T_DONT_REM": "Don't remember your credentials?",
+  "T_CREATE_NEW": "Create a new one!!",
+  "T_OR": "or",
+  "T_GO_LOGIN": "Back to login",
+  "T_NEW_PWD": "New password",
+  "T_CHG_PWD": "Change password",
+  "T_CHG_PWD_PROCESS": "Introduce your new password",
+  "T_ACT_ACC": "Activate account"
 }
