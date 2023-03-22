@@ -1,0 +1,58 @@
+<div class="login-block h-100 w-100">
+  <div class="container">
+    <div class="row">
+      <div
+        class="login-sec"
+        [ngClass]="{
+          'col-7': currentSize === sizes.XL || currentSize === sizes.LG
+        }"
+      >
+        <h1 class="text-center">{{ "T_AUTOMATAPI" | translate }}</h1>
+        <div class="row h-100">
+          <div class="col-12 h-50">
+            <div class="row h-75 w-100 align-items-center">
+              <div class="col-12">
+                <div class="row">
+                  <h4 class="text-center">
+                    {{ "T_ACTIVATION_PROCESS" | translate }}
+                  </h4>
+                </div>
+                <div class="row w-50">
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-send"
+                    iconPos="right"
+                    [label]="'T_ACTIVE_ACCOUNT' | translate"
+                    type="button"
+                    [loading]="false"
+                    class="p-button-rounded p-button-warning"
+                  ></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="currentSize === sizes.XL"
+        class="banner-sec"
+        [ngClass]="{
+          'col-5': currentSize === sizes.XL
+        }"
+      >
+        <div class="row">
+          <div class="col-12">
+            <div class="row py-5">
+              <div class="col-3"></div>
+              <div class="col-6">
+                <img src="assets/icons/Quote.svg" alt="Quote" />
+              </div>
+              <div class="col-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

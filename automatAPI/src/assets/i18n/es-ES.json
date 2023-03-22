@@ -23,13 +23,14 @@
   "T_FIRST_NAME_PLACEHOLDER": "Introduce tu nombre",
   "T_LAST_NAME": "Apellidos",
   "T_LAST_NAME_PLACEHOLDER": "Introduce tus apellidos",
-  "T_NAME":"Nombre",
+  "T_NAME": "Nombre",
   "T_NAME_PLACEHOLDER": "Introduce el nombre",
-  "error":{
+  "T_ACTIVATION_PROCESS": "Solo un paso más, ¡Pulsa en el botón para activar tu cuenta!",
+  "error": {
     "T_EMAIL_REQ": "El correo electrónico es obligatorio",
     "T_EMAIL_INVALID": "El correo electrónico no es válido",
     "T_PWD_REQ": "La contraseña es obligatoria",
-    "T_PWD_INVALID":"La contraseña no es válida",
+    "T_PWD_INVALID": "La contraseña no es válida",
     "T_DATE_REQ": "La fecha es obligatoria",
     "T_DATE_INVALID": "La fecha es inválida",
     "T_NAME_REQ": "El nombre es obligatorio",

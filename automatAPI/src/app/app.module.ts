@@ -13,20 +13,20 @@ import { UserManagementComponent } from './views/user-management/user-management
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { RegisterComponent } from './components/register/register.component';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { SelectorComponent } from './components/basics/selector/selector.component';
+import { ActivateUserComponent } from './views/user-management/activate-user/activate-user.component';
+import { RememberPasswordComponent } from './views/user-management/remember-password/remember-password.component';
+import { ChangePasswordComponent } from './views/user-management/change-password/change-password.component';
 
 // NG Prime components
-import {InputTextModule} from 'primeng/inputtext';
-import {PasswordModule} from 'primeng/password';
-import {CalendarModule} from 'primeng/calendar';
-import {RadioButtonModule} from 'primeng/radiobutton';
-import {DividerModule} from 'primeng/divider';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { CalendarModule } from 'primeng/calendar';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { DividerModule } from 'primeng/divider';
 import { ButtonModule } from 'primeng/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
-
+import { RippleModule } from 'primeng/ripple';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -40,9 +40,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginComponent,
     DashboardComponent,
     RegisterComponent,
-    ForgotPasswordComponent,
-    ChangePasswordComponent,
     SelectorComponent,
+    ActivateUserComponent,
+    RememberPasswordComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +64,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DividerModule,
     ButtonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RippleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
