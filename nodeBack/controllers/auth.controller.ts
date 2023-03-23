@@ -6,7 +6,9 @@ import jwt from "jsonwebtoken";
 import {
 	generateToken,
 	sendActivationEmail,
+	sendPasswordResetEmail,
 } from "../middleware/auxiliaryFunctions";
+import { Op, WhereOptions } from "sequelize";
 
 export const Signup = async (req: Request, res: Response) => {
 	if (
@@ -31,9 +33,9 @@ export const Signup = async (req: Request, res: Response) => {
 			password_token: "",
 		};
 
-		bcrypt.genSalt(config.saltRounds, (err, salt) => {
+		bcrypt.genSalt(config.saltRounds, (err: Error | undefined, salt: string) => {
 			if (!err) {
-				bcrypt.hash(req.body.password, salt, (err, passwordHashed) => {
+				bcrypt.hash(req.body.password, salt, (err: Error | undefined, passwordHashed: string) => {
 					if (!err) {
 						let userTokens = [];
 						for (let i = 0; i < 2; i++) userTokens.push(generateToken(100));
@@ -114,7 +116,14 @@ export const Signin = async (req: Request, res: Response) => {
 		});
 	}
 	user = res.locals.user;
-	// Posibility to add the user account activation
+
+	if (!user.activeUser) {
+		return res.status(401).send({
+			message: "User not activated",
+			status: 401,
+		});
+	}
+
 	let sessionObject = formatSessionObject(user);
 	let token = jwt.sign(
 		{
@@ -148,6 +157,161 @@ export const Signout = (req: Request, res: Response) => {
 			.send({ message: "User logged out", status: 200 });
 	} else {
 		res.status(400).send({ message: "Invalid JWT", status: 400 });
+	}
+};
+
+export const activateAccount = async (req: Request, res: Response) => {
+	if (req.body.token != undefined) {
+		User.findOne({ where: { access_token: req.body.token } })
+			.then((user: User | null) => {
+				if (!user) {
+					return res.status(404).send({
+						message: "User not found",
+						status: 404,
+					});
+				} else if (user.activeUser) {
+					return res.status(401).send({
+						message: "User already activated",
+						status: 401,
+					});
+				} else {
+					user
+						.update({ activeUser: true, access_token: "" })
+						.then(() => {
+							return res.status(200).send({
+								message: "User activated successfully",
+								status: 200,
+							});
+						})
+						.catch((err) => {
+							return res.status(500).send({
+								message:
+									err.message ||
+									"Some error occurred while activating the User.",
+								status: 500,
+							});
+						});
+				}
+			})
+			.catch((err) => {
+				return res.status(500).send({
+					message:
+						err.message || "Some error occurred while activating the User.",
+					status: 500,
+				});
+			});
+	} else {
+		return res.status(400).send({
+			message: "Bad request",
+			status: 400,
+		});
+	}
+};
+export const rememberPassword = async (req: Request, res: Response) => {
+	if (req.query.username != undefined && req.query.email != undefined) {
+		User.findOne({
+			where: {
+				[Op.and]: [
+					{ username: req.query.username },
+					{ email: req.query.email },
+				],
+			} as WhereOptions<User>,
+		})
+			.then((user: User | null) => {
+				if (!user) {
+					return res.status(404).send({
+						message: "User not found",
+						status: 404,
+					});
+				}
+				sendPasswordResetEmail(
+					user.email,
+					user.password_token,
+					user.username
+				).then((response) => {
+					if (response === 200) {
+						return res.status(200).send({
+							message: "Email sent successfully",
+							status: 200,
+						});
+					} else {
+						return res.status(500).send({
+							message: "Internal server error",
+							status: 500,
+						});
+					}
+				});
+			})
+			.catch((err) => {
+				return res.status(500).send({
+					message: err.message || "Some error occurred.",
+					status: 500,
+				});
+			});
+	} else {
+		return res.status(400).send({
+			message: "Bad request",
+			status: 400,
+		});
+	}
+};
+export const resetPassword = async (req: Request, res: Response) => {
+	if (req.body.token != undefined && req.body.password != undefined) {
+		User.findOne({ where: { password_token: req.body.token } })
+			.then((user: User | null) => {
+				if (!user) {
+					return res.status(404).send({
+						message: "User not found",
+						status: 404,
+					});
+				} else {
+					bcrypt.genSalt(config.saltRounds, (err: Error | undefined, salt: string) => {
+						if (!err) {
+							bcrypt.hash(req.body.password, salt, (err: Error | undefined, hash: string) => {
+								if (!err) {
+									user
+										.update({
+											password: hash,
+										})
+										.then(() => {
+											return res.status(200).send({
+												message: "Password changed successfully",
+												status: 200,
+											});
+										})
+										.catch((err) => {
+											return res.status(500).send({
+												message:
+													err.message ||
+													"Some error occurred while changing the password.",
+												status: 500,
+											});
+										});
+								} else {
+									return res
+										.status(500)
+										.send({ message: "Internal server error", status: 500 });
+								}
+							});
+						} else {
+							return res
+								.status(500)
+								.send({ message: "Internal server error", status: 500 });
+						}
+					});
+				}
+			})
+			.catch((err) => {
+				return res.status(500).send({
+					message: err.message || "Some error occurred.",
+					status: 500,
+				});
+			});
+	} else {
+		return res.status(400).send({
+			message: "Bad request",
+			status: 400,
+		});
 	}
 };
 
