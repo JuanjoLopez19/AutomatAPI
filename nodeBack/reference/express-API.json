@@ -20,16 +20,16 @@
   ],
   "tags": [
     {
+      "name": "Auth",
+      "description": " "
+    },
+    {
       "name": "Login",
-      "description": ""
+      "description": " "
     },
     {
       "name": "Register",
-      "description": ""
-    },
-    {
-      "name": "Auth",
-      "description": ""
+      "description": " "
     }
   ],
   "paths": {
@@ -391,59 +391,90 @@
         ]
       }
     },
-    "api/auth/remember_password": {
+    "/api/auth/remember_password": {
       "get": {
+        "tags": [
+          "Auth"
+        ],
         "summary": "Remember password",
         "operationId": "getapi-auth-remember_password",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Email with the token sent",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "x-stoplight": {
-                        "id": "y96azi4uj5s96"
-                      }
-                    },
-                    "status": {
-                      "type": "string",
-                      "x-stoplight": {
-                        "id": "apy8etr9lo9qc"
-                      }
-                    },
-                    "token": {
-                      "type": "string",
-                      "x-stoplight": {
-                        "id": "k65gfwe5qyxin"
-                      }
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Email sent succesfully",
+                      "status": 200
                     }
                   }
                 }
               }
             }
-          }
-        },
-        "description": "Get the password token from the user given to check to change his password",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "username": {
-                    "type": "string",
-                    "x-stoplight": {
-                      "id": "ensdto72z7wal"
+          },
+          "400": {
+            "description": "Bad Request (no body provided)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Bad Request",
+                      "status": 400,
+                      "data": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found (No user associated to the query params)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Not found",
+                      "status": 404,
+                      "data": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error (While finding the user or sending the email)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Internal server error",
+                      "status": 500,
+                      "data": {}
                     }
                   },
-                  "email": {
-                    "type": "string",
-                    "x-stoplight": {
-                      "id": "wzif6l0qcjbvt"
+                  "Example 2": {
+                    "value": {
+                      "message": "Some error ocurred",
+                      "status": 500,
+                      "data": {}
                     }
                   }
                 }
@@ -451,12 +482,33 @@
             }
           }
         },
-        "parameters": []
+        "description": "Endpoint that makes the server send an email with the password token associated to the username and the email given as query parameters",
+        "requestBody": {
+          "content": {}
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "username",
+            "description": "username of the account"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "email",
+            "description": "email to send the token"
+          }
+        ]
       }
     },
-    "api/auth/change_password": {
+    "/api/auth/reset_password": {
       "put": {
-        "summary": "Change password",
+        "summary": "Reset password",
         "operationId": "putapi-auth-change_password",
         "responses": {
           "200": {
@@ -465,12 +517,92 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Password changed succesfully",
+                      "status": 200,
+                      "data": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request (Body not provided)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Bad request",
+                      "status": 400,
+                      "data": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found (user not associated to token)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Not found",
+                      "status": 404,
+                      "data": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Some error ocurred",
+                      "status": 500,
+                      "data": {}
+                    }
+                  },
+                  "Example 2": {
+                    "value": {
+                      "message": "Internal server error",
+                      "status": 500,
+                      "data": {}
+                    }
+                  },
+                  "Example 3": {
+                    "value": {
+                      "message": "Some error ocurred while changing the password",
+                      "status": 500,
+                      "data": {}
+                    }
+                  }
                 }
               }
             }
           }
         },
-        "description": "With the password token and the password, it will update the user password",
+        "description": "This endpoint allow the user to change the password in case he has forgotten it",
         "requestBody": {
           "content": {
             "application/json": {
@@ -493,10 +625,14 @@
               }
             }
           }
-        }
-      }
+        },
+        "tags": [
+          "Auth"
+        ]
+      },
+      "parameters": []
     },
-    "api/auth/activate_account": {
+    "/api/auth/activate_account": {
       "put": {
         "summary": "Activate account",
         "operationId": "putapi-auth-activate_account",
@@ -510,14 +646,98 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request (No token provided)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Bad request",
+                      "status": 400,
+                      "data": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (User already active)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "User already active",
+                      "status": 401,
+                      "data": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found (user no associated to the token)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Not found",
+                      "status": 404,
+                      "data": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Some error ocurred",
+                      "status": 500,
+                      "data": {}
+                    }
+                  }
+                }
+              }
+            }
           }
         },
-        "description": "with the access token, the account will be active and ready to access the platform",
+        "description": "Endpoint that allow the user to activate his account and be able to access to the platform",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "type": "string"
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "gyccxdviy8yex"
+                    }
+                  }
+                }
               }
             }
           }
@@ -525,7 +745,7 @@
       },
       "parameters": []
     },
-    "api/auth/checkToken": {
+    "/api/auth/checkToken": {
       "get": {
         "summary": "",
         "operationId": "getapi-auth-checkToken",
