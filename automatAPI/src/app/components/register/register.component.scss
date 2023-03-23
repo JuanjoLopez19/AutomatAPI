@@ -14,3 +14,19 @@ button {
   background-color: $primary-color;
   color: $white;
 }
+
+:host ::ng-deep p-calendar .p-button{
+  background-color: $light-blue;
+}
+
+:host ::ng-deep .p-button.p-button-warning {
+  background-color: $light-blue;
+  border-color: $light-blue;
+  color: $white;
+}
+
+:host ::ng-deep .p-button.p-button-warning:hover {
+  background-color: $blue-transparent;
+  border-color: $blue-transparent;
+  color: $white;
+}

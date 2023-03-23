@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/env';
 import { loginParms } from 'src/app/common/interfaces/interfaces';
 import {Observable} from 'rxjs';
@@ -25,8 +25,4 @@ export class LoginService {
     );
   }
 
-  private handleError(error: HttpErrorResponse): any {
-    console.log(error);
-    return error;
-  }
 }

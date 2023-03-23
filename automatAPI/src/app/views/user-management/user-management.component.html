@@ -17,9 +17,6 @@
               <div class="col-12" *ngIf="active === 'sign_up'">
                 <app-register></app-register>
               </div>
-              <div class="col-12" *ngIf="active === 'forgot_pwd'">
-                <app-forgot-password></app-forgot-password>
-              </div>
             </div>
           </div>
         </div>
@@ -35,9 +32,9 @@
                 </span>
               </div>
             </div>
-            <div class="row">
+            <div class="row mx-0">
               <div class="col-1"></div>
-              <div class="col-10">
+              <div class="col-10 px-0">
                 <div class="row w-100">
                   <app-selector
                     class="d-flex justify-content-end"
@@ -50,7 +47,7 @@
             </div>
             <div class="row mt-2" *ngIf="active !== 'forgot_pwd'">
               <div class="text-center">
-                <small (click)="active = 'forgot_pwd'" class="d-inline">
+                <small (click)="goToRemPwd()" class="d-inline">
                   {{ "T_REM_PWD" | translate }}
                 </small>
               </div>

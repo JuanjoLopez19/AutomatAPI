@@ -16,16 +16,36 @@
   "T_PWD_PLACEHOLDER": "Enter your password",
   "T_USERNAME_PLACEHOLDER": "Introduce your username",
   "T_BIRTHDATE": "Datebirth",
-  "T_DATE_PLACEHOLDER": "mm/dd/yyyy",
+  "T_DATE_PLACEHOLDER": "mm/dd/yy",
   "T_REPEAT_PWD": "Confirm password",
   "T_REPEAT_PWD_PLACEHOLDER": "Repeat the password",
   "T_FIRST_NAME": "Name",
   "T_FIRST_NAME_PLACEHOLDER": "Introduce your name",
   "T_LAST_NAME": "Surname",
   "T_LAST_NAME_PLACEHOLDER": "Introduce your surname",
-  "error":{
+  "T_NAME": "Name",
+  "T_NAME_PLACEHOLDER": "Introduce your name",
+  "T_ACTIVATION_PROCESS": "Just one more step, click in the button below to activate your account!!",
+  "error": {
     "T_EMAIL_REQ": "The email is required",
     "T_EMAIL_INVALID": "The email is invalid",
-    "T_PWD_REQ": "The password is required"
-  }
+    "T_PWD_REQ": "The password is required",
+    "T_PWD_INVALID": "The password is invalid",
+    "T_DATE_REQ": "The date is required",
+    "T_DATE_INVALID": "The date is invalid",
+    "T_NAME_REQ": "The name is required",
+    "T_SURNAME_REQ": "The surname is required",
+    "T_USERNAME_REQ": "The username is required"
+  },
+  "T_REM_PWD_PROCESS": "Problems to access your account?",
+  "T_REM_PWD_STEPS": "Introduce your email and we will send you a link to reset your password",
+  "T_SEND_EMAIL": "Send email",
+  "T_DONT_REM": "Don't remember your credentials?",
+  "T_CREATE_NEW": "Create a new one!!",
+  "T_OR": "or",
+  "T_GO_LOGIN": "Back to login",
+  "T_NEW_PWD": "New password",
+  "T_CHG_PWD": "Change password",
+  "T_CHG_PWD_PROCESS": "Introduce your new password",
+  "T_ACT_ACC": "Activate account"
 }

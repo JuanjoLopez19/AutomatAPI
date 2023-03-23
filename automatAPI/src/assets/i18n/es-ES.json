@@ -16,16 +16,36 @@
   "T_PWD_PLACEHOLDER": "Introduce tu contraseña",
   "T_USERNAME_PLACEHOLDER": "Introduce tu nombre de usuario",
   "T_BIRTHDATE": "Fecha de nacimiento",
-  "T_DATE_PLACEHOLDER": "dd/mm/yyyy",
+  "T_DATE_PLACEHOLDER": "dd/mm/yy",
   "T_REPEAT_PWD": "Confirma la contraseña",
   "T_REPEAT_PWD_PLACEHOLDER": "Repite tu contraseña",
   "T_FIRST_NAME": "Nombre",
   "T_FIRST_NAME_PLACEHOLDER": "Introduce tu nombre",
   "T_LAST_NAME": "Apellidos",
   "T_LAST_NAME_PLACEHOLDER": "Introduce tus apellidos",
-  "error":{
+  "T_NAME": "Nombre",
+  "T_NAME_PLACEHOLDER": "Introduce el nombre",
+  "T_ACTIVATION_PROCESS": "Solo un paso más, ¡Pulsa en el botón para activar tu cuenta!",
+  "error": {
     "T_EMAIL_REQ": "El correo electrónico es obligatorio",
     "T_EMAIL_INVALID": "El correo electrónico no es válido",
-    "T_PWD_REQ": "La contraseña es obligatoria"
-  }
+    "T_PWD_REQ": "La contraseña es obligatoria",
+    "T_PWD_INVALID": "La contraseña no es válida",
+    "T_DATE_REQ": "La fecha es obligatoria",
+    "T_DATE_INVALID": "La fecha es inválida",
+    "T_NAME_REQ": "El nombre es obligatorio",
+    "T_SURNAME_REQ": "Los apellidos son obligatorios",
+    "T_USERNAME_REQ": "El nombre de usuario es obligatorio"
+  },
+  "T_REM_PWD_PROCESS": "¿Tienes problemas para acceder a tu cuenta?",
+  "T_REM_PWD_STEPS": "Introduce tu nombre de usuario y tu email, para que podamos enviarte un correo electrónico con las instrucciones para recuperar tu contraseña.",
+  "T_SEND_EMAIL": "Enviar correo electrónico",
+  "T_DONT_REM": "¿No recuerdas tus credenciales?",
+  "T_CREATE_NEW": "Crea una cuenta nueva!!",
+  "T_OR": "o",
+  "T_GO_LOGIN": "Volver al inicio de sesión",
+  "T_NEW_PWD": "Nueva contraseña",
+  "T_CHG_PWD": "Cambiar contraseña",
+  "T_CHG_PWD_PROCESS": "Introduce tu nueva contraseña",
+  "T_ACT_ACC": "Activar cuenta"
 }

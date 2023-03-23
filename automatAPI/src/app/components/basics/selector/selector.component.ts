@@ -16,7 +16,6 @@ export class SelectorComponent {
   }
 
   manageClick(event: MouseEvent, target: number) {
-    console.log(target, this.active);
     if (!target) {
       this.active = 'sign_in';
       this.activeChange.emit(this.active);

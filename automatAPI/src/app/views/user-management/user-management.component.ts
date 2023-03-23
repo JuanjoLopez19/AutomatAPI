@@ -1,8 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Navigation, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Sizes } from 'src/app/common/enums/enums';
-
 
 @Component({
   selector: 'app-user-management',
@@ -14,10 +13,17 @@ export class UserManagementComponent implements OnInit {
   currentSize!: string;
   active: string;
   constructor(private router: Router, private translate: TranslateService) {
-    translate.addLangs(['en', 'es-Es']);
+    translate.addLangs(['en', 'es-ES']);
     translate.setDefaultLang('es-ES');
     translate.use('es-ES');
-    this.active = 'sign_in';
+
+    const currentNavigation: Navigation = this.router.getCurrentNavigation();
+    if (currentNavigation && currentNavigation.extras.state) {
+      const active: string = currentNavigation.extras.state['active'];
+      if (active) {
+        this.active = active;
+      } else this.active = 'sign_in';
+    } else this.active = 'sign_in';
   }
 
   ngOnInit() {
@@ -55,7 +61,10 @@ export class UserManagementComponent implements OnInit {
   }
 
   onActiveChange(active: string) {
-    console.log(active);
     this.active = active;
+  }
+
+  goToRemPwd() {
+    this.router.navigate(['remember_password'], { });
   }
 }
