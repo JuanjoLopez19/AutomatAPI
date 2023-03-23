@@ -1,32 +1,41 @@
-import db from "../database/database";
 import User, { UserAttributes } from "../database/models/user";
 import { Request, Response } from "express";
 import config from "../config/config";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { generateToken } from "../middleware/auxiliaryFunctions";
+import {
+	generateToken,
+	sendActivationEmail,
+	sendPasswordResetEmail,
+} from "../middleware/auxiliaryFunctions";
+import { Op, WhereOptions } from "sequelize";
 
-export const Signup = (req: Request, res: Response) => {
+export const Signup = async (req: Request, res: Response) => {
 	if (
 		req.body.password != undefined &&
 		req.body.username != undefined &&
 		req.body.email != undefined &&
 		req.body.role != undefined &&
-		req.body.date != undefined
+		req.body.date != undefined &&
+		req.body.firstName != undefined &&
+		req.body.lastName != undefined
 	) {
 		let user: UserAttributes = {
 			username: req.body.username,
 			email: req.body.email,
 			role: req.body.role,
 			date: req.body.date,
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
 			password: "",
+			activeUser: false,
 			access_token: "",
 			password_token: "",
 		};
 
-		bcrypt.genSalt(config.saltRounds, (err, salt) => {
+		bcrypt.genSalt(config.saltRounds, (err: Error | undefined, salt: string) => {
 			if (!err) {
-				bcrypt.hash(req.body.password, salt, (err, passwordHashed) => {
+				bcrypt.hash(req.body.password, salt, (err: Error | undefined, passwordHashed: string) => {
 					if (!err) {
 						let userTokens = [];
 						for (let i = 0; i < 2; i++) userTokens.push(generateToken(100));
@@ -36,21 +45,52 @@ export const Signup = (req: Request, res: Response) => {
 
 						User.create(user)
 							.then((createdUser) => {
-								res.status(201).send({
-									message: "User created successfully.",
-								});
+								if (createdUser) {
+									sendActivationEmail(
+										createdUser.email,
+										createdUser.access_token,
+										createdUser.username
+									).then((response) => {
+										if (response === 200) {
+											res.status(200).send({
+												message: "User created successfully",
+												status: 200,
+											});
+										} else {
+											createdUser
+												.destroy()
+												.then(() => {
+													res.status(500).send({
+														message:
+															"Some error occurred while creating the User.",
+														status: 500,
+													});
+												})
+												.catch((err) => {
+													res.status(500).send({
+														message:
+															err.message ||
+															"Some error occurred while creating the User.",
+														status: 500,
+													});
+												});
+										}
+									});
+								}
 							})
 							.catch((err) => {
 								res.status(500).send({
 									message:
 										err.message ||
 										"Some error occurred while creating the User.",
+									status: 500,
 								});
 							});
 					} else {
 						res.status(500).send({
 							message:
 								err.message || "Some error occurred while creating the User.",
+							status: 500,
 						});
 					}
 				});
@@ -58,23 +98,32 @@ export const Signup = (req: Request, res: Response) => {
 				res.status(500).send({
 					message:
 						err.message || "Some error occurred while creating the User.",
+					status: 500,
 				});
 			}
 		});
 	} else {
-		res.status(400).send({ message: "Content can not be empty!" });
+		res.status(400).send({ message: "Content can not be empty!", status: 400 });
 	}
 };
 
 export const Signin = async (req: Request, res: Response) => {
 	let user: User;
 	if (!res.locals.user) {
-		res.status(400).json({
-			error: "user not found",
+		res.status(404).json({
+			message: "user not found",
+			status: 404,
 		});
 	}
 	user = res.locals.user;
-	// Posibility to add the user account activation
+
+	if (!user.activeUser) {
+		return res.status(401).send({
+			message: "User not activated",
+			status: 401,
+		});
+	}
+
 	let sessionObject = formatSessionObject(user);
 	let token = jwt.sign(
 		{
@@ -94,17 +143,178 @@ export const Signin = async (req: Request, res: Response) => {
 			.status(200)
 			.send({'data':sessionObject, 'status':200, 'message':'User logged in'});
 	} else {
-		return res.status(500).send({ message: "Internal server error" });
+		return res
+			.status(500)
+			.send({ message: "Internal server error", status: 500 });
 	}
 };
 
 export const Signout = (req: Request, res: Response) => {
 	if (req.cookies.jwt) {
-		res.clearCookie("jwt").status(200).send({ message: "User logged out" });
+		res
+			.clearCookie("jwt")
+			.status(200)
+			.send({ message: "User logged out", status: 200 });
 	} else {
-		res.status(400).send({ message: "Invalid JWT" });
+		res.status(400).send({ message: "Invalid JWT", status: 400 });
 	}
 };
+
+export const activateAccount = async (req: Request, res: Response) => {
+	if (req.body.token != undefined) {
+		User.findOne({ where: { access_token: req.body.token } })
+			.then((user: User | null) => {
+				if (!user) {
+					return res.status(404).send({
+						message: "User not found",
+						status: 404,
+					});
+				} else if (user.activeUser) {
+					return res.status(401).send({
+						message: "User already activated",
+						status: 401,
+					});
+				} else {
+					user
+						.update({ activeUser: true, access_token: "" })
+						.then(() => {
+							return res.status(200).send({
+								message: "User activated successfully",
+								status: 200,
+							});
+						})
+						.catch((err) => {
+							return res.status(500).send({
+								message:
+									err.message ||
+									"Some error occurred while activating the User.",
+								status: 500,
+							});
+						});
+				}
+			})
+			.catch((err) => {
+				return res.status(500).send({
+					message:
+						err.message || "Some error occurred while activating the User.",
+					status: 500,
+				});
+			});
+	} else {
+		return res.status(400).send({
+			message: "Bad request",
+			status: 400,
+		});
+	}
+};
+export const rememberPassword = async (req: Request, res: Response) => {
+	if (req.query.username != undefined && req.query.email != undefined) {
+		User.findOne({
+			where: {
+				[Op.and]: [
+					{ username: req.query.username },
+					{ email: req.query.email },
+				],
+			} as WhereOptions<User>,
+		})
+			.then((user: User | null) => {
+				if (!user) {
+					return res.status(404).send({
+						message: "User not found",
+						status: 404,
+					});
+				}
+				sendPasswordResetEmail(
+					user.email,
+					user.password_token,
+					user.username
+				).then((response) => {
+					if (response === 200) {
+						return res.status(200).send({
+							message: "Email sent successfully",
+							status: 200,
+						});
+					} else {
+						return res.status(500).send({
+							message: "Internal server error",
+							status: 500,
+						});
+					}
+				});
+			})
+			.catch((err) => {
+				return res.status(500).send({
+					message: err.message || "Some error occurred.",
+					status: 500,
+				});
+			});
+	} else {
+		return res.status(400).send({
+			message: "Bad request",
+			status: 400,
+		});
+	}
+};
+export const resetPassword = async (req: Request, res: Response) => {
+	if (req.body.token != undefined && req.body.password != undefined) {
+		User.findOne({ where: { password_token: req.body.token } })
+			.then((user: User | null) => {
+				if (!user) {
+					return res.status(404).send({
+						message: "User not found",
+						status: 404,
+					});
+				} else {
+					bcrypt.genSalt(config.saltRounds, (err: Error | undefined, salt: string) => {
+						if (!err) {
+							bcrypt.hash(req.body.password, salt, (err: Error | undefined, hash: string) => {
+								if (!err) {
+									user
+										.update({
+											password: hash,
+										})
+										.then(() => {
+											return res.status(200).send({
+												message: "Password changed successfully",
+												status: 200,
+											});
+										})
+										.catch((err) => {
+											return res.status(500).send({
+												message:
+													err.message ||
+													"Some error occurred while changing the password.",
+												status: 500,
+											});
+										});
+								} else {
+									return res
+										.status(500)
+										.send({ message: "Internal server error", status: 500 });
+								}
+							});
+						} else {
+							return res
+								.status(500)
+								.send({ message: "Internal server error", status: 500 });
+						}
+					});
+				}
+			})
+			.catch((err) => {
+				return res.status(500).send({
+					message: err.message || "Some error occurred.",
+					status: 500,
+				});
+			});
+	} else {
+		return res.status(400).send({
+			message: "Bad request",
+			status: 400,
+		});
+	}
+};
+
 const formatSessionObject = (user: User | null) => {
 	let sessionObject = {};
 	if (user) {
@@ -112,6 +322,8 @@ const formatSessionObject = (user: User | null) => {
 			sessionObject = {
 				id: user.id,
 				username: user.username,
+				firstName: user.firstName,
+				lastName: user.lastName,
 				email: user.email,
 				role: user.role,
 				date: user.date,

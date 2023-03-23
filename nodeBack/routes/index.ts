@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { Request, Response } from "express";
 import routerAuth from "./auth.routes";
 import routerUser from "./user.routes";
 

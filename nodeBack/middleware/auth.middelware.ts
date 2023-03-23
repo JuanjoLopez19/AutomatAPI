@@ -15,7 +15,7 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 					res
 						.status(400)
 						.contentType("application/json")
-						.json({ error: "Username or email already in use" })
+						.json({ message: "Username or email already in use", status: 400 })
 						.send();
 					return;
 				}
@@ -31,7 +31,10 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 							res
 								.status(400)
 								.contentType("application/json")
-								.json({ error: "Username or email already in use" })
+								.json({
+									message: "Username or email already in use",
+									status: 400,
+								})
 								.send();
 							return;
 						}
@@ -41,7 +44,7 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 						res
 							.status(500)
 							.contentType("application/json")
-							.json({ error: err.message })
+							.json({ message: err.message,a:"dasd", status: 500 })
 							.send();
 					});
 			})
@@ -49,7 +52,7 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 				res
 					.status(500)
 					.contentType("application/json")
-					.json({ error: err.message })
+					.json({ message: err.message, a:"aaa", status: 500 })
 					.send();
 				return;
 			});
@@ -57,7 +60,7 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 		res
 			.status(400)
 			.contentType("application/json")
-			.json({ error: "Username or email not provided" })
+			.json({ message: "Username or email not provided", status: 400 })
 			.send();
 	return;
 };
@@ -81,6 +84,7 @@ export const verifySignIn = (req: Request, res: Response, next: any) => {
 						if (!passwordIsValid) {
 							return res.status(401).send({
 								message: "Invalid Password!",
+								status: 401,
 							});
 						}
 
@@ -90,7 +94,7 @@ export const verifySignIn = (req: Request, res: Response, next: any) => {
 						res
 							.status(404)
 							.contentType("application/json")
-							.json({ error: 'User not found' })
+							.json({ message: "User not found", status: 404 })
 							.send();
 						return;
 					}
@@ -99,7 +103,7 @@ export const verifySignIn = (req: Request, res: Response, next: any) => {
 					res
 						.status(404)
 						.contentType("application/json")
-						.json({ error: err.message })
+						.json({ message: err.message, status: 404 })
 						.send();
 					return;
 				});
@@ -107,7 +111,7 @@ export const verifySignIn = (req: Request, res: Response, next: any) => {
 			res
 				.status(500)
 				.contentType("application/json")
-				.json({ error: err.message })
+				.json({ message: err.message, status: 500 })
 				.send();
 			return;
 		}
@@ -115,7 +119,7 @@ export const verifySignIn = (req: Request, res: Response, next: any) => {
 		res
 			.status(400)
 			.contentType("application/json")
-			.json({ error: "Bad Request" })
+			.json({ message: "Bad Request", status: 400 })
 			.send();
 		return;
 	}

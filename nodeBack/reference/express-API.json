@@ -1,0 +1,666 @@
+{
+  "openapi": "3.0.0",
+  "x-stoplight": {
+    "id": "7v8y864cukbqy"
+  },
+  "info": {
+    "title": "express API",
+    "version": "0.0",
+    "contact": {
+      "name": "Juanjo Lopez",
+      "email": "juanjoselopez@usal.es",
+      "url": "https://github.com/JuanjoLopez19/AutomatAPI"
+    },
+    "description": "Express + Nodejs backend for auth and user management"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3486"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Login",
+      "description": ""
+    },
+    {
+      "name": "Register",
+      "description": ""
+    },
+    {
+      "name": "Auth",
+      "description": ""
+    }
+  ],
+  "paths": {
+    "/api/auth/signin": {
+      "post": {
+        "tags": [
+          "Auth",
+          "Login"
+        ],
+        "summary": "Validate an user",
+        "operationId": "post-auth-signin",
+        "responses": {
+          "200": {
+            "description": "User logged in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "48pbgts2djprp"
+                      }
+                    },
+                    "status": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "k2hd7um4zcyde"
+                      }
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "JWT": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "JWT token to authenticate the user"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "3rsd81wkik2k4"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "x-stoplight": {
+                        "id": "obgb2pch2pr0k"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Bad Request",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "qynic4mu0d1n3"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "x-stoplight": {
+                        "id": "qd8eg2ebz439l"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Invalid password",
+                      "status": 401
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "5m4okn3fid7bq"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "x-stoplight": {
+                        "id": "5of2umcwqyf9n"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "User not found",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "u3te5gxk3topa"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "x-stoplight": {
+                        "id": "zzrl2jut1b0s1"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Internal Server error",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Endpoint that allow the user to sign up on the platform",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "mj776vn2rjq3i"
+                    }
+                  },
+                  "password": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "adh4xfz6a3a0p"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "The data of the login form"
+        }
+      }
+    },
+    "/api/auth/signup": {
+      "post": {
+        "tags": [
+          "Auth",
+          "Register"
+        ],
+        "summary": "Create New User",
+        "operationId": "post-user",
+        "responses": {
+          "201": {
+            "description": "User created and return the jwt token with the data of the user created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "User created succesfully",
+                      "status": 201,
+                      "data": {
+                        "id": 10,
+                        "firstName": "User",
+                        "lastName": "Name",
+                        "email": "user@example.com",
+                        "date": "1997-10-31",
+                        "username": "Usernmae",
+                        "role": "client"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Username or email not provided",
+                      "status": 400
+                    }
+                  },
+                  "Example 2": {
+                    "value": {
+                      "message": "Username or email in used",
+                      "status": 400
+                    }
+                  },
+                  "Example 3": {
+                    "value": {
+                      "message": "Content cannot be empty",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Some error ocurred while creating the user",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "description": "Post the necessary fields for the API to create a new user."
+        },
+        "description": "Validate the data for the new user and if it proceed create a new one"
+      },
+      "parameters": []
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Log out an user",
+        "operationId": "post-api-auth-logout",
+        "responses": {
+          "200": {
+            "description": "User logged out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "User logged out",
+                      "status": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Invalid JWT token",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Endpoint that makes the user logout of the platform",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "JWT",
+            "description": "JWT toke that allow the platform to authenticate the user"
+          }
+        ]
+      }
+    },
+    "api/auth/remember_password": {
+      "get": {
+        "summary": "Remember password",
+        "operationId": "getapi-auth-remember_password",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "y96azi4uj5s96"
+                      }
+                    },
+                    "status": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "apy8etr9lo9qc"
+                      }
+                    },
+                    "token": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "k65gfwe5qyxin"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get the password token from the user given to check to change his password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "ensdto72z7wal"
+                    }
+                  },
+                  "email": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "wzif6l0qcjbvt"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      }
+    },
+    "api/auth/change_password": {
+      "put": {
+        "summary": "Change password",
+        "operationId": "putapi-auth-change_password",
+        "responses": {
+          "200": {
+            "description": "The password was updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "description": "With the password token and the password, it will update the user password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "dcuocmm7mf7m5"
+                    }
+                  },
+                  "password": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "c6dg2jgecrwll"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "api/auth/activate_account": {
+      "put": {
+        "summary": "Activate account",
+        "operationId": "putapi-auth-activate_account",
+        "responses": {
+          "200": {
+            "description": "The account has been activated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "description": "with the access token, the account will be active and ready to access the platform",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    },
+    "api/auth/checkToken": {
+      "get": {
+        "summary": "",
+        "operationId": "getapi-auth-checkToken",
+        "responses": {
+          "200": {
+            "description": "The session is correct, the user data will be send",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "description": "Used to check if the session has expired, or if the request is valid",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "JWT",
+            "description": "JWT token"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "title": "User",
+        "type": "object",
+        "x-examples": {
+          "Alice Smith": {
+            "id": 142,
+            "firstName": "Alice",
+            "lastName": "Smith",
+            "email": "alice.smith@gmail.com",
+            "dateOfBirth": "1997-10-31",
+            "emailVerified": true,
+            "signUpDate": "2019-08-24"
+          }
+        },
+        "description": "User model that identifies it by role",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the given user."
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Name of the user"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name of the user"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "email given on the sign up for the platform"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "example": "1997-10-31",
+            "x-stoplight": {
+              "id": "mzjp642louwxx"
+            },
+            "description": "Date birth of the user"
+          },
+          "username": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "gnyww40qmzuuj"
+            },
+            "description": "Nickname that the user has provided"
+          },
+          "role": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "88cfi4yo2pyyk"
+            },
+            "description": "Role that is used to navigate on the platform"
+          }
+        },
+        "required": [
+          "id",
+          "firstName",
+          "lastName",
+          "email",
+          "date",
+          "username",
+          "role"
+        ],
+        "x-stoplight": {
+          "id": "7v8y864cukbqy"
+        }
+      },
+      "Response": {
+        "title": "Response",
+        "x-stoplight": {
+          "id": "7v8y864cukbqy"
+        },
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "rjbivm6ej7s5o"
+            }
+          },
+          "status": {
+            "type": "integer",
+            "x-stoplight": {
+              "id": "sizk9akq4ceby"
+            }
+          },
+          "data": {
+            "type": "object",
+            "x-stoplight": {
+              "id": "y6paqxtaa51lp"
+            }
+          }
+        },
+        "required": [
+          "message",
+          "status"
+        ],
+        "description": "Response model is not a real model just for simplicity"
+      }
+    }
+  },
+  "x-internal": false,
+  "x-extension-1": null
+}
