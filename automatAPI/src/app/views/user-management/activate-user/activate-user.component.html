@@ -28,9 +28,10 @@
                           iconPos="right"
                           [label]="'T_ACT_ACC' | translate"
                           type="button"
-                          [loading]="false"
+                          [loading]="waitingState"
                           class="p-button-rounded p-button-warning"
                           [ngStyle]="{ width: '30%' }"
+                          (click)="activateAccount()"
                         ></button>
                       </div>
                     </div>

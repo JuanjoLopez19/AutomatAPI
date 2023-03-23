@@ -2,7 +2,10 @@ import { Component, HostListener } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from 'src/app/api/auth/auth/auth.service';
 import { Sizes } from 'src/app/common/enums/enums';
+import { rememberPasswordParams } from 'src/app/common/interfaces/interfaces';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-remember-password',
@@ -11,9 +14,16 @@ import { Sizes } from 'src/app/common/enums/enums';
 })
 export class RememberPasswordComponent {
   remPasswordForm: FormGroup;
+  params: rememberPasswordParams;
   readonly sizes: typeof Sizes = Sizes;
   currentSize!: string;
-  constructor(private router: Router, private translate: TranslateService) {
+  waitingState: boolean = false;
+
+  constructor(
+    private router: Router,
+    private translate: TranslateService,
+    private authService: AuthService
+  ) {
     translate.addLangs(['en', 'es-ES']);
     translate.setDefaultLang('es-ES');
     translate.use('es-ES');
@@ -75,5 +85,37 @@ export class RememberPasswordComponent {
       skipLocationChange: false,
       state: { active: 'sign_in' },
     });
+  }
+
+  remPasswordSubmit() {
+    if (this.remPasswordForm.invalid) {
+      return;
+    } else {
+      this.waitingState = true;
+      this.params = {
+        email: this.remPasswordForm.value.email,
+        username: this.remPasswordForm.value.username,
+      };
+      this.authService.rememberPassword(this.params).subscribe({
+        next: (response: HttpResponse<any>) => {
+          console.log('next');
+          console.log(response);
+          window.alert(this.translate.getTranslation('T_EMAIL_SENT'));
+          this.waitingState = false;
+          setTimeout(() => {
+            this.router.navigate(['']);
+          }, 2000);
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log('error');
+          console.log(error);
+          window.alert(this.translate.getTranslation('T_EMAIL_NO_SENT'));
+          this.waitingState = false;
+          setTimeout(() => {
+            this.router.navigate(['']);
+          }, 2000);
+        },
+      });
+    }
   }
 }

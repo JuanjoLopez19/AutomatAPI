@@ -1,7 +1,9 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from 'src/app/api/auth/auth/auth.service';
 import { Sizes } from 'src/app/common/enums/enums';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-activate-user',
@@ -10,12 +12,14 @@ import { Sizes } from 'src/app/common/enums/enums';
 })
 export class ActivateUserComponent implements OnInit {
   private token: string = undefined;
+  waitingState: boolean = false;
   readonly sizes: typeof Sizes = Sizes;
   currentSize!: string;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private authService: AuthService
   ) {
     translate.addLangs(['en', 'es-ES']);
     translate.setDefaultLang('es-ES');
@@ -62,5 +66,29 @@ export class ActivateUserComponent implements OnInit {
 
   chooseLanguage(language: string) {
     this.translate.use(language);
+  }
+
+  activateAccount() {
+    this.waitingState = true;
+    this.authService.activateAccount(this.token).subscribe({
+      next: (response: HttpResponse<any>) => {
+        console.log('next');
+        console.log(response);
+        window.alert(this.translate.getTranslation('T_ACCOUNT_ACTIVATED'));
+        this.waitingState = false;
+        setTimeout(() => {
+          this.router.navigate(['']);
+        }, 2000);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log('error');
+        console.log(error);
+        window.alert(this.translate.getTranslation('T_ACCOUNT_NO_ACTIVATED'));
+        this.waitingState = false;
+        setTimeout(() => {
+          this.router.navigate(['']);
+        }, 2000);
+      },
+    });
   }
 }

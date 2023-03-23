@@ -2,7 +2,10 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from 'src/app/api/auth/auth/auth.service';
 import { Sizes } from 'src/app/common/enums/enums';
+import { changePasswordParams } from 'src/app/common/interfaces/interfaces';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-change-password',
@@ -10,14 +13,19 @@ import { Sizes } from 'src/app/common/enums/enums';
   styleUrls: ['./change-password.component.scss'],
 })
 export class ChangePasswordComponent implements OnInit {
+  params: changePasswordParams;
+  waitingState: boolean = false;
   changePasswordForm: FormGroup;
+  invalidPasswords: boolean = false;
   private token: string = undefined;
   readonly sizes: typeof Sizes = Sizes;
   currentSize!: string;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private authService: AuthService
   ) {
     translate.addLangs(['en', 'es-ES']);
     translate.setDefaultLang('es-ES');
@@ -80,6 +88,45 @@ export class ChangePasswordComponent implements OnInit {
       this.currentSize = Sizes.LG;
     } else {
       this.currentSize = Sizes.XL;
+    }
+  }
+
+  onChangePasswordSubmit() {
+    if (this.changePasswordForm.invalid) {
+      return;
+    } else {
+      if (
+        this.changePasswordForm.value.password ===
+        this.changePasswordForm.value.repeatPassword
+      ) {
+        this.waitingState = true;
+        this.invalidPasswords = false;
+
+        this.params = {
+          password: this.changePasswordForm.value.password,
+          token: this.token,
+        };
+        this.authService.changePassword(this.params).subscribe({
+          next: (response: HttpResponse<any>) => {
+            this.waitingState = false;
+            window.alert(this.translate.getTranslation('T_PWD_CHANGED')); // Change this
+            this.waitingState = false;
+            setTimeout(() => {
+              this.router.navigate(['']);
+            }, 2000);
+          },
+          error: (error: HttpErrorResponse) => {
+            this.waitingState = false;
+            window.alert("Error" + error.message);
+            setTimeout(() => {
+              this.router.navigate(['']);
+            }, 2000);
+          },
+        });
+      } else {
+        this.invalidPasswords = true;
+        return;
+      }
     }
   }
 

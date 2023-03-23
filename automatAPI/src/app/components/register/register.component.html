@@ -162,8 +162,23 @@
                         formControlName="password"
                         placeholder="{{ 'T_PWD_PLACEHOLDER' | translate }}"
                         [toggleMask]="true"
-                        [feedback]="false"
-                      ></p-password>
+                        [feedback]="true"
+                      >
+                        <ng-template pTemplate="header">
+                          <h6>{{ "T_PICK_PWD" | translate }}</h6>
+                        </ng-template>
+                        <ng-template pTemplate="footer">
+                          <p-divider></p-divider>
+                          <p class="mt-2">{{ "T_REQ" | translate }}</p>
+                          <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                            <li>{{ "T_LOWER" | translate }}</li>
+                            <li>{{ "T_UPPER" | translate }}</li>
+                            <li>{{ "T_NUMBER" | translate }}</li>
+                            <li>{{ "T_SYMBOL" | translate }}</li>
+                            <li>{{ "T_8_CHAR" | translate }}</li>
+                          </ul>
+                        </ng-template>
+                      </p-password>
                       <div class="row">
                         <small
                           id="pwd-help"
@@ -190,13 +205,29 @@
                   <div class="row">
                     <div class="field">
                       <p-password
+                        class="myPass"
                         formControlName="repeatPassword"
                         placeholder="{{
                           'T_REPEAT_PWD_PLACEHOLDER' | translate
                         }}"
                         [toggleMask]="true"
-                        [feedback]="false"
-                      ></p-password>
+                        [feedback]="true"
+                      >
+                        <ng-template pTemplate="header">
+                          <h6>{{ "T_PICK_PWD" | translate }}</h6>
+                        </ng-template>
+                        <ng-template pTemplate="footer">
+                          <p-divider></p-divider>
+                          <p class="mt-2">{{ "T_REQ" | translate }}</p>
+                          <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                            <li>{{ "T_LOWER" | translate }}</li>
+                            <li>{{ "T_UPPER" | translate }}</li>
+                            <li>{{ "T_NUMBER" | translate }}</li>
+                            <li>{{ "T_SYMBOL" | translate }}</li>
+                            <li>{{ "T_8_CHAR" | translate }}</li>
+                          </ul>
+                        </ng-template>
+                      </p-password>
                       <div class="row">
                         <small
                           id="pwd2-help"
@@ -209,6 +240,12 @@
                           class="p-error block"
                           *ngIf="registerForm.get('repeatPassword').errors?.[ 'pattern' ] && registerForm.get('repeatPassword').touched"
                           >{{ "error.T_PWD_INVALID" | translate }}
+                        </small>
+                        <small
+                          id="pwd2-help"
+                          class="p-error block"
+                          *ngIf="invalidPasswords"
+                          >{{ "error.T_PWDS_NO_MATCH" | translate }}
                         </small>
                       </div>
                     </div>
@@ -228,15 +265,14 @@
                   </div>
                   <div class="row">
                     <div class="field">
-                      <span class="p-input-icon-right">
-                        <i class="pi pi-calendar"></i>
-                        <input
+                      <span>
+                        <p-calendar
                           formControlName="birthdate"
-                          type="text"
-                          id="calendar"
-                          placeholder="{{ 'T_DATE_PLACEHOLDER' | translate }}"
-                          pInputText
-                        />
+                          [showIcon]="true"
+                          placeholder="{{'T_DATE_PLACEHOLDER' | translate}}"
+                          dateFormat="{{'T_DATE_PLACEHOLDER' | translate}}"
+                          [readonlyInput]="true"
+                        ></p-calendar>
                       </span>
                       <div class="row">
                         <small
@@ -259,11 +295,16 @@
                   <div class="row mb-4"></div>
                   <div class="row">
                     <div class="field w-75">
-                      <button type="submit" class="btn btn-warning w-100">
-                        <span>
-                          {{ "T_SIGN_UP" | translate }}
-                        </span>
-                      </button>
+                      <button
+                          pButton
+                          pRipple
+                          icon="pi pi-send"
+                          iconPos="right"
+                          [label]="'T_REGISTER' | translate"
+                          type="submit"
+                          [loading]="waitingState"
+                          class="p-button-rounded p-button-warning"
+                        ></button>
                     </div>
                   </div>
                 </div>

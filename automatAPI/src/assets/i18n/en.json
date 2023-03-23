@@ -16,7 +16,7 @@
   "T_PWD_PLACEHOLDER": "Enter your password",
   "T_USERNAME_PLACEHOLDER": "Introduce your username",
   "T_BIRTHDATE": "Datebirth",
-  "T_DATE_PLACEHOLDER": "mm/dd/yyyy",
+  "T_DATE_PLACEHOLDER": "mm/dd/yy",
   "T_REPEAT_PWD": "Confirm password",
   "T_REPEAT_PWD_PLACEHOLDER": "Repeat the password",
   "T_FIRST_NAME": "Name",
