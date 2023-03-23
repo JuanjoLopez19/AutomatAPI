@@ -390,6 +390,169 @@
           }
         ]
       }
+    },
+    "api/auth/remember_password": {
+      "get": {
+        "summary": "Remember password",
+        "operationId": "getapi-auth-remember_password",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "y96azi4uj5s96"
+                      }
+                    },
+                    "status": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "apy8etr9lo9qc"
+                      }
+                    },
+                    "token": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "k65gfwe5qyxin"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get the password token from the user given to check to change his password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "ensdto72z7wal"
+                    }
+                  },
+                  "email": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "wzif6l0qcjbvt"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      }
+    },
+    "api/auth/change_password": {
+      "put": {
+        "summary": "Change password",
+        "operationId": "putapi-auth-change_password",
+        "responses": {
+          "200": {
+            "description": "The password was updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "description": "With the password token and the password, it will update the user password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "dcuocmm7mf7m5"
+                    }
+                  },
+                  "password": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "c6dg2jgecrwll"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "api/auth/activate_account": {
+      "put": {
+        "summary": "Activate account",
+        "operationId": "putapi-auth-activate_account",
+        "responses": {
+          "200": {
+            "description": "The account has been activated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        },
+        "description": "with the access token, the account will be active and ready to access the platform",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    },
+    "api/auth/checkToken": {
+      "get": {
+        "summary": "",
+        "operationId": "getapi-auth-checkToken",
+        "responses": {
+          "200": {
+            "description": "The session is correct, the user data will be send",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "description": "Used to check if the session has expired, or if the request is valid",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "JWT",
+            "description": "JWT token"
+          }
+        ]
+      }
     }
   },
   "components": {
