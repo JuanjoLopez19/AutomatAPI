@@ -1,4 +1,4 @@
-import User, { UserAttributes } from "../database/models/user";
+import User, { UserAttributes, role } from "../database/models/user";
 import { Request, Response } from "express";
 import config from "../config/config";
 import bcrypt from "bcrypt";
@@ -15,18 +15,17 @@ export const Signup = async (req: Request, res: Response) => {
 		req.body.password != undefined &&
 		req.body.username != undefined &&
 		req.body.email != undefined &&
-		req.body.role != undefined &&
 		req.body.date != undefined &&
-		req.body.firstName != undefined &&
-		req.body.lastName != undefined
+		req.body.name != undefined &&
+		req.body.surname != undefined
 	) {
 		let user: UserAttributes = {
 			username: req.body.username,
 			email: req.body.email,
-			role: req.body.role,
+			role: role.client,
 			date: req.body.date,
-			firstName: req.body.firstName,
-			lastName: req.body.lastName,
+			firstName: req.body.name,
+			lastName: req.body.surname,
 			password: "",
 			activeUser: false,
 			access_token: "",
