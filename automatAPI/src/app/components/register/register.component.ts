@@ -15,6 +15,8 @@ export class RegisterComponent {
   waitingState: boolean = false;
   invalidPasswords: boolean = false;
   params: registerParams;
+  showDialog: boolean = false;
+  statusCode: number;
 
   constructor(
     private registerService: RegisterService,
@@ -91,20 +93,23 @@ export class RegisterComponent {
             console.log('next');
             console.log(response);
             this.waitingState = false;
-            setTimeout(() => {
-              this.router.navigate([''], { state: { active: 'sign_in' } });
-            }, 2000);
+            this.statusCode = response.status;
+            this.showDialog = true;
+
           },
           error: (error: HttpErrorResponse) => {
             console.log('error');
             console.log(error);
             this.waitingState = false;
-            setTimeout(() => {
-              this.router.navigate([''], { state: { active: 'sign_in' } });
-            }, 2000);
+            this.statusCode = error.status;
+            this.showDialog = true;
           },
         });
       }
     }
+  }
+
+  manageHide(event: boolean) {
+    this.showDialog = false;
   }
 }

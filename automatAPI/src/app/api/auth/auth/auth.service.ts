@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
@@ -16,6 +16,7 @@ export class AuthService {
   }
 
   rememberPassword(params: rememberPasswordParams): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const queryParams = new HttpParams({
       fromObject: { email: params.email, username: params.username },
     });
@@ -23,36 +24,29 @@ export class AuthService {
       `${environment.apiHost}${environment.apiPort}/api/auth/remember_password`,
       {
         params: queryParams,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
+        headers,
       }
     );
   }
 
   changePassword(params: changePasswordParams): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.put(
       `${environment.apiHost}${environment.apiPort}/api/auth/reset_password`,
       params,
       {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
+        headers,
       }
     );
   }
 
   activateAccount(token: string): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.put(
       `${environment.apiHost}${environment.apiPort}/api/auth/activate_account`,
       { token: token },
       {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
+        headers,
       }
     );
   }

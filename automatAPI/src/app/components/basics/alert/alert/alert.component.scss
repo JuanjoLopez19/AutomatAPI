@@ -1,0 +1,52 @@
+@import "src/shared/variables";
+
+:host ::ng-deep p-dialog {
+  .p-dialog {
+    -webkit-box-shadow: 14px 18px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 14px 18px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 14px 18px 5px 0px rgba(0, 0, 0, 0.75);
+    border-radius: 20px;
+    border: 1px solid $black;
+  }
+  .p-dialog-header {
+    background-color: $orange;
+    border-radius: 20px 20px 0px 0px;
+    -moz-border-radius: 20px 20px 0px 0px;
+    -webkit-border-radius: 20px 20px 0px 0px;
+    padding-bottom: 0;
+  }
+  .p-dialog-content {
+    background-color: $orange;
+  }
+  .p-dialog-footer {
+    background-color: $orange;
+    border-radius: 0px 0px 20px 20px;
+    -moz-border-radius: 0px 0px 20px 20px;
+    -webkit-border-radius: 0px 0px 20px 20px;
+  }
+
+  .p-dialog-mask {
+    position: absolute;
+    left: 210px;
+    top: 212px;
+    justify-content: start;
+  }
+}
+
+:host ::ng-deep .p-button {
+  background-color: $light-blue;
+  border-color: $light-blue;
+  color: $white;
+
+  &:active {
+    background-color: $blue-transparent;
+    border-color: $blue-transparent;
+    color: $white;
+  }
+
+  &:hover {
+    background-color: $blue-transparent;
+    border-color: $blue-transparent;
+    color: $white;
+  }
+}

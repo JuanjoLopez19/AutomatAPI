@@ -9,6 +9,7 @@
         </span>
       </div>
       <form
+        id="form"
         class="row py-3 px-0"
         (ngSubmit)="OnRegisterSubmit($event)"
         [formGroup]="registerForm"
@@ -314,5 +315,6 @@
         </div>
       </form>
     </div>
+    <app-alert [show]="true" [status]="400" (onHide)="manageHide($event)"></app-alert>
   </div>
 </div>
