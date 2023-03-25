@@ -25,14 +25,14 @@ export const sendActivationEmail = async (
 		subject: "AutomatAPI - Account activation",
 		html:'<h1> Welcome to AutomatAPI!</h1></br>' + 
 			username +', here is the link for activating your user account: <a href="' +
-			config.host +
+			config.front +
 			config.activateRoute +
 			"?token=" +
 			accessToken +
 			'">Activate account</a>.</br> <div>' +
 			username +
 			", if you cannot use previous link, please just acccess this url: <span> " +
-			config.host +
+			config.front +
 			config.activateRoute +
 			"?token=" +
 			accessToken +
@@ -56,14 +56,14 @@ export const sendPasswordResetEmail = async (
 		to: userEmail,
 		subject: "AutomatAPI - Password reset",
 		html:'<h1> Hello again, '+ username+'!</h1></br> We are sorry to hear you have forgotten your password, to reset it click here: <a href="' +
-			config.host +
+			config.front +
 			config.resetRoute +
 			"?token=" +
 			passwordToken +
 			'">Reset password</a>.</br> <div>' +
 			username +
 			", if you cannot use previous link, please just acccess this url: <span> " +
-			config.host +
+			config.front +
 			config.resetRoute +
 			"?token=" +
 			passwordToken +

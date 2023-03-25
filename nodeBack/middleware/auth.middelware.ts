@@ -15,7 +15,7 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 					res
 						.status(400)
 						.contentType("application/json")
-						.json({ message: "Username or email already in use", status: 400 })
+						.json({ message: "Username already in use", status: 400 })
 						.send();
 					return;
 				}
@@ -32,7 +32,7 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 								.status(400)
 								.contentType("application/json")
 								.json({
-									message: "Username or email already in use",
+									message: "email already in use",
 									status: 400,
 								})
 								.send();
@@ -44,7 +44,7 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 						res
 							.status(500)
 							.contentType("application/json")
-							.json({ message: err.message,a:"dasd", status: 500 })
+							.json({ message: err.message, status: 500 })
 							.send();
 					});
 			})
@@ -52,7 +52,7 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 				res
 					.status(500)
 					.contentType("application/json")
-					.json({ message: err.message, a:"aaa", status: 500 })
+					.json({ message: err.message, status: 500 })
 					.send();
 				return;
 			});
