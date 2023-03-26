@@ -9,6 +9,7 @@
         </span>
       </div>
       <form
+        id="form"
         class="row py-3 px-0"
         (ngSubmit)="OnRegisterSubmit($event)"
         [formGroup]="registerForm"
@@ -303,7 +304,7 @@
                           [label]="'T_REGISTER' | translate"
                           type="submit"
                           [loading]="waitingState"
-                          class="p-button-rounded p-button-warning"
+                          class="p-button-rounded p-button-info"
                         ></button>
                     </div>
                   </div>
@@ -314,5 +315,6 @@
         </div>
       </form>
     </div>
+    <app-alert [show]="showDialog" [status]="statusCode" (onHide)="manageHide($event)"></app-alert>
   </div>
 </div>

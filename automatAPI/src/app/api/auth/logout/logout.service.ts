@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { environment } from 'src/environments/env';
 import { Observable } from 'rxjs';
 
@@ -13,13 +13,11 @@ export class LogoutService {
   }
 
   logout(): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.get(
       `${environment.apiHost}${environment.apiPort}/api/auth/signout`,
       {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
+        headers
       }
     );
   }

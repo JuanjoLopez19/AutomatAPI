@@ -28,6 +28,8 @@ import { DividerModule } from 'primeng/divider';
 import { ButtonModule } from 'primeng/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RippleModule } from 'primeng/ripple';
+import { DialogModule } from 'primeng/dialog';
+import { AlertComponent } from './components/basics/alert/alert.component';
 
 
 // AoT requires an exported function for factories
@@ -46,6 +48,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ActivateUserComponent,
     RememberPasswordComponent,
     ChangePasswordComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormsModule,
     ReactiveFormsModule,
     RippleModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    DialogModule
   ],
   providers: [],
   bootstrap: [AppComponent],

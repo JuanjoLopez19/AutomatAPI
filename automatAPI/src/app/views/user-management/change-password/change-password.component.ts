@@ -20,6 +20,8 @@ export class ChangePasswordComponent implements OnInit {
   private token: string = undefined;
   readonly sizes: typeof Sizes = Sizes;
   currentSize!: string;
+  showDialog: boolean = false;
+  statusCode: number;
 
   constructor(
     private router: Router,
@@ -36,7 +38,7 @@ export class ChangePasswordComponent implements OnInit {
         validators: [
           Validators.required,
           Validators.pattern(
-            '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$'
+            '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
           ),
         ],
         updateOn: 'submit',
@@ -45,7 +47,7 @@ export class ChangePasswordComponent implements OnInit {
         validators: [
           Validators.required,
           Validators.pattern(
-            '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$'
+            '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
           ),
         ],
         updateOn: 'submit',
@@ -108,19 +110,18 @@ export class ChangePasswordComponent implements OnInit {
         };
         this.authService.changePassword(this.params).subscribe({
           next: (response: HttpResponse<any>) => {
-            this.waitingState = false;
-            window.alert(this.translate.getTranslation('T_PWD_CHANGED')); // Change this
-            this.waitingState = false;
             setTimeout(() => {
-              this.router.navigate(['']);
-            }, 2000);
+              this.waitingState = false;
+              this.statusCode = response.status;
+              this.showDialog = true;
+            }, 1500);
           },
           error: (error: HttpErrorResponse) => {
-            this.waitingState = false;
-            window.alert("Error" + error.message);
             setTimeout(() => {
-              this.router.navigate(['']);
-            }, 2000);
+              this.waitingState = false;
+              this.statusCode = error.status;
+              this.showDialog = true;
+            }, 1500);
           },
         });
       } else {
@@ -146,5 +147,10 @@ export class ChangePasswordComponent implements OnInit {
       skipLocationChange: false,
       state: { active: 'sign_in' },
     });
+  }
+
+  manageHide(event: boolean) {
+    this.showDialog = false;
+    this.router.navigate([''], { state: { active: 'sign_in' } });
   }
 }

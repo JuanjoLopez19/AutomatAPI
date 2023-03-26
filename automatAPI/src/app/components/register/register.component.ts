@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegisterService } from 'src/app/api/auth/register/register.service';
@@ -11,10 +11,13 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
+  @Output() goToLogin: EventEmitter<string> = new EventEmitter<string>();
   registerForm: FormGroup;
   waitingState: boolean = false;
   invalidPasswords: boolean = false;
   params: registerParams;
+  showDialog: boolean = false;
+  statusCode: number;
 
   constructor(
     private registerService: RegisterService,
@@ -41,7 +44,7 @@ export class RegisterComponent {
         validators: [
           Validators.required,
           Validators.pattern(
-            '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$'
+            '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{8,}$'
           ),
         ],
         updateOn: 'submit',
@@ -50,7 +53,7 @@ export class RegisterComponent {
         validators: [
           Validators.required,
           Validators.pattern(
-            '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$'
+            '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
           ),
         ],
         updateOn: 'submit',
@@ -70,8 +73,6 @@ export class RegisterComponent {
         this.registerForm.value.password !==
         this.registerForm.value.repeatPassword
       ) {
-        console.log(this.registerForm.get('password').value);
-        console.log(this.registerForm.get('repeatPassword').value);
         this.invalidPasswords = true;
         return;
       } else {
@@ -88,23 +89,26 @@ export class RegisterComponent {
 
         this.registerService.register(this.params).subscribe({
           next: (response: HttpResponse<any>) => {
-            console.log('next');
-            console.log(response);
-            this.waitingState = false;
             setTimeout(() => {
-              this.router.navigate([''], { state: { active: 'sign_in' } });
-            }, 2000);
+              this.waitingState = false;
+              this.statusCode = response.status;
+              this.showDialog = true;
+              this.goToLogin.emit('sign_in');
+            }, 1500);
           },
           error: (error: HttpErrorResponse) => {
-            console.log('error');
-            console.log(error);
-            this.waitingState = false;
             setTimeout(() => {
-              this.router.navigate([''], { state: { active: 'sign_in' } });
-            }, 2000);
+              this.waitingState = false;
+              this.statusCode = error.status;
+              this.showDialog = true;
+            }, 1500);
           },
         });
       }
     }
+  }
+
+  manageHide(event: boolean) {
+    this.showDialog = false;
   }
 }

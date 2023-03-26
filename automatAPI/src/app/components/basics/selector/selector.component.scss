@@ -1,31 +1,39 @@
 @import "src/shared/variables";
+:host {
+  .main {
+    border-radius: 40px;
+    background-color: $white;
+  }
 
-.main {
-  border-radius: 40px;
-  background-color: $white;
-}
+  button {
+    width: 90%;
+    border-radius: 30px;
+    padding: 1rem;
+  }
 
-.button-active {
-  color: $white;
-}
+  ::ng-deep .p-button.p-button-text{
+    color: $light-blue;
+    font-weight: 600;
+    font-size: 1.25rem;
 
-button {
-  width: 90%;
-  border-radius: 20px;
-  padding: 1rem;
-}
+    &:hover {
+      color: $blue-transparent;
+    }
+  }
+  ::ng-deep .p-button.p-button-info {
+    background-color: $light-blue;
+    border-color: $light-blue;
+    color: $white;
 
-.btn-warning{
-  background-color: $primary-color;
-  color: $white;
-}
-.btn-light {
-  background-color: $white;
-  color: $black;
-  border: 0px;
-}
+    &:hover {
+      background-color: $blue-transparent;
+      border-color: $blue-transparent;
+      color: $white;
+    }
 
-.btn-light:hover{
-  background-color: $primary-color;
-  color: $white;
+    &:focus {
+      box-shadow: 0 0 0 0.2rem $blue-transparent;
+    }
+  }
+
 }

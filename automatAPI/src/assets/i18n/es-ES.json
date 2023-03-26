@@ -13,6 +13,7 @@
   "T_EMAIL": "Correo electrónico",
   "T_EMAIL_PLACEHOLDER": "Introduce tu correo electrónico",
   "T_PWD": "Contraseña",
+  "T_LOGIN_WITH": "Inicia sesión con:",
   "T_PWD_PLACEHOLDER": "Introduce tu contraseña",
   "T_USERNAME_PLACEHOLDER": "Introduce tu nombre de usuario",
   "T_BIRTHDATE": "Fecha de nacimiento",
@@ -47,5 +48,18 @@
   "T_NEW_PWD": "Nueva contraseña",
   "T_CHG_PWD": "Cambiar contraseña",
   "T_CHG_PWD_PROCESS": "Introduce tu nueva contraseña",
-  "T_ACT_ACC": "Activar cuenta"
+  "T_ACT_ACC": "Activar cuenta",
+  "T_OK": "¡Entendido!",
+  "T_SUCCESS": "¡La operación ha sido un éxito!",
+  "T_CREATED": "¡Cuenta creada!",
+  "T_INTER_ERROR": "¡Error interno del servidor!",
+  "T_BAD_REQ": "!Petición incorrecta!",
+  "T_NOT_FOUND": "¡No se ha encontrado el recurso!",
+  "T_UNAUTH": "¡No autorizado!",
+  "T_SUCCESS_RES": "La operación ha sido un éxito, cierre esta ventana para continuar.",
+  "T_CREATED_RES": "La cuenta ha sido creada, revise el correo electrónico para activarla.",
+  "T_INTER_ERROR_RES": "Ha habido un error interno del servidor, inténtelo de nuevo más tarde.",
+  "T_BAD_REQ_RES": "Petición incorrecta, inténtelo de nuevo más tarde.",
+  "T_NOT_FOUND_RES": "No se ha encontrado el recurso, inténtelo de nuevo más tarde.",
+  "T_UNAUTH_RES": "No autorizado, inténtelo de nuevo más tarde."
 }

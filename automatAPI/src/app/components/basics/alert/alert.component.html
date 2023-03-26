@@ -1,0 +1,73 @@
+<p-dialog
+  header="{{ 'T_MESSAGE' | translate }}"
+  [(visible)]="show"
+  [style]="{ width: '350px' }"
+  [position]="'top'"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="manageHide()"
+  [closable]="false"
+  class="dialog"
+>
+  <ng-template pTemplate="header">
+    <div class="container">
+      <div class="row">
+        <span class="title" *ngIf="status === 200">{{
+          "T_SUCCESS" | translate
+        }}</span>
+        <span class="title" *ngIf="status === 201">{{
+          "T_CREATED" | translate
+        }}</span>
+        <span class="title" *ngIf="status === 500">{{
+          "T_INTER_ERROR" | translate
+        }}</span>
+        <span class="title" *ngIf="status === 400">{{
+          "T_BAD_REQ" | translate
+        }}</span>
+        <span class="title" *ngIf="status === 401">{{
+          "T_UNAUTH" | translate
+        }}</span>
+        <span class="title" *ngIf="status === 404">{{
+          "T_NOT_FOUND" | translate
+        }}</span>
+      </div>
+
+      <div class="row w-100">
+        <p-divider></p-divider>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div class="container">
+      <p class="text-xl font-bold" *ngIf="status === 200">
+        {{ "T_SUCCESS_RES" | translate }}
+      </p>
+      <p class="text-xl font-bold" *ngIf="status === 201">
+        {{ "T_CREATED_RES" | translate }}
+      </p>
+      <p class="text-xl font-bold" *ngIf="status === 500">
+        {{ "T_INTER_ERROR_RES" | translate }}
+      </p>
+      <p class="text-xl font-bold" *ngIf="status === 400">
+        {{ "T_BAD_REQ_RES" | translate }}
+      </p>
+      <p class="text-xl font-bold" *ngIf="status === 401">
+        {{ "T_UNAUTH_RES" | translate }}
+      </p>
+      <p class="text-xl font-bold" *ngIf="status === 404">
+        {{ "T_NOT_FOUND_RES" | translate }}
+      </p>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      icon="pi pi-check"
+      iconPos="right"
+      (click)="show = false"
+      [label]="'T_OK' | translate"
+      class="p-button-rounded"
+    ></button>
+  </ng-template>
+</p-dialog>

@@ -10,12 +10,12 @@
         <h1 class="text-center">{{ "T_AUTOMATAPI" | translate }}</h1>
         <div class="row">
           <div class="col-12">
-            <div class="row" [ngClass]="{ 'pb-5': active === 'sign_in' }">
+            <div class="row" [ngClass]="{ 'pb-5': active === 'sign_in' }" >
               <div class="col-12" *ngIf="active === 'sign_in'">
-                <app-login class=""></app-login>
+                <app-login class="login"></app-login>
               </div>
               <div class="col-12" *ngIf="active === 'sign_up'">
-                <app-register></app-register>
+                <app-register (goToLogin)="onRegister($event)"></app-register>
               </div>
             </div>
           </div>
