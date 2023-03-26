@@ -18,6 +18,8 @@ export class RememberPasswordComponent {
   readonly sizes: typeof Sizes = Sizes;
   currentSize!: string;
   waitingState: boolean = false;
+  showDialog: boolean = false;
+  statusCode: number;
 
   constructor(
     private router: Router,
@@ -98,24 +100,25 @@ export class RememberPasswordComponent {
       };
       this.authService.rememberPassword(this.params).subscribe({
         next: (response: HttpResponse<any>) => {
-          console.log('next');
-          console.log(response);
-          window.alert(this.translate.getTranslation('T_EMAIL_SENT'));
-          this.waitingState = false;
           setTimeout(() => {
-            this.router.navigate(['']);
-          }, 2000);
+            this.waitingState = false;
+            this.statusCode = response.status;
+            this.showDialog = true;
+          }, 1500);
         },
         error: (error: HttpErrorResponse) => {
-          console.log('error');
-          console.log(error);
-          window.alert(this.translate.getTranslation('T_EMAIL_NO_SENT'));
-          this.waitingState = false;
           setTimeout(() => {
-            this.router.navigate(['']);
-          }, 2000);
+            this.waitingState = false;
+            this.statusCode = error.status;
+            this.showDialog = true;
+          }, 1500);
         },
       });
     }
+  }
+
+  manageHide(event: boolean) {
+    this.showDialog = false;
+    this.router.navigate([''], { state: { active: 'sign_in' } });
   }
 }

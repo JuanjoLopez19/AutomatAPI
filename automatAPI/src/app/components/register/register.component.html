@@ -304,7 +304,7 @@
                           [label]="'T_REGISTER' | translate"
                           type="submit"
                           [loading]="waitingState"
-                          class="p-button-rounded p-button-warning"
+                          class="p-button-rounded p-button-info"
                         ></button>
                     </div>
                   </div>
@@ -315,6 +315,6 @@
         </div>
       </form>
     </div>
-    <app-alert [show]="true" [status]="400" (onHide)="manageHide($event)"></app-alert>
+    <app-alert [show]="showDialog" [status]="statusCode" (onHide)="manageHide($event)"></app-alert>
   </div>
 </div>

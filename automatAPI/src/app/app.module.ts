@@ -29,7 +29,7 @@ import { ButtonModule } from 'primeng/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RippleModule } from 'primeng/ripple';
 import { DialogModule } from 'primeng/dialog';
-import { AlertComponent } from './components/basics/alert/alert/alert.component';
+import { AlertComponent } from './components/basics/alert/alert.component';
 
 
 // AoT requires an exported function for factories

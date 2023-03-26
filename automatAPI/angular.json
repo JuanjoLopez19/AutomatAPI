@@ -62,6 +62,20 @@
                   "with": "src/environments/env.prod.ts"
                 }
               ]
+            },
+            "distri": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/env.ts",
+                  "with": "src/environments/env.prod.dist.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "development"
@@ -74,6 +88,9 @@
             },
             "development": {
               "browserTarget": "automatAPI:build:development"
+            },
+            "distri": {
+              "browserTarget": "automatAPI:build:distri"
             }
           },
           "defaultConfiguration": "development"

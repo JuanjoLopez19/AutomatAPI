@@ -29,7 +29,7 @@
                           [label]="'T_ACT_ACC' | translate"
                           type="button"
                           [loading]="waitingState"
-                          class="p-button-rounded p-button-warning"
+                          class="p-button-rounded p-button-info"
                           [ngStyle]="{ width: '30%' }"
                           (click)="activateAccount()"
                         ></button>
@@ -39,6 +39,7 @@
                 </div>
               </div>
             </div>
+            <app-alert [show]="showDialog" [status]="statusCode" (onHide)="manageHide($event)"></app-alert>
           </div>
         </div>
       </div>

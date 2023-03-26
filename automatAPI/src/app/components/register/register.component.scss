@@ -1,32 +1,59 @@
 @import "src/shared/variables";
 
-h3{
-  font-size: 1.25rem;
-  font-weight: 600;
-}
+:host {
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
 
-button {
-  border-radius: 20px;
-  padding: 1rem;
-}
+  ::ng-deep p-divider {
+    .p-divider-content {
+      background-color: $orange;
+    }
+  }
 
-.btn-warning{
-  background-color: $primary-color;
-  color: $white;
-}
+  ::ng-deep p-calendar .p-button {
+    background-color: $light-blue;
 
-:host ::ng-deep p-calendar .p-button{
-  background-color: $light-blue;
-}
+    &:hover {
+      background-color: $blue-transparent;
+    }
 
-:host ::ng-deep .p-button.p-button-warning {
-  background-color: $light-blue;
-  border-color: $light-blue;
-  color: $white;
-}
+    &:focus {
+      box-shadow: 0 0 0 0.2rem $blue-transparent;
+    }
+  }
+  ::ng-deep .p-button.p-button-info {
+    background-color: $light-blue;
+    border-color: $light-blue;
+    color: $white;
 
-:host ::ng-deep .p-button.p-button-warning:hover {
-  background-color: $blue-transparent;
-  border-color: $blue-transparent;
-  color: $white;
+    &:hover {
+      background-color: $blue-transparent;
+      border-color: $blue-transparent;
+      color: $white;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem $blue-transparent;
+    }
+  }
+
+  ::ng-deep p-button {
+    .p-button-rounded.p-button-info {
+      background-color: $light-blue;
+      border-color: $light-blue;
+      color: $white;
+    }
+
+    .p-button.p-button-rounded.p-button-info:hover {
+      background-color: $blue-transparent;
+      border-color: $blue-transparent;
+      color: $white;
+    }
+
+    .p-button.p-button-info:focus {
+      box-shadow: 0 0 0 0.2rem $blue-transparent;
+    }
+  }
 }

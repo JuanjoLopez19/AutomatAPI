@@ -37,20 +37,44 @@
     font-size: 4rem;
     font-weight: 700;
   }
-  small {
-    cursor: pointer;
-    font-weight: 700;
+
+  ::ng-deep p-divider {
+    .p-divider-content {
+      background-color: $orange;
+    }
   }
-}
 
-:host ::ng-deep .p-button.p-button-warning {
-  background-color: $light-blue;
-  border-color: $light-blue;
-  color: $white;
-}
+  ::ng-deep .p-button.p-button-info {
+    background-color: $light-blue;
+    border-color: $light-blue;
+    color: $white;
 
-:host ::ng-deep .p-button.p-button-warning:hover {
-  background-color: $blue-transparent;
-  border-color: $blue-transparent;
-  color: $white;
+    &:hover {
+      background-color: $blue-transparent;
+      border-color: $blue-transparent;
+      color: $white;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem $blue-transparent;
+    }
+  }
+
+  ::ng-deep p-button {
+    .p-button-rounded.p-button-info {
+      background-color: $light-blue;
+      border-color: $light-blue;
+      color: $white;
+    }
+
+    .p-button.p-button-rounded.p-button-info:hover {
+      background-color: $blue-transparent;
+      border-color: $blue-transparent;
+      color: $white;
+    }
+
+    .p-button.p-button-info:focus {
+      box-shadow: 0 0 0 0.2rem $blue-transparent;
+    }
+  }
 }
