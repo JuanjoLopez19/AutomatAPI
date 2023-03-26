@@ -33,6 +33,20 @@ const config = {
 			process.env.GOOGLE_CALLBACK ||
 			"http://localhost:3000/auth/google/callback",
 	},
+	github: {
+		clientID: process.env.GITHUB_CLIENT_ID || "clientID",
+		clientSecret: process.env.GITHUB_SECRET || "secret",
+		callbackURL:
+			process.env.GITHUB_CALLBACK ||
+			"http://localhost:3000/auth/github/callback",
+	},
+	twitter: {
+		clientID: process.env.TWITTER_CLIENT_ID || "clientID",
+		clientSecret: process.env.TWITTER_SECRET || "secret",
+		callbackURL:
+			process.env.TWITTER_CALLBACK ||
+			"http://localhost:3000/auth/twitter/callback",
+	},
 };
 
 export default config;

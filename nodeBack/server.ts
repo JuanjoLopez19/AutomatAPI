@@ -30,7 +30,9 @@ const server = https.createServer({
 
 const server = http.createServer(app);
 
-server.listen(port);
+server.listen(port, () => {
+	console.log(`Server running on port ${port}`);
+});
 server.on("error", onError);
 server.on("listening", onListening);
 

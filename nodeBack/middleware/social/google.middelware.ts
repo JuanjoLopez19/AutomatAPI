@@ -16,7 +16,8 @@ const google = new googleStrategy(
 		profile: passportGoogle.Profile,
 		done: passportGoogle.VerifyCallback
 	) => {
-		return done;
+		console.log("Google profile", profile);
+		return done(null, profile); //Change this to the correct function
 	}
 );
 
