@@ -3,6 +3,7 @@ import passport from "passport";
 import passportJWT from "passport-jwt";
 const JWTStrategy = passportJWT.Strategy;
 import config from "./config/config";
+import google from "./middleware/social/google.middelware";
 
 const cookieExtractor = (req: Request) => {
 	let jwt = null;
@@ -13,8 +14,8 @@ const cookieExtractor = (req: Request) => {
 
 	return jwt;
 };
-
-passport.use(
+const middelware = passport
+middelware.use(
 	"jwt",
 	new JWTStrategy(
 		{
@@ -32,3 +33,7 @@ passport.use(
 		}
 	)
 );
+
+middelware.use("google", google);
+
+export default middelware;

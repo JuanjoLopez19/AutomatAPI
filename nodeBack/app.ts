@@ -2,7 +2,7 @@ import express, { Express, Request, Response, NextFunction } from "express";
 import BodyParser from "body-parser";
 import cors from "cors";
 import routes from "./routes";
-import passport from "passport";
+import middleware from "./passport";
 import cookieParser from "cookie-parser";
 import swaggerUi from "swagger-ui-express";
 import * as swaggerdocs from "./reference/express-API.json";
@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(passport.initialize());
+app.use(middleware.initialize());
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerdocs));
 app.use("/api", routes);
 

@@ -18,7 +18,6 @@ const db = new Sequelize(dbName, dbUser, dbPass, {
 		timestamps: false,
 	},
 });
-
 async function testConnection() {
 	try {
 		//alter = true updates the database if schema has changed

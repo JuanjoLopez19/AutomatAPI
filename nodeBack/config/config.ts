@@ -15,7 +15,7 @@ const config = {
 		dialect: process.env.DB_DIALECT || "postgres",
 	},
 	backend_url: process.env.BACKEND_URL || "http://localhost:5000",
-	smtp:{
+	smtp: {
 		host: process.env.SMTP_HOST || "smtp.gmail.com",
 		port: Number(process.env.SMTP_PORT) || 587,
 		email: process.env.SMTP_EMAIL || "email",
@@ -25,6 +25,14 @@ const config = {
 	host: process.env.HOST || "http://localhost:3000",
 	activateRoute: process.env.ACTIVATION_ROUTE || "/activate",
 	resetRoute: process.env.RESET_ROUTE || "/reset",
+
+	google: {
+		clientID: process.env.GOOGLE_CLIENT_ID || "clientID",
+		clientSecret: process.env.GOOGLE_SECRET || "secret",
+		callbackURL:
+			process.env.GOOGLE_CALLBACK ||
+			"http://localhost:3000/auth/google/callback",
+	},
 };
 
 export default config;
