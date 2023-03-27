@@ -314,7 +314,7 @@ export const resetPassword = async (req: Request, res: Response) => {
 	}
 };
 
-const formatSessionObject = (user: User | null) => {
+export const formatSessionObject = (user: User | null) => {
 	let sessionObject = {};
 	if (user) {
 		try {

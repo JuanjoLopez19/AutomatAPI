@@ -18,6 +18,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(passport.initialize());
+
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerdocs));
 app.use("/api", routes);
 

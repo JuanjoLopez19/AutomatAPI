@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { request, Router } from "express";
 import { Request, Response } from "express";
 import {
 	activateAccount,
@@ -21,27 +21,27 @@ routerAuth.put("/activate_account", activateAccount);
 routerAuth.get("/remember_password", rememberPassword);
 routerAuth.put("/reset_password", resetPassword);
 
+// Google social auth
 routerAuth.get(
 	"/google",
 	passport.authenticate("google", { scope: ["email", "profile"] })
 );
-
 routerAuth.get(
 	"/google/callback",
 	passport.authenticate(
 		"google",
 		{
-			failureRedirect: "/api/auth/failure",
 			session: false,
 		},
-		(req: Request, res: Response) => {
-			handleSocialLoginCallback(req, res);
+		(req, res) => {
+			console.log(req.user)
+			handleSocialOauthCallback(req, res);
 		}
 	)
 );
 
+// Github social auth
 routerAuth.get("/github", passport.authenticate("github", { scope: ["user"] }));
-
 routerAuth.get(
 	"/github/callback",
 	passport.authenticate(
@@ -50,29 +50,13 @@ routerAuth.get(
 			failureRedirect: "/api/auth/failure",
 			session: false,
 		},
-		(req: Request, res: Response) => {
-			handleSocialLoginCallback(req, res);
-		}
-	)
-);
-
-routerAuth.get("/twitter", passport.authenticate("twitter", { scope: ["user"] }));
-
-routerAuth.get(
-	"/twitter/callback",
-	passport.authenticate(
-		"twitter",
-		{
-			failureRedirect: "/api/auth/failure",
-			session: false,
-		},
-		(req: Request, res: Response) => {
-			handleSocialLoginCallback(req, res);
-		}
+		(req: Request, res: Response) => {}
 	)
 );
 
 routerAuth.get("/succes", (req: Request, res: Response) => {
+	console.log("succes");
+	console.log(res);
 	res.redirect("http://localhost:4200/#/home");
 });
 
@@ -80,11 +64,13 @@ routerAuth.get("/failure", (req: Request, res: Response) => {
 	res.redirect("http://localhost:4200/#/forbidden");
 });
 
-async function handleSocialLoginCallback(req: any, res: any) { //Change this to the correct url
-	if (req) {
-		return res.redirect("http://localhost:4200/#/home");
-	} else {
-		return res.redirect("http://localhost:4200/#/forbidden");
-	}
+function handleSocialOauthCallback(req:any, res:any) {
+	console.log("handleSocialOauthCallback");
+    if (req.socialAuthSuccess) {
+      res.redirect("http://localhost:4200/#/home");
+    } else {
+      res.redirect("http://localhost:4200/#/forbidden"); 
+    }
 }
+
 export default routerAuth;
