@@ -31,6 +31,14 @@ import { RippleModule } from 'primeng/ripple';
 import { DialogModule } from 'primeng/dialog';
 import { AlertComponent } from './components/basics/alert/alert.component';
 
+// Material components
+import {MatSidenavModule} from '@angular/material/sidenav'
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { SidebarComponent } from './components/basics/sidebar/sidebar.component';
+import {MatListModule} from '@angular/material/list';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
+
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -49,6 +57,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     RememberPasswordComponent,
     ChangePasswordComponent,
     AlertComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,7 +81,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     RippleModule,
     BrowserAnimationsModule,
-    DialogModule
+    DialogModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatListModule,
+    MatIconModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent],

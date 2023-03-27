@@ -1,1 +1,53 @@
-<p>dashboard works!</p>
+<div class="main-container h-100">
+  <mat-toolbar color="primary" class="topbar telative">
+    <!-- ============================================================== -->
+    <!-- Logo - style you can find in header.scss -->
+    <!-- ============================================================== -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.html">
+        <!-- Logo icon --><b>
+          <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+          <!-- Dark Logo icon -->
+        </b>
+        <!--End Logo icon -->
+        <!-- Logo text -->
+        <span fxShow="false" fxShow.gt-xs>
+          <!-- dark Logo text -->
+        </span>
+      </a>
+    </div>
+    <!-- ============================================================== -->
+    <!-- sidebar toggle -->
+    <!-- ============================================================== -->
+
+    <button pButton (click)="snav.toggle()" value="sidebarclosed">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span fxFlex></span>
+    <!-- ============================================================== -->
+    <!-- app header component - style you can find in header.scss / header.component.ts-->
+    <!-- ============================================================== -->
+  </mat-toolbar>
+  <mat-sidenav-container
+    class="example-sidenav-container"
+    [ngStyle]="{ height: '851px' }"
+  >
+    <mat-sidenav
+      #snav
+      id="snav"
+      class="dark-sidebar pl-xs"
+      [mode]="'side'"
+      fixedTopGap="0"
+      [opened]="true"
+    >
+      <app-sidebar></app-sidebar>
+    </mat-sidenav>
+    <mat-sidenav-content class="page-wrapper">
+      <div class="page-content h-100">
+        <app-remember-password></app-remember-password>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <mat-toolbar color="primary" class="bottombar telative"> </mat-toolbar>
+</div>

@@ -4,6 +4,7 @@ import { UserManagementComponent } from './views/user-management/user-management
 import { ActivateUserComponent } from './views/user-management/activate-user/activate-user.component';
 import { RememberPasswordComponent } from './views/user-management/remember-password/remember-password.component';
 import { ChangePasswordComponent } from './views/user-management/change-password/change-password.component';
+import { DashboardComponent } from './views/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -23,9 +24,13 @@ const routes: Routes = [
     component: ChangePasswordComponent,
   },
   {
+    path: 'home',
+    component: DashboardComponent,
+  },
+  {
     path: '**',
     redirectTo: '',
-  }
+  },
 ];
 
 @NgModule({
