@@ -18,6 +18,7 @@ import { SelectorComponent } from './components/basics/selector/selector.compone
 import { ActivateUserComponent } from './views/user-management/activate-user/activate-user.component';
 import { RememberPasswordComponent } from './views/user-management/remember-password/remember-password.component';
 import { ChangePasswordComponent } from './views/user-management/change-password/change-password.component';
+import { AlertComponent } from './components/basics/alert/alert.component';
 
 // NG Prime components
 import { InputTextModule } from 'primeng/inputtext';
@@ -29,15 +30,17 @@ import { ButtonModule } from 'primeng/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RippleModule } from 'primeng/ripple';
 import { DialogModule } from 'primeng/dialog';
-import { AlertComponent } from './components/basics/alert/alert.component';
+import { MenuModule } from 'primeng/menu';
 
 // Material components
-import {MatSidenavModule} from '@angular/material/sidenav'
-import {MatToolbarModule} from '@angular/material/toolbar';
-import { SidebarComponent } from './components/basics/sidebar/sidebar.component';
-import {MatListModule} from '@angular/material/list';
-import {MatIconModule} from '@angular/material/icon';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { SidebarComponent } from './components/dashboard/sidebar/sidebar.component';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { HeaderComponent } from './components/dashboard/header/header.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 // AoT requires an exported function for factories
@@ -58,6 +61,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ChangePasswordComponent,
     AlertComponent,
     SidebarComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,7 +90,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatToolbarModule,
     MatListModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    MenuModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent],

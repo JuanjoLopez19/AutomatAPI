@@ -21,3 +21,14 @@ export interface rememberPasswordParams{
   email:string;
   username:string;
 }
+
+export interface menuItemsDef{
+  label: string;
+  icon: string;
+  routerLink?: string;
+  state?: any
+}
+
+export interface menuItems{
+  [items: string]: menuItemsDef[];
+}

@@ -1,0 +1,68 @@
+<mat-nav-list>
+  <div class="row w-100 mx-0">
+    <div class="col-12 pt-3">
+      <div class="row">
+        <div class="col-2">
+          <mat-icon>home</mat-icon>
+        </div>
+        <div class="col-10 d-flex align-items-center">
+          <span class="ml-1">{{ "T_HOME" | translate }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <mat-accordion>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="row header">
+                <div class="col-2">
+                  <mat-icon>add</mat-icon>
+                </div>
+                <div class="col-10 d-flex align-items-center justify-content-center" >
+                  <span class="ml-3">{{ "T_CREATE_TEMP" | translate }}</span>
+                </div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="row">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-12">
+                  <mat-icon svgIcon="flask"></mat-icon>
+                  <span class="ml-1">{{ "T_FLASK" | translate }}</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <mat-icon svgIcon="express"></mat-icon>
+                  <span class="ml-1">{{ "T_EXPRESS" | translate }}</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <mat-icon svgIcon="django"></mat-icon>
+                  <span class="ml-1">{{ "T_DJANGO" | translate }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <mat-icon>save</mat-icon>
+      <span class="ml-1">{{ "T_TEMPLATES" | translate }}</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <i class="pi pi-users"></i>
+      <span class="ml-1">{{ "T_CREATE_TEMPLATES" | translate }}</span>
+    </div>
+  </div>
+</mat-nav-list>

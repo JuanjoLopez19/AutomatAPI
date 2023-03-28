@@ -1,37 +1,29 @@
 <div class="main-container h-100">
   <mat-toolbar color="primary" class="topbar telative">
-    <!-- ============================================================== -->
-    <!-- Logo - style you can find in header.scss -->
-    <!-- ============================================================== -->
     <div class="navbar-header">
-      <a class="navbar-brand" href="index.html">
-        <!-- Logo icon --><b>
-          <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-          <!-- Dark Logo icon -->
+      <span class="navbar-brand d-flex h-100">
+        <b>
+          <img
+            src="assets/icons/logo.svg"
+            alt="homepage"
+            [ngStyle]="{ width: '50px' }"
+          />
         </b>
-        <!--End Logo icon -->
-        <!-- Logo text -->
-        <span fxShow="false" fxShow.gt-xs>
-          <!-- dark Logo text -->
+        <span class="mx-3 pt-2">
+          <h1 class="d-inline title">{{ "T_AUTOMATAPI" | translate }}</h1>
         </span>
-      </a>
+        <span class="pt-2">
+          <i class="pi pi-bars icon" (click)="snav.toggle()"></i>
+        </span>
+      </span>
     </div>
-    <!-- ============================================================== -->
-    <!-- sidebar toggle -->
-    <!-- ============================================================== -->
 
-    <button pButton (click)="snav.toggle()" value="sidebarclosed">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span fxFlex></span>
-    <!-- ============================================================== -->
-    <!-- app header component - style you can find in header.scss / header.component.ts-->
-    <!-- ============================================================== -->
+    <span class="w-100 d-flex justify-content-end">
+      <app-header></app-header
+    ></span>
   </mat-toolbar>
-  <mat-sidenav-container
-    class="example-sidenav-container"
-    [ngStyle]="{ height: '851px' }"
-  >
+
+  <mat-sidenav-container [ngStyle]="{ height: '876px' }">
     <mat-sidenav
       #snav
       id="snav"
@@ -49,5 +41,18 @@
     </mat-sidenav-content>
   </mat-sidenav-container>
 
-  <mat-toolbar color="primary" class="bottombar telative"> </mat-toolbar>
+  <mat-toolbar color="primary" class="bottombar telative">
+    <div class="row w-100">
+      <div class="col-1">
+        <small> {{ "T_VERSION" | translate }} 0.1.0 </small>
+      </div>
+      <div class="col-10"></div>
+      <div class="col-1">
+        <small>
+          {{ "T_AUTOMATAPI" | translate }}
+        </small>
+        <mat-icon class="mt-1">copyright</mat-icon>
+      </div>
+    </div>
+  </mat-toolbar>
 </div>
