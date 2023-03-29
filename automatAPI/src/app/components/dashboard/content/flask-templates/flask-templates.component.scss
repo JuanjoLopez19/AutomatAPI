@@ -1,0 +1,17 @@
+@import "src/shared/variables";
+
+:host{
+  .container{
+    max-width: calc(80vw);
+  }
+  .main-container{
+    background-color: $white-not-white;
+    border-radius: 24px;
+    padding: 1rem;
+  }
+
+  mat-horizontal-stepper{
+    width: 100%;
+    background-color: $white-not-white;
+  }
+}

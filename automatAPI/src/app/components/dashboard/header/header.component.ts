@@ -17,7 +17,8 @@ export class HeaderComponent {
     translate.use('es-ES');
   }
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.chooseLanguage(navigator.language);
     this.translate.get(['T_PROFILE', 'T_LOGOUT']).subscribe((res) => {
       this.items = [
         {
@@ -34,5 +35,9 @@ export class HeaderComponent {
         },
       ];
     });
+  }
+
+  chooseLanguage(language: string) {
+    this.translate.use(language);
   }
 }

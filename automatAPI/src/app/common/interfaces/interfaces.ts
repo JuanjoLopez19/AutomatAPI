@@ -32,3 +32,12 @@ export interface menuItemsDef{
 export interface menuItems{
   [items: string]: menuItemsDef[];
 }
+
+export interface databaseParams{
+  db_host: string;
+  db_port: number;
+  db_user: string;
+  db_pwd: string;
+  db_name: string;
+  db_type: string;
+}

@@ -61,5 +61,18 @@
   "T_INTER_ERROR_RES": "There has been an internal server error, try again later.",
   "T_BAD_REQ_RES": "Bad request, try again later.",
   "T_NOT_FOUND_RES": "Resource not found, try again later.",
-  "T_UNAUTH_RES": "Not authorized, try again later."
+  "T_UNAUTH_RES": "Not authorized, try again later.",
+  "T_PROFILE": "Profile",
+  "T_LOGOUT": "Logout",
+  "dashboard":{
+    "T_HOME": "Home",
+    "T_CREATE_TEMP": "Create template",
+    "T_SAVED_TEMPLATES": "Saved Templates",
+    "T_USERS": "Users",
+    "T_VERSION": "Version",
+    "T_FLASK": "Flask",
+    "T_EXPRESS": "Express",
+    "T_DJANGO": "Django",
+    "T_CREATE_FLASK": "Create your flask template!!"
+  }
 }

@@ -27,16 +27,20 @@
     <mat-sidenav
       #snav
       id="snav"
-      class="dark-sidebar pl-xs"
       [mode]="'side'"
       fixedTopGap="0"
       [opened]="true"
     >
-      <app-sidebar></app-sidebar>
+      <app-sidebar (activeTabChange)="onActiveTabChange($event)"></app-sidebar>
     </mat-sidenav>
     <mat-sidenav-content class="page-wrapper">
       <div class="page-content h-100">
-        <app-remember-password></app-remember-password>
+        <app-home *ngIf="activeView === 'home'"></app-home>
+        <app-flask-templates *ngIf="activeView === 'flask'"></app-flask-templates>
+        <app-django-templates *ngIf="activeView === 'django'"></app-django-templates>
+        <app-express-templates *ngIf="activeView === 'express'"></app-express-templates>
+        <app-manage-users *ngIf="activeView === 'manage_users'"></app-manage-users>
+        <app-manage-templates *ngIf="activeView === 'manage_templates'"></app-manage-templates>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
@@ -44,14 +48,20 @@
   <mat-toolbar color="primary" class="bottombar telative">
     <div class="row w-100">
       <div class="col-1">
-        <small> {{ "T_VERSION" | translate }} 0.1.0 </small>
+        <small> {{ "dashboard.T_VERSION" | translate }} 0.1.0 </small>
       </div>
       <div class="col-10"></div>
       <div class="col-1">
-        <small>
-          {{ "T_AUTOMATAPI" | translate }}
-        </small>
-        <mat-icon class="mt-1">copyright</mat-icon>
+        <div class="row">
+          <div class="col-9 d-flex justify-content-end px-0">
+            <small>
+              {{ "T_AUTOMATAPI" | translate }}
+            </small>
+          </div>
+          <div class="col-1">
+            <mat-icon class="mt-1" [ngStyle]="{fontSize:'15px'}">copyright</mat-icon>
+          </div>
+        </div>
       </div>
     </div>
   </mat-toolbar>

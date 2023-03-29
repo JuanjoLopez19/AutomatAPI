@@ -1,0 +1,85 @@
+<div class="container h-100">
+  <div class="row">
+    <div class="col-12 mt-5 mb-2 main-container">
+      <h1>{{ "dashboard.T_CREATE_FLASK" | translate }}</h1>
+      <mat-horizontal-stepper [linear]="true" #stepper>
+        <mat-step [stepControl]="basicFormGroup">
+          <form [formGroup]="basicFormGroup">
+            <ng-template matStepLabel>{{
+              "dashboard.T_BASICS" | translate
+            }}</ng-template>
+            <mat-form-field>
+              <mat-label>Name</mat-label>
+              <input
+                matInput
+                placeholder="Name"
+                formControlName="name"
+                required
+              />
+            </mat-form-field>
+            <br />
+            <mat-form-field>
+              <mat-label>Description</mat-label>
+              <textarea
+                matInput
+                placeholder="Description"
+                formControlName="description"
+                required
+              ></textarea>
+            </mat-form-field>
+            <div>
+              <button pButton matStepperNext>{{ "T_NEXT" | translate }}</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="apiConfigFormGroup">
+          <form [formGroup]="apiConfigFormGroup">
+            <ng-template matStepLabel>{{
+              "dashboard.T_API_CONFIG" | translate
+            }}</ng-template>
+            <mat-form-field>
+              <mat-label>Amount</mat-label>
+              <input
+                matInput
+                placeholder="Amount"
+                formControlName="amount"
+                required
+              />
+            </mat-form-field>
+            <br />
+            <mat-form-field>
+              <mat-label>Stock</mat-label>
+              <input
+                matInput
+                placeholder="Stock"
+                formControlName="stock"
+                required
+              />
+            </mat-form-field>
+            <br />
+            <div>
+              <button pButton matStepperPrevious>Back</button>
+              <button pButton matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step *ngIf="useBlueprints">
+          <ng-template matStepLabel>{{
+            "flask.T_BLUEPRINTS" | translate
+          }}</ng-template>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>{{
+            "dashboard.T_ENDPOINTS" | translate
+          }}</ng-template>
+
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>{{
+            "dashboard.T_SUMMARY" | translate
+          }}</ng-template>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+  </div>
+</div>

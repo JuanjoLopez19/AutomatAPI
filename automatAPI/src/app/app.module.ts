@@ -19,6 +19,12 @@ import { ActivateUserComponent } from './views/user-management/activate-user/act
 import { RememberPasswordComponent } from './views/user-management/remember-password/remember-password.component';
 import { ChangePasswordComponent } from './views/user-management/change-password/change-password.component';
 import { AlertComponent } from './components/basics/alert/alert.component';
+import { HomeComponent } from './components/dashboard/content/home/home.component';
+import { FlaskTemplatesComponent } from './components/dashboard/content/flask-templates/flask-templates.component';
+import { ExpressTemplatesComponent } from './components/dashboard/content/express-templates/express-templates.component';
+import { DjangoTemplatesComponent } from './components/dashboard/content/django-templates/django-templates.component';
+import { ManageTemplatesComponent } from './components/dashboard/content/manage-templates/manage-templates.component';
+import { ManageUsersComponent } from './components/dashboard/content/manage-users/manage-users.component';
 
 // NG Prime components
 import { InputTextModule } from 'primeng/inputtext';
@@ -41,6 +47,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { HeaderComponent } from './components/dashboard/header/header.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+
+
+
 
 
 // AoT requires an exported function for factories
@@ -62,6 +74,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     AlertComponent,
     SidebarComponent,
     HeaderComponent,
+    HomeComponent,
+    FlaskTemplatesComponent,
+    ExpressTemplatesComponent,
+    DjangoTemplatesComponent,
+    ManageTemplatesComponent,
+    ManageUsersComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,7 +110,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatIconModule,
     MatMenuModule,
     MenuModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatStepperModule,
+    MatInputModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent],

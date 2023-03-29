@@ -61,5 +61,18 @@
   "T_INTER_ERROR_RES": "Ha habido un error interno del servidor, inténtelo de nuevo más tarde.",
   "T_BAD_REQ_RES": "Petición incorrecta, inténtelo de nuevo más tarde.",
   "T_NOT_FOUND_RES": "No se ha encontrado el recurso, inténtelo de nuevo más tarde.",
-  "T_UNAUTH_RES": "No autorizado, inténtelo de nuevo más tarde."
+  "T_UNAUTH_RES": "No autorizado, inténtelo de nuevo más tarde.",
+  "T_PROFILE": "Perfil",
+  "T_LOGOUT": "Cerrar sesión",
+  "dashboard":{
+    "T_HOME": "Inicio",
+    "T_CREATE_TEMP": "Crear plantilla",
+    "T_SAVED_TEMPLATES": "Plantillas guardadas",
+    "T_USERS": "Usuarios",
+    "T_VERSION": "Versión",
+    "T_FLASK": "Flask",
+    "T_EXPRESS": "Express",
+    "T_DJANGO": "Django",
+    "T_CREATE_FLASK": "Crea tu plantilla de flask!!"
+  }
 }
