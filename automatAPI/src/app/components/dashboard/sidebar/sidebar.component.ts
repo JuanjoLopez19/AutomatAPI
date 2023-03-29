@@ -19,14 +19,14 @@ export class SidebarComponent {
       event !== 'django'
     ) {
       this.setState(-1);
-      this.toggleActiveHeader(null);
+      this.toggleActiveHeader();
     }
     this.activeTab = event;
 
     this.activeTabChange.emit(this.activeTab);
   }
 
-  toggleActiveHeader(event: MouseEvent) {
+  toggleActiveHeader() {
     this.activeTab = '';
     const target = document.getElementsByName('header');
     const targets = document.getElementsByName('text');

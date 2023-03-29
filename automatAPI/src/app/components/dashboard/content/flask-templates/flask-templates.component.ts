@@ -1,7 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormGroup,
-  FormBuilder,
   Validators,
   FormControl,
   FormArray,
@@ -20,7 +19,7 @@ import { dropdownParams } from 'src/app/common/interfaces/interfaces';
   templateUrl: './flask-templates.component.html',
   styleUrls: ['./flask-templates.component.scss'],
 })
-export class FlaskTemplatesComponent {
+export class FlaskTemplatesComponent implements OnInit{
   @ViewChild('stepper') stepper: MatStepper;
 
   flaskServicesData!: flaskServices;

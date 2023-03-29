@@ -27,7 +27,7 @@ export class LoginComponent {
     });
   }
 
-  onLoginSubmit($event: SubmitEvent): void {
+  onLoginSubmit(): void {
     if (this.loginForm.invalid) {
       return;
     } else {

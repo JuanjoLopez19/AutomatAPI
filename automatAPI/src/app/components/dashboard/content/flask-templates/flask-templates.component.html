@@ -240,7 +240,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="row" *ngIf="apiConfigFormGroup.get('config_file').value == 'yes'">
+                    <div class="row" *ngIf="apiConfigFormGroup.get('config_file').value === 'yes'">
                       <div class="col-12">
                         <div class="row">
                           {{ "flask.T_TECH_TYPE" | translate }}

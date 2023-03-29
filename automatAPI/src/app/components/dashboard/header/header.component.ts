@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { menuItems } from 'src/app/common/interfaces/interfaces';
 
@@ -7,11 +7,11 @@ import { menuItems } from 'src/app/common/interfaces/interfaces';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   username: string = 'John Doe';
   items: menuItems[];
 
-  constructor(private translate: TranslateService) {
+  constructor(private translate: TranslateService)  {
     translate.addLangs(['en', 'es-ES']);
     translate.setDefaultLang('es-ES');
     translate.use('es-ES');

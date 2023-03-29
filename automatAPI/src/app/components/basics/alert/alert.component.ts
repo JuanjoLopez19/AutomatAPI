@@ -8,9 +8,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class AlertComponent {
   @Input() show: boolean;
   @Input() status: number;
-  @Output() onHide: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() Hide: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   manageHide() {
-    this.onHide.emit(false);
+    this.Hide.emit(false);
   }
 }
