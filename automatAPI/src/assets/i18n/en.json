@@ -27,17 +27,6 @@
   "T_NAME": "Name",
   "T_NAME_PLACEHOLDER": "Introduce your name",
   "T_ACTIVATION_PROCESS": "Just one more step, click in the button below to activate your account!!",
-  "error": {
-    "T_EMAIL_REQ": "The email is required",
-    "T_EMAIL_INVALID": "The email is invalid",
-    "T_PWD_REQ": "The password is required",
-    "T_PWD_INVALID": "The password is invalid",
-    "T_DATE_REQ": "The date is required",
-    "T_DATE_INVALID": "The date is invalid",
-    "T_NAME_REQ": "The name is required",
-    "T_SURNAME_REQ": "The surname is required",
-    "T_USERNAME_REQ": "The username is required"
-  },
   "T_REM_PWD_PROCESS": "Problems to access your account?",
   "T_REM_PWD_STEPS": "Introduce your email and we will send you a link to reset your password",
   "T_SEND_EMAIL": "Send email",
@@ -64,6 +53,15 @@
   "T_UNAUTH_RES": "Not authorized, try again later.",
   "T_PROFILE": "Profile",
   "T_LOGOUT": "Logout",
+  "T_NEXT": "Next step",
+  "T_SERVICES": "Services",
+  "T_APP_WEB": "Web application",
+  "T_SELECT_ONE": "Select one",
+  "T_YES": "Yes",
+  "T_NO": "No",
+  "T_BACK": "Step back",
+  "T_DEV": "Development",
+  "T_PROD": "Production",
   "dashboard":{
     "T_HOME": "Home",
     "T_CREATE_TEMP": "Create template",
@@ -73,6 +71,32 @@
     "T_FLASK": "Flask",
     "T_EXPRESS": "Express",
     "T_DJANGO": "Django",
-    "T_CREATE_FLASK": "Create your flask template!!"
+    "T_CREATE_FLASK": "Create your flask template!!",
+    "T_BASICS": "Basic configuration",
+    "T_API_CONFIG": "API configuration",
+    "T_ENDPOINTS": "Endpoints",
+    "T_SUMMARY": "Summary"
+  },
+  "error": {
+    "T_EMAIL_REQ": "The email is required",
+    "T_EMAIL_INVALID": "The email is invalid",
+    "T_PWD_REQ": "The password is required",
+    "T_PWD_INVALID": "The password is invalid",
+    "T_DATE_REQ": "The date is required",
+    "T_DATE_INVALID": "The date is invalid",
+    "T_NAME_REQ": "The name is required",
+    "T_SURNAME_REQ": "The surname is required",
+    "T_USERNAME_REQ": "The username is required"
+  },
+  "flask":{
+    "T_APP_NAME": "Application name",
+    "T_APP_DESC": "Application description",
+    "T_TECH_TYPE": "Technology type",
+    "T_HOST": "Host",
+    "T_PORT": "Port",
+    "T_USE_CORS": "Use CORS?",
+    "T_USE_SSL": "Use SSL?",
+    "T_USE_DB": "Use Database?",
+    "T_USE_CONFIG_FILE": "Use config file?"
   }
 }

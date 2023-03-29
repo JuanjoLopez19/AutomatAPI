@@ -37,6 +37,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RippleModule } from 'primeng/ripple';
 import { DialogModule } from 'primeng/dialog';
 import { MenuModule } from 'primeng/menu';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { DropdownModule } from 'primeng/dropdown';
 
 // Material components
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -50,6 +52,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+
 
 
 
@@ -80,6 +83,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DjangoTemplatesComponent,
     ManageTemplatesComponent,
     ManageUsersComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -113,7 +117,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatExpansionModule,
     MatStepperModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    InputNumberModule,
+    DropdownModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -16,3 +16,8 @@ export enum techUse{
   services = 'services',
   webApp = 'app_web',
 }
+
+export enum configFileTypes{
+  dev = 'dev',
+  prod = 'prod',
+}

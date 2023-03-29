@@ -1,5 +1,5 @@
 <div class="container h-100">
-  <div class="row">
+  <div class="row flex-grow">
     <div class="col-12 mt-5 mb-2 main-container">
       <h1>{{ "dashboard.T_CREATE_FLASK" | translate }}</h1>
       <mat-horizontal-stepper [linear]="true" #stepper>
@@ -8,27 +8,96 @@
             <ng-template matStepLabel>{{
               "dashboard.T_BASICS" | translate
             }}</ng-template>
-            <mat-form-field>
-              <mat-label>Name</mat-label>
-              <input
-                matInput
-                placeholder="Name"
-                formControlName="name"
-                required
-              />
-            </mat-form-field>
-            <br />
-            <mat-form-field>
-              <mat-label>Description</mat-label>
-              <textarea
-                matInput
-                placeholder="Description"
-                formControlName="description"
-                required
-              ></textarea>
-            </mat-form-field>
-            <div>
-              <button pButton matStepperNext>{{ "T_NEXT" | translate }}</button>
+            <div class="row mx-0">
+              <div class="d-grid grid">
+                <div class="pb-3">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        {{ "flask.T_APP_NAME" | translate }}
+                      </div>
+                      <div class="row w-50">
+                        <input
+                          type="text"
+                          pInputText
+                          formControlName="app_name"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        {{ "flask.T_APP_DESC" | translate }}
+                      </div>
+                      <div class="row w-50">
+                        <input
+                          type="text"
+                          pInputText
+                          formControlName="app_description"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        {{ "flask.T_TECH_TYPE" | translate }}
+                      </div>
+                      <div class="row w-50">
+                        <p-dropdown
+                          formControlName="tech_type"
+                          [options]="dropdownItems"
+                          optionLabel="name"
+                          optionValue="value"
+                          class="p-0"
+                        ></p-dropdown>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        {{ "flask.T_HOST" | translate }}
+                      </div>
+                      <div class="row w-50">
+                        <input type="text" pInputText formControlName="host" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        {{ "flask.T_PORT" | translate }}
+                      </div>
+                      <div class="row">
+                        <p-inputNumber
+                          formControlName="port"
+                          [min]="0"
+                          [max]="65535"
+                          class="p-0"
+                        >
+                        </p-inputNumber>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3 mx-0">
+              <div class="col-2 px-0">
+                <button pButton matStepperNext>
+                  {{ "T_NEXT" | translate }}
+                </button>
+              </div>
             </div>
           </form>
         </mat-step>
@@ -37,29 +106,171 @@
             <ng-template matStepLabel>{{
               "dashboard.T_API_CONFIG" | translate
             }}</ng-template>
-            <mat-form-field>
-              <mat-label>Amount</mat-label>
-              <input
-                matInput
-                placeholder="Amount"
-                formControlName="amount"
-                required
-              />
-            </mat-form-field>
-            <br />
-            <mat-form-field>
-              <mat-label>Stock</mat-label>
-              <input
-                matInput
-                placeholder="Stock"
-                formControlName="stock"
-                required
-              />
-            </mat-form-field>
-            <br />
-            <div>
-              <button pButton matStepperPrevious>Back</button>
-              <button pButton matStepperNext>Next</button>
+            <div class="row">
+              <div class="d-grid grid">
+                <div>
+                  <div class="row mb-3">
+                    <div class="col-2">
+                      <div class="row">
+                        {{ "flask.T_USE_CORS" | translate }}
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="row">
+                        <div class="col-6">
+                          <p-radioButton
+                            inputId="cors_yes"
+                            value="yes"
+                            formControlName="cors"
+                          ></p-radioButton>
+                          <label for="cors_yes" class="ml-2">{{
+                            "T_YES" | translate
+                          }}</label>
+                        </div>
+                        <div class="col-6">
+                          <p-radioButton
+                            inputId="cors_no"
+                            value="no"
+                            formControlName="cors"
+                          ></p-radioButton>
+                          <label for="cors_no" class="ml-2">{{
+                            "T_NO" | translate
+                          }}</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="row">
+                    <div class="col-2">
+                      <div class="row">
+                        {{ "flask.T_USE_SSL" | translate }}
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="row">
+                        <div class="col-6">
+                          <p-radioButton
+                            inputId="ssl_yes"
+                            value="yes"
+                            formControlName="use_ssl"
+                          ></p-radioButton>
+                          <label for="ssl_yes" class="ml-2">{{
+                            "T_YES" | translate
+                          }}</label>
+                        </div>
+                        <div class="col-6">
+                          <p-radioButton
+                            inputId="ssl_no"
+                            value="no"
+                            formControlName="use_ssl"
+                          ></p-radioButton>
+                          <label for="ssl_no" class="ml-2">{{
+                            "T_NO" | translate
+                          }}</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="row">
+                    <div class="col-2">
+                      <div class="row">
+                        {{ "flask.T_USE_DB" | translate }}
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="row">
+                        <div class="col-6">
+                          <p-radioButton
+                            inputId="bd_yes"
+                            value="yes"
+                            formControlName="connect_DB"
+                          ></p-radioButton>
+                          <label for="bd_yes" class="ml-2">{{
+                            "T_YES" | translate
+                          }}</label>
+                        </div>
+                        <div class="col-6">
+                          <p-radioButton
+                            inputId="bd_no"
+                            value="no"
+                            formControlName="connect_DB"
+                          ></p-radioButton>
+                          <label for="bd_no" class="ml-2">{{
+                            "T_NO" | translate
+                          }}</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="row">
+                    <div class="row">
+                      <div class="col-2">
+                        <div class="row">
+                          {{ "flask.T_USE_CONFIG_FILE" | translate }}
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="row">
+                          <div class="col-6">
+                            <p-radioButton
+                              inputId="config_yes"
+                              value="yes"
+                              formControlName="config_file"
+                            ></p-radioButton>
+                            <label for="config_yes" class="ml-2">{{
+                              "T_YES" | translate
+                            }}</label>
+                          </div>
+                          <div class="col-6">
+                            <p-radioButton
+                              inputId="config_no"
+                              value="no"
+                              formControlName="config_file"
+                            ></p-radioButton>
+                            <label for="config_no" class="ml-2">{{
+                              "T_NO" | translate
+                            }}</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row" *ngIf="apiConfigFormGroup.get('config_file').value == 'yes'">
+                      <div class="col-12">
+                        <div class="row">
+                          {{ "flask.T_TECH_TYPE" | translate }}
+                        </div>
+                        <div class="row w-50">
+                          <p-dropdown
+                            formControlName="type_config_file"
+                            [options]="dropdownItems2"
+                            optionLabel="name"
+                            optionValue="value"
+                            class="p-0"
+                          ></p-dropdown>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row pt-3">
+              <div class="col-2 pl-0">
+                <button pButton matStepperPrevious>
+                  {{ "T_BACK" | translate }}
+                </button>
+              </div>
+              <div class="col-2">
+                <button pButton (click)="submit()">
+                  {{ "T_NEXT" | translate }}
+                </button>
+              </div>
             </div>
           </form>
         </mat-step>
@@ -72,7 +283,6 @@
           <ng-template matStepLabel>{{
             "dashboard.T_ENDPOINTS" | translate
           }}</ng-template>
-
         </mat-step>
         <mat-step>
           <ng-template matStepLabel>{{

@@ -27,17 +27,6 @@
   "T_NAME": "Nombre",
   "T_NAME_PLACEHOLDER": "Introduce el nombre",
   "T_ACTIVATION_PROCESS": "Solo un paso más, ¡Pulsa en el botón para activar tu cuenta!",
-  "error": {
-    "T_EMAIL_REQ": "El correo electrónico es obligatorio",
-    "T_EMAIL_INVALID": "El correo electrónico no es válido",
-    "T_PWD_REQ": "La contraseña es obligatoria",
-    "T_PWD_INVALID": "La contraseña no es válida",
-    "T_DATE_REQ": "La fecha es obligatoria",
-    "T_DATE_INVALID": "La fecha es inválida",
-    "T_NAME_REQ": "El nombre es obligatorio",
-    "T_SURNAME_REQ": "Los apellidos son obligatorios",
-    "T_USERNAME_REQ": "El nombre de usuario es obligatorio"
-  },
   "T_REM_PWD_PROCESS": "¿Tienes problemas para acceder a tu cuenta?",
   "T_REM_PWD_STEPS": "Introduce tu nombre de usuario y tu email, para que podamos enviarte un correo electrónico con las instrucciones para recuperar tu contraseña.",
   "T_SEND_EMAIL": "Enviar correo electrónico",
@@ -64,6 +53,15 @@
   "T_UNAUTH_RES": "No autorizado, inténtelo de nuevo más tarde.",
   "T_PROFILE": "Perfil",
   "T_LOGOUT": "Cerrar sesión",
+  "T_NEXT": "Siguiente paso",
+  "T_SERVICES": "Servicios",
+  "T_SELECT_ONE": "Selecciona uno",
+  "T_APP_WEB": "Aplicación web",
+  "T_YES": "Sí",
+  "T_NO": "No",
+  "T_BACK": "Paso atrás",
+  "T_DEV": "Desarrollo",
+  "T_PROD": "Producción",
   "dashboard":{
     "T_HOME": "Inicio",
     "T_CREATE_TEMP": "Crear plantilla",
@@ -73,6 +71,32 @@
     "T_FLASK": "Flask",
     "T_EXPRESS": "Express",
     "T_DJANGO": "Django",
-    "T_CREATE_FLASK": "Crea tu plantilla de flask!!"
+    "T_CREATE_FLASK": "Crea tu plantilla de flask!!",
+    "T_BASICS": "Configuración básica",
+    "T_API_CONFIG": "Configuración de la API",
+    "T_ENDPOINTS": "Endpoints",
+    "T_SUMMARY": "Resumen"
+  },
+  "error": {
+    "T_EMAIL_REQ": "El correo electrónico es obligatorio",
+    "T_EMAIL_INVALID": "El correo electrónico no es válido",
+    "T_PWD_REQ": "La contraseña es obligatoria",
+    "T_PWD_INVALID": "La contraseña no es válida",
+    "T_DATE_REQ": "La fecha es obligatoria",
+    "T_DATE_INVALID": "La fecha es inválida",
+    "T_NAME_REQ": "El nombre es obligatorio",
+    "T_SURNAME_REQ": "Los apellidos son obligatorios",
+    "T_USERNAME_REQ": "El nombre de usuario es obligatorio"
+  },
+  "flask":{
+    "T_APP_NAME": "Nombre de la Aplicación",
+    "T_APP_DESC": "description",
+    "T_TECH_TYPE": "Tipo de tecnlogía",
+    "T_HOST": "Host",
+    "T_PORT": "Puerto de escucha",
+    "T_USE_CORS": "¿Usar CORS?",
+    "T_USE_SSL": "¿Usar SSL?",
+    "T_USE_DB": "¿Usar base de datos?",
+    "T_USE_CONFIG_FILE": "¿Usar archivo de configuración?"
   }
 }

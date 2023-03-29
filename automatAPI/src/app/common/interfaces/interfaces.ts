@@ -41,3 +41,8 @@ export interface databaseParams{
   db_name: string;
   db_type: string;
 }
+
+export interface dropdownParams{
+  name:string;
+  value:string;
+}
