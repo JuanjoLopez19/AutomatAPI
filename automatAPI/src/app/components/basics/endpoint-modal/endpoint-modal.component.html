@@ -1,0 +1,134 @@
+<p-dialog
+  header="{{ 'T_MESSAGE' | translate }}"
+  [modal]="true"
+  [(visible)]="show"
+  [position]="'top'"
+  [style]="{ width: '650px', height: '400px' }"
+  [draggable]="false"
+  [resizable]="false"
+  (Hide)="manageHide()"
+  [closable]="false"
+  class="dialog"
+>
+  <ng-template pTemplate="header">
+    <div class="container">
+      <div class="row w-100">
+        <h1>{{ "T_ADD_ENDPOINT" | translate }}</h1>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div class="row h-100">
+      <div class="col-12">
+        <form [formGroup]="addEndpointFormControl">
+          <div class="row">
+            <div class="col-8">
+              <div class="row justify-content-end">
+                <div class="row pt-4 pb-3">
+                  <span class="p-float-label">
+                    <input
+                      pInputText
+                      id="endpoint_name"
+                      formControlName="endpoint_name"
+                    />
+                    <label htmlFor="endpoint_name">{{
+                      "T_ENDP_NAME" | translate
+                    }}</label>
+                  </span>
+                </div>
+                <div class="row">
+                  <span class="p-float-label">
+                    <input
+                      pInputText
+                      id="endpoint_desc"
+                      formControlName="endpoint_comment"
+                    />
+                    <label htmlFor="endpoint_desc">{{
+                      "T_ENDP_DESC" | translate
+                    }}</label>
+                  </span>
+                </div>
+                <div class="row py-3">
+                  <span class="p-float-label">
+                    <input
+                      pInputText
+                      id="endpoint_url"
+                      formControlName="endpoint_url"
+                    />
+                    <label htmlFor="endpoint_url">{{
+                      "T_ENDP_URL" | translate
+                    }}</label>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="flex flex-column pt-4" formGroupName="methods">
+                <div class="field-checkbox mb-3">
+                  <p-checkbox
+                    name="group"
+                    [binary]="true"
+                    formControlName="get_m"
+                    inputId="get_m"
+                    ngDefaultControl
+                  ></p-checkbox>
+                  <label for="get_m"> {{ "T_GET_METHOD" | translate }}</label>
+                </div>
+                <div class="field-checkbox mb-3">
+                  <p-checkbox
+                    name="group"
+                    [binary]="true"
+                    formControlName="post"
+                    inputId="post"
+                    ngDefaultControl
+                  ></p-checkbox>
+                  <label for="post"> {{ "T_POST_METHOD" | translate }}</label>
+                </div>
+                <div class="field-checkbox mb-3">
+                  <p-checkbox
+                    name="group"
+                    [binary]="true"
+                    formControlName="put"
+                    inputId="put"
+                    ngDefaultControl
+                  ></p-checkbox>
+                  <label for="put"> {{ "T_PUT_METHOD" | translate }}</label>
+                </div>
+                <div class="field-checkbox mb-3">
+                  <p-checkbox
+                    name="group"
+                    [binary]="true"
+                    formControlName="del"
+                    inputId="del"
+                    ngDefaultControl
+                  ></p-checkbox>
+                  <label for="del"> {{ "T_DEL_METHOD" | translate }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="row w-100 justify-content-end">
+      <div class="col-4">
+        <p-button
+          [label]="'T_DISCARD' | translate"
+          icon="pi pi-times"
+          iconPos="right"
+          (onClick)="show = false"
+        ></p-button>
+      </div>
+      <div class="col-4">
+        <p-button
+          [label]="'T_ADD' | translate"
+          icon="pi pi-check"
+          iconPos="right"
+          (onClick)="closeModal()"
+        ></p-button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

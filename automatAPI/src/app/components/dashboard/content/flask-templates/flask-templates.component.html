@@ -100,7 +100,7 @@
               </div>
             </div>
           </form>
-        </mat-step>-->
+        </mat-step>
         <mat-step [stepControl]="apiConfigFormGroup">
           <form [formGroup]="apiConfigFormGroup">
             <ng-template matStepLabel>{{
@@ -533,11 +533,145 @@
               </div>
             </div>
           </form>
-        </mat-step>
-        <mat-step *ngIf="useBlueprints">
+        </mat-step>-->
+        <mat-step *ngIf="true">
           <ng-template matStepLabel>{{
             "flask.T_BLUEPRINTS" | translate
           }}</ng-template>
+          <div class="row">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-4">
+                  <div class="row">
+                    <div class="col-6">
+                      <h1>{{ "flask.T_LIST_BP" | translate }}</h1>
+                    </div>
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                      <div class="row">
+                        <div class="col-6">
+                          <p-button
+                            styleClass="p-button-danger"
+                            [label]="'T_DELETE' | translate"
+                            [disabled]="true"
+                          ></p-button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <p-divider></p-divider>
+                  <div class="row"></div>
+                </div>
+
+                <div class="col-8">
+                  <div class="row">
+                    <div class="col-6">
+                      <h1>{{ "flask.T_MANAGE_BP" | translate }}</h1>
+                    </div>
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                      <div class="row justify-content-end">
+                        <div class="col-6">
+                          <p-button [label]="'T_SAVE' | translate"></p-button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <p-divider></p-divider>
+                  <div class="row">
+                    <div class="col-4">
+                      <span class="p-float-label">
+                        <input pInputText id="username" />
+                        <label htmlFor="username">Username</label>
+                      </span>
+                    </div>
+                    <div class="col-8">
+                      <div class="row">
+                        <div class="col-3">
+                          <p-button
+                            styleClass="p-button-sm"
+                            [label]="'T_ADD_ENDP' | translate"
+                            (onClick)="showDialog = true"
+                          ></p-button>
+                        </div>
+                        <div class="col-9">
+                          <div class="row justify-content-end">
+                            <div class="col-4">
+                              <p-button
+                                styleClass="p-button-sm p-button-warning"
+                                [label]="'T_EDIT_ENDP' | translate"
+                                [disabled]="true"
+                              ></p-button>
+                            </div>
+                            <div class="col-4">
+                              <p-button
+                                styleClass="p-button-sm p-button-danger"
+                                [label]="'T_DEL_ENDP' | translate"
+                                [disabled]="true"
+                              ></p-button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-2">
+                    <p-table
+                      selectionMode="single"
+                      dataKey="endpoint_name"
+                      [value]="endpointList"
+                      [scrollable]="true"
+                      scrollHeight="400px"
+                    >
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th>{{ "flask.T_ENDP_NAME" | translate }}</th>
+                          <th>{{ "flask.T_ENDP_DESC" | translate }}</th>
+                          <th>{{ "flask.T_ENDP_URL" | translate }}</th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_GET" | translate }}
+                          </th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_POST" | translate }}
+                          </th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_PUT" | translate }}
+                          </th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_DEL" | translate }}
+                          </th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-endpoint>
+                        <tr [pSelectableRow]="endpoint">
+                          <td>{{ endpoint.endpoint_name }}</td>
+                          <td>{{ endpoint.endpoint_comment }}</td>
+                          <td>{{ endpoint.endpoint_url }}</td>
+                          <td>{{ endpoint.methods.get_m }}</td>
+                          <td>{{ endpoint.methods.post }}</td>
+                          <td>{{ endpoint.methods.put }}</td>
+                          <td>{{ endpoint.methods.del }}</td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </div>
+                </div>
+              </div>
+              <app-endpoint-modal [show]="showDialog" (Hide)="manageHide()" (endpointAdded)="onEndpointAdded($event)"></app-endpoint-modal>
+              <div class="row pt-3">
+                <div class="col-2 pl-0">
+                  <button pButton matStepperPrevious>
+                    {{ "T_BACK" | translate }}
+                  </button>
+                </div>
+                <div class="col-2">
+                  <button pButton (click)="submit()">
+                    {{ "T_NEXT" | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </mat-step>
         <mat-step>
           <ng-template matStepLabel>{{

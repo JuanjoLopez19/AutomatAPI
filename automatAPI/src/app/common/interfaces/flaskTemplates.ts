@@ -51,7 +51,7 @@ export interface flaskMethods {
   get_m: string;
   post: string;
   put: string;
-  delete: string;
+  del: string;
 }
 
 export interface flaskBlueprintAux {

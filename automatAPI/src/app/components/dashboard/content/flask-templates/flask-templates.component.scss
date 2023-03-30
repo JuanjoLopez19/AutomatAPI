@@ -1,7 +1,9 @@
 @import "src/shared/variables";
 
 :host {
-
+  .container{
+    max-height: fit-content;
+  }
   .main-container {
     background-color: $white-not-white;
     border-radius: 24px;
@@ -28,4 +30,8 @@
   label{
     margin-left: 10px;
   }
+  .method{
+    width: 10%;
+  }
+
 }

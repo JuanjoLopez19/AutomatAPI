@@ -8,6 +8,7 @@ import {
   dataBaseTypes,
 } from 'src/app/common/enums/enums';
 import {
+  flaskEndpointTemplate,
   flaskServices,
   flaskWebApp,
 } from 'src/app/common/interfaces/flaskTemplates';
@@ -19,7 +20,10 @@ import { dropdownParams } from 'src/app/common/interfaces/interfaces';
   styleUrls: ['./flask-templates.component.scss'],
 })
 export class FlaskTemplatesComponent implements OnInit {
+
   @ViewChild('stepper') stepper: MatStepper;
+
+  showDialog: boolean = false;
 
   flaskServicesData!: flaskServices;
   flaskWebAppData!: flaskWebApp;
@@ -38,6 +42,20 @@ export class FlaskTemplatesComponent implements OnInit {
 
   certFileName: string = 'T_CHOSE_CERT_FILE';
   keyFileName: string = 'T_CHOSE_KEY_FILE';
+
+  endpointList: flaskEndpointTemplate[] = [
+    {
+      endpoint_name: 'prueba',
+      endpoint_comment: '',
+      endpoint_url: '',
+      methods: {
+        get_m: 'no',
+        post: 'no',
+        put: 'no',
+        del: 'no',
+      },
+    },
+  ];
   constructor(private translate: TranslateService) {
     this.translate
       .get(['T_SERVICES', 'T_APP_WEB', 'T_SELECT_ONE', 'T_DEV', 'T_PROD'])
@@ -163,7 +181,9 @@ export class FlaskTemplatesComponent implements OnInit {
     });
 
     this.blueprintsFormGroup = new FormGroup({
-      bp_list: new FormArray([]),
+      bp_list: new FormGroup({
+        list: new FormArray([]),
+      }),
     });
     this.endpointsFormGroup = new FormGroup({
       endpoints: new FormArray([]),
@@ -171,7 +191,7 @@ export class FlaskTemplatesComponent implements OnInit {
   }
   submit() {
     // Here is where the object will be created
-    console.log(this.apiConfigFormGroup.value);
+    console.log(this.blueprintsFormGroup.value);
   }
 
   nextStep() {
@@ -195,5 +215,13 @@ export class FlaskTemplatesComponent implements OnInit {
           this.keyFileName = this.keyFileName.substring(0, 15) + '...';
       }
     }
+  }
+
+  manageHide() {
+    console.log('hide');
+    this.showDialog = false;
+  }
+  onEndpointAdded(event: flaskEndpointTemplate) {
+    this.endpointList.push(event);
   }
 }

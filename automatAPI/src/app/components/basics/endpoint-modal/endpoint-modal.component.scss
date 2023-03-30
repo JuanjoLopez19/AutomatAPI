@@ -1,0 +1,25 @@
+@import "src/shared/variables";
+:host {
+  label {
+    margin-left: 10px;
+  }
+
+  ::ng-deep p-dialog {
+    .p-dialog {
+      border-radius: 20px;
+      border: 1px solid $black;
+    }
+    .p-dialog-header {
+      border-radius: 20px 20px 0px 0px;
+      -moz-border-radius: 20px 20px 0px 0px;
+      -webkit-border-radius: 20px 20px 0px 0px;
+      padding-bottom: 0;
+    }
+
+    .p-dialog-footer {
+      border-radius: 0px 0px 20px 20px;
+      -moz-border-radius: 0px 0px 20px 20px;
+      -webkit-border-radius: 0px 0px 20px 20px;
+    }
+  }
+}

@@ -25,6 +25,7 @@ import { ExpressTemplatesComponent } from './components/dashboard/content/expres
 import { DjangoTemplatesComponent } from './components/dashboard/content/django-templates/django-templates.component';
 import { ManageTemplatesComponent } from './components/dashboard/content/manage-templates/manage-templates.component';
 import { ManageUsersComponent } from './components/dashboard/content/manage-users/manage-users.component';
+import { EndpointModalComponent } from './components/basics/endpoint-modal/endpoint-modal.component';
 
 // NG Prime components
 import { InputTextModule } from 'primeng/inputtext';
@@ -39,6 +40,8 @@ import { DialogModule } from 'primeng/dialog';
 import { MenuModule } from 'primeng/menu';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
+import {TableModule} from 'primeng/table';
+import { CheckboxModule } from 'primeng/checkbox';
 
 // Material components
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -52,6 +55,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+
+
 
 
 
@@ -83,6 +88,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DjangoTemplatesComponent,
     ManageTemplatesComponent,
     ManageUsersComponent,
+    EndpointModalComponent,
 
   ],
   imports: [
@@ -119,7 +125,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatInputModule,
     MatButtonModule,
     InputNumberModule,
-    DropdownModule
+    DropdownModule,
+    TableModule,
+    CheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent],
