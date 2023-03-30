@@ -97,6 +97,7 @@
     "T_USE_CORS": "¿Usar CORS?",
     "T_USE_SSL": "¿Usar SSL?",
     "T_USE_DB": "¿Usar base de datos?",
-    "T_USE_CONFIG_FILE": "¿Usar archivo de configuración?"
+    "T_USE_CONFIG_FILE": "¿Usar archivo de configuración?",
+    "T_USE_BP": "¿Usar blueprints?"
   }
 }

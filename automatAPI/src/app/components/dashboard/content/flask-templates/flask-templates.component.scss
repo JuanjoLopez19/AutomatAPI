@@ -1,9 +1,7 @@
 @import "src/shared/variables";
 
 :host {
-  .container {
-    max-width: calc(80vw);
-  }
+
   .main-container {
     background-color: $white-not-white;
     border-radius: 24px;
@@ -18,8 +16,16 @@
   .grid {
     grid-template-columns: auto auto auto;
   }
-  .item{
+  .item {
     grid-column-start: 2;
     grid-column-end: 3;
+  }
+
+  ::ng-deep .mat-horizontal-content-container {
+    overflow: unset;
+  }
+
+  label{
+    margin-left: 10px;
   }
 }

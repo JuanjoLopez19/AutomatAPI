@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  FormGroup,
-  Validators,
-  FormControl,
-  FormArray,
-} from '@angular/forms';
+import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { TranslateService } from '@ngx-translate/core';
-import { techUse, configFileTypes } from 'src/app/common/enums/enums';
+import {
+  techUse,
+  configFileTypes,
+  dataBaseTypes,
+} from 'src/app/common/enums/enums';
 import {
   flaskServices,
   flaskWebApp,
@@ -19,7 +18,7 @@ import { dropdownParams } from 'src/app/common/interfaces/interfaces';
   templateUrl: './flask-templates.component.html',
   styleUrls: ['./flask-templates.component.scss'],
 })
-export class FlaskTemplatesComponent implements OnInit{
+export class FlaskTemplatesComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
 
   flaskServicesData!: flaskServices;
@@ -35,6 +34,10 @@ export class FlaskTemplatesComponent implements OnInit{
 
   dropdownItems: dropdownParams[];
   dropdownItems2: dropdownParams[];
+  dropdownItems3: dropdownParams[];
+
+  certFileName: string = 'T_CHOSE_CERT_FILE';
+  keyFileName: string = 'T_CHOSE_KEY_FILE';
   constructor(private translate: TranslateService) {
     this.translate
       .get(['T_SERVICES', 'T_APP_WEB', 'T_SELECT_ONE', 'T_DEV', 'T_PROD'])
@@ -65,6 +68,33 @@ export class FlaskTemplatesComponent implements OnInit{
           {
             name: res.T_PROD,
             value: configFileTypes.prod,
+          },
+        ];
+
+        this.dropdownItems3 = [
+          {
+            name: res.T_SELECT_ONE,
+            value: null,
+          },
+          {
+            name: dataBaseTypes.postgres,
+            value: dataBaseTypes.postgres,
+          },
+          {
+            name: dataBaseTypes.mysql,
+            value: dataBaseTypes.mysql,
+          },
+          {
+            name: dataBaseTypes.sqlite,
+            value: dataBaseTypes.sqlite,
+          },
+          {
+            name: dataBaseTypes.oracle,
+            value: dataBaseTypes.oracle,
+          },
+          {
+            name: dataBaseTypes.mssql,
+            value: dataBaseTypes.mssql,
           },
         ];
       });
@@ -100,7 +130,7 @@ export class FlaskTemplatesComponent implements OnInit{
       }),
       connect_DB: new FormControl('no', {
         validators: [Validators.required],
-        updateOn: 'blur',
+        updateOn: 'change',
       }),
       use_ssl: new FormControl('no', {
         validators: [Validators.required],
@@ -113,15 +143,15 @@ export class FlaskTemplatesComponent implements OnInit{
       db: new FormGroup({
         db_name: new FormControl('flaskDatabase'),
         db_user: new FormControl('flaskUser'),
-        db_password: new FormControl('flaskPassword'),
+        db_pwd: new FormControl('flaskPassword'),
         db_host: new FormControl('localhost'),
         db_port: new FormControl('0000'),
         db_type: new FormControl('sqlite'),
+        table_name: new FormControl('flaskTable'),
       }),
-      table_name: new FormControl(''),
       config_file: new FormControl('no', {
         validators: [Validators.required],
-        updateOn: 'blur',
+        updateOn: 'change',
       }),
       type_config_file: new FormControl('dev', {
         updateOn: 'blur',
@@ -142,7 +172,28 @@ export class FlaskTemplatesComponent implements OnInit{
   submit() {
     // Here is where the object will be created
     console.log(this.apiConfigFormGroup.value);
+  }
 
+  nextStep() {
+    this.useBlueprints = this.apiConfigFormGroup.get('use_bp')?.value === 'yes';
+    setTimeout(() => {
+      this.stepper.next();
+    }, 500);
+  }
 
+  onFileChange(event: any, type: string) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.apiConfigFormGroup.get('ssl_files')?.get(type)?.setValue(file);
+      if (type === 'cert') {
+        this.certFileName = file.name;
+        if (this.certFileName.length > 20)
+          this.certFileName = this.certFileName.substring(0, 15) + '...';
+      } else {
+        this.keyFileName = file.name;
+        if (this.keyFileName.length > 20)
+          this.keyFileName = this.keyFileName.substring(0, 15) + '...';
+      }
+    }
   }
 }

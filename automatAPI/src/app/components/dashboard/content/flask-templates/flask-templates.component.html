@@ -3,7 +3,7 @@
     <div class="col-12 mt-5 mb-2 main-container">
       <h1>{{ "dashboard.T_CREATE_FLASK" | translate }}</h1>
       <mat-horizontal-stepper [linear]="true" #stepper>
-        <mat-step [stepControl]="basicFormGroup">
+        <!--<mat-step [stepControl]="basicFormGroup">
           <form [formGroup]="basicFormGroup">
             <ng-template matStepLabel>{{
               "dashboard.T_BASICS" | translate
@@ -100,159 +100,419 @@
               </div>
             </div>
           </form>
-        </mat-step>
+        </mat-step>-->
         <mat-step [stepControl]="apiConfigFormGroup">
           <form [formGroup]="apiConfigFormGroup">
             <ng-template matStepLabel>{{
               "dashboard.T_API_CONFIG" | translate
             }}</ng-template>
-            <div class="row">
-              <div class="d-grid grid">
-                <div>
-                  <div class="row mb-3">
-                    <div class="col-2">
-                      <div class="row">
-                        {{ "flask.T_USE_CORS" | translate }}
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="row">
-                        <div class="col-6">
-                          <p-radioButton
-                            inputId="cors_yes"
-                            value="yes"
-                            formControlName="cors"
-                          ></p-radioButton>
-                          <label for="cors_yes" class="ml-2">{{
-                            "T_YES" | translate
-                          }}</label>
+            <div class="row w-100 h-100">
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-4 py-3">
+                    <div class="row justify-content-end">
+                      <div class="row py-2">
+                        <div class="col-2">
+                          <div class="row">
+                            {{ "flask.T_USE_CORS" | translate }}
+                          </div>
                         </div>
                         <div class="col-6">
-                          <p-radioButton
-                            inputId="cors_no"
-                            value="no"
-                            formControlName="cors"
-                          ></p-radioButton>
-                          <label for="cors_no" class="ml-2">{{
-                            "T_NO" | translate
-                          }}</label>
+                          <div class="row">
+                            <div class="col-6">
+                              <p-radioButton
+                                inputId="cors_yes"
+                                value="yes"
+                                formControlName="cors"
+                              ></p-radioButton>
+                              <label for="cors_yes" class="ml-2">{{
+                                "T_YES" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6">
+                              <p-radioButton
+                                inputId="cors_no"
+                                value="no"
+                                formControlName="cors"
+                              ></p-radioButton>
+                              <label for="cors_no" class="ml-2">{{
+                                "T_NO" | translate
+                              }}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row py-2">
+                        <div class="col-2">
+                          <div class="row">
+                            {{ "flask.T_USE_CONFIG_FILE" | translate }}
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="row">
+                            <div class="col-6">
+                              <p-radioButton
+                                inputId="config_yes"
+                                value="yes"
+                                formControlName="config_file"
+                              ></p-radioButton>
+                              <label for="config_yes" class="ml-2">{{
+                                "T_YES" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6">
+                              <p-radioButton
+                                inputId="config_no"
+                                value="no"
+                                formControlName="config_file"
+                              ></p-radioButton>
+                              <label for="config_no" class="ml-2">{{
+                                "T_NO" | translate
+                              }}</label>
+                            </div>
+                          </div>
+                          <div
+                            class="row py-3"
+                            *ngIf="
+                              apiConfigFormGroup.get('config_file').value ===
+                              'yes'
+                            "
+                          >
+                            <div class="row">
+                              <div class="col-12">
+                                <div class="row">
+                                  <div class="col-12">
+                                    {{ "flask.T_TECH_TYPE" | translate }}
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6">
+                                    <p-dropdown
+                                      formControlName="type_config_file"
+                                      [options]="dropdownItems2"
+                                      optionLabel="name"
+                                      optionValue="value"
+                                      class="p-0"
+                                    ></p-dropdown>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row pb-2">
+                        <div class="col-2">
+                          <div class="row">
+                            {{ "flask.T_USE_BP" | translate }}
+                          </div>
+                        </div>
+                        <div class="col-6">
+                          <div class="row">
+                            <div class="col-6">
+                              <p-radioButton
+                                inputId="bp_yes"
+                                value="yes"
+                                formControlName="use_bp"
+                              ></p-radioButton>
+                              <label for="bp_yes" class="ml-2">{{
+                                "T_YES" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6">
+                              <p-radioButton
+                                inputId="bp_no"
+                                value="no"
+                                formControlName="use_bp"
+                              ></p-radioButton>
+                              <label for="bp_no" class="ml-2">{{
+                                "T_NO" | translate
+                              }}</label>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div>
-                  <div class="row">
-                    <div class="col-2">
-                      <div class="row">
-                        {{ "flask.T_USE_SSL" | translate }}
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="row">
-                        <div class="col-6">
-                          <p-radioButton
-                            inputId="ssl_yes"
-                            value="yes"
-                            formControlName="use_ssl"
-                          ></p-radioButton>
-                          <label for="ssl_yes" class="ml-2">{{
-                            "T_YES" | translate
-                          }}</label>
-                        </div>
-                        <div class="col-6">
-                          <p-radioButton
-                            inputId="ssl_no"
-                            value="no"
-                            formControlName="use_ssl"
-                          ></p-radioButton>
-                          <label for="ssl_no" class="ml-2">{{
-                            "T_NO" | translate
-                          }}</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div class="row">
-                    <div class="col-2">
-                      <div class="row">
-                        {{ "flask.T_USE_DB" | translate }}
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="row">
-                        <div class="col-6">
-                          <p-radioButton
-                            inputId="bd_yes"
-                            value="yes"
-                            formControlName="connect_DB"
-                          ></p-radioButton>
-                          <label for="bd_yes" class="ml-2">{{
-                            "T_YES" | translate
-                          }}</label>
-                        </div>
-                        <div class="col-6">
-                          <p-radioButton
-                            inputId="bd_no"
-                            value="no"
-                            formControlName="connect_DB"
-                          ></p-radioButton>
-                          <label for="bd_no" class="ml-2">{{
-                            "T_NO" | translate
-                          }}</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div class="row">
+                  <div class="col-8">
                     <div class="row">
-                      <div class="col-2">
-                        <div class="row">
-                          {{ "flask.T_USE_CONFIG_FILE" | translate }}
-                        </div>
-                      </div>
-                      <div class="col-6">
-                        <div class="row">
-                          <div class="col-6">
-                            <p-radioButton
-                              inputId="config_yes"
-                              value="yes"
-                              formControlName="config_file"
-                            ></p-radioButton>
-                            <label for="config_yes" class="ml-2">{{
-                              "T_YES" | translate
-                            }}</label>
-                          </div>
-                          <div class="col-6">
-                            <p-radioButton
-                              inputId="config_no"
-                              value="no"
-                              formControlName="config_file"
-                            ></p-radioButton>
-                            <label for="config_no" class="ml-2">{{
-                              "T_NO" | translate
-                            }}</label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row" *ngIf="apiConfigFormGroup.get('config_file').value === 'yes'">
                       <div class="col-12">
-                        <div class="row">
-                          {{ "flask.T_TECH_TYPE" | translate }}
-                        </div>
-                        <div class="row w-50">
-                          <p-dropdown
-                            formControlName="type_config_file"
-                            [options]="dropdownItems2"
-                            optionLabel="name"
-                            optionValue="value"
-                            class="p-0"
-                          ></p-dropdown>
+                        <div class="row py-3">
+                          <div class="col-12">
+                            <div class="row mb-3">
+                              <div class="col-4">
+                                <div class="row justify-content-center">
+                                  <div class="col-3">
+                                    <div class="row">
+                                      {{ "flask.T_USE_SSL" | translate }}
+                                    </div>
+                                  </div>
+                                  <div class="col-8">
+                                    <div class="row">
+                                      <div class="col-6">
+                                        <p-radioButton
+                                          inputId="ssl_yes"
+                                          value="yes"
+                                          formControlName="use_ssl"
+                                        ></p-radioButton>
+                                        <label for="ssl_yes" class="ml-2">{{
+                                          "T_YES" | translate
+                                        }}</label>
+                                      </div>
+                                      <div class="col-6">
+                                        <p-radioButton
+                                          inputId="ssl_no"
+                                          value="no"
+                                          formControlName="use_ssl"
+                                        ></p-radioButton>
+                                        <label for="ssl_no" class="ml-2">{{
+                                          "T_NO" | translate
+                                        }}</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-8">
+                                <div
+                                  *ngIf="
+                                    apiConfigFormGroup.get('use_ssl').value ===
+                                    'yes'
+                                  "
+                                >
+                                  <div class="row">
+                                    <div class="col-6">
+                                      <div class="row">
+                                        <div class="col-4">
+                                          <button
+                                            type="button"
+                                            pButton
+                                            icon="pi pi-upload"
+                                            iconPos="right"
+                                            (click)="certInput.click()"
+                                            [label]="certFileName | translate"
+                                          ></button>
+                                          <input
+                                            hidden
+                                            #certInput
+                                            type="file"
+                                            (change)="
+                                              onFileChange($event, 'cert')
+                                            "
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-6">
+                                      <button
+                                        type="button"
+                                        pButton
+                                        icon="pi pi-upload"
+                                        iconPos="right"
+                                        (click)="keyInput.click()"
+                                        [label]="keyFileName | translate"
+                                      ></button>
+                                      <input
+                                        (change)="onFileChange($event, 'key')"
+                                        hidden
+                                        #keyInput
+                                        type="file"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-4">
+                                <div class="row justify-content-center">
+                                  <div class="col-3">
+                                    <div class="row">
+                                      {{ "flask.T_USE_DB" | translate }}
+                                    </div>
+                                  </div>
+                                  <div class="col-8">
+                                    <div class="row">
+                                      <div class="col-6">
+                                        <p-radioButton
+                                          inputId="db_yes"
+                                          value="yes"
+                                          formControlName="connect_DB"
+                                        ></p-radioButton>
+                                        <label for="db_yes" class="ml-2">{{
+                                          "T_YES" | translate
+                                        }}</label>
+                                      </div>
+                                      <div class="col-6">
+                                        <p-radioButton
+                                          inputId="db_no"
+                                          value="no"
+                                          formControlName="connect_DB"
+                                        ></p-radioButton>
+                                        <label for="db_no" class="ml-2">{{
+                                          "T_NO" | translate
+                                        }}</label>
+                                      </div>
+                                    </div>
+                                    <div
+                                      class="row pt-3"
+                                      *ngIf="
+                                        apiConfigFormGroup.get('connect_DB')
+                                          .value === 'yes'
+                                      "
+                                    >
+                                      <div class="col-6" formGroupName="db">
+                                        <div class="row">
+                                          <div class="col-12">
+                                            <div class="row">
+                                              <div class="col-6">
+                                                {{
+                                                  "flask.T_DB_TYPE" | translate
+                                                }}
+                                              </div>
+                                            </div>
+                                            <div class="row">
+                                              <div class="col-6">
+                                                <p-dropdown
+                                                  [options]="dropdownItems3"
+                                                  optionLabel="name"
+                                                  optionValue="value"
+                                                  class="p-0"
+                                                  formControlName="db_type"
+                                                ></p-dropdown>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-8 mt-3">
+                                <div
+                                  *ngIf="
+                                    apiConfigFormGroup.get('db.db_type')
+                                      .value !== 'sqlite' &&
+                                    apiConfigFormGroup.get('connect_DB')
+                                      .value === 'yes'
+                                  "
+                                  formGroupName="db"
+                                >
+                                  <div class="row">
+                                    <div class="col-6">
+                                      <div class="row justify-content-start">
+                                        <div class="col-4">
+                                          {{ "flask.T_HOST_DB" | translate }}
+                                        </div>
+                                      </div>
+                                      <div class="row justify-content-start">
+                                        <div class="col-4">
+                                          <input
+                                            type="text"
+                                            pInputText
+                                            formControlName="db_host"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-6">
+                                      <div class="row">
+                                        <div class="col-6">
+                                          {{ "flask.T_PORT_DB" | translate }}
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-6">
+                                          <input
+                                            type="text"
+                                            pInputText
+                                            formControlName="db_port"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row my-3">
+                                    <div class="col-6">
+                                      <div class="row justify-content-start">
+                                        <div class="col-4">
+                                          {{
+                                            "flask.T_USERNAME_DB" | translate
+                                          }}
+                                        </div>
+                                      </div>
+                                      <div class="row justify-content-start">
+                                        <div class="col-4">
+                                          <input
+                                            type="text"
+                                            pInputText
+                                            formControlName="db_user"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-6">
+                                      <div class="row">
+                                        <div class="col-6">
+                                          {{
+                                            "flask.T_PASSWORD_DB" | translate
+                                          }}
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-6 field">
+                                          <p-password
+                                            formControlName="db_pwd"
+                                            placeholder="{{
+                                              'T_PWD_PLACEHOLDER' | translate
+                                            }}"
+                                            id="password"
+                                            [toggleMask]="true"
+                                            [feedback]="false"
+                                          ></p-password>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-6">
+                                      <div class="row justify-content-start">
+                                        <div class="col-4">
+                                          {{ "flask.T_DB_NAME" | translate }}
+                                        </div>
+                                      </div>
+                                      <div class="row justify-content-start">
+                                        <div class="col-4">
+                                          <input
+                                            type="text"
+                                            pInputText
+                                            formControlName="db_name"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-6">
+                                      <div class="row justify-content-start">
+                                        <div class="col-6">
+                                          {{ "flask.T_TABLE_NAME" | translate }}
+                                        </div>
+                                      </div>
+                                      <div class="row justify-content-start">
+                                        <div class="col-6">
+                                          <input
+                                            type="text"
+                                            pInputText
+                                            formControlName="table_name"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -267,7 +527,7 @@
                 </button>
               </div>
               <div class="col-2">
-                <button pButton (click)="submit()">
+                <button pButton (click)="nextStep()">
                   {{ "T_NEXT" | translate }}
                 </button>
               </div>

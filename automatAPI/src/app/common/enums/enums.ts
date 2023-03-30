@@ -3,21 +3,29 @@ export enum Sizes {
   SM = 'SM',
   MD = 'MD',
   LG = 'LG',
-  XL = 'XL'
+  XL = 'XL',
 }
 
-export enum techType{
+export enum techType {
   flask = 'flask',
   django = 'django',
   express = 'express',
 }
 
-export enum techUse{
+export enum techUse {
   services = 'services',
   webApp = 'app_web',
 }
 
-export enum configFileTypes{
+export enum configFileTypes {
   dev = 'dev',
   prod = 'prod',
+}
+
+export enum dataBaseTypes {
+  postgres = 'postgresql',
+  mysql = 'mysql',
+  sqlite = 'sqlite',
+  oracle = 'oracle',
+  mssql = 'mssql',
 }
