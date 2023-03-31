@@ -80,6 +80,9 @@
   "T_PUT_METHOD": "PUT",
   "T_DEL_METHOD": "DELETE",
   "T_ADD_ENDP": "Add endpoint",
+  "T_CREATE_TEMPLATE": "Create template",
+  "T_CHOSE_CERT_FILE": "Choose the certificate file",
+  "T_CHOSE_KEY_FILE": "Choose the key file",
   "dashboard":{
     "T_HOME": "Home",
     "T_CREATE_TEMP": "Create template",
@@ -104,7 +107,20 @@
     "T_DATE_INVALID": "The date is invalid",
     "T_NAME_REQ": "The name is required",
     "T_SURNAME_REQ": "The surname is required",
-    "T_USERNAME_REQ": "The username is required"
+    "T_USERNAME_REQ": "The username is required",
+    "T_APP_NAME_REQ": "The app's name is required",
+    "T_TECH_TYPE_REQ": "Choose one",
+    "T_HOST_REQ": "The host is required",
+    "T_PORT_REQ": "The port is required",
+    "T_HOST_INVALID": "The host is invalid",
+    "T_BP_NAME_INVALID": "The blueprint name is invalid",
+    "T_BP_NAME_DUPLC": "Blueprint already exists",
+    "T_ENDP_NAME_INVALID": "The enpdpoint name is invalid",
+    "T_ENDP_NAME_REQ": "The endpoint name is required",
+    "T_ENDP_NAME_DUPL": "Endpoint already exists",
+    "T_ENDP_URL_INVALID": "The endpoint URL is invalid",
+    "T_ENDP_URL_REQ": "The endpoint URL is required",
+    "T_ENDP_METHOD_REQ": "Choos a HTTP method"
   },
   "flask":{
     "T_APP_NAME": "Application name",

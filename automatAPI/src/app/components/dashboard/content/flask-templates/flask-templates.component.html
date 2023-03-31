@@ -3,7 +3,7 @@
     <div class="col-12 mt-5 mb-2 main-container">
       <h1>{{ "dashboard.T_CREATE_FLASK" | translate }}</h1>
       <mat-horizontal-stepper [linear]="true" #stepper>
-        <!--<mat-step [stepControl]="basicFormGroup">
+        <mat-step [stepControl]="basicFormGroup">
           <form [formGroup]="basicFormGroup">
             <ng-template matStepLabel>{{
               "dashboard.T_BASICS" | translate
@@ -22,6 +22,14 @@
                           pInputText
                           formControlName="app_name"
                         />
+                      </div>
+                      <div class="row">
+                        <small
+                          id="endp-name-help"
+                          class="p-error block firstStep"
+                          *ngIf="firstStepErrors.app_name['required']"
+                          >{{ "error.T_APP_NAME_REQ" | translate }}</small
+                        >
                       </div>
                     </div>
                   </div>
@@ -57,6 +65,14 @@
                           class="p-0"
                         ></p-dropdown>
                       </div>
+                      <div class="row">
+                        <small
+                          id="endp-name-help"
+                          class="p-error block firstStep"
+                          *ngIf="firstStepErrors.tech_type['required']"
+                          >{{ "error.T_TECH_TYPE_REQ" | translate }}</small
+                        >
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -68,6 +84,20 @@
                       </div>
                       <div class="row w-50">
                         <input type="text" pInputText formControlName="host" />
+                      </div>
+                      <div class="row">
+                        <small
+                          id="endp-name-help"
+                          class="p-error block firstStep"
+                          *ngIf="firstStepErrors.host['required']"
+                          >{{ "error.T_HOST_REQ" | translate }}</small
+                        >
+                        <small
+                          id="endp-name-help"
+                          class="p-error block firstStep"
+                          *ngIf="firstStepErrors.host['pattern']"
+                          >{{ "error.T_HOST_INVALID" | translate }}</small
+                        >
                       </div>
                     </div>
                   </div>
@@ -87,6 +117,14 @@
                         >
                         </p-inputNumber>
                       </div>
+                      <div class="row">
+                        <small
+                          id="endp-name-help"
+                          class="p-error block firstStep"
+                          *ngIf="firstStepErrors.port['required']"
+                          >{{ "error.T_PORT_REQ" | translate }}</small
+                        >
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -94,7 +132,7 @@
             </div>
             <div class="row mt-3 mx-0">
               <div class="col-2 px-0">
-                <button pButton matStepperNext>
+                <button pButton matStepperNext (click)="manageFirstStep()">
                   {{ "T_NEXT" | translate }}
                 </button>
               </div>
@@ -117,9 +155,9 @@
                             {{ "flask.T_USE_CORS" | translate }}
                           </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-8">
                           <div class="row">
-                            <div class="col-6">
+                            <div class="col-6 d-flex justify-content-center">
                               <p-radioButton
                                 inputId="cors_yes"
                                 value="yes"
@@ -148,9 +186,9 @@
                             {{ "flask.T_USE_CONFIG_FILE" | translate }}
                           </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-8">
                           <div class="row">
-                            <div class="col-6">
+                            <div class="col-6 d-flex justify-content-center">
                               <p-radioButton
                                 inputId="config_yes"
                                 value="yes"
@@ -178,8 +216,8 @@
                               'yes'
                             "
                           >
-                            <div class="row">
-                              <div class="col-12">
+                            <div class="row justify-content-center">
+                              <div class="col-9">
                                 <div class="row">
                                   <div class="col-12">
                                     {{ "flask.T_TECH_TYPE" | translate }}
@@ -201,15 +239,20 @@
                           </div>
                         </div>
                       </div>
-                      <div class="row pb-2">
+                      <div
+                        class="row pb-2"
+                        *ngIf="
+                          basicFormGroup.get('tech_type').value === 'app_web'
+                        "
+                      >
                         <div class="col-2">
                           <div class="row">
                             {{ "flask.T_USE_BP" | translate }}
                           </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-8">
                           <div class="row">
-                            <div class="col-6">
+                            <div class="col-6 d-flex justify-content-center">
                               <p-radioButton
                                 inputId="bp_yes"
                                 value="yes"
@@ -282,26 +325,20 @@
                                 >
                                   <div class="row">
                                     <div class="col-6">
-                                      <div class="row">
-                                        <div class="col-4">
-                                          <button
-                                            type="button"
-                                            pButton
-                                            icon="pi pi-upload"
-                                            iconPos="right"
-                                            (click)="certInput.click()"
-                                            [label]="certFileName | translate"
-                                          ></button>
-                                          <input
-                                            hidden
-                                            #certInput
-                                            type="file"
-                                            (change)="
-                                              onFileChange($event, 'cert')
-                                            "
-                                          />
-                                        </div>
-                                      </div>
+                                      <button
+                                        type="button"
+                                        pButton
+                                        icon="pi pi-upload"
+                                        iconPos="right"
+                                        (click)="certInput.click()"
+                                        [label]="certFileName | translate"
+                                      ></button>
+                                      <input
+                                        hidden
+                                        #certInput
+                                        type="file"
+                                        (change)="onFileChange($event, 'cert')"
+                                      />
                                     </div>
                                     <div class="col-6">
                                       <button
@@ -533,8 +570,12 @@
               </div>
             </div>
           </form>
-        </mat-step>-->
-        <mat-step *ngIf="true">
+        </mat-step>
+        <mat-step
+          *ngIf="
+            useBlueprints && basicFormGroup.get('tech_type').value === 'app_web'
+          "
+        >
           <ng-template matStepLabel>{{
             "flask.T_BLUEPRINTS" | translate
           }}</ng-template>
@@ -623,13 +664,13 @@
                           id="endp-name-help"
                           class="p-error block"
                           *ngIf="invalidBpName"
-                          >{{ "errors.T_BP_NAME_INVALID" | translate }}</small
+                          >{{ "error.T_BP_NAME_INVALID" | translate }}</small
                         >
                         <small
                           id="endp-name-help"
                           class="p-error block"
                           *ngIf="duplicatedBpName"
-                          >{{ "errors.T_BP_NAME_DUPLC" | translate }}</small
+                          >{{ "error.T_BP_NAME_DUPLC" | translate }}</small
                         >
                       </div>
                     </div>
@@ -783,7 +824,7 @@
                     <p-table
                       selectionMode="single"
                       dataKey="endpoint_name"
-                      [value]="endpointBPList"
+                      [value]="endpointList"
                       [(selection)]="endpointSelection"
                       [scrollable]="true"
                       scrollHeight="400px"
@@ -826,10 +867,10 @@
                 [show]="showDialog"
                 [editMode]="editMode"
                 [endpointData]="endpointSelection"
-                [endpointNameList]="getEndpointNameList()"
+                [endpointNameList]="getEndpointNameList(true)"
                 (Hide)="onHide()"
-                (endpointAdded)="onEndpointAdded($event)"
-                (endpointEdited)="onEndpointEdited($event)"
+                (endpointAdded)="onEndpointAdded($event, true)"
+                (endpointEdited)="onEndpointEdited($event, true)"
               ></app-endpoint-modal>
               <div class="row pt-3">
                 <div class="col-2 pl-0">
@@ -838,7 +879,7 @@
                   </button>
                 </div>
                 <div class="col-2">
-                  <button pButton matStepperNext (click)="addBlueprints()">
+                  <button pButton matStepperNext (click)="addEndpoints()">
                     {{ "T_NEXT" | translate }}
                   </button>
                 </div>
@@ -850,6 +891,12 @@
           <ng-template matStepLabel>{{
             "dashboard.T_SUMMARY" | translate
           }}</ng-template>
+          <div class="row">
+            <p-button
+              [label]="'T_CREATE_TEMPLATE' | translate"
+              (onClick)="createTemplate()"
+            ></p-button>
+          </div>
         </mat-step>
       </mat-horizontal-stepper>
     </div>

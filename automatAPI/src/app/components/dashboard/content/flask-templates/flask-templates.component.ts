@@ -61,10 +61,28 @@ export class FlaskTemplatesComponent implements OnInit {
   bpSelection: any = null;
   bpName: string = '';
 
-  endpointList: flaskEndpointTemplate[];
+  endpointList: flaskEndpointTemplate[] = [];
 
   invalidBpName: boolean = false;
   duplicatedBpName: boolean = false;
+
+  firstStepErrors: any = {
+    app_name: {
+      required: false,
+    },
+    app_description: {},
+    host: {
+      required: false,
+      pattern: false,
+    },
+    port: {
+      required: false,
+    },
+
+    tech_type: {
+      required: false,
+    },
+  };
 
   constructor(private translate: TranslateService) {
     this.translate
@@ -193,17 +211,25 @@ export class FlaskTemplatesComponent implements OnInit {
 
     this.blueprintsFormGroup = new FormGroup({
       bp_list: new FormGroup({
-        list: new FormArray([]),
+        list: new FormControl([]),
       }),
     });
     this.endpointsFormGroup = new FormGroup({
-      endpoints: new FormArray([]),
+      endpoints: new FormControl([]),
     });
   }
 
   addBlueprints() {
     // Here is where the object will be created
-    this.blueprintsFormGroup.get('bp_list')?.get('list')?.setValue(this.blueprintList);
+    this.blueprintsFormGroup
+      .get('bp_list')
+      ?.get('list')
+      .setValue(this.blueprintList);
+  }
+
+  addEndpoints() {
+    // Here is where the object will be created
+    this.endpointsFormGroup.get('endpoints')?.setValue(this.endpointList);
   }
 
   nextStep() {
@@ -233,24 +259,40 @@ export class FlaskTemplatesComponent implements OnInit {
     this.showDialog = false;
   }
 
-  onEndpointAdded(event: flaskEndpointTemplate) {
-    this.endpointBPList.push(event);
+  onEndpointAdded(event: flaskEndpointTemplate, type: boolean = false) {
+    if (type) this.endpointList.push(event);
+    else this.endpointBPList.push(event);
   }
 
-  onEndpointEdited(event: flaskEndpointTemplate) {
-    this.endpointBPList = this.endpointBPList.map((endpoint) => {
-      if (endpoint.endpoint_name === event.endpoint_name) {
-        return event;
-      }
-      return endpoint;
-    });
+  onEndpointEdited(event: flaskEndpointTemplate, type: boolean = false) {
+    if (type) {
+      this.endpointList = this.endpointList.map((endpoint) => {
+        if (endpoint.endpoint_name === event.endpoint_name) {
+          return event;
+        }
+        return endpoint;
+      });
+    } else {
+      this.endpointBPList = this.endpointBPList.map((endpoint) => {
+        if (endpoint.endpoint_name === event.endpoint_name) {
+          return event;
+        }
+        return endpoint;
+      });
+    }
     this.endpointSelection = null;
   }
 
-  deleteEndpoint() {
-    this.endpointBPList = this.endpointBPList.filter(
-      (endpoint) => endpoint !== this.endpointSelection
-    );
+  deleteEndpoint(type: boolean = false) {
+    if (type) {
+      this.endpointList = this.endpointList.filter(
+        (endpoint) => endpoint !== this.endpointSelection
+      );
+    } else {
+      this.endpointBPList = this.endpointBPList.filter(
+        (endpoint) => endpoint !== this.endpointSelection
+      );
+    }
     this.endpointSelection = null;
   }
 
@@ -307,12 +349,34 @@ export class FlaskTemplatesComponent implements OnInit {
     this.duplicatedBpName = false;
   }
 
-  getEndpointNameList() {
-    return this.endpointBPList.map((endpoint) => endpoint.endpoint_name);
+  getEndpointNameList(type: boolean = false) {
+    if (type)
+      return this.endpointList.map((endpoint) => endpoint.endpoint_name);
+    else return this.endpointBPList.map((endpoint) => endpoint.endpoint_name);
   }
 
   checkSelection() {
     if (this.bpSelection) return false;
     else return this.blueprintList.find((bp) => bp.name === this.bpName);
+  }
+
+  createTemplate() {
+    console.log(this.basicFormGroup.value);
+    console.log(this.apiConfigFormGroup.value);
+    console.log(this.blueprintsFormGroup.value);
+    console.log(this.endpointsFormGroup.value);
+  }
+
+  manageFirstStep() {
+    const basicForm = this.basicFormGroup.controls;
+    const keys = Object.keys(basicForm);
+    keys.forEach((key) => {
+      if (basicForm[key]?.errors?.['required']) {
+        this.firstStepErrors[key]['required'] = true;
+      } else this.firstStepErrors[key]['required'] = false;
+      if (basicForm[key]?.errors?.['pattern']) {
+        this.firstStepErrors[key]['pattern'] = true;
+      } else this.firstStepErrors[key]['pattern'] = false;
+    });
   }
 }

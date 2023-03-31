@@ -42,19 +42,19 @@
                     id="endp-name-help"
                     class="p-error block"
                     *ngIf="addEndpointFormControl.get('endpoint_name').errors?.[ 'required' ] && addEndpointFormControl.get('endpoint_name').touched"
-                    >{{ "errors.T_ENDP_NAME_REQ" | translate }}</small
+                    >{{ "error.T_ENDP_NAME_REQ" | translate }}</small
                   >
                   <small
                     id="endp-name-help"
                     class="p-error block"
                     *ngIf="validName"
-                    >{{ "errors.T_ENDP_NAME_INVALID" | translate }}</small
+                    >{{ "error.T_ENDP_NAME_INVALID" | translate }}</small
                   >
                   <small
                     id="endp-name-help"
                     class="p-error block"
                     *ngIf="duplicatedName"
-                    >{{ "errors.T_ENDP_NAME_DUPL" | translate }}</small
+                    >{{ "error.T_ENDP_NAME_DUPL" | translate }}</small
                   >
                 </div>
                 <div class="row pt-3">
@@ -75,13 +75,13 @@
                     id="endp-name-help"
                     class="p-error block"
                     *ngIf="addEndpointFormControl.get('endpoint_url').errors?.[ 'required' ] && addEndpointFormControl.get('endpoint_url').touched"
-                    >{{ "errors.T_ENDP_URL_REQ" | translate }}</small
+                    >{{ "error.T_ENDP_URL_REQ" | translate }}</small
                   >
                   <small
                     id="endp-name-help"
                     class="p-error block"
                     *ngIf="validUrl"
-                    >{{ "errors.T_ENDP_URL_INVALID" | translate }}</small
+                    >{{ "error.T_ENDP_URL_INVALID" | translate }}</small
                   >
                 </div>
               </div>
@@ -166,7 +166,7 @@
             id="endp-name-help"
             class="p-error block"
             *ngIf="noMethodChecked"
-            >{{ "errors.T_ENDP_METHOD_REQ" | translate }}</small
+            >{{ "error.T_ENDP_METHOD_REQ" | translate }}</small
           >
       </div>
       <div class="col-4">

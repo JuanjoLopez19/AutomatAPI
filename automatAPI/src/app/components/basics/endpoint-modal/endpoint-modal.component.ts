@@ -172,10 +172,11 @@ export class EndpointModalComponent implements OnInit {
   validateDuplicatedName() {
     const name = this.addEndpointFormControl.get('endpoint_name').value;
     const result = this.endpointNameList.includes(name);
-    if (result) {
+    if (result && !this.editMode) {
       this.duplicatedName = true;
+      return false
     }
-    return !result;
+    return true;
   }
 
   sanitizeUrl(url: string) {
