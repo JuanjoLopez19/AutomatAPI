@@ -1,13 +1,21 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { TranslateService } from '@ngx-translate/core';
+import { endpointRegex, hostRegex } from 'src/app/common/constants';
 import {
   techUse,
   configFileTypes,
   dataBaseTypes,
 } from 'src/app/common/enums/enums';
 import {
+  flaskBlueprint,
   flaskEndpointTemplate,
   flaskServices,
   flaskWebApp,
@@ -20,10 +28,12 @@ import { dropdownParams } from 'src/app/common/interfaces/interfaces';
   styleUrls: ['./flask-templates.component.scss'],
 })
 export class FlaskTemplatesComponent implements OnInit {
-
   @ViewChild('stepper') stepper: MatStepper;
 
+  @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
+
   showDialog: boolean = false;
+  editMode: boolean = false;
 
   flaskServicesData!: flaskServices;
   flaskWebAppData!: flaskWebApp;
@@ -43,19 +53,19 @@ export class FlaskTemplatesComponent implements OnInit {
   certFileName: string = 'T_CHOSE_CERT_FILE';
   keyFileName: string = 'T_CHOSE_KEY_FILE';
 
-  endpointList: flaskEndpointTemplate[] = [
-    {
-      endpoint_name: 'prueba',
-      endpoint_comment: '',
-      endpoint_url: '',
-      methods: {
-        get_m: 'no',
-        post: 'no',
-        put: 'no',
-        del: 'no',
-      },
-    },
-  ];
+  endpointBPList: flaskEndpointTemplate[] = [];
+
+  blueprintList: flaskBlueprint[] = [];
+
+  endpointSelection: flaskEndpointTemplate = null;
+  bpSelection: any = null;
+  bpName: string = '';
+
+  endpointList: flaskEndpointTemplate[];
+
+  invalidBpName: boolean = false;
+  duplicatedBpName: boolean = false;
+
   constructor(private translate: TranslateService) {
     this.translate
       .get(['T_SERVICES', 'T_APP_WEB', 'T_SELECT_ONE', 'T_DEV', 'T_PROD'])
@@ -117,6 +127,7 @@ export class FlaskTemplatesComponent implements OnInit {
         ];
       });
   }
+
   ngOnInit() {
     this.basicFormGroup = new FormGroup({
       app_name: new FormControl('', {
@@ -133,7 +144,7 @@ export class FlaskTemplatesComponent implements OnInit {
         updateOn: 'blur',
       }),
       host: new FormControl('127.0.0.1', {
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.pattern(hostRegex)],
         updateOn: 'blur',
       }),
       tech_type: new FormControl('', {
@@ -189,9 +200,10 @@ export class FlaskTemplatesComponent implements OnInit {
       endpoints: new FormArray([]),
     });
   }
-  submit() {
+
+  addBlueprints() {
     // Here is where the object will be created
-    console.log(this.blueprintsFormGroup.value);
+    this.blueprintsFormGroup.get('bp_list')?.get('list')?.setValue(this.blueprintList);
   }
 
   nextStep() {
@@ -217,11 +229,90 @@ export class FlaskTemplatesComponent implements OnInit {
     }
   }
 
-  manageHide() {
-    console.log('hide');
+  onHide() {
     this.showDialog = false;
   }
+
   onEndpointAdded(event: flaskEndpointTemplate) {
-    this.endpointList.push(event);
+    this.endpointBPList.push(event);
+  }
+
+  onEndpointEdited(event: flaskEndpointTemplate) {
+    this.endpointBPList = this.endpointBPList.map((endpoint) => {
+      if (endpoint.endpoint_name === event.endpoint_name) {
+        return event;
+      }
+      return endpoint;
+    });
+    this.endpointSelection = null;
+  }
+
+  deleteEndpoint() {
+    this.endpointBPList = this.endpointBPList.filter(
+      (endpoint) => endpoint !== this.endpointSelection
+    );
+    this.endpointSelection = null;
+  }
+
+  deleteBlueprint() {
+    this.blueprintList = this.blueprintList.filter(
+      (bp) => bp !== this.bpSelection
+    );
+    this.bpSelection = null;
+    this.bpName = '';
+    this.endpointBPList = [];
+  }
+
+  openDialog(editMode: boolean) {
+    this.closeSidenav.emit();
+    this.editMode = editMode;
+    this.showDialog = true;
+  }
+
+  saveBluePrint() {
+    if (this.checkSelection()) {
+      this.duplicatedBpName = true;
+    } else if (this.bpName === '' || !endpointRegex.test(this.bpName)) {
+      this.invalidBpName = true;
+    } else {
+      if (this.bpSelection === null) {
+        this.blueprintList.push({
+          name: this.bpName,
+          endpoints: [...this.endpointBPList],
+        });
+      } else {
+        this.blueprintList = this.blueprintList.map((bp) => {
+          if (bp === this.bpSelection) {
+            return {
+              name: this.bpName,
+              endpoints: [...this.endpointBPList],
+            };
+          }
+          return bp;
+        });
+      }
+
+      this.bpName = '';
+      this.endpointBPList = [];
+      this.invalidBpName = false;
+      this.duplicatedBpName = false;
+    }
+  }
+
+  onBPSelected(event: any) {
+    console.log(event);
+    this.endpointBPList = event.data['endpoints'];
+    this.bpName = event.data['name'];
+    this.invalidBpName = false;
+    this.duplicatedBpName = false;
+  }
+
+  getEndpointNameList() {
+    return this.endpointBPList.map((endpoint) => endpoint.endpoint_name);
+  }
+
+  checkSelection() {
+    if (this.bpSelection) return false;
+    else return this.blueprintList.find((bp) => bp.name === this.bpName);
   }
 }

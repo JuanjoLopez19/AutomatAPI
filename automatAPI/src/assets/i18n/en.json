@@ -79,6 +79,7 @@
   "T_POST_METHOD": "POST",
   "T_PUT_METHOD": "PUT",
   "T_DEL_METHOD": "DELETE",
+  "T_ADD_ENDP": "Add endpoint",
   "dashboard":{
     "T_HOME": "Home",
     "T_CREATE_TEMP": "Create template",
@@ -115,6 +116,20 @@
     "T_USE_SSL": "Use SSL?",
     "T_USE_DB": "Use Database?",
     "T_USE_CONFIG_FILE": "Use config file?",
-    "T_USE_BP": "Use blueprints?"
+    "T_USE_BP": "Use blueprints?",
+    "T_BLUEPRINTS": "Blueprints",
+    "T_LIST_BP": "List of blueprints",
+    "T_BP_NAME": "Blueprint name",
+    "T_ENDP_COUNT": "Endpoint count",
+    "T_MANAGE_BP": "Manage blueprints",
+    "T_ENDP_NAME":"Endpoint name",
+    "T_ENDP_DESC":"Endpoint description",
+    "T_ENDP_URL":"Endpoint URL",
+    "T_ENDP_METHOD":"Endpoint method",
+    "T_ENDP_GET":"GET",
+    "T_ENDP_POST":"POST",
+    "T_ENDP_PUT":"PUT",
+    "T_ENDP_DEL":"DELETE",
+    "T_SAVE_BP": "Save blueprint"
   }
 }

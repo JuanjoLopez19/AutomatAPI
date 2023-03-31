@@ -62,7 +62,6 @@
   "T_BACK": "Paso atrás",
   "T_DEV": "Desarrollo",
   "T_PROD": "Producción",
-
   "T_ADD_ENDPOINT": "Añadir endpoint",
   "T_ADD": "Añadir",
   "T_DISCARD": "Descartar",
@@ -80,6 +79,7 @@
   "T_POST_METHOD": "POST",
   "T_PUT_METHOD": "PUT",
   "T_DEL_METHOD": "DELETE",
+  "T_ADD_ENDP": "Añadir endpoint",
   "dashboard":{
     "T_HOME": "Inicio",
     "T_CREATE_TEMP": "Crear plantilla",
@@ -116,6 +116,20 @@
     "T_USE_SSL": "¿Usar SSL?",
     "T_USE_DB": "¿Usar base de datos?",
     "T_USE_CONFIG_FILE": "¿Usar archivo de configuración?",
-    "T_USE_BP": "¿Usar blueprints?"
+    "T_USE_BP": "¿Usar blueprints?",
+    "T_BLUEPRINTS": "Blueprints",
+    "T_LIST_BP": "Lista de blueprints",
+    "T_BP_NAME": "Nombre del bluerprint",
+    "T_ENDP_COUNT": "Número de endpoints",
+    "T_MANAGE_BP": "Gestionar blueprints",
+    "T_ENDP_NAME":"Nombre del endpoint",
+    "T_ENDP_DESC":"Descripción del endpoint",
+    "T_ENDP_URL":"Endpoint URL",
+    "T_ENDP_METHOD":"Endpoint método",
+    "T_ENDP_GET":"GET",
+    "T_ENDP_POST":"POST",
+    "T_ENDP_PUT":"PUT",
+    "T_ENDP_DEL":"DELETE",
+    "T_SAVE_BP": "Guardar blueprint"
   }
 }

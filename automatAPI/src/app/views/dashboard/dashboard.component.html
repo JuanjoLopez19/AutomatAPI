@@ -36,7 +36,7 @@
     <mat-sidenav-content class="page-wrapper">
       <div class="page-content h-100">
         <app-home *ngIf="activeView === 'home'"></app-home>
-        <app-flask-templates *ngIf="activeView === 'flask'"></app-flask-templates>
+        <app-flask-templates *ngIf="activeView === 'flask'" (closeSidenav)="snav.close()"></app-flask-templates>
         <app-django-templates *ngIf="activeView === 'django'"></app-django-templates>
         <app-express-templates *ngIf="activeView === 'express'"></app-express-templates>
         <app-manage-users *ngIf="activeView === 'manage_users'"></app-manage-users>

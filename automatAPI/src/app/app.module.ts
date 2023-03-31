@@ -42,6 +42,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
 import {TableModule} from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 // Material components
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -127,7 +128,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     InputNumberModule,
     DropdownModule,
     TableModule,
-    CheckboxModule
+    CheckboxModule,
+    InputTextareaModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

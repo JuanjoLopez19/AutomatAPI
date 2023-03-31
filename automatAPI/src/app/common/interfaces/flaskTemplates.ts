@@ -61,3 +61,8 @@ export interface flaskBlueprintAux {
 export interface sslFilesInterface {
   [key: string]: string;
 }
+
+export interface flaskBlueprint {
+  name: string;
+  endpoints: flaskEndpointTemplate[];
+}
