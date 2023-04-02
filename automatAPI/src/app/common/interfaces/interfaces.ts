@@ -27,10 +27,11 @@ export interface menuItemsDef{
   icon: string;
   routerLink?: string;
   state?: any
+  command?: any;
 }
 
 export interface menuItems{
-  [items: string]: menuItemsDef[];
+  items:menuItemsDef[];
 }
 
 export interface databaseParams{

@@ -211,7 +211,7 @@ export class ExpressTemplatesComponent {
         validators: [Validators.required, Validators.pattern(hostRegex)],
         updateOn: 'blur',
       }),
-      tech_type: new FormControl('app_web', {
+      tech_type: new FormControl('', {
         validators: [Validators.required],
         updateOn: 'blur',
       }),

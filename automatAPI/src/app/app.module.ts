@@ -56,6 +56,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import { ProfileComponent } from './components/dashboard/profile/profile.component';
 
 
 
@@ -90,6 +91,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ManageTemplatesComponent,
     ManageUsersComponent,
     EndpointModalComponent,
+    ProfileComponent,
 
   ],
   imports: [

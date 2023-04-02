@@ -52,6 +52,11 @@ export class AuthService {
   }
 
   checkToken(): Observable<any> {
-    return null;
+    return this.http.get(`${environment.apiHost}${environment.apiPort}/api/auth/check_token`);
   }
+
+  public setUserInfo(userInfo: any) {
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
+  }
+
 }
