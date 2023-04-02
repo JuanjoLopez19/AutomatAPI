@@ -5,6 +5,7 @@ import routes from "./routes";
 import passport from "passport";
 import cookieParser from "cookie-parser";
 import swaggerUi from "swagger-ui-express";
+import morgan from "morgan";
 import * as swaggerdocs from "./reference/express-API.json";
 import "./passport";
 
@@ -13,6 +14,12 @@ const app: Express = express();
 app.use(BodyParser.json());
 
 app.use(cors());
+app.use(
+	morgan(
+		':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
+	)
+);
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
