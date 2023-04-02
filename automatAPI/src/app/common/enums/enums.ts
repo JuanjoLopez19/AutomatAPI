@@ -29,3 +29,28 @@ export enum dataBaseTypes {
   oracle = 'oracle',
   mssql = 'mssql',
 }
+
+export enum viewEngines {
+  pug = 'pug',
+  ejs = 'ejs',
+  hbs = 'hbs',
+  hjs = 'hjs',
+  jade = 'jade',
+  twig = 'twig',
+  vash = 'vash',
+}
+
+export enum cssEngines {
+  sass = 'sass',
+  styl = 'styl',
+  scss = 'scss',
+  less = 'less',
+  css = 'css',
+}
+
+export enum httpMethods{
+  get = 'get',
+  post = 'post',
+  put = 'put',
+  delete = 'delete',
+}

@@ -83,7 +83,8 @@
   "T_CREATE_TEMPLATE": "Crear plantilla",
   "T_CHOSE_CERT_FILE": "Selecciona el certificado",
   "T_CHOSE_KEY_FILE": "Selecciona la clave privada",
-  "dashboard":{
+  "T_BASIC_HTML": "HTML básico",
+  "dashboard": {
     "T_HOME": "Inicio",
     "T_CREATE_TEMP": "Crear plantilla",
     "T_SAVED_TEMPLATES": "Plantillas guardadas",
@@ -93,6 +94,7 @@
     "T_EXPRESS": "Express",
     "T_DJANGO": "Django",
     "T_CREATE_FLASK": "Crea tu plantilla de flask!!",
+    "T_CREATE_EXPRESS": "Crea tu plantilla de express!!",
     "T_BASICS": "Configuración básica",
     "T_API_CONFIG": "Configuración de la API",
     "T_ENDPOINTS": "Endpoints",
@@ -120,9 +122,12 @@
     "T_ENDP_NAME_DUPL": "El endpoint ya existe",
     "T_ENDP_URL_INVALID": "La URL del endpoint no es válida",
     "T_ENDP_URL_REQ": "La URL del endpoint es obligatoria",
-    "T_ENDP_METHOD_REQ": "Elige un método HTTP"
+    "T_ENDP_METHOD_REQ": "Elige un método HTTP",
+    "T_CONTROLLER_NAME_REQ": "El nombre del controlador es obligatorio",
+    "T_CONTROLLER_NAME_INVALID": "El nombre del controlador no es válido",
+    "T_CONTROLLER_NAME_DUPL": "El controlador ya existe"
   },
-  "flask":{
+  "flask": {
     "T_APP_NAME": "Nombre de la Aplicación",
     "T_APP_DESC": "description",
     "T_TECH_TYPE": "Tipo de tecnlogía",
@@ -138,14 +143,31 @@
     "T_BP_NAME": "Nombre del bluerprint",
     "T_ENDP_COUNT": "Número de endpoints",
     "T_MANAGE_BP": "Gestionar blueprints",
-    "T_ENDP_NAME":"Nombre del endpoint",
-    "T_ENDP_DESC":"Descripción del endpoint",
-    "T_ENDP_URL":"Endpoint URL",
-    "T_ENDP_METHOD":"Endpoint método",
-    "T_ENDP_GET":"GET",
-    "T_ENDP_POST":"POST",
-    "T_ENDP_PUT":"PUT",
-    "T_ENDP_DEL":"DELETE",
-    "T_SAVE_BP": "Guardar blueprint"
-  }
+    "T_ENDP_NAME": "Nombre del endpoint",
+    "T_ENDP_DESC": "Descripción del endpoint",
+    "T_ENDP_URL": "Endpoint URL",
+    "T_ENDP_METHOD": "Endpoint método",
+    "T_ENDP_GET": "GET",
+    "T_ENDP_POST": "POST",
+    "T_ENDP_PUT": "PUT",
+    "T_ENDP_DEL": "DELETE",
+    "T_SAVE_BP": "Guardar blueprint",
+    "T_MANAGE_ENDP": "Gestionar endpoints"
+  },
+  "express": {
+    "T_CONTROLLERS": "Controladores",
+    "T_USE_CONTROLLER": "Usar controlador?",
+    "T_VIEW_ENGINE": "Visor HTML",
+    "T_CSS_ENGINE": "Motor CSS",
+    "T_CONTROLLERS_LIST": "Lista de controladores",
+    "T_CONTROLLER_NAME": "Nombre del controlador",
+    "T_ENDP_COUNT": "Número de endpoints",
+    "T_MANAGE_CONTROLLER": "Gestionar controlador",
+    "T_SAVE_CONTROLLER": "Guardar controlador",
+    "T_ENDP_NAME": "Nombre del endpoint",
+    "T_ENDP_DESC": "Descripción del endpoint",
+    "T_ENDP_URL": "Endpoint URL",
+    "T_ENDP_METHOD": "Método del endpoint"
+  },
+  "django": {}
 }

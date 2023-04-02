@@ -404,7 +404,7 @@
                                             <div class="row">
                                               <div class="col-6">
                                                 {{
-                                                  "flask.T_DB_TYPE" | translate
+                                                  "db.T_DB_TYPE" | translate
                                                 }}
                                               </div>
                                             </div>
@@ -440,7 +440,7 @@
                                     <div class="col-6">
                                       <div class="row justify-content-start">
                                         <div class="col-4">
-                                          {{ "flask.T_HOST_DB" | translate }}
+                                          {{ "db.T_DB_HOST" | translate }}
                                         </div>
                                       </div>
                                       <div class="row justify-content-start">
@@ -456,7 +456,7 @@
                                     <div class="col-6">
                                       <div class="row">
                                         <div class="col-6">
-                                          {{ "flask.T_PORT_DB" | translate }}
+                                          {{ "db.T_DB_PORT" | translate }}
                                         </div>
                                       </div>
                                       <div class="row">
@@ -475,7 +475,7 @@
                                       <div class="row justify-content-start">
                                         <div class="col-4">
                                           {{
-                                            "flask.T_USERNAME_DB" | translate
+                                            "db.T_DB_USERNAME" | translate
                                           }}
                                         </div>
                                       </div>
@@ -493,7 +493,7 @@
                                       <div class="row">
                                         <div class="col-6">
                                           {{
-                                            "flask.T_PASSWORD_DB" | translate
+                                            "db.T_DB_PWD" | translate
                                           }}
                                         </div>
                                       </div>
@@ -516,7 +516,7 @@
                                     <div class="col-6">
                                       <div class="row justify-content-start">
                                         <div class="col-4">
-                                          {{ "flask.T_DB_NAME" | translate }}
+                                          {{ "db.T_DB_NAME" | translate }}
                                         </div>
                                       </div>
                                       <div class="row justify-content-start">
@@ -532,7 +532,7 @@
                                     <div class="col-6">
                                       <div class="row justify-content-start">
                                         <div class="col-6">
-                                          {{ "flask.T_TABLE_NAME" | translate }}
+                                          {{ "db.T_TABLE_NAME" | translate }}
                                         </div>
                                       </div>
                                       <div class="row justify-content-start">
@@ -698,7 +698,7 @@
                                 styleClass="p-button-sm p-button-danger"
                                 [label]="'T_DEL_ENDP' | translate"
                                 [disabled]="endpointSelection === null"
-                                (onClick)="deleteEndpoint()"
+                                (onClick)="deleteEndpoint(true)"
                               ></p-button>
                             </div>
                           </div>

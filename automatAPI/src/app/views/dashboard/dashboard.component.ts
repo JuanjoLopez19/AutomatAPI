@@ -7,7 +7,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
-  activeView: string = 'flask';
+  activeView: string = 'express';
   onActiveTabChange(event: string) {
     this.activeView = event;
   }

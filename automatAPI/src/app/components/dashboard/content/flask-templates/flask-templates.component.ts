@@ -335,6 +335,7 @@ export class FlaskTemplatesComponent implements OnInit {
       }
 
       this.bpName = '';
+      this.bpSelection = null;
       this.endpointBPList = [];
       this.invalidBpName = false;
       this.duplicatedBpName = false;

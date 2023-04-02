@@ -83,6 +83,16 @@
   "T_CREATE_TEMPLATE": "Create template",
   "T_CHOSE_CERT_FILE": "Choose the certificate file",
   "T_CHOSE_KEY_FILE": "Choose the key file",
+  "T_BASIC_HTML": "Basic HTML",
+  "db":{
+    "T_DB_TYPE": "Database type",
+    "T_DB_NAME": "Database name",
+    "T_DB_HOST": "Database host",
+    "T_DB_PORT": "Database port",
+    "T_DB_USERNAME": "Database username",
+    "T_DB_PWD": "Database password",
+    "T_TABLE_NAME": "Table name"
+  },
   "dashboard":{
     "T_HOME": "Home",
     "T_CREATE_TEMP": "Create template",
@@ -93,6 +103,7 @@
     "T_EXPRESS": "Express",
     "T_DJANGO": "Django",
     "T_CREATE_FLASK": "Create your flask template!!",
+    "T_CREATE_EXPRESS": "Create your express template!!",
     "T_BASICS": "Basic configuration",
     "T_API_CONFIG": "API configuration",
     "T_ENDPOINTS": "Endpoints",
@@ -120,7 +131,10 @@
     "T_ENDP_NAME_DUPL": "Endpoint already exists",
     "T_ENDP_URL_INVALID": "The endpoint URL is invalid",
     "T_ENDP_URL_REQ": "The endpoint URL is required",
-    "T_ENDP_METHOD_REQ": "Choos a HTTP method"
+    "T_ENDP_METHOD_REQ": "Choose a HTTP method",
+    "T_CONTROLLER_NAME_REQ": "The controller name is required",
+    "T_CONTROLLER_NAME_INVALID": "The controller name is invalid",
+    "T_CONTROLLER_NAME_DUPL": "Controller already exists"
   },
   "flask":{
     "T_APP_NAME": "Application name",
@@ -146,6 +160,23 @@
     "T_ENDP_POST":"POST",
     "T_ENDP_PUT":"PUT",
     "T_ENDP_DEL":"DELETE",
-    "T_SAVE_BP": "Save blueprint"
-  }
+    "T_SAVE_BP": "Save blueprint",
+    "T_MANAGE_ENDP": "Manage endpoints"
+  },
+  "express":{
+    "T_CONTROLLERS": "Controllers",
+    "T_USE_CONTROLLER": "Use controllers?",
+    "T_VIEW_ENGINE": "View engine",
+    "T_CSS_ENGINE": "CSS engine",
+    "T_CONTROLLERS_LIST": "Controllers list",
+    "T_CONTROLLER_NAME": "Controller name",
+    "T_ENDP_COUNT": "Endpoint count",
+    "T_MANAGE_CONTROLLER": "Manage controllers",
+    "T_SAVE_CONTROLLER": "Save controller",
+    "T_ENDP_NAME": "Endpoint name",
+    "T_ENDP_DESC": "Endpoint description",
+    "T_ENDP_URL": "Endpoint URL",
+    "T_ENDP_METHOD": "Endpoint method"
+  },
+  "django":{}
 }

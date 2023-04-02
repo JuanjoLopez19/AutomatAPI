@@ -62,7 +62,6 @@
                     <input
                       pInputText
                       id="endpoint_url"
-
                       formControlName="endpoint_url"
                     />
                     <label htmlFor="endpoint_url">{{
@@ -99,7 +98,7 @@
                   }}</label>
                 </span>
               </div>
-              <div class="row">
+              <div class="row" *ngIf="type === 'flask'">
                 <div class="py-3" formGroupName="methods">
                   <div class="row">
                     <div class="mb-3">
@@ -153,6 +152,22 @@
                   </div>
                 </div>
               </div>
+              <div class="row" *ngIf="type === 'express'">
+                <div class="py-3 px-4">
+                  <div class="row">
+                    {{ "T_METHOD" | translate }}
+                  </div>
+                  <div class="row">
+                    <p-dropdown
+                      [options]="httpMethodSelector"
+                      optionLabel="name"
+                      optionValue="value"
+                      class="p-0"
+                      formControlName="method"
+                    ></p-dropdown>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </form>
@@ -162,12 +177,12 @@
   <ng-template pTemplate="footer">
     <div class="row w-100 justify-content-end">
       <div class="col-4">
-         <small
-            id="endp-name-help"
-            class="p-error block"
-            *ngIf="noMethodChecked"
-            >{{ "error.T_ENDP_METHOD_REQ" | translate }}</small
-          >
+        <small
+          id="endp-name-help"
+          class="p-error block"
+          *ngIf="noMethodChecked"
+          >{{ "error.T_ENDP_METHOD_REQ" | translate }}</small
+        >
       </div>
       <div class="col-4">
         <p-button

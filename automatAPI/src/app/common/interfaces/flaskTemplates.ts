@@ -1,4 +1,4 @@
-import { databaseParams } from './interfaces';
+import { databaseParams, sslFilesInterface } from './interfaces';
 
 export interface flaskServices {
   app_name: string;
@@ -9,7 +9,7 @@ export interface flaskServices {
   cors: string;
   connect_DB: string;
   use_ssl: string;
-  ssl_files: sslFilesInterface;
+  certs: sslFilesInterface;
   db: databaseParams;
   table_name: string;
   config_file: string;
@@ -58,9 +58,7 @@ export interface flaskBlueprintAux {
   list: any[];
 }
 
-export interface sslFilesInterface {
-  [key: string]: string;
-}
+
 
 export interface flaskBlueprint {
   name: string;

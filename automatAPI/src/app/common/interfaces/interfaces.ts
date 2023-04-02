@@ -46,3 +46,6 @@ export interface dropdownParams{
   name:string;
   value:string;
 }
+export interface sslFilesInterface {
+  [key: string]: string;
+}

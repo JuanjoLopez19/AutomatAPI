@@ -10,6 +10,9 @@
       border-radius: 20px;
       border: 1px solid $black;
     }
+    .p-dialog-content {
+      overflow: unset;
+    }
     .p-dialog-header {
       border-radius: 20px 20px 0px 0px;
       -moz-border-radius: 20px 20px 0px 0px;
@@ -24,7 +27,7 @@
     }
   }
 
-  .border-bottom{
+  .border-bottom {
     border-bottom: 1px solid $black !important;
   }
 }

@@ -1,6 +1,6 @@
 export const functionNamePythonRegex = new RegExp("^[a-zA-Z_][a-zA-Z0-9_]*$")
 
-export const functionNameJSRegex = new RegExp("/^[a-zA-Z_$][0-9a-zA-Z_$]*$/i")
+export const functionNameJSRegex = new RegExp("^[a-zA-Z_$][0-9a-zA-Z_$]*$")
 
 export const endpointRegex = new RegExp("^[a-zA-Z_/][a-zA-Z0-9_]*$")
 
