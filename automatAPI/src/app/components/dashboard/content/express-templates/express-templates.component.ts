@@ -5,7 +5,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { endpointRegex, hostRegex } from 'src/app/common/constants';
 import {
   techUse,
-  configFileTypes,
   dataBaseTypes,
   viewEngines,
   cssEngines,
@@ -16,7 +15,6 @@ import {
   expressServices,
   expressWebApp,
 } from 'src/app/common/interfaces/expressTemplates';
-import { flaskEndpointTemplate } from 'src/app/common/interfaces/flaskTemplates';
 import { dropdownParams } from 'src/app/common/interfaces/interfaces';
 
 @Component({
@@ -234,13 +232,13 @@ export class ExpressTemplatesComponent {
         key: new FormControl(''),
       }),
       db: new FormGroup({
-        db_name: new FormControl('flaskDatabase'),
-        db_user: new FormControl('flaskUser'),
+        db_name: new FormControl('expressDatabase'),
+        db_user: new FormControl('expressUser'),
         db_pwd: new FormControl('flaskPassword'),
         db_host: new FormControl('localhost'),
-        db_port: new FormControl('0000'),
+        db_port: new FormControl('1234'),
         db_type: new FormControl('sqlite'),
-        table_name: new FormControl('flaskTable'),
+        table_name: new FormControl('expressTable'),
       }),
       config_file: new FormControl('no', {
         validators: [Validators.required],
@@ -283,7 +281,6 @@ export class ExpressTemplatesComponent {
   }
 
   nextStep() {
-
     this.useControllers =
       this.apiConfigFormGroup.get('use_controllers')?.value === 'yes';
     setTimeout(() => {
@@ -400,7 +397,6 @@ export class ExpressTemplatesComponent {
   }
 
   onControllerSelected(event: any) {
-
     this.endpointControllerList = event.data['endpoints'];
     this.controllerName = event.data['name'];
     this.invalidControllerName = false;

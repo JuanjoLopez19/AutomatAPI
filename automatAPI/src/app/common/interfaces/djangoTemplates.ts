@@ -1,16 +1,20 @@
-import { databaseParams } from './interfaces';
+import { databaseParams, sslFilesInterface } from './interfaces';
 
 export interface djangoServices {
   app_name: string;
   port: number;
+  app_description: string;
   host: string;
   language_code: string;
+
   admin_url: string; // yes / no
   admin_url_name: string;
   web_browser: string; // yes / no
   web_browser_url: string;
   db: databaseParams;
   use_ssl: string;
+  certs: sslFilesInterface;
+
   endpoints: djangoEndpointTemplate[];
   sub_apps: djangoSubAppAux;
 }
@@ -18,14 +22,18 @@ export interface djangoServices {
 export interface djangoWebApp {
   app_name: string;
   port: number;
+  app_description: string;
   host: string;
   language_code: string;
+
   admin_url: string; // yes / no
   admin_url_name: string;
   web_browser: string; // yes / no
   web_browser_url: string;
   db: databaseParams;
   use_ssl: string;
+  certs: sslFilesInterface;
+
   endpoints: djangoEndpointTemplate[];
   sub_apps: djangoSubAppAux;
 }
@@ -67,7 +75,7 @@ interface djangoModel {
   model_fields: djangoModelFields[];
 }
 
-interface djangoModelFields {
+export interface djangoModelFields {
   name: string;
   type: string;
   null: string;

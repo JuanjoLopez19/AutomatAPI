@@ -84,6 +84,7 @@
   "T_CHOSE_CERT_FILE": "Choose the certificate file",
   "T_CHOSE_KEY_FILE": "Choose the key file",
   "T_BASIC_HTML": "Basic HTML",
+  "T_METHOD": "HTTP Method",
   "db":{
     "T_DB_TYPE": "Database type",
     "T_DB_NAME": "Database name",
@@ -104,6 +105,7 @@
     "T_DJANGO": "Django",
     "T_CREATE_FLASK": "Create your flask template!!",
     "T_CREATE_EXPRESS": "Create your express template!!",
+    "T_CREATE_DJANGO": "Create your django template!!",
     "T_BASICS": "Basic configuration",
     "T_API_CONFIG": "API configuration",
     "T_ENDPOINTS": "Endpoints",
@@ -178,5 +180,33 @@
     "T_ENDP_URL": "Endpoint URL",
     "T_ENDP_METHOD": "Endpoint method"
   },
-  "django":{}
+  "django":{
+    "T_LANGUAGE": "Language",
+    "T_ADMIN_URL": "Admin URL?",
+    "T_ADMIN_URL_PATH": "Admin path",
+    "T_WEB_BROWSER": "Web access?",
+    "T_WEB_BROWSER_PATH": "Web access path",
+    "T_SUB_APPS_LIST": "Sub-apps list",
+    "T_MODEL_MANAGEMENT": "Model management",
+    "T_SAVE_MODEL": "Save model",
+    "T_ADD_FIELD": "Add field",
+    "T_EDIT_FIELD": "Edit field",
+    "T_DELETE_FIELD": "Delete field",
+    "T_SUB_APPS": "Sub-apps",
+    "T_ADD_SUB_APP": "Add sub-app",
+    "T_EDIT_SUB_APP": "Edit sub-app",
+    "T_DELETE_SUB_APP": "Delete sub-app",
+    "T_SUB_APP_NAME": "Sub-app name",
+    "T_ACCESS_ROUTE": "Sub-app URL",
+    "T_REQ_AUTH": "Require authentication?",
+    "T_MODEL_NAME": "Model name",
+    "T_MODEL_EDITABLE": "Model Editable?"
+  },
+  "model":{
+    "T_FIELD_NAME": "Field name",
+    "T_FIELD_TYPE": "Field type",
+    "T_FIELD_NULL": "Null?",
+    "T_FIELD_DEFAULT": "Default value",
+    "T_FIELD_BLANK": "Blank?"
+  }
 }

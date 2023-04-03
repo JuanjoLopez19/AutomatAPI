@@ -21,7 +21,7 @@
       <mat-accordion>
         <mat-expansion-panel
           hideToggle
-          [expanded]="state === 0"
+          [expanded]="state === 0 || selectedView()"
           (opened)="setState(0)"
           (closed)="setState(-1)"
         >

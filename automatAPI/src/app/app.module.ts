@@ -43,6 +43,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import {TableModule} from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { AvatarModule } from 'primeng/avatar';
 
 // Material components
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -57,6 +58,8 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { ProfileComponent } from './components/dashboard/profile/profile.component';
+import { SubAppModalComponent } from './components/basics/sub-app-modal/sub-app-modal.component';
+import { ModelModalComponent } from './components/basics/model-modal/model-modal.component';
 
 
 
@@ -92,6 +95,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ManageUsersComponent,
     EndpointModalComponent,
     ProfileComponent,
+    SubAppModalComponent,
+    ModelModalComponent,
 
   ],
   imports: [
@@ -132,6 +137,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TableModule,
     CheckboxModule,
     InputTextareaModule,
+    AvatarModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,5 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { MediaMatcher } from '@angular/cdk/layout';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,7 +6,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
-  activeView: string = 'express';
+  activeView: string = 'django';
   onActiveTabChange(event: string) {
     this.activeView = event;
   }

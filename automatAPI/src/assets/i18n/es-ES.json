@@ -84,6 +84,16 @@
   "T_CHOSE_CERT_FILE": "Selecciona el certificado",
   "T_CHOSE_KEY_FILE": "Selecciona la clave privada",
   "T_BASIC_HTML": "HTML básico",
+  "T_METHOD": "Método HTTP",
+  "db": {
+    "T_DB_TYPE": "Tipo de Base de datos",
+    "T_DB_NAME": "Nombre de la base de datos",
+    "T_DB_HOST": "Host de la base de datos",
+    "T_DB_PORT": "Puerto de la base de datos",
+    "T_DB_USERNAME": "Usuario de la base de datos",
+    "T_DB_PWD": "Contraseña del usuario",
+    "T_TABLE_NAME": "Nombre de la tabla"
+  },
   "dashboard": {
     "T_HOME": "Inicio",
     "T_CREATE_TEMP": "Crear plantilla",
@@ -95,6 +105,7 @@
     "T_DJANGO": "Django",
     "T_CREATE_FLASK": "Crea tu plantilla de flask!!",
     "T_CREATE_EXPRESS": "Crea tu plantilla de express!!",
+    "T_CREATE_DJANGO": "Crea tu plantilla de django!!",
     "T_BASICS": "Configuración básica",
     "T_API_CONFIG": "Configuración de la API",
     "T_ENDPOINTS": "Endpoints",
@@ -169,5 +180,33 @@
     "T_ENDP_URL": "Endpoint URL",
     "T_ENDP_METHOD": "Método del endpoint"
   },
-  "django": {}
+  "django": {
+    "T_LANGUAGE": "Idioma",
+    "T_ADMIN_URL": "URL del administrador?",
+    "T_ADMIN_URL_PATH": "Ruta del administrador",
+    "T_WEB_BROWSER": "Acceso web?",
+    "T_WEB_BROWSER_PATH": "Ruta web",
+    "T_SUB_APPS_LIST": "Lista de sub-aplicaciones",
+    "T_MODEL_MANAGEMENT": "Gestión del modelo",
+    "T_SAVE_MODEL": "Guardar modelo",
+    "T_ADD_FIELD": "Añadir campo",
+    "T_EDIT_FIELD": "Editar campo",
+    "T_DELETE_FIELD": "Eliminar campo",
+    "T_SUB_APPS": "Sub-apps",
+    "T_ADD_SUB_APP": "Añadir sub-app",
+    "T_EDIT_SUB_APP": "Editar sub-app",
+    "T_DELETE_SUB_APP": "Eliminar sub-app",
+    "T_SUB_APP_NAME": "Nombre de la sub-app",
+    "T_ACCESS_ROUTE": "Sub-app URL",
+    "T_REQ_AUTH": "Requiere authentication?",
+    "T_MODEL_NAME": "Nombre del modelo",
+    "T_MODEL_EDITABLE": "Modelo Editable?"
+  },
+  "model":{
+    "T_FIELD_NAME": "Nombre",
+    "T_FIELD_TYPE": "Tipo",
+    "T_FIELD_NULL": "Null?",
+    "T_FIELD_DEFAULT": "Valor por defecto",
+    "T_FIELD_BLANK": "En blanco?"
+  }
 }

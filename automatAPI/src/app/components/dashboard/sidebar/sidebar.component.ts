@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,7 +6,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent {
-  activeTab: string = 'home';
+  @Input() activeTab: string = 'home';
   state: number = -1;
 
   @Output() activeTabChange: EventEmitter<string> = new EventEmitter<string>();
@@ -26,8 +26,9 @@ export class SidebarComponent {
     this.activeTabChange.emit(this.activeTab);
   }
 
-  toggleActiveHeader() {
-    this.activeTab = '';
+  toggleActiveHeader(flag:boolean = false) {
+    if(!flag)
+      this.activeTab = '';
     const target = document.getElementsByName('header');
     const targets = document.getElementsByName('text');
     target[0].classList.toggle('selected');
@@ -38,5 +39,13 @@ export class SidebarComponent {
 
   setState(stateNumb: number) {
     this.state = stateNumb;
+  }
+
+  selectedView(): boolean{
+    if(this.activeTab === 'flask' || this.activeTab === 'express' || this.activeTab === 'django'){
+      this.toggleActiveHeader(true);
+      return true
+    }
+    return false
   }
 }
