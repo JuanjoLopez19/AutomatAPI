@@ -12,6 +12,7 @@ import {
 import {
   djangoModelFields,
   djangoSubAppServicesTemplate,
+  djangoSubAppWebAppTemplate,
 } from 'src/app/common/interfaces/djangoTemplates';
 import { dropdownParams } from 'src/app/common/interfaces/interfaces';
 
@@ -66,6 +67,7 @@ export class DjangoTemplatesComponent implements OnInit {
   modelFieldsList: djangoModelFields[] = [];
 
   subAppSelection: djangoSubAppServicesTemplate = null;
+  subAppSelectionWebApp: djangoSubAppWebAppTemplate = null;
   subAppsList: djangoSubAppServicesTemplate[] = [
     {
       subapp_name: 'subapp1',
@@ -83,7 +85,7 @@ export class DjangoTemplatesComponent implements OnInit {
           },
         ],
       },
-      endpoint_name: 'endpoint1',
+      endpoint_name: 'model1',
       methods: {
         get_m: 'yes',
         post: 'yes',
@@ -287,6 +289,12 @@ export class DjangoTemplatesComponent implements OnInit {
     this.showModelModal = true;
   }
 
+  openSubAppModal(editMode: boolean) {
+    this.closeSidenav.emit();
+    this.editModeSubApp = editMode;
+    this.showSubAppModal = true;
+  }
+
   deleteModelField() {
     this.modelFieldsList = this.modelFieldsList.filter(
       (field) => field !== this.fieldSelection
@@ -305,4 +313,36 @@ export class DjangoTemplatesComponent implements OnInit {
     });
     this.fieldSelection = null;
   }
+
+  saveModel() {
+    this.subAppSelection.model['model_fields'] = this.modelFieldsList;
+
+    this.subAppSelection = null;
+    this.modelFieldsList = [];
+  }
+
+  deleteSubApp() {
+    this.subAppsList = this.subAppsList.filter(
+      (subApp) => subApp !== this.subAppSelection
+    );
+    this.subAppSelection = null;
+    this.modelFieldsList = [];
+  }
+
+  onSubAppSelect(event: any) {
+    this.modelFieldsList = event.data['model']['model_fields'];
+  }
+
+  getSubAppNameList(): string[] {
+    return this.subAppsList.map((subApp) => subApp.subapp_name);
+  }
+
+  getModelsNameList(): string[] {
+    return this.subAppsList.map((subApp) => subApp.model.model_name);
+  }
+
+  onAddSubApp(event: djangoSubAppServicesTemplate) {}
+  onEditSubApp(event: djangoSubAppServicesTemplate) {}
+  onAddSubAppWebApp(event: djangoSubAppWebAppTemplate) {}
+  onEditSubAppWebApp(event: djangoSubAppWebAppTemplate) {}
 }

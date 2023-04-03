@@ -581,8 +581,7 @@
                           <p-button
                             styleClass="p-button-sm"
                             [label]="'django.T_ADD_SUB_APP' | translate"
-                            [disabled]="true"
-                            (click)="(null)"
+                            (click)="openSubAppModal(false)"
                           ></p-button>
                         </div>
                         <div class="col-4 d-flex justify-content-end">
@@ -590,7 +589,7 @@
                             styleClass="p-button-sm p-button-warning"
                             [label]="'django.T_EDIT_SUB_APP' | translate"
                             [disabled]="subAppSelection === null"
-                            (click)="(null)"
+                            (click)="openSubAppModal(true)"
                           ></p-button>
                         </div>
                         <div class="col-4 d-flex justify-content-end">
@@ -598,7 +597,7 @@
                             styleClass="p-button-sm p-button-danger"
                             [label]="'django.T_DELETE_SUB_APP' | translate"
                             [disabled]="subAppSelection === null"
-                            (click)="(null)"
+                            (click)="deleteSubApp()"
                           ></p-button>
                         </div>
                       </div>
@@ -612,6 +611,8 @@
                       [(selection)]="subAppSelection"
                       [scrollable]="true"
                       scrollHeight="400px"
+                      (onRowSelect)="onSubAppSelect($event)"
+                      (onRowUnselect)="modelFieldsList = []"
                     >
                       <ng-template pTemplate="header">
                         <tr>
@@ -677,8 +678,8 @@
                         <div class="col d-flex justify-content-end">
                           <p-button
                             [label]="'django.T_SAVE_MODEL' | translate"
-                            [disabled]="true"
-                            (click)="(null)"
+                            [disabled]="subAppSelection === null"
+                            (click)="saveModel()"
                           ></p-button>
                         </div>
                       </div>
@@ -754,6 +755,21 @@
                   (AddField)="onAddField($event)"
                   (EditField)="onEditField($event)"
                 ></app-model-modal>
+                <app-sub-app-modal
+                  [show]="showSubAppModal"
+                  [editMode]="editModeSubApp"
+                  [subAppData]="subAppSelection"
+                  [subAppDataApp]="subAppSelectionWebApp"
+                  [subAppNameList]="getSubAppNameList()"
+                  [modelsNameList]="getModelsNameList()"
+                  [subAppType]="basicFormGroup.get('tech_type').value"
+                  (Hide)="onHide(false)"
+                  (AddSubApp)="onAddSubApp($event)"
+                  (EditSubApp)="onEditSubApp($event)"
+                  (AddSubAppWebApp)="onAddSubAppWebApp($event)"
+                  (EditSubAppWebApp)="onEditSubAppWebApp($event)"
+
+                ></app-sub-app-modal>
               </div>
             </div>
           </div>

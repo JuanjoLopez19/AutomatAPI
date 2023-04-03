@@ -114,8 +114,7 @@ export class ModelModalComponent implements OnInit {
       };
       if (this.editMode) {
         this.EditField.emit(field);
-      }
-      this.AddField.emit(field);
+      } else this.AddField.emit(field);
 
       this.manageHide();
     }

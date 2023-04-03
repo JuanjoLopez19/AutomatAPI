@@ -1,4 +1,4 @@
-import { databaseParams, sslFilesInterface } from './interfaces';
+    import { databaseParams, sslFilesInterface } from './interfaces';
 
 export interface djangoServices {
   app_name: string;
