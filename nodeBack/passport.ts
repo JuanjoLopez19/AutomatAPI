@@ -1,12 +1,15 @@
 import { Request } from "express";
 import passport from "passport";
 import passportJWT from "passport-jwt";
-const JWTStrategy = passportJWT.Strategy;
 import config from "./config/config";
 import google from "./middleware/social/google.middelware";
 import github from "./middleware/social/github.middelware";
+import twitter from "./middleware/social/twitter.middleware";
+import User, { UserAttributes } from "./database/models/user";
 
-const cookieExtractor = (req: Request) => {
+const JWTStrategy = passportJWT.Strategy;
+
+const cookieExtractorSession = (req: Request) => {
 	let jwt = null;
 
 	if (req && req.cookies) {
@@ -16,34 +19,67 @@ const cookieExtractor = (req: Request) => {
 	return jwt;
 };
 
-passport.use(
-	"jwt",
-	new JWTStrategy(
-		{
-			jwtFromRequest: cookieExtractor,
-			secretOrKey: config.secretKey,
-		},
-		(jwtPayload, done) => {
-			const { expiration } = jwtPayload;
+const cookieExtractorSocialAuth = (req: Request) => {
+	let jwt = null;
 
-			if (Date.now() > expiration) {
-				done("Unauthorized", false);
-			}
+	if (req && req.cookies) {
+		jwt = req.cookies["socialAuth"];
+	}
 
-			done(null, jwtPayload);
+	return jwt;
+};
+
+const jwtSession = new JWTStrategy(
+	{
+		jwtFromRequest: cookieExtractorSession,
+		secretOrKey: config.secretKey,
+	},
+	(jwtPayload, done) => {
+		const { expiration } = jwtPayload;
+
+		if (Date.now() > expiration) {
+			done("Unauthorized", false);
 		}
-	)
+
+		done(null, jwtPayload);
+	}
 );
+
+const jwtSocialAuth = new JWTStrategy(
+	{
+		jwtFromRequest: cookieExtractorSocialAuth,
+		secretOrKey: config.secretKey,
+	},
+	(jwtPayload, done) => {
+		const { expiration } = jwtPayload;
+
+		if (Date.now() > expiration) {
+			done("Unauthorized", false);
+		}
+
+		done(null, jwtPayload);
+	}
+);
+
+passport.use("jwt", jwtSession);
+passport.use("jwtSocialAuth", jwtSocialAuth);
 
 passport.use("google", google);
 passport.use("github", github);
+passport.use("twitter", twitter);
 
 passport.serializeUser((user: any, done) => {
-	done(null, user);
+	done(null, user.profile);
 });
 
-passport.deserializeUser((user: any, done) => {
-	done(null, user);
+passport.deserializeUser((user: number, done) => {
+	User.findByPk(user)
+		.then((user: UserAttributes | null) => {
+			done(null, user);
+		})
+		.catch((err: Error) => {
+			done(err, null);
+		});
 });
 
 export default passport;

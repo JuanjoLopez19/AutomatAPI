@@ -54,24 +54,18 @@ const github = new githubStrategy(
 						newUser.firstName = profile.displayName || "";
 						newUser.lastName = profile?.name?.familyName || "";
 						newUser.password = "";
-						newUser.activeUser = true;
-						newUser.access_token = "";
+						newUser.activeUser = false;
+						newUser.access_token = generateToken(100);
 						newUser.password_token = generateToken(100);
+						newUser.image = profile.photos![0].value;
+						
 						newUser
 							.save()
 							.then((savedUser: User) => {
 								if (savedUser) {
-									const token = jwt.sign(
-										{ id: savedUser.id },
-										config.secretKey,
-										{
-											expiresIn: "60s",
-										}
-									);
 									return done(null, {
-										profile: profile,
-										token: token,
-										refreshToken: refreshToken,
+										profile: savedUser.id,
+										accessToken: savedUser.access_token,
 									});
 								}
 							})
@@ -80,16 +74,16 @@ const github = new githubStrategy(
 								return done(err, null);
 							});
 					} else {
-						let token = undefined;
-						if (registeredUser?.activeUser) {
-							token = jwt.sign({ id: registeredUser.id }, config.secretKey, {
-								expiresIn: "60s",
+						if (registeredUser?.activeUser === false) {
+							return done(null, {
+								profile: registeredUser.id,
+								accessToken: registeredUser.access_token,
 							});
 						}
+
 						return done(null, {
-							profile: profile,
-							token: token,
-							refreshToken: refreshToken,
+							profile: registeredUser?.id,
+							accessToken: null,
 						});
 					}
 				})

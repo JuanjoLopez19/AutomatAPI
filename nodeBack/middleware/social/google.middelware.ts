@@ -1,5 +1,4 @@
 import passportGoogle from "passport-google-oauth20";
-const googleStrategy = passportGoogle.Strategy;
 import config from "../../config/config";
 import bcrypt from "bcrypt";
 import User, { role } from "../../database/models/user";
@@ -7,19 +6,23 @@ import { Op, WhereOptions } from "sequelize";
 import jwt from "jsonwebtoken";
 import { generateToken } from "../auxiliaryFunctions";
 
+const googleStrategy = passportGoogle.Strategy;
 const google = new googleStrategy(
 	{
 		clientID: config.google.clientID,
 		clientSecret: config.google.clientSecret,
 		callbackURL: `http://localhost:${config.port}${config.google.callbackURL}`,
+		passReqToCallback: true,
 	},
 	async (
+		req: any,
 		accessToken: string,
 		refreshToken: string,
 		profile: passportGoogle.Profile,
 		done: any
 	) => {
 		try {
+			console.log(profile);
 			const googleId = profile.id;
 			const googleIdHashed = await bcrypt.hash(googleId, config.saltRounds);
 			User.findAll({
@@ -54,24 +57,18 @@ const google = new googleStrategy(
 						newUser.firstName = profile?.name?.givenName || "";
 						newUser.lastName = profile?.name?.familyName || "";
 						newUser.password = "";
-						newUser.activeUser = true;
-						newUser.access_token = "";
+						newUser.activeUser = false;
+						newUser.access_token = generateToken(100);
 						newUser.password_token = generateToken(100);
+						newUser.image = profile.photos![0].value;
 
 						newUser
 							.save()
 							.then((savedUser: User) => {
 								if (savedUser) {
-									const token = jwt.sign(
-										{ id: savedUser.id },
-										config.secretKey,
-										{ expiresIn: "60s" }
-									);
-
 									return done(null, {
-										profile: profile,
-										token: token,
-										refreshToken: refreshToken,
+										profile: savedUser.id,
+										accessToken: savedUser.access_token,
 									});
 								}
 							})
@@ -80,16 +77,16 @@ const google = new googleStrategy(
 								return done(error, false);
 							});
 					} else {
-						let token = undefined;
-						if (registeredUser?.activeUser) {
-							token = jwt.sign({ id: registeredUser.id }, config.secretKey, {
-								expiresIn: "60s",
+						if (registeredUser?.activeUser === false) {
+							return done(null, {
+								profile: registeredUser.id,
+								accessToken: registeredUser.access_token,
 							});
 						}
+
 						return done(null, {
-							profile: profile,
-							token: token,
-							refreshToken: refreshToken,
+							profile: registeredUser?.id,
+							accessToken: null,
 						});
 					}
 				})

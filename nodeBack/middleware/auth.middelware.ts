@@ -38,6 +38,7 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 								.send();
 							return;
 						}
+						
 						next();
 					})
 					.catch((err: any) => {

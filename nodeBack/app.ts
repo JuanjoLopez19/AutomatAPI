@@ -23,7 +23,7 @@ app.use(
 );
 app.use(
 	Session({
-		secret: "tengoHambreYMeVoyAlGoiko",
+		secret: config.sessionSecret,
 		resave: true,
 		saveUninitialized: true,
 		cookie: { secure: true },
@@ -39,40 +39,11 @@ app.use(passport.session()); // Need to use session for social auth
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerdocs));
 app.use("/api", routes);
 
-app.get("/", (req: Request, res: Response) => {
-	res.send("Express + TypeScript Server");
-});
-
-// Google social auth
-app.get(
-	"/api/auth/google",
-	passport.authenticate("google", { scope: ["email", "profile"] })
-);
-app.get(
-	"/api/auth/google/callback",
-	passport.authenticate("google", {
-		failureRedirect: "http://localhost:3486/api/auth/failure",
-		successRedirect: "http://localhost:3486/api/auth/succes/google",
-	})
-);
-
-// Github social auth
-app.get(
-	"/api/auth/github",
-	passport.authenticate("github", { scope: ["user"] })
-);
-app.get(
-	"/api/auth/github/callback",
-	passport.authenticate("github", {
-		failureRedirect: "http://localhost:3486/api/auth/failure",
-		successRedirect: "http://localhost:3486/api/auth/succes/github",
-	})
-);
-
 app.use((req: Request, res: Response, next: NextFunction) => {
 	res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
 	next();
 });
+
 app.use(function (
 	err: { message: any; status: any },
 	req: Request,
@@ -85,4 +56,49 @@ app.use(function (
 
 	res.status(err.status || 404).send({ message: "Unknown route" });
 });
+
+app.get("/", (req: Request, res: Response) => {
+	res.send("Express + TypeScript Server");
+});
+
+// Google social auth
+app.get(
+	"/api/auth/google",
+	passport.authenticate("google", { scope: ["email", "profile"] })
+);
+app.get(
+	"/api/auth/google/callback",
+	passport.authenticate("google", {
+		failureRedirect: `http://localhost:${config.port}/api/auth/failure`,
+		successRedirect: `http://localhost:${config.port}/api/auth/succes/google`,
+	})
+);
+
+// Github social auth
+app.get(
+	"/api/auth/github",
+	passport.authenticate("github", { scope: ["user"] })
+);
+app.get(
+	"/api/auth/github/callback",
+	passport.authenticate("github", {
+		failureRedirect: `http://localhost:${config.port}/api/auth/failure`,
+		successRedirect: `http://localhost:${config.port}/api/auth/succes/github`,
+	})
+);
+
+// Twitter social auth
+app.get(
+	"/api/auth/twitter",
+	passport.authenticate("twitter")
+);
+
+app.get(
+	"/api/auth/twitter/callback",
+	passport.authenticate("twitter", {
+		failureRedirect: `http://localhost:${config.port}/api/auth/failure`,
+		successRedirect: `http://localhost:${config.port}/api/auth/succes/twitter`,
+	})
+);
+
 export default app;

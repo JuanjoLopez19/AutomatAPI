@@ -26,6 +26,7 @@ const config = {
 	host: process.env.HOST || "http://localhost:3000",
 	activateRoute: process.env.ACTIVATION_ROUTE || "/activate",
 	resetRoute: process.env.RESET_ROUTE || "/reset",
+	completeRoute: process.env.COMPLETE_ROUTE || "/complete",
 
 	google: {
 		clientID: process.env.GOOGLE_CLIENT_ID || "clientID",

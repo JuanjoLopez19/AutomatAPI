@@ -19,6 +19,7 @@ export interface UserAttributes {
 	password_token: string;
 	google_id?: string;
 	github_id?: string;
+	image?: string;
 }
 
 export interface UserInput extends Optional<UserAttributes, "id"> {}
@@ -38,6 +39,7 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
 	public password_token!: string;
 	public google_id!: string;
 	public github_id!: string;
+	public image!: string;
 }
 
 User.init(
@@ -94,11 +96,16 @@ User.init(
 			allowNull: true,
 			defaultValue: null,
 		},
-		github_id:{
+		github_id: {
 			type: DataTypes.STRING(200),
 			allowNull: true,
 			defaultValue: null,
-		}
+		},
+		image: {
+			type: DataTypes.STRING(200),
+			allowNull: true,
+			defaultValue: null,
+		},
 	},
 	{
 		sequelize: db,
