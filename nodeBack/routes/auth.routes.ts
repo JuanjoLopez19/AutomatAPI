@@ -140,12 +140,7 @@ routerAuth.get("/failure", (req: Request, res: Response) => {
 	res.redirect("http://localhost:4200/#/forbidden");
 });
 
-routerAuth.get(
-	"/succes/twitter",
-		(req: Request, res: Response) => {
-		console.log("Done");
-	}
-);
+
 
 routerAuth.post(
 	"/complete_registration",

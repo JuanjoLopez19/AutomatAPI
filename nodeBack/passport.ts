@@ -4,7 +4,6 @@ import passportJWT from "passport-jwt";
 import config from "./config/config";
 import google from "./middleware/social/google.middelware";
 import github from "./middleware/social/github.middelware";
-import twitter from "./middleware/social/twitter.middleware";
 import User, { UserAttributes } from "./database/models/user";
 
 const JWTStrategy = passportJWT.Strategy;
@@ -66,7 +65,6 @@ passport.use("jwtSocialAuth", jwtSocialAuth);
 
 passport.use("google", google);
 passport.use("github", github);
-passport.use("twitter", twitter);
 
 passport.serializeUser((user: any, done) => {
 	done(null, user.profile);

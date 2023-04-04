@@ -1,4 +1,5 @@
 import passportGoogle from "passport-google-oauth20";
+const googleStrategy = passportGoogle.Strategy;
 import config from "../../config/config";
 import bcrypt from "bcrypt";
 import User, { role } from "../../database/models/user";
@@ -6,7 +7,6 @@ import { Op, WhereOptions } from "sequelize";
 import jwt from "jsonwebtoken";
 import { generateToken } from "../auxiliaryFunctions";
 
-const googleStrategy = passportGoogle.Strategy;
 const google = new googleStrategy(
 	{
 		clientID: config.google.clientID,
@@ -22,7 +22,6 @@ const google = new googleStrategy(
 		done: any
 	) => {
 		try {
-			console.log(profile);
 			const googleId = profile.id;
 			const googleIdHashed = await bcrypt.hash(googleId, config.saltRounds);
 			User.findAll({
@@ -61,7 +60,7 @@ const google = new googleStrategy(
 						newUser.access_token = generateToken(100);
 						newUser.password_token = generateToken(100);
 						newUser.image = profile.photos![0].value;
-
+						// Add field for the image
 						newUser
 							.save()
 							.then((savedUser: User) => {
