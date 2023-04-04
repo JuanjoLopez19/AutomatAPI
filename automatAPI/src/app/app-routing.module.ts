@@ -6,6 +6,7 @@ import { RememberPasswordComponent } from './views/user-management/remember-pass
 import { ChangePasswordComponent } from './views/user-management/change-password/change-password.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { GuardService } from './api/auth/auth/guard/guard.service';
+import { CompleteRegisterComponent } from './views/user-management/complete-register/complete-register.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'change_password',
     component: ChangePasswordComponent,
+  },
+  {
+    path: 'complete_registration',
+    component: CompleteRegisterComponent,
   },
   {
     path: 'home',

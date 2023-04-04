@@ -60,6 +60,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { ProfileComponent } from './components/dashboard/profile/profile.component';
 import { SubAppModalComponent } from './components/basics/sub-app-modal/sub-app-modal.component';
 import { ModelModalComponent } from './components/basics/model-modal/model-modal.component';
+import { CompleteRegisterComponent } from './views/user-management/complete-register/complete-register.component';
 
 
 
@@ -97,6 +98,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProfileComponent,
     SubAppModalComponent,
     ModelModalComponent,
+    CompleteRegisterComponent,
 
   ],
   imports: [
