@@ -4,6 +4,7 @@ dotenv.config();
 const config = {
 	port: process.env.PORT || "3000",
 	secretKey: process.env.SECRET_KEY || "secretKey",
+	sessionSecret: process.env.SECRET_SESSION || "secretSession",
 	saltRounds: Number(process.env.SALT_ROUNDS) || 10,
 	expiration: Number(process.env.EXPIRATION_TIME) || 180,
 	db: {
@@ -15,15 +16,39 @@ const config = {
 		dialect: process.env.DB_DIALECT || "postgres",
 	},
 	backend_url: process.env.BACKEND_URL || "http://localhost:5000",
-	smtp:{
+	smtp: {
 		host: process.env.SMTP_HOST || "smtp.gmail.com",
 		port: Number(process.env.SMTP_PORT) || 587,
 		email: process.env.SMTP_EMAIL || "email",
 		password: process.env.SMTP_PWD || "password",
 	},
+	front: process.env.FRONTEND_HOST || "http://localhost:4200",
 	host: process.env.HOST || "http://localhost:3000",
 	activateRoute: process.env.ACTIVATION_ROUTE || "/activate",
 	resetRoute: process.env.RESET_ROUTE || "/reset",
+	completeRoute: process.env.COMPLETE_ROUTE || "/complete",
+
+	google: {
+		clientID: process.env.GOOGLE_CLIENT_ID || "clientID",
+		clientSecret: process.env.GOOGLE_SECRET || "secret",
+		callbackURL:
+			process.env.GOOGLE_CALLBACK ||
+			"http://localhost:3000/auth/google/callback",
+	},
+	github: {
+		clientID: process.env.GITHUB_CLIENT_ID || "clientID",
+		clientSecret: process.env.GITHUB_SECRET || "secret",
+		callbackURL:
+			process.env.GITHUB_CALLBACK ||
+			"http://localhost:3000/auth/github/callback",
+	},
+	twitter: {
+		clientID: process.env.TWITTER_CLIENT_ID || "clientID",
+		clientSecret: process.env.TWITTER_SECRET || "secret",
+		callbackURL:
+			process.env.TWITTER_CALLBACK ||
+			"http://localhost:3000/auth/twitter/callback",
+	},
 };
 
 export default config;

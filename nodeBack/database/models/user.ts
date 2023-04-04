@@ -17,6 +17,9 @@ export interface UserAttributes {
 	activeUser: boolean;
 	access_token: string;
 	password_token: string;
+	google_id?: string;
+	github_id?: string;
+	image?: string;
 }
 
 export interface UserInput extends Optional<UserAttributes, "id"> {}
@@ -34,6 +37,9 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
 	public activeUser!: boolean;
 	public access_token!: string;
 	public password_token!: string;
+	public google_id!: string;
+	public github_id!: string;
+	public image!: string;
 }
 
 User.init(
@@ -75,7 +81,7 @@ User.init(
 		activeUser: {
 			type: DataTypes.BOOLEAN,
 			allowNull: false,
-			defaultValue: false
+			defaultValue: false,
 		},
 		access_token: {
 			type: DataTypes.STRING(200),
@@ -84,6 +90,21 @@ User.init(
 		password_token: {
 			type: DataTypes.STRING(200),
 			allowNull: false,
+		},
+		google_id: {
+			type: DataTypes.STRING(200),
+			allowNull: true,
+			defaultValue: null,
+		},
+		github_id: {
+			type: DataTypes.STRING(200),
+			allowNull: true,
+			defaultValue: null,
+		},
+		image: {
+			type: DataTypes.STRING(200),
+			allowNull: true,
+			defaultValue: null,
 		},
 	},
 	{
