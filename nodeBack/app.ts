@@ -7,6 +7,8 @@ import cookieParser from "cookie-parser";
 import swaggerUi from "swagger-ui-express";
 import morgan from "morgan";
 import * as swaggerdocs from "./reference/express-API.json";
+import Session from "express-session";
+import config from "./config/config";
 import "./passport";
 
 const app: Express = express();
@@ -19,22 +21,58 @@ app.use(
 		':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
 	)
 );
-
+app.use(
+	Session({
+		secret: "tengoHambreYMeVoyAlGoiko",
+		resave: true,
+		saveUninitialized: true,
+		cookie: { secure: true },
+	})
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(passport.initialize());
+app.use(passport.session()); // Need to use session for social auth
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerdocs));
 app.use("/api", routes);
 
 app.get("/", (req: Request, res: Response) => {
 	res.send("Express + TypeScript Server");
-	console.log(res.getHeaders());
 });
 
-// error handler
+// Google social auth
+app.get(
+	"/api/auth/google",
+	passport.authenticate("google", { scope: ["email", "profile"] })
+);
+app.get(
+	"/api/auth/google/callback",
+	passport.authenticate("google", {
+		failureRedirect: "http://localhost:3486/api/auth/failure",
+		successRedirect: "http://localhost:3486/api/auth/succes/google",
+	})
+);
+
+// Github social auth
+app.get(
+	"/api/auth/github",
+	passport.authenticate("github", { scope: ["user"] })
+);
+app.get(
+	"/api/auth/github/callback",
+	passport.authenticate("github", {
+		failureRedirect: "http://localhost:3486/api/auth/failure",
+		successRedirect: "http://localhost:3486/api/auth/succes/github",
+	})
+);
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+	res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
+	next();
+});
 app.use(function (
 	err: { message: any; status: any },
 	req: Request,
@@ -45,13 +83,6 @@ app.use(function (
 	res.locals.message = err.message;
 	res.locals.error = req.app.get("env") === "development" ? err : {};
 
-	// render the error page
 	res.status(err.status || 404).send({ message: "Unknown route" });
 });
-
-app.use((req: Request, res: Response, next: NextFunction) => {
-	res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
-	next();
-});
-
 export default app;

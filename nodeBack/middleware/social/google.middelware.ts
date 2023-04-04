@@ -12,16 +12,13 @@ const google = new googleStrategy(
 		clientID: config.google.clientID,
 		clientSecret: config.google.clientSecret,
 		callbackURL: `http://localhost:${config.port}${config.google.callbackURL}`,
-		passReqToCallback: true,
 	},
 	async (
-		request: any,
 		accessToken: string,
 		refreshToken: string,
 		profile: passportGoogle.Profile,
 		done: any
 	) => {
-		request.socialAuthSuccess = false;
 		try {
 			const googleId = profile.id;
 			const googleIdHashed = await bcrypt.hash(googleId, config.saltRounds);
@@ -70,8 +67,12 @@ const google = new googleStrategy(
 										config.secretKey,
 										{ expiresIn: "60s" }
 									);
-									request.socialAuthSuccess = true;
-									return done(request, savedUser, { authToken: token });
+
+									return done(null, {
+										profile: profile,
+										token: token,
+										refreshToken: refreshToken,
+									});
 								}
 							})
 							.catch((error: any) => {
@@ -84,9 +85,12 @@ const google = new googleStrategy(
 							token = jwt.sign({ id: registeredUser.id }, config.secretKey, {
 								expiresIn: "60s",
 							});
-							request.socialAuthSuccess = true;
 						}
-						return done(request, registeredUser, { authToken: token });
+						return done(null, {
+							profile: profile,
+							token: token,
+							refreshToken: refreshToken,
+						});
 					}
 				})
 				.catch((error: any) => {

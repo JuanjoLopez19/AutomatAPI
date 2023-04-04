@@ -4,6 +4,7 @@ dotenv.config();
 const config = {
 	port: process.env.PORT || "3000",
 	secretKey: process.env.SECRET_KEY || "secretKey",
+	sessionSecret: process.env.SECRET_SESSION || "secretSession",
 	saltRounds: Number(process.env.SALT_ROUNDS) || 10,
 	expiration: Number(process.env.EXPIRATION_TIME) || 180,
 	db: {
