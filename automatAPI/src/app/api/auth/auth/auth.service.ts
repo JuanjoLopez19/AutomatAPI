@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   changePasswordParams,
+  completeRegisterParams,
   rememberPasswordParams,
 } from 'src/app/common/interfaces/interfaces';
 import { environment } from 'src/environments/env';
@@ -52,6 +53,23 @@ export class AuthService {
   }
 
   checkToken(): Observable<any> {
-    return null;
+    return this.http.get(
+      `${environment.apiHost}${environment.apiPort}/api/auth/check_token`
+    );
+  }
+
+  completeRegister(params: completeRegisterParams): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post(
+      `${environment.apiHost}${environment.apiPort}/api/auth/complete_register`,
+      params,
+      {
+        headers,
+      }
+    );
+  }
+
+  public setUserInfo(userInfo: any) {
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
   }
 }

@@ -1,0 +1,265 @@
+<p-dialog
+  header="{{ 'T_MESSAGE' | translate }}"
+  [modal]="true"
+  [(visible)]="show"
+  [position]="'top'"
+  [style]="{ width: '650px', height: '430px' }"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="false"
+  class="dialog"
+  (onShow)="onShow()"
+>
+  <ng-template pTemplate="header">
+    <div class="container">
+      <div class="row w-100 border-bottom">
+        <h1>{{ "T_ADD_SUB_APP" | translate }}</h1>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div class="row h-100">
+      <div class="col-12">
+        <form [formGroup]="addSubAppFormGroup">
+          <div class="row">
+            <div class="col-6">
+              <div class="row justify-content-end">
+                <div class="row pt-4">
+                  <span class="p-float-label">
+                    <input
+                      pInputText
+                      id="endpoint_name"
+                      formControlName="subapp_name"
+                      [readOnly]="editMode"
+                    />
+                    <label htmlFor="endpoint_name">{{
+                      "django.T_SUB_APP_NAME" | translate
+                    }}</label>
+                  </span>
+                </div>
+                <div class="pb-2 row">
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="addSubAppFormGroup.get('subapp_name').errors?.[ 'required' ] && addSubAppFormGroup.get('subapp_name').touched"
+                    >{{ "error.T_ENDP_NAME_REQ" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="validName"
+                    >{{ "error.T_ENDP_NAME_INVALID" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="duplicatedName"
+                    >{{ "error.T_ENDP_NAME_DUPL" | translate }}</small
+                  >
+                </div>
+                <div class="row pt-3">
+                  <span class="p-float-label">
+                    <input
+                      pInputText
+                      id="endpoint_url"
+                      formControlName="middleware_name"
+                    />
+                    <label htmlFor="endpoint_url">{{
+                      "django.T_ACCESS_ROUTE" | translate
+                    }}</label>
+                  </span>
+                </div>
+                <div class="pb-3 row">
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="addSubAppFormGroup.get('middleware_name').errors?.[ 'required' ] && addSubAppFormGroup.get('middleware_name').touched"
+                    >{{ "error.T_ENDP_URL_REQ" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="validUrl"
+                    >{{ "error.T_ENDP_URL_INVALID" | translate }}</small
+                  >
+                </div>
+                <div class="row pt-3">
+                  <span class="p-float-label">
+                    <input
+                      pInputText
+                      id="endpoint_url"
+                      formControlName="endpoint_name"
+                    />
+                    <label htmlFor="endpoint_url">{{
+                      "django.T_MODEL_NAME" | translate
+                    }}</label>
+                  </span>
+                </div>
+                <div class="pb-3 row">
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="addSubAppFormGroup.get('endpoint_name').errors?.[ 'required' ] && addSubAppFormGroup.get('endpoint_name').touched"
+                    >{{ "error.T_ENDP_URL_REQ" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="validUrl"
+                    >{{ "error.T_ENDP_URL_INVALID" | translate }}</small
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="row pt-4">
+                <div class="col-4">
+                  <div class="row">
+                    {{ "django.T_REQ_AUTH" | translate }}
+                  </div>
+                </div>
+                <div class="col-8">
+                  <div class="row">
+                    <div class="col-6 d-flex justify-content-center">
+                      <p-radioButton
+                        inputId="admin_yes"
+                        value="yes"
+                        formControlName="logged_in"
+                      ></p-radioButton>
+                      <label for="admin_yes" class="ml-2">{{
+                        "T_YES" | translate
+                      }}</label>
+                    </div>
+                    <div class="col-6">
+                      <p-radioButton
+                        inputId="admin_no"
+                        value="no"
+                        formControlName="logged_in"
+                      ></p-radioButton>
+                      <label for="admin_no" class="ml-2">{{
+                        "T_NO" | translate
+                      }}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-4" *ngIf="true || subAppType === 'app_web'">
+                <div class="col-4">
+                  <div class="row">
+                    {{ "django.T_MODEL_EDITABLE" | translate }}
+                  </div>
+                </div>
+                <div class="col-8">
+                  <div class="row">
+                    <div class="col-6 d-flex justify-content-center">
+                      <p-radioButton
+                        inputId="admin_yes"
+                        value="yes"
+                        formControlName="model_editable"
+                      ></p-radioButton>
+                      <label for="admin_yes" class="ml-2">{{
+                        "T_YES" | translate
+                      }}</label>
+                    </div>
+                    <div class="col-6">
+                      <p-radioButton
+                        inputId="admin_no"
+                        value="no"
+                        formControlName="model_editable"
+                      ></p-radioButton>
+                      <label for="admin_no" class="ml-2">{{
+                        "T_NO" | translate
+                      }}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-4">
+                <div class="px-0" formGroupName="methods">
+                  <div class="row">
+                    <div class="mb-3">
+                      <p-checkbox
+                        name="group"
+                        [binary]="true"
+                        formControlName="get_m"
+                        inputId="get_m"
+                        ngDefaultControl
+                      ></p-checkbox>
+                      <label for="get_m">
+                        {{ "T_GET_METHOD" | translate }}</label
+                      >
+
+                      <p-checkbox
+                        name="group"
+                        [binary]="true"
+                        formControlName="post"
+                        inputId="post"
+                        ngDefaultControl
+                      ></p-checkbox>
+                      <label for="post">
+                        {{ "T_POST_METHOD" | translate }}</label
+                      >
+                    </div>
+                    <div class="row">
+                      <div class="mb-1">
+                        <p-checkbox
+                          name="group"
+                          [binary]="true"
+                          formControlName="put"
+                          inputId="put"
+                          ngDefaultControl
+                        ></p-checkbox>
+                        <label for="put">
+                          {{ "T_PUT_METHOD" | translate }}</label
+                        >
+
+                        <p-checkbox
+                          name="group"
+                          [binary]="true"
+                          formControlName="del"
+                          inputId="del"
+                          ngDefaultControl
+                        ></p-checkbox>
+                        <label for="del">
+                          {{ "T_DEL_METHOD" | translate }}</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="row w-100 justify-content-end">
+      <div class="col-4">
+        <small
+          id="endp-name-help"
+          class="p-error block"
+          *ngIf="noMethodChecked"
+          >{{ "error.T_ENDP_METHOD_REQ" | translate }}</small
+        >
+      </div>
+      <div class="col-4">
+        <p-button
+          [label]="'T_DISCARD' | translate"
+          icon="pi pi-times"
+          iconPos="right"
+          (onClick)="manageHide()"
+        ></p-button>
+      </div>
+      <div class="col-4">
+        <p-button
+          [label]="'T_ADD' | translate"
+          icon="pi pi-check"
+          iconPos="right"
+          (onClick)="closeModal()"
+        ></p-button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

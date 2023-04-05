@@ -1,0 +1,250 @@
+<div class="login-block h-100 w-100">
+  <div class="container">
+    <div class="row">
+      <div
+        class="login-sec"
+        [ngClass]="{
+          'col-7': currentSize === sizes.XL || currentSize === sizes.LG
+        }"
+      >
+        <h1 class="text-center">{{ "T_AUTOMATAPI" | translate }}</h1>
+        <div class="row h-100 mx-0">
+          <div class="col-12 h-75">
+            <div class="row h-75 align-items-center">
+              <div class="col-12 px-0">
+                <div class="row mx-0 mb-3">
+                  <span>
+                    <h3 class="text-center">
+                      {{ "T_COMPLETE_REGISTER" | translate }}
+                    </h3>
+                    <p class="text-center w-100">
+                      {{ "T_COMPLETE_REGISTER_STEPS" | translate }}
+                    </p>
+                  </span>
+                </div>
+                <form
+                  class="row w-100 mx-0"
+                  [formGroup]="completeRegisterForm"
+                  (ngSubmit)="completeRegisterSubmit()"
+                >
+                  <div class="col-12 px-0">
+                    <div class="row mx-0 mb-2">
+                      <div class="col-6">
+                        <div class="row">
+                          <div class="row justify-content-end">
+                            <span class="col-9">
+                              <h3>{{ "T_USERNAME" | translate }}</h3>
+                            </span>
+                          </div>
+                          <div class="row justify-content-end">
+                            <div class="col-9">
+                              <div class="field p-input-icon-right">
+                                <i class="pi pi-user"></i>
+                                <input
+                                  type="text"
+                                  pInputText
+                                  formControlName="username"
+                                  [placeholder]="
+                                    'T_USERNAME_PLACEHOLDER' | translate
+                                  "
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row justify-content-end">
+                            <div class="col-9">
+                              <small
+                                id="email-help"
+                                class="p-error block"
+                                *ngIf="
+                                  completeRegisterForm.get('username').errors?.['required'] &&
+                                  completeRegisterForm.get('username').touched
+                                "
+                                >{{ "error.T_USERNAME_REQ" | translate }}
+                              </small>
+                              <small
+                                id="email-help"
+                                class="p-error block"
+                                *ngIf="validUsername"
+                                >{{ "error.T_USERNAME_INVALID" | translate }}
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mt-3" *ngIf="type === 'github'">
+                          <div class="row justify-content-end">
+                            <span class="col-9">
+                              <h3>{{ "T_EMAIL" | translate }}</h3>
+                            </span>
+                          </div>
+                          <div class="row justify-content-end">
+                            <div class="col-9">
+                              <div class="field p-input-icon-right">
+                                <i class="pi pi-envelope"></i>
+                                <input
+                                  type="text"
+                                  pInputText
+                                  formControlName="email"
+                                  [placeholder]="
+                                    'T_EMAIL_PLACEHOLDER' | translate
+                                  "
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row justify-content-end">
+                            <div class="col-9">
+                              <small
+                                id="email-help"
+                                class="p-error block"
+                                *ngIf="
+                                  completeRegisterForm.get('email').errors?.['email'] &&
+                                  completeRegisterForm.get('email').touched
+                                "
+                                >{{ "error.T_EMAIL_INVALID" | translate }}
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mt-4 pt-3" *ngIf="type === 'google'">
+                          <div class="row justify-content-end">
+                            <div class="col-9">
+                              <button
+                                pButton
+                                pRipple
+                                icon="pi pi-send"
+                                iconPos="right"
+                                [label]="'T_COMPLETE_REGISTER' | translate"
+                                type="submit"
+                                [loading]="waitingState"
+                                class="p-button-rounded p-button-info"
+                              ></button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="row">
+                          <span class="col-6"
+                            ><h3>{{ "T_PWD" | translate }}</h3>
+                          </span>
+                        </div>
+                        <div class="row">
+                          <div class="field col-7">
+                            <p-password
+                              formControlName="password"
+                              placeholder="{{
+                                'T_PWD_PLACEHOLDER' | translate
+                              }}"
+                              id="password"
+                              [toggleMask]="true"
+                              [feedback]="false"
+                            ></p-password>
+
+                            <div class="row">
+                              <small
+                                id="email-help"
+                                class="p-error block"
+                                *ngIf="completeRegisterForm.get('password').errors?.[ 'required' ] && completeRegisterForm.get('password').touched"
+                                >{{ "error.T_PWD_REQ" | translate }}
+                              </small>
+                              <small
+                                id="email-help"
+                                class="p-error block"
+                                *ngIf="pwdValid"
+                                >{{ "error.T_PWD_INVALID" | translate }}
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row mt-3">
+                          <span class="col"
+                            ><h3>{{ "T_REPEAT_PWD" | translate }}</h3>
+                          </span>
+                        </div>
+                        <div class="row">
+                          <div class="field col-7">
+                            <p-password
+                              formControlName="passwordConfirm"
+                              placeholder="{{
+                                'T_PWD_PLACEHOLDER' | translate
+                              }}"
+                              id="password"
+                              [toggleMask]="true"
+                              [feedback]="false"
+                            ></p-password>
+                            <div class="row">
+                              <small
+                                id="email-help"
+                                class="p-error block"
+                                *ngIf="completeRegisterForm.get('passwordConfirm').errors?.[ 'required' ] && completeRegisterForm.get('passwordConfirm').touched"
+                                >{{ "error.T_PWD_REQ" | translate }}
+                              </small>
+                              <small
+                                id="email-help"
+                                class="p-error block"
+                                *ngIf="pwdConfirmValid"
+                                >{{ "error.T_PWD_INVALID" | translate }}
+                              </small>
+                              <small
+                                id="email-help"
+                                class="p-error block"
+                                *ngIf="checkPwd"
+                                >{{ "error.T_PWD_NOT_MATCH" | translate }}
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row pt-3 w-100 mx-0" *ngIf="type === 'github'">
+                      <div class="col-3"></div>
+                      <div class="col-6 d-flex justify-content-center">
+                        <button
+                          pButton
+                          pRipple
+                          icon="pi pi-send"
+                          iconPos="right"
+                          [label]="'T_COMPLETE_REGISTER' | translate"
+                          type="submit"
+                          [loading]="waitingState"
+                          class="p-button-rounded p-button-info"
+                        ></button>
+                      </div>
+                      <div class="col-3"></div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <app-alert
+              [show]="showDialog"
+              [status]="statusCode"
+              (Hide)="manageHide($event)"
+            ></app-alert>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="currentSize === sizes.XL"
+        class="banner-sec"
+        [ngClass]="{
+          'col-5': currentSize === sizes.XL
+        }"
+      >
+        <div class="row">
+          <div class="col-12">
+            <div class="row py-5">
+              <div class="col-3"></div>
+              <div class="col-6">
+                <img src="assets/icons/Quote.svg" alt="Quote" />
+              </div>
+              <div class="col-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

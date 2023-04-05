@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="row justify-content-end align-items-center">
+    <div class="col-1" (click)="menu.toggle($event)">
+      <p-avatar [label]="letter" shape="circle" [image]="userImg"></p-avatar>
+    </div>
+    <div class="col-3" (click)="menu.toggle($event)">
+      <h1 class="text-end">{{ username }}</h1>
+    </div>
+  </div>
+  <p-menu #menu [model]="items" [popup]="true"></p-menu>
+</div>
