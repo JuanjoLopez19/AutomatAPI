@@ -13,19 +13,19 @@ export class SocialService {
 
   loginGoogle(): Observable<any> {
     return this.http.get(
-      `${environment.apiHost}${environment.apiPort}/api/auth/google_login`
+      `${environment.apiHost}${environment.apiPort}/api/auth/google`
     );
   }
 
   loginFacebook(): Observable<any> {
     return this.http.get(
-      `${environment.apiHost}${environment.apiPort}/api/auth/facebook_login`
+      `${environment.apiHost}${environment.apiPort}/api/auth/facebook`
     );
   }
 
   loginGithub(): Observable<any> {
     return this.http.get(
-      `${environment.apiHost}${environment.apiPort}/api/auth/github_login`
+      `${environment.apiHost}${environment.apiPort}/api/auth/github`
     );
   }
 }

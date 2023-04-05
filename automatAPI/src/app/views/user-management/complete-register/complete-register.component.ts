@@ -44,7 +44,7 @@ export class CompleteRegisterComponent {
     translate.use('es-ES');
 
     this.completeRegisterForm = new FormGroup({
-      email: new FormControl(undefined, {
+      email: new FormControl('', {
         validators: [Validators.email],
         updateOn: 'submit',
       }),
@@ -132,6 +132,7 @@ export class CompleteRegisterComponent {
         email: this.completeRegisterForm.value.email,
         username: this.completeRegisterForm.value.username,
         password: this.completeRegisterForm.value.password,
+        access_token: this.token,
       };
 
       this.authService.completeRegister(this.params).subscribe({

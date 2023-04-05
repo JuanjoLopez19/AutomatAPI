@@ -26,6 +26,7 @@ export interface completeRegisterParams{
   email?:string;
   username:string;
   password:string;
+  access_token:string;
 }
 
 export interface menuItemsDef{
