@@ -4,12 +4,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/api/auth/auth/auth.service';
-import { passwordRegex } from 'src/app/common/constants';
+import { passwordRegex, databaseRegEx } from 'src/app/common/constants';
 import { Sizes } from 'src/app/common/enums/enums';
-import {
-  completeRegisterParams,
-  rememberPasswordParams,
-} from 'src/app/common/interfaces/interfaces';
+import { completeRegisterParams } from 'src/app/common/interfaces/interfaces';
 
 @Component({
   selector: 'app-complete-register',
@@ -31,6 +28,7 @@ export class CompleteRegisterComponent {
   showDialog: boolean = false;
   statusCode: number;
 
+  validUsername: boolean = false;
   pwdValid: boolean = false;
   pwdConfirmValid: boolean = false;
   checkPwd: boolean = false;
@@ -124,25 +122,73 @@ export class CompleteRegisterComponent {
   }
 
   completeRegisterSubmit() {
-    if(this.completeRegisterForm.valid && this.validatePwds()){}
+    if (
+      this.completeRegisterForm.valid &&
+      this.validateUsername() &&
+      this.validatePwds()
+    ) {
+      this.waitingState = true;
+      this.params = {
+        email: this.completeRegisterForm.value.email,
+        username: this.completeRegisterForm.value.username,
+        password: this.completeRegisterForm.value.password,
+      };
+
+      this.authService.completeRegister(this.params).subscribe({
+        next: (response: HttpResponse<any>) => {
+          setTimeout(() => {
+            this.waitingState = false;
+            this.statusCode = response.status;
+            this.showDialog = true;
+          }, 1500);
+        },
+        error: (error: HttpErrorResponse) => {
+          setTimeout(() => {
+            this.waitingState = false;
+            this.statusCode = error.status;
+            this.showDialog = true;
+          }, 1500);
+        },
+      });
+    }
+  }
+
+  validateUsername(): boolean {
+    this.validUsername = false;
+    let result = databaseRegEx.test(this.completeRegisterForm.value.username);
+    if (!result) {
+      this.validUsername = true;
+    }
+
+    return result;
   }
 
   validatePwds(): boolean {
     let result = true;
-    if(passwordRegex.test(this.completeRegisterForm.value.password) !== true){
+    this.pwdValid = false;
+    this.pwdConfirmValid = false;
+    this.checkPwd = false;
+    if (passwordRegex.test(this.completeRegisterForm.value.password) !== true) {
       this.pwdValid = true;
       result = false;
     }
-    if(passwordRegex.test(this.completeRegisterForm.value.confirmPassword) !== true){
+    if (
+      passwordRegex.test(this.completeRegisterForm.value.passwordConfirm) !==
+      true
+    ) {
       this.pwdConfirmValid = true;
       return false;
     }
-    if(this.completeRegisterForm.value.password !== this.completeRegisterForm.value.passwordConfirm){
+    if (
+      this.completeRegisterForm.value.password !==
+      this.completeRegisterForm.value.passwordConfirm
+    ) {
       this.checkPwd = true;
       result = false;
     }
     return result;
   }
+
   manageHide(event: boolean) {
     this.showDialog = false;
     this.router.navigate([''], { state: { active: 'sign_in' } });

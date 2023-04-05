@@ -62,6 +62,12 @@
                                 "
                                 >{{ "error.T_USERNAME_REQ" | translate }}
                               </small>
+                              <small
+                                id="email-help"
+                                class="p-error block"
+                                *ngIf="validUsername"
+                                >{{ "error.T_USERNAME_INVALID" | translate }}
+                              </small>
                             </div>
                           </div>
                         </div>
@@ -212,7 +218,6 @@
                 </form>
               </div>
             </div>
-
             <app-alert
               [show]="showDialog"
               [status]="statusCode"
