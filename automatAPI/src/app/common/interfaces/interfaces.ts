@@ -22,6 +22,12 @@ export interface rememberPasswordParams{
   username:string;
 }
 
+export interface completeRegisterParams{
+  email?:string;
+  username:string;
+  password:string;
+}
+
 export interface menuItemsDef{
   label: string;
   icon: string;

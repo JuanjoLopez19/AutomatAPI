@@ -4,8 +4,12 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/api/auth/auth/auth.service';
+import { passwordRegex } from 'src/app/common/constants';
 import { Sizes } from 'src/app/common/enums/enums';
-import { rememberPasswordParams } from 'src/app/common/interfaces/interfaces';
+import {
+  completeRegisterParams,
+  rememberPasswordParams,
+} from 'src/app/common/interfaces/interfaces';
 
 @Component({
   selector: 'app-complete-register',
@@ -14,14 +18,22 @@ import { rememberPasswordParams } from 'src/app/common/interfaces/interfaces';
 })
 export class CompleteRegisterComponent {
   readonly sizes: typeof Sizes = Sizes;
+
   token: string = '';
   type: string = '';
-  remPasswordForm: FormGroup;
-  params: rememberPasswordParams;
+
+  completeRegisterForm: FormGroup;
+  params: completeRegisterParams;
+
   currentSize!: string;
   waitingState: boolean = false;
+
   showDialog: boolean = false;
   statusCode: number;
+
+  pwdValid: boolean = false;
+  pwdConfirmValid: boolean = false;
+  checkPwd: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,9 +45,9 @@ export class CompleteRegisterComponent {
     translate.setDefaultLang('es-ES');
     translate.use('es-ES');
 
-    this.remPasswordForm = new FormGroup({
+    this.completeRegisterForm = new FormGroup({
       email: new FormControl(undefined, {
-        validators: [Validators.required, Validators.email],
+        validators: [Validators.email],
         updateOn: 'submit',
       }),
       username: new FormControl(undefined, {
@@ -43,6 +55,10 @@ export class CompleteRegisterComponent {
         updateOn: 'submit',
       }),
       password: new FormControl(undefined, {
+        validators: [Validators.required],
+        updateOn: 'submit',
+      }),
+      passwordConfirm: new FormControl(undefined, {
         validators: [Validators.required],
         updateOn: 'submit',
       }),
@@ -107,34 +123,26 @@ export class CompleteRegisterComponent {
     });
   }
 
-  remPasswordSubmit() {
-    if (this.remPasswordForm.invalid) {
-      return;
-    } else {
-      this.waitingState = true;
-      this.params = {
-        email: this.remPasswordForm.value.email,
-        username: this.remPasswordForm.value.username,
-      };
-      this.authService.rememberPassword(this.params).subscribe({
-        next: (response: HttpResponse<any>) => {
-          setTimeout(() => {
-            this.waitingState = false;
-            this.statusCode = response.status;
-            this.showDialog = true;
-          }, 1500);
-        },
-        error: (error: HttpErrorResponse) => {
-          setTimeout(() => {
-            this.waitingState = false;
-            this.statusCode = error.status;
-            this.showDialog = true;
-          }, 1500);
-        },
-      });
-    }
+  completeRegisterSubmit() {
+    if(this.completeRegisterForm.valid && this.validatePwds()){}
   }
 
+  validatePwds(): boolean {
+    let result = true;
+    if(passwordRegex.test(this.completeRegisterForm.value.password) !== true){
+      this.pwdValid = true;
+      result = false;
+    }
+    if(passwordRegex.test(this.completeRegisterForm.value.confirmPassword) !== true){
+      this.pwdConfirmValid = true;
+      return false;
+    }
+    if(this.completeRegisterForm.value.password !== this.completeRegisterForm.value.passwordConfirm){
+      this.checkPwd = true;
+      result = false;
+    }
+    return result;
+  }
   manageHide(event: boolean) {
     this.showDialog = false;
     this.router.navigate([''], { state: { active: 'sign_in' } });

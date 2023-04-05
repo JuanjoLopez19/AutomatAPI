@@ -15,97 +15,184 @@
                 <div class="row mx-0 mb-3">
                   <span>
                     <h3 class="text-center">
-                      {{ "T_REM_PWD_PROCESS" | translate }}
+                      {{ "T_COMPLETE_REGISTER" | translate }}
                     </h3>
                     <p class="text-center w-100">
-                      {{ "T_REM_PWD_STEPS" | translate }}
+                      {{ "T_COMPLETE_REGISTER_STEPS" | translate }}
                     </p>
                   </span>
                 </div>
                 <form
                   class="row w-100 mx-0"
-                  [formGroup]="remPasswordForm"
-                  (ngSubmit)="remPasswordSubmit()"
+                  [formGroup]="completeRegisterForm"
+                  (ngSubmit)="completeRegisterSubmit()"
                 >
                   <div class="col-12 px-0">
-                    <div class="row mx-0">
-                      <div class="col-6 px-0 d-grid justify-content-end">
-                        <div class="row mx-0">
-                          <div class="col-2"></div>
-                          <span class="col-6">
-                            <h3>{{ "T_EMAIL" | translate }}</h3>
-                          </span>
-                          <div class="col-3"></div>
-                        </div>
-                        <div class="row mx-0">
-                          <div class="col-2"></div>
-                          <div class="field col-7">
-                            <span class="p-input-icon-right">
-                              <i class="pi pi-envelope"></i>
-                              <input
-                                formControlName="email"
-                                type="email"
-                                id="email"
-                                placeholder="{{
-                                  'T_EMAIL_PLACEHOLDER' | translate
-                                }}"
-                                pInputText
-                              />
+                    <div class="row mx-0 mb-2">
+                      <div class="col-6">
+                        <div class="row">
+                          <div class="row justify-content-end">
+                            <span class="col-9">
+                              <h3>{{ "T_USERNAME" | translate }}</h3>
                             </span>
-                            <div class="row">
+                          </div>
+                          <div class="row justify-content-end">
+                            <div class="col-9">
+                              <div class="field p-input-icon-right">
+                                <i class="pi pi-user"></i>
+                                <input
+                                  type="text"
+                                  pInputText
+                                  formControlName="username"
+                                  [placeholder]="
+                                    'T_USERNAME_PLACEHOLDER' | translate
+                                  "
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row justify-content-end">
+                            <div class="col-9">
                               <small
                                 id="email-help"
                                 class="p-error block"
-                                *ngIf="remPasswordForm.get('email').errors?.[ 'required' ] && remPasswordForm.get('email').touched"
-                                >{{ "error.T_EMAIL_REQ" | translate }}
-                              </small>
-                              <small
-                                id="email-help"
-                                class="p-error block"
-                                *ngIf="remPasswordForm.get('email').errors?.[ 'email' ]"
-                              >
-                                {{ "error.T_EMAIL_INVALID" | translate }}
+                                *ngIf="
+                                  completeRegisterForm.get('username').errors?.['required'] &&
+                                  completeRegisterForm.get('username').touched
+                                "
+                                >{{ "error.T_USERNAME_REQ" | translate }}
                               </small>
                             </div>
                           </div>
-                          <div class="col-3"></div>
+                        </div>
+                        <div class="row mt-3" *ngIf="type === 'github'">
+                          <div class="row justify-content-end">
+                            <span class="col-9">
+                              <h3>{{ "T_EMAIL" | translate }}</h3>
+                            </span>
+                          </div>
+                          <div class="row justify-content-end">
+                            <div class="col-9">
+                              <div class="field p-input-icon-right">
+                                <i class="pi pi-envelope"></i>
+                                <input
+                                  type="text"
+                                  pInputText
+                                  formControlName="email"
+                                  [placeholder]="
+                                    'T_EMAIL_PLACEHOLDER' | translate
+                                  "
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row justify-content-end">
+                            <div class="col-9">
+                              <small
+                                id="email-help"
+                                class="p-error block"
+                                *ngIf="
+                                  completeRegisterForm.get('email').errors?.['email'] &&
+                                  completeRegisterForm.get('email').touched
+                                "
+                                >{{ "error.T_EMAIL_INVALID" | translate }}
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mt-4 pt-3" *ngIf="type === 'google'">
+                          <div class="row justify-content-end">
+                            <div class="col-9">
+                              <button
+                                pButton
+                                pRipple
+                                icon="pi pi-send"
+                                iconPos="right"
+                                [label]="'T_COMPLETE_REGISTER' | translate"
+                                type="submit"
+                                [loading]="waitingState"
+                                class="p-button-rounded p-button-info"
+                              ></button>
+                            </div>
+                          </div>
                         </div>
                       </div>
                       <div class="col-6">
                         <div class="row">
                           <span class="col-6"
-                            ><h3>{{ "T_USERNAME" | translate }}</h3>
+                            ><h3>{{ "T_PWD" | translate }}</h3>
                           </span>
-                          <div class="col-3"></div>
                         </div>
                         <div class="row">
                           <div class="field col-7">
-                            <span class="p-input-icon-right">
-                              <i class="pi pi-user"></i>
-                              <input
-                                formControlName="username"
-                                type="text"
-                                id="username"
-                                placeholder="{{
-                                  'T_USERNAME_PLACEHOLDER' | translate
-                                }}"
-                                pInputText
-                              />
-                            </span>
+                            <p-password
+                              formControlName="password"
+                              placeholder="{{
+                                'T_PWD_PLACEHOLDER' | translate
+                              }}"
+                              id="password"
+                              [toggleMask]="true"
+                              [feedback]="false"
+                            ></p-password>
+
                             <div class="row">
                               <small
                                 id="email-help"
                                 class="p-error block"
-                                *ngIf="remPasswordForm.get('username').errors?.[ 'required' ] && remPasswordForm.get('username').touched"
-                                >{{ "error.T_USERNAME_REQ" | translate }}
+                                *ngIf="completeRegisterForm.get('password').errors?.[ 'required' ] && completeRegisterForm.get('password').touched"
+                                >{{ "error.T_PWD_REQ" | translate }}
+                              </small>
+                              <small
+                                id="email-help"
+                                class="p-error block"
+                                *ngIf="pwdValid"
+                                >{{ "error.T_PWD_INVALID" | translate }}
                               </small>
                             </div>
                           </div>
-                          <div class="col-3"></div>
+                        </div>
+
+                        <div class="row mt-3">
+                          <span class="col"
+                            ><h3>{{ "T_REPEAT_PWD" | translate }}</h3>
+                          </span>
+                        </div>
+                        <div class="row">
+                          <div class="field col-7">
+                            <p-password
+                              formControlName="passwordConfirm"
+                              placeholder="{{
+                                'T_PWD_PLACEHOLDER' | translate
+                              }}"
+                              id="password"
+                              [toggleMask]="true"
+                              [feedback]="false"
+                            ></p-password>
+                            <div class="row">
+                              <small
+                                id="email-help"
+                                class="p-error block"
+                                *ngIf="completeRegisterForm.get('passwordConfirm').errors?.[ 'required' ] && completeRegisterForm.get('passwordConfirm').touched"
+                                >{{ "error.T_PWD_REQ" | translate }}
+                              </small>
+                              <small
+                                id="email-help"
+                                class="p-error block"
+                                *ngIf="pwdConfirmValid"
+                                >{{ "error.T_PWD_INVALID" | translate }}
+                              </small>
+                              <small
+                                id="email-help"
+                                class="p-error block"
+                                *ngIf="checkPwd"
+                                >{{ "error.T_PWD_NOT_MATCH" | translate }}
+                              </small>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <div class="row pt-3 w-100 mx-0">
+                    <div class="row pt-3 w-100 mx-0" *ngIf="type === 'github'">
                       <div class="col-3"></div>
                       <div class="col-6 d-flex justify-content-center">
                         <button
@@ -113,7 +200,7 @@
                           pRipple
                           icon="pi pi-send"
                           iconPos="right"
-                          [label]="'T_SEND_EMAIL' | translate"
+                          [label]="'T_COMPLETE_REGISTER' | translate"
                           type="submit"
                           [loading]="waitingState"
                           class="p-button-rounded p-button-info"
@@ -125,39 +212,7 @@
                 </form>
               </div>
             </div>
-            <div class="row h-100 mt-3">
-              <div class="col-12">
-                <div class="row mx-0">
-                  <div class="col-2"></div>
-                  <div class="col-8">
-                    <p-divider align="center"><b>{{'T_OR' |  translate}}</b></p-divider>
-                  </div>
-                  <div class="col-2"></div>
-                </div>
-                <div class="row">
-                  <div class="text-center">
-                    <span>
-                      {{ "T_DONT_REM" | translate }}
-                    </span>
-                    <h4 class="d-inline" (click)="goToRegister()">
-                      {{ "T_CREATE_NEW" | translate }}
-                    </h4>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="text-center">
-                    <small>{{ "T_OR" | translate }}</small>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="text-center">
-                    <h4 class="d-inline" (click)="goToLogin()">
-                      {{ "T_GO_LOGIN" | translate }}
-                    </h4>
-                  </div>
-                </div>
-              </div>
-            </div>
+
             <app-alert
               [show]="showDialog"
               [status]="statusCode"
