@@ -17,7 +17,7 @@ app.use(BodyParser.json());
 
 app.use(
 	cors({
-		origin: [`http://${config.front}`, `http://${config.laptopHost}`],
+		origin: "http://localhost:4200",
 		credentials: true,
 	})
 );
@@ -39,11 +39,6 @@ app.use(passport.session()); // Need to use session for social auth
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerdocs));
 app.use("/api", routes);
-
-app.use((req: Request, res: Response, next: NextFunction) => {
-	res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
-	next();
-});
 
 app.use(function (
 	err: { message: any; status: any },
