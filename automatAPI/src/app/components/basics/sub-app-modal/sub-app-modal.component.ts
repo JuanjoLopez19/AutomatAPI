@@ -170,6 +170,53 @@ export class SubAppModalComponent implements OnInit {
       this.validateDuplicateNames() &&
       this.validateURL()
     ) {
+      console.log("here")
+      if (this.subAppType === 'web_app') {
+        const subApp: djangoSubAppWebAppTemplate = {
+          subapp_name: this.addSubAppFormGroup.get('subapp_name').value,
+          middleware_name: this.addSubAppFormGroup.get('middleware_name').value,
+          logged_in: this.addSubAppFormGroup.get('logged_in').value,
+          endpoint_name: this.addSubAppFormGroup.get('endpoint_name').value,
+          model_editable: this.addSubAppFormGroup.get('model_editable').value,
+          model: {
+            model_name: this.addSubAppFormGroup.get('endpoint_name').value,
+            model_fields: [],
+          },
+          methods: {
+            get_m: this.addSubAppFormGroup.get('methods').get('get_m').value,
+            post: this.addSubAppFormGroup.get('methods').get('post').value,
+            put: this.addSubAppFormGroup.get('methods').get('put').value,
+            del: this.addSubAppFormGroup.get('methods').get('del').value,
+          },
+        };
+        if (this.editMode) {
+          this.EditSubAppWebApp.emit(subApp);
+        } else {
+          this.AddSubAppWebApp.emit(subApp);
+        }
+      } else {
+        const subApp: djangoSubAppServicesTemplate = {
+          subapp_name: this.addSubAppFormGroup.get('subapp_name').value,
+          middleware_name: this.addSubAppFormGroup.get('middleware_name').value,
+          logged_in: this.addSubAppFormGroup.get('logged_in').value,
+          endpoint_name: this.addSubAppFormGroup.get('endpoint_name').value,
+          model: {
+            model_name: this.addSubAppFormGroup.get('endpoint_name').value,
+            model_fields: [],
+          },
+          methods: {
+            get_m: this.addSubAppFormGroup.get('methods').get('get_m').value,
+            post: this.addSubAppFormGroup.get('methods').get('post').value,
+            put: this.addSubAppFormGroup.get('methods').get('put').value,
+            del: this.addSubAppFormGroup.get('methods').get('del').value,
+          },
+        };
+        if (this.editMode) {
+          this.EditSubApp.emit(subApp);
+        } else {
+          this.AddSubApp.emit(subApp);
+        }
+      }
       this.manageHide();
     }
   }

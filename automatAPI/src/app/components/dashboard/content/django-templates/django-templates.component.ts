@@ -68,32 +68,7 @@ export class DjangoTemplatesComponent implements OnInit {
 
   subAppSelection: djangoSubAppServicesTemplate = null;
   subAppSelectionWebApp: djangoSubAppWebAppTemplate = null;
-  subAppsList: djangoSubAppServicesTemplate[] = [
-    {
-      subapp_name: 'subapp1',
-      middleware_name: 'middleware1',
-      logged_in: 'yes',
-      model: {
-        model_name: 'model1',
-        model_fields: [
-          {
-            name: 'id',
-            type: 'int',
-            null: 'no',
-            blank: 'no',
-            default: 'auto',
-          },
-        ],
-      },
-      endpoint_name: 'model1',
-      methods: {
-        get_m: 'yes',
-        post: 'yes',
-        put: 'yes',
-        del: 'yes',
-      },
-    },
-  ];
+  subAppsList: djangoSubAppServicesTemplate[] = [];
   constructor(private translate: TranslateService) {
     this.translate
       .get(['T_SERVICES', 'T_APP_WEB', 'T_SELECT_ONE', 'T_BASIC_HTML'])
@@ -170,7 +145,7 @@ export class DjangoTemplatesComponent implements OnInit {
         validators: [Validators.required, Validators.pattern(hostRegex)],
         updateOn: 'blur',
       }),
-      tech_type: new FormControl('', {
+      tech_type: new FormControl('services', {
         validators: [Validators.required],
         updateOn: 'blur',
       }),
@@ -341,7 +316,11 @@ export class DjangoTemplatesComponent implements OnInit {
     return this.subAppsList.map((subApp) => subApp.model.model_name);
   }
 
-  onAddSubApp(event: djangoSubAppServicesTemplate) {}
+  onAddSubApp(event: djangoSubAppServicesTemplate) {
+    console.log(event);
+    this.subAppsList.push(event);
+    console.log(this.subAppsList);
+  }
   onEditSubApp(event: djangoSubAppServicesTemplate) {}
   onAddSubAppWebApp(event: djangoSubAppWebAppTemplate) {}
   onEditSubAppWebApp(event: djangoSubAppWebAppTemplate) {}
