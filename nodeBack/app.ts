@@ -15,12 +15,13 @@ const app: Express = express();
 
 app.use(BodyParser.json());
 
-app.use(cors());
 app.use(
-	morgan(
-		':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
-	)
+	cors({
+		origin: [`http://${config.front}`, `http://${config.laptopHost}`],
+		credentials: true,
+	})
 );
+app.use(morgan("dev"));
 app.use(
 	Session({
 		secret: config.sessionSecret,
@@ -88,10 +89,7 @@ app.get(
 );
 
 // Twitter social auth
-app.get(
-	"/api/auth/twitter",
-	passport.authenticate("twitter")
-);
+app.get("/api/auth/twitter", passport.authenticate("twitter"));
 
 app.get(
 	"/api/auth/twitter/callback",
