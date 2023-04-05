@@ -45,7 +45,8 @@ export class LoginComponent {
   }
 
   loginWithGoogle(): void {
-    this.socialService.loginGoogle().subscribe({
+    window.location.href = 'http://localhost:3486/api/auth/google';
+    /*this.socialService.loginGoogle().subscribe({
       next: (response: HttpResponse<any>) => {
         console.log('next');
         console.log(response);
@@ -54,7 +55,7 @@ export class LoginComponent {
         console.log('error');
         console.log(error);
       },
-    });
+    });*/
   }
   loginWithFacebook(): void {
     this.socialService.loginFacebook().subscribe({

@@ -61,9 +61,10 @@ export class AuthService {
   completeRegister(params: completeRegisterParams): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.post(
-      `${environment.apiHost}${environment.apiPort}/api/auth/complete_register`,
+      `${environment.apiHost}${environment.apiPort}/api/auth/complete_registration`,
       params,
       {
+        withCredentials: true,
         headers,
       }
     );
