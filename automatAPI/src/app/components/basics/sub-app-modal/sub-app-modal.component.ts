@@ -5,6 +5,7 @@ import {
   endpointRegex,
   functionNamePythonRegex,
 } from 'src/app/common/constants';
+import { techUse } from 'src/app/common/enums/enums';
 import {
   djangoSubAppServicesTemplate,
   djangoSubAppWebAppTemplate,
@@ -38,6 +39,8 @@ export class SubAppModalComponent implements OnInit {
     new EventEmitter<djangoSubAppWebAppTemplate>();
   @Output() EditSubAppWebApp: EventEmitter<djangoSubAppWebAppTemplate> =
     new EventEmitter<djangoSubAppWebAppTemplate>();
+
+  readonly techUse = techUse;
 
   addSubAppFormGroup: FormGroup;
   validName: boolean = false;
@@ -77,7 +80,7 @@ export class SubAppModalComponent implements OnInit {
     this.validUrl = false;
     this.noMethodChecked = false;
 
-    if (!this.editMode && (this.subAppData || this.subAppDataApp)) {
+    if (this.editMode && (this.subAppData || this.subAppDataApp)) {
       if (this.subAppData) {
         this.addSubAppFormGroup = new FormGroup({
           subapp_name: new FormControl(this.subAppData.subapp_name, [
@@ -164,18 +167,65 @@ export class SubAppModalComponent implements OnInit {
   }
 
   closeModal() {
+    console.log(this.addSubAppFormGroup.valid);
     if (
       this.addSubAppFormGroup.valid &&
       this.validateNames() &&
       this.validateDuplicateNames() &&
-      this.validateURL()
+      this.validateURL() &&
+      this.validateMethods()
     ) {
+      if (this.subAppType === techUse.webApp) {
+        const subApp: djangoSubAppWebAppTemplate = {
+          subapp_name: this.addSubAppFormGroup.get('subapp_name').value,
+          middleware_name: this.addSubAppFormGroup.get('middleware_name').value,
+          logged_in: this.addSubAppFormGroup.get('logged_in').value,
+          endpoint_name: this.addSubAppFormGroup.get('endpoint_name').value,
+          model_editable: this.addSubAppFormGroup.get('model_editable').value,
+          model: {
+            model_name: this.addSubAppFormGroup.get('endpoint_name').value,
+            model_fields: [],
+          },
+          methods: {
+            get_m: this.addSubAppFormGroup.get('methods').get('get_m').value,
+            post: this.addSubAppFormGroup.get('methods').get('post').value,
+            put: this.addSubAppFormGroup.get('methods').get('put').value,
+            del: this.addSubAppFormGroup.get('methods').get('del').value,
+          },
+        };
+        if (this.editMode) {
+          this.EditSubAppWebApp.emit(subApp);
+        } else {
+          this.AddSubAppWebApp.emit(subApp);
+        }
+      } else {
+        const subApp: djangoSubAppServicesTemplate = {
+          subapp_name: this.addSubAppFormGroup.get('subapp_name').value,
+          middleware_name: this.addSubAppFormGroup.get('middleware_name').value,
+          logged_in: this.addSubAppFormGroup.get('logged_in').value,
+          endpoint_name: this.addSubAppFormGroup.get('endpoint_name').value,
+          model: {
+            model_name: this.addSubAppFormGroup.get('endpoint_name').value,
+            model_fields: [],
+          },
+          methods: {
+            get_m: this.addSubAppFormGroup.get('methods').get('get_m').value,
+            post: this.addSubAppFormGroup.get('methods').get('post').value,
+            put: this.addSubAppFormGroup.get('methods').get('put').value,
+            del: this.addSubAppFormGroup.get('methods').get('del').value,
+          },
+        };
+        if (this.editMode) {
+          this.EditSubApp.emit(subApp);
+        } else {
+          this.AddSubApp.emit(subApp);
+        }
+      }
       this.manageHide();
     }
   }
 
   validateNames(): boolean {
-    console.log(this.addSubAppFormGroup.value);
     let result = false;
     result = functionNamePythonRegex.test(
       this.addSubAppFormGroup.get('subapp_name').value
@@ -191,6 +241,7 @@ export class SubAppModalComponent implements OnInit {
     if (!result) {
       this.validModelName = true;
     }
+
     return result;
   }
 
@@ -199,14 +250,13 @@ export class SubAppModalComponent implements OnInit {
     const modelName = this.addSubAppFormGroup.get('endpoint_name').value;
     let result1 = false;
     let result2 = false;
-    result1 = this.subAppNameList.includes(subAppName);
-    if (result1 && !this.editMode) {
+
+    if (this.subAppNameList.includes(subAppName) && !this.editMode) {
       this.duplicatedName = true;
       result1 = true;
     }
 
-    result2 = this.modelsNameList.includes(modelName);
-    if (result2 && !this.editMode) {
+    if (this.modelsNameList.includes(modelName) && !this.editMode) {
       this.duplicatedModelName = true; // Add the errors to the form
       result2 = true;
     }
@@ -220,5 +270,19 @@ export class SubAppModalComponent implements OnInit {
     );
     if (!result) this.validUrl = true;
     return result;
+  }
+
+  validateMethods() {
+    const methods = this.addSubAppFormGroup.get('methods');
+    const value =
+      methods.get('get_m').value ||
+      methods.get('post').value ||
+      methods.get('put').value ||
+      methods.get('del').value;
+
+    if (!value) {
+      this.noMethodChecked = true;
+    }
+    return value;
   }
 }

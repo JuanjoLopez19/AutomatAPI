@@ -80,7 +80,7 @@ export class ModelModalComponent implements OnInit {
           Validators.required,
         ]),
         default: new FormControl(this.fieldData.default, [Validators.required]),
-        blank: new FormControl(this.fieldData.null === 'True', [
+        blank: new FormControl(this.fieldData.blank === 'True', [
           Validators.required,
         ]),
       });

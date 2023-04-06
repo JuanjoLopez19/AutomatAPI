@@ -7,6 +7,7 @@ import {
   functionNamePythonRegex,
 } from 'src/app/common/constants';
 import { httpMethods } from 'src/app/common/enums/enums';
+import { djangoEndpointTemplate } from 'src/app/common/interfaces/djangoTemplates';
 import { expressEndpointTemplate } from 'src/app/common/interfaces/expressTemplates';
 import { flaskEndpointTemplate } from 'src/app/common/interfaces/flaskTemplates';
 import { dropdownParams } from 'src/app/common/interfaces/interfaces';
@@ -21,6 +22,7 @@ export class EndpointModalComponent implements OnInit {
   @Input() editMode: boolean = false;
   @Input() endpointData: flaskEndpointTemplate = null;
   @Input() endpointDataExpress: expressEndpointTemplate = null;
+  @Input() endpointDataDjango: djangoEndpointTemplate = null;
   @Input() endpointNameList: string[] = [];
   @Input() type: string = 'flask';
 
@@ -35,6 +37,11 @@ export class EndpointModalComponent implements OnInit {
     new EventEmitter<expressEndpointTemplate>();
   @Output() endpointEditedExpress: EventEmitter<expressEndpointTemplate> =
     new EventEmitter<expressEndpointTemplate>();
+
+  @Output() endpointAddedDjango: EventEmitter<djangoEndpointTemplate> =
+    new EventEmitter<djangoEndpointTemplate>();
+  @Output() endpointEditedDjango: EventEmitter<djangoEndpointTemplate> =
+    new EventEmitter<djangoEndpointTemplate>();
 
   addEndpointFormControl: FormGroup;
 
@@ -79,6 +86,25 @@ export class EndpointModalComponent implements OnInit {
             del: new FormControl(false),
           }),
         });
+      } else if (this.type == 'django') {
+        this.addEndpointFormControl = new FormGroup({
+          endpoint_name: new FormControl('', {
+            validators: Validators.required,
+            updateOn: 'blur',
+          }),
+          endpoint_comment: new FormControl(''),
+          endpoint_url: new FormControl('', {
+            validators: Validators.required,
+            updateOn: 'blur',
+          }),
+          logged_in: new FormControl('no'),
+          methods: new FormGroup({
+            get_m: new FormControl(true),
+            post: new FormControl(false),
+            put: new FormControl(false),
+            del: new FormControl(false),
+          }),
+        });
       } else {
         this.addEndpointFormControl = new FormGroup({
           endpoint_name: new FormControl('', {
@@ -108,7 +134,10 @@ export class EndpointModalComponent implements OnInit {
     this.validUrl = false;
     this.noMethodChecked = false;
     this.duplicatedName = false;
-    if (this.editMode && (this.endpointData || this.endpointDataExpress)) {
+    if (
+      this.editMode &&
+      (this.endpointData || this.endpointDataExpress || this.endpointDataDjango)
+    ) {
       if (this.type == 'flask') {
         this.addEndpointFormControl = new FormGroup({
           endpoint_name: new FormControl(this.endpointData.endpoint_name, {
@@ -125,6 +154,34 @@ export class EndpointModalComponent implements OnInit {
             post: new FormControl(this.endpointData.methods.post === 'yes'),
             put: new FormControl(this.endpointData.methods.put === 'yes'),
             del: new FormControl(this.endpointData.methods.del === 'yes'),
+          }),
+        });
+      } else if (this.type == 'django') {
+        this.addEndpointFormControl = new FormGroup({
+          endpoint_name: new FormControl(
+            this.endpointDataDjango.endpoint_name,
+            {
+              validators: [Validators.required],
+              updateOn: 'blur',
+            }
+          ),
+          endpoint_comment: new FormControl(
+            this.endpointDataDjango.endpoint_comment
+          ),
+          endpoint_url: new FormControl(this.endpointDataDjango.endpoint_url, {
+            validators: [Validators.required],
+            updateOn: 'blur',
+          }),
+          logged_in: new FormControl(this.endpointDataDjango.logged_in),
+          methods: new FormGroup({
+            get_m: new FormControl(
+              this.endpointDataDjango.methods.get_m === 'yes'
+            ),
+            post: new FormControl(
+              this.endpointDataDjango.methods.post === 'yes'
+            ),
+            put: new FormControl(this.endpointDataDjango.methods.put === 'yes'),
+            del: new FormControl(this.endpointDataDjango.methods.del === 'yes'),
           }),
         });
       } else {
@@ -161,6 +218,25 @@ export class EndpointModalComponent implements OnInit {
             validators: Validators.required,
             updateOn: 'blur',
           }),
+          methods: new FormGroup({
+            get_m: new FormControl(true),
+            post: new FormControl(false),
+            put: new FormControl(false),
+            del: new FormControl(false),
+          }),
+        });
+      } else if (this.type == 'django') {
+        this.addEndpointFormControl = new FormGroup({
+          endpoint_name: new FormControl('', {
+            validators: Validators.required,
+            updateOn: 'blur',
+          }),
+          endpoint_comment: new FormControl(''),
+          endpoint_url: new FormControl('', {
+            validators: Validators.required,
+            updateOn: 'blur',
+          }),
+          logged_in: new FormControl('no'),
           methods: new FormGroup({
             get_m: new FormControl(true),
             post: new FormControl(false),
@@ -221,6 +297,32 @@ export class EndpointModalComponent implements OnInit {
         };
         if (this.editMode) this.endpointEdited.emit(endpoint);
         else this.endpointAdded.emit(endpoint);
+      } else if (this.type == 'django') {
+        const endpoint: djangoEndpointTemplate = {
+          endpoint_name: this.addEndpointFormControl.get('endpoint_name').value,
+          endpoint_comment:
+            this.addEndpointFormControl.get('endpoint_comment').value,
+          endpoint_url: this.sanitizeUrl(
+            this.addEndpointFormControl.get('endpoint_url').value
+          ),
+          logged_in: this.addEndpointFormControl.get('logged_in').value,
+          methods: {
+            get_m: this.addEndpointFormControl.get('methods').get('get_m').value
+              ? 'yes'
+              : 'no',
+            post: this.addEndpointFormControl.get('methods').get('post').value
+              ? 'yes'
+              : 'no',
+            put: this.addEndpointFormControl.get('methods').get('put').value
+              ? 'yes'
+              : 'no',
+            del: this.addEndpointFormControl.get('methods').get('del').value
+              ? 'yes'
+              : 'no',
+          },
+        };
+        if (this.editMode) this.endpointEditedDjango.emit(endpoint);
+        else this.endpointAddedDjango.emit(endpoint);
       } else {
         const endpoint: expressEndpointTemplate = {
           endpoint_name: this.addEndpointFormControl.get('endpoint_name').value,

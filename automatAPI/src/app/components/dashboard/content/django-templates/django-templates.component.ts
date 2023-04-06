@@ -5,11 +5,11 @@ import { hostRegex } from 'src/app/common/constants';
 import {
   techUse,
   dataBaseTypes,
-  languageCodes,
   LanguageNames,
   LanguageNamesSpanish,
 } from 'src/app/common/enums/enums';
 import {
+  djangoEndpointTemplate,
   djangoModelFields,
   djangoSubAppServicesTemplate,
   djangoSubAppWebAppTemplate,
@@ -23,6 +23,9 @@ import { dropdownParams } from 'src/app/common/interfaces/interfaces';
 })
 export class DjangoTemplatesComponent implements OnInit {
   @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
+  readonly techUse: typeof techUse = techUse;
+
+  techType: techUse = techUse.services;
 
   basicFormGroup: FormGroup;
   apiConfigFormGroup: FormGroup;
@@ -41,6 +44,9 @@ export class DjangoTemplatesComponent implements OnInit {
 
   showSubAppModal: boolean = false;
   editModeSubApp: boolean = false;
+
+  showDialog: boolean = false;
+  editMode: boolean = false;
 
   firstStepErrors: any = {
     app_name: {
@@ -68,32 +74,12 @@ export class DjangoTemplatesComponent implements OnInit {
 
   subAppSelection: djangoSubAppServicesTemplate = null;
   subAppSelectionWebApp: djangoSubAppWebAppTemplate = null;
-  subAppsList: djangoSubAppServicesTemplate[] = [
-    {
-      subapp_name: 'subapp1',
-      middleware_name: 'middleware1',
-      logged_in: 'yes',
-      model: {
-        model_name: 'model1',
-        model_fields: [
-          {
-            name: 'id',
-            type: 'int',
-            null: 'no',
-            blank: 'no',
-            default: 'auto',
-          },
-        ],
-      },
-      endpoint_name: 'model1',
-      methods: {
-        get_m: 'yes',
-        post: 'yes',
-        put: 'yes',
-        del: 'yes',
-      },
-    },
-  ];
+  subAppsList: djangoSubAppServicesTemplate[] = [];
+  subAppsListWebApp: djangoSubAppWebAppTemplate[] = [];
+
+  endpointSelection: djangoEndpointTemplate = null;
+  endpointList: djangoEndpointTemplate[] = [];
+
   constructor(private translate: TranslateService) {
     this.translate
       .get(['T_SERVICES', 'T_APP_WEB', 'T_SELECT_ONE', 'T_BASIC_HTML'])
@@ -170,7 +156,7 @@ export class DjangoTemplatesComponent implements OnInit {
         validators: [Validators.required, Validators.pattern(hostRegex)],
         updateOn: 'blur',
       }),
-      tech_type: new FormControl('', {
+      tech_type: new FormControl('services', {
         validators: [Validators.required],
         updateOn: 'blur',
       }),
@@ -227,11 +213,12 @@ export class DjangoTemplatesComponent implements OnInit {
   manageFirstStep() {
     const basicForm = this.basicFormGroup.controls;
     const keys = Object.keys(basicForm);
+
     keys.forEach((key) => {
       if (basicForm[key]?.errors?.['required']) {
         this.firstStepErrors[key]['required'] = true;
       } else this.firstStepErrors[key]['required'] = false;
-      if (basicForm[key]?.errors?.['pattern']) {
+      if (basicForm![key]?.errors?.['pattern']) {
         this.firstStepErrors[key]['pattern'] = true;
       } else this.firstStepErrors[key]['pattern'] = false;
     });
@@ -295,6 +282,12 @@ export class DjangoTemplatesComponent implements OnInit {
     this.showSubAppModal = true;
   }
 
+  openDialog(editMode: boolean) {
+    this.closeSidenav.emit();
+    this.editMode = editMode;
+    this.showDialog = true;
+  }
+
   deleteModelField() {
     this.modelFieldsList = this.modelFieldsList.filter(
       (field) => field !== this.fieldSelection
@@ -315,17 +308,28 @@ export class DjangoTemplatesComponent implements OnInit {
   }
 
   saveModel() {
-    this.subAppSelection.model['model_fields'] = this.modelFieldsList;
+    if (this.techType === this.techUse.services)
+      this.subAppSelection.model['model_fields'] = this.modelFieldsList;
+    else
+      this.subAppSelectionWebApp.model['model_fields'] = this.modelFieldsList;
 
     this.subAppSelection = null;
+    this.subAppSelectionWebApp = null;
     this.modelFieldsList = [];
   }
 
   deleteSubApp() {
-    this.subAppsList = this.subAppsList.filter(
-      (subApp) => subApp !== this.subAppSelection
-    );
+    if (this.techType === this.techUse.services)
+      this.subAppsList = this.subAppsList.filter(
+        (subApp) => subApp !== this.subAppSelection
+      );
+    else {
+      this.subAppsListWebApp = this.subAppsListWebApp.filter(
+        (subApp) => subApp !== this.subAppSelectionWebApp
+      );
+    }
     this.subAppSelection = null;
+    this.subAppSelectionWebApp = null;
     this.modelFieldsList = [];
   }
 
@@ -341,8 +345,83 @@ export class DjangoTemplatesComponent implements OnInit {
     return this.subAppsList.map((subApp) => subApp.model.model_name);
   }
 
-  onAddSubApp(event: djangoSubAppServicesTemplate) {}
-  onEditSubApp(event: djangoSubAppServicesTemplate) {}
-  onAddSubAppWebApp(event: djangoSubAppWebAppTemplate) {}
-  onEditSubAppWebApp(event: djangoSubAppWebAppTemplate) {}
+  onAddSubApp(event: djangoSubAppServicesTemplate) {
+    this.subAppsList.push(event);
+  }
+
+  onEditSubApp(event: djangoSubAppServicesTemplate) {
+    this.subAppsList = this.subAppsList.map((subApp) => {
+      if (subApp.subapp_name === event.subapp_name) return event;
+      else return subApp;
+    });
+    this.subAppSelection = null;
+  }
+
+  onAddSubAppWebApp(event: djangoSubAppWebAppTemplate) {
+    this.subAppsListWebApp.push(event);
+  }
+
+  onEditSubAppWebApp(event: djangoSubAppWebAppTemplate) {
+    this.subAppsListWebApp = this.subAppsListWebApp.map((subApp) => {
+      if (subApp.subapp_name === event.subapp_name) return event;
+      else return subApp;
+    });
+    this.subAppSelectionWebApp = null;
+  }
+
+  addSubApps() {
+    if (this.techType === this.techUse.services)
+      this.subAppsFormGroup
+        .get('sub_apps')
+        ?.get('apps')
+        ?.setValue(this.subAppsList);
+    else
+      this.subAppsFormGroup
+        .get('sub_apps')
+        ?.get('apps')
+        ?.setValue(this.subAppsListWebApp);
+  }
+
+  deleteEndpoint() {
+    this.endpointList = this.endpointList.filter(
+      (endpoint) => endpoint !== this.endpointSelection
+    );
+
+    this.endpointSelection = null;
+  }
+
+  onHideEndp() {
+    this.showDialog = false;
+  }
+
+  getEndpointNameList(type: boolean = false) {
+    return this.endpointList.map((endpoint) => endpoint.endpoint_name);
+  }
+
+  onEndpointAdded(event: djangoEndpointTemplate, type: boolean = false) {
+    this.endpointList.push(event);
+  }
+
+  onEndpointEdited(event: djangoEndpointTemplate, type: boolean = false) {
+    this.endpointList = this.endpointList.map((endpoint) => {
+      if (endpoint.endpoint_name === event.endpoint_name) {
+        return event;
+      }
+      return endpoint;
+    });
+
+    this.endpointSelection = null;
+  }
+
+  addEndpoints() {
+    // Here is where the object will be created
+    this.endpointsFormGroup.get('endpoints')?.setValue(this.endpointList);
+  }
+
+  createTemplate() {
+    console.log(this.basicFormGroup.value);
+    console.log(this.apiConfigFormGroup.value);
+    console.log(this.subAppsFormGroup.value);
+    console.log(this.endpointsFormGroup.value);
+  }
 }

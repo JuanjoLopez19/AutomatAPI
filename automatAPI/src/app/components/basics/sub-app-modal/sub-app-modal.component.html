@@ -100,13 +100,19 @@
                     id="endp-name-help"
                     class="p-error block"
                     *ngIf="addSubAppFormGroup.get('endpoint_name').errors?.[ 'required' ] && addSubAppFormGroup.get('endpoint_name').touched"
-                    >{{ "error.T_ENDP_URL_REQ" | translate }}</small
+                    >{{ "error.T_MODEL_NAME_REQ" | translate }}</small
                   >
                   <small
                     id="endp-name-help"
                     class="p-error block"
-                    *ngIf="validUrl"
-                    >{{ "error.T_ENDP_URL_INVALID" | translate }}</small
+                    *ngIf="validModelName"
+                    >{{ "error.T_MODEL_NAME_INVALID" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="duplicatedModelName"
+                    >{{ "error.T_MODEL_NAME_DUPL" | translate }}</small
                   >
                 </div>
               </div>
@@ -143,7 +149,7 @@
                   </div>
                 </div>
               </div>
-              <div class="row pt-4" *ngIf="true || subAppType === 'app_web'">
+              <div class="row pt-4" *ngIf="subAppType === techUse.webApp">
                 <div class="col-4">
                   <div class="row">
                     {{ "django.T_MODEL_EDITABLE" | translate }}
@@ -226,6 +232,14 @@
                       </div>
                     </div>
                   </div>
+                  <div class="pb-3 row">
+                    <small
+                      id="endp-name-help"
+                      class="p-error block"
+                      *ngIf="noMethodChecked"
+                      >{{ "error.T_ENDP_METHOD_REQ" | translate }}</small
+                    >
+                  </div>
                 </div>
               </div>
             </div>
@@ -236,14 +250,6 @@
   </ng-template>
   <ng-template pTemplate="footer">
     <div class="row w-100 justify-content-end">
-      <div class="col-4">
-        <small
-          id="endp-name-help"
-          class="p-error block"
-          *ngIf="noMethodChecked"
-          >{{ "error.T_ENDP_METHOD_REQ" | translate }}</small
-        >
-      </div>
       <div class="col-4">
         <p-button
           [label]="'T_DISCARD' | translate"
