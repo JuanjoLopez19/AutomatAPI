@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SocialService } from 'src/app/api/auth/auth/social/social.service';
 import { LoginService } from 'src/app/api/auth/login/login.service';
+import { environment } from 'src/environments/env';
 
 @Component({
   selector: 'app-login',
@@ -45,18 +46,12 @@ export class LoginComponent {
   }
 
   loginWithGoogle(): void {
-    window.location.href = 'http://localhost:3486/api/auth/google';
-    /*this.socialService.loginGoogle().subscribe({
-      next: (response: HttpResponse<any>) => {
-        console.log('next');
-        console.log(response);
-      },
-      error: (error: HttpErrorResponse) => {
-        console.log('error');
-        console.log(error);
-      },
-    });*/
+    window.open(
+      `${environment.apiHost}${environment.apiPort}${environment.googleRoute}`,
+      '_self'
+    );
   }
+
   loginWithFacebook(): void {
     this.socialService.loginFacebook().subscribe({
       next: (response: HttpResponse<any>) => {
@@ -70,15 +65,9 @@ export class LoginComponent {
     });
   }
   loginWithGithub(): void {
-    this.socialService.loginGithub().subscribe({
-      next: (response: HttpResponse<any>) => {
-        console.log('next');
-        console.log(response);
-      },
-      error: (error: HttpErrorResponse) => {
-        console.log('error');
-        console.log(error);
-      },
-    });
+    window.open(
+      `${environment.apiHost}${environment.apiPort}${environment.githubRoute}`,
+      '_self'
+    );
   }
 }
