@@ -3,7 +3,7 @@
     <div class="col-12 mt-5 mb-2 main-container">
       <h1>{{ "dashboard.T_CREATE_DJANGO" | translate }}</h1>
       <mat-horizontal-stepper [linear]="true" #stepper>
-        <!--<mat-step [stepControl]="basicFormGroup">
+        <mat-step [stepControl]="basicFormGroup">
           <form [formGroup]="basicFormGroup">
             <ng-template matStepLabel>{{
               "dashboard.T_BASICS" | translate
@@ -553,13 +553,17 @@
                 </button>
               </div>
               <div class="col-2">
-                <button pButton matStepperNext>
+                <button
+                  pButton
+                  matStepperNext
+                  (click)="techType = basicFormGroup.get('tech_type').value"
+                >
                   {{ "T_NEXT" | translate }}
                 </button>
               </div>
             </div>
           </form>
-        </mat-step>-->
+        </mat-step>
         <mat-step [stepControl]="subAppsFormGroup">
           <ng-template matStepLabel>{{
             "django.T_SUB_APPS" | translate
@@ -588,7 +592,10 @@
                           <p-button
                             styleClass="p-button-sm p-button-warning"
                             [label]="'django.T_EDIT_SUB_APP' | translate"
-                            [disabled]="subAppSelection === null"
+                            [disabled]="
+                              subAppSelection === null &&
+                              subAppSelectionWebApp === null
+                            "
                             (click)="openSubAppModal(true)"
                           ></p-button>
                         </div>
@@ -596,14 +603,17 @@
                           <p-button
                             styleClass="p-button-sm p-button-danger"
                             [label]="'django.T_DELETE_SUB_APP' | translate"
-                            [disabled]="subAppSelection === null"
+                            [disabled]="
+                              subAppSelection === null &&
+                              subAppSelectionWebApp === null
+                            "
                             (click)="deleteSubApp()"
                           ></p-button>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="row mt-2">
+                  <div class="row mt-2" *ngIf="techType === techUse.services">
                     <p-table
                       selectionMode="single"
                       dataKey="endpoint_name"
@@ -619,13 +629,52 @@
                           <th>{{ "django.T_SUB_APP_NAME" | translate }}</th>
                           <th>{{ "django.T_ACCESS_ROUTE" | translate }}</th>
                           <th>{{ "django.T_REQ_AUTH" | translate }}</th>
-                          <th
-                            *ngIf="
-                              true ||
-                              basicFormGroup.get('tech_type').value ===
-                                'web_app'
-                            "
-                          >
+                          <th>{{ "django.T_MODEL_NAME" | translate }}</th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_GET" | translate }}
+                          </th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_POST" | translate }}
+                          </th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_PUT" | translate }}
+                          </th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_DEL" | translate }}
+                          </th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-subApp>
+                        <tr [pSelectableRow]="subApp">
+                          <td>{{ subApp.subapp_name }}</td>
+                          <td>{{ subApp.middleware_name }}</td>
+                          <td>{{ subApp.logged_in }}</td>
+                          <td>{{ subApp.endpoint_name }}</td>
+                          <td>{{ subApp.methods.get_m }}</td>
+                          <td>{{ subApp.methods.post }}</td>
+                          <td>{{ subApp.methods.put }}</td>
+                          <td>{{ subApp.methods.del }}</td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </div>
+                  <div class="row mt-2" *ngIf="techType === techUse.webApp">
+                    <p-table
+                      selectionMode="single"
+                      dataKey="endpoint_name"
+                      [value]="subAppsListWebApp"
+                      [(selection)]="subAppSelectionWebApp"
+                      [scrollable]="true"
+                      scrollHeight="400px"
+                      (onRowSelect)="onSubAppSelect($event)"
+                      (onRowUnselect)="modelFieldsList = []"
+                    >
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th>{{ "django.T_SUB_APP_NAME" | translate }}</th>
+                          <th>{{ "django.T_ACCESS_ROUTE" | translate }}</th>
+                          <th>{{ "django.T_REQ_AUTH" | translate }}</th>
+                          <th>
                             {{ "django.T_MODEL_EDITABLE" | translate }}
                           </th>
                           <th>{{ "django.T_MODEL_NAME" | translate }}</th>
@@ -648,13 +697,7 @@
                           <td>{{ subApp.subapp_name }}</td>
                           <td>{{ subApp.middleware_name }}</td>
                           <td>{{ subApp.logged_in }}</td>
-                          <td
-                            *ngIf="
-                              true ||
-                              basicFormGroup.get('tech_type').value ===
-                                'web_app'
-                            "
-                          >
+                          <td>
                             {{ subApp.model_editable }}
                           </td>
                           <td>{{ subApp.endpoint_name }}</td>
@@ -678,7 +721,10 @@
                         <div class="col d-flex justify-content-end">
                           <p-button
                             [label]="'django.T_SAVE_MODEL' | translate"
-                            [disabled]="subAppSelection === null"
+                            [disabled]="
+                              subAppSelection === null &&
+                              subAppSelectionWebApp === null
+                            "
                             (click)="saveModel()"
                           ></p-button>
                         </div>
@@ -693,7 +739,10 @@
                           <p-button
                             styleClass="p-button-sm"
                             [label]="'django.T_ADD_FIELD' | translate"
-                            [disabled]="subAppSelection === null"
+                            [disabled]="
+                              subAppSelection === null &&
+                              subAppSelectionWebApp === null
+                            "
                             (click)="openModelModal(false)"
                           ></p-button>
                         </div>
@@ -719,7 +768,7 @@
                   <div class="row mt-2">
                     <p-table
                       selectionMode="single"
-                      dataKey="endpoint_name"
+                      dataKey="name"
                       [value]="modelFieldsList"
                       [(selection)]="fieldSelection"
                       [scrollable]="true"
@@ -762,16 +811,154 @@
                   [subAppDataApp]="subAppSelectionWebApp"
                   [subAppNameList]="getSubAppNameList()"
                   [modelsNameList]="getModelsNameList()"
-                  [subAppType]="basicFormGroup.get('tech_type').value"
+                  [subAppType]="techType"
                   (Hide)="onHide(false)"
                   (AddSubApp)="onAddSubApp($event)"
                   (EditSubApp)="onEditSubApp($event)"
                   (AddSubAppWebApp)="onAddSubAppWebApp($event)"
                   (EditSubAppWebApp)="onEditSubAppWebApp($event)"
-
                 ></app-sub-app-modal>
               </div>
             </div>
+          </div>
+          <div class="row pt-3">
+            <div class="col-2 pl-0">
+              <button pButton matStepperPrevious>
+                {{ "T_BACK" | translate }}
+              </button>
+            </div>
+            <div class="col-2">
+              <button pButton matStepperNext (click)="addSubApps()">
+                {{ "T_NEXT" | translate }}
+              </button>
+            </div>
+          </div>
+        </mat-step>
+        <mat-step [stepControl]="endpointsFormGroup">
+          <ng-template matStepLabel>{{
+            "dashboard.T_ENDPOINTS" | translate
+          }}</ng-template>
+          <div class="row">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-7">
+                      <h1>{{ "flask.T_MANAGE_ENDP" | translate }}</h1>
+                    </div>
+                  </div>
+                  <p-divider></p-divider>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        <div class="col-5">
+                          <p-button
+                            styleClass="p-button-sm"
+                            [label]="'T_ADD_ENDP' | translate"
+                            (onClick)="openDialog(false)"
+                          ></p-button>
+                        </div>
+                        <div class="col-7">
+                          <div class="row">
+                            <div class="col-6 d-flex justify-content-end">
+                              <p-button
+                                styleClass="p-button-sm p-button-warning"
+                                [label]="'T_EDIT_ENDP' | translate"
+                                [disabled]="endpointSelection === null"
+                                (onClick)="openDialog(true)"
+                              ></p-button>
+                            </div>
+                            <div class="col-6 d-flex justify-content-end">
+                              <p-button
+                                styleClass="p-button-sm p-button-danger"
+                                [label]="'T_DEL_ENDP' | translate"
+                                [disabled]="endpointSelection === null"
+                                (onClick)="deleteEndpoint()"
+                              ></p-button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-2">
+                    <p-table
+                      selectionMode="single"
+                      dataKey="endpoint_name"
+                      [value]="endpointList"
+                      [(selection)]="endpointSelection"
+                      [scrollable]="true"
+                      scrollHeight="400px"
+                    >
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th>{{ "flask.T_ENDP_NAME" | translate }}</th>
+                          <th>{{ "flask.T_ENDP_URL" | translate }}</th>
+                          <th>{{ "flask.T_ENDP_DESC" | translate }}</th>
+                          <th>{{ "django.T_REQ_AUTH" | translate }}</th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_GET" | translate }}
+                          </th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_POST" | translate }}
+                          </th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_PUT" | translate }}
+                          </th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_DEL" | translate }}
+                          </th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-endpoint>
+                        <tr [pSelectableRow]="endpoint">
+                          <td>{{ endpoint.endpoint_name }}</td>
+                          <td>{{ endpoint.endpoint_url }}</td>
+                          <td>{{ endpoint.endpoint_comment }}</td>
+                          <td>{{ endpoint.logged_in }}</td>
+                          <td>{{ endpoint.methods.get_m }}</td>
+                          <td>{{ endpoint.methods.post }}</td>
+                          <td>{{ endpoint.methods.put }}</td>
+                          <td>{{ endpoint.methods.del }}</td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </div>
+                </div>
+              </div>
+              <app-endpoint-modal
+                [show]="showDialog"
+                [editMode]="editMode"
+                [endpointDataDjango]="endpointSelection"
+                [endpointNameList]="getEndpointNameList(true)"
+                (Hide)="onHideEndp()"
+                (endpointAddedDjango)="onEndpointAdded($event, true)"
+                (endpointEditedDjango)="onEndpointEdited($event, true)"
+                [type]="'django'"
+              ></app-endpoint-modal>
+              <div class="row pt-3">
+                <div class="col-2 pl-0">
+                  <button pButton matStepperPrevious>
+                    {{ "T_BACK" | translate }}
+                  </button>
+                </div>
+                <div class="col-2">
+                  <button pButton matStepperNext (click)="addEndpoints()">
+                    {{ "T_NEXT" | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div> </mat-step
+        ><mat-step>
+          <ng-template matStepLabel>{{
+            "dashboard.T_SUMMARY" | translate
+          }}</ng-template>
+          <div class="row">
+            <p-button
+              [label]="'T_CREATE_TEMPLATE' | translate"
+              (onClick)="createTemplate()"
+            ></p-button>
           </div>
         </mat-step>
       </mat-horizontal-stepper>

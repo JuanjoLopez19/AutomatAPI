@@ -119,6 +119,14 @@
                     "model.T_FIELD_DEFAULT" | translate
                   }}</label>
                 </span>
+                <div class="pb-3 row">
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="addFieldFormGroup.get('default').errors?.[ 'required' ] && addFieldFormGroup.get('default').touched"
+                    >{{ "error.T_FIELD_DEFAULT_REQ" | translate }}</small
+                  >
+                </div>
               </div>
             </div>
           </div>

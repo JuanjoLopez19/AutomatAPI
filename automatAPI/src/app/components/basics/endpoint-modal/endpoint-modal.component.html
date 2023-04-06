@@ -83,6 +83,34 @@
                     >{{ "error.T_ENDP_URL_INVALID" | translate }}</small
                   >
                 </div>
+                <div class="row justify-content-center">
+                  <div class="row mx-0">
+                    {{ "django.T_REQ_AUTH" | translate }}
+                  </div>
+
+                  <div class="row pt-2 mx-0 px-0">
+                    <div class="col-6">
+                      <p-radioButton
+                        inputId="admin_yes"
+                        value="yes"
+                        formControlName="logged_in"
+                      ></p-radioButton>
+                      <label for="admin_yes" class="ml-2">{{
+                        "T_YES" | translate
+                      }}</label>
+                    </div>
+                    <div class="col-6">
+                      <p-radioButton
+                        inputId="admin_no"
+                        value="no"
+                        formControlName="logged_in"
+                      ></p-radioButton>
+                      <label for="admin_no" class="ml-2">{{
+                        "T_NO" | translate
+                      }}</label>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="col-6">
@@ -98,7 +126,7 @@
                   }}</label>
                 </span>
               </div>
-              <div class="row" *ngIf="type === 'flask'">
+              <div class="row" *ngIf="type === 'flask' || type === 'django'">
                 <div class="py-3" formGroupName="methods">
                   <div class="row">
                     <div class="mb-3">
