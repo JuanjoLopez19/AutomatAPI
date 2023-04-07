@@ -1,17 +1,21 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
-export class GuardService implements CanActivate{
+export class GuardService {
   constructor(private authService: AuthService, private route: Router) {}
   canActivate() {
-    if (this.authService.checkToken()) {
-      return true;
-    }
-    this.route.navigate(['']);
-    return false;
+    this.authService.checkToken().subscribe({
+      next: (res) => {
+        if (res.status === 200) return true;
+        else return false;
+      },
+      error: (err) => {
+        return false;
+      },
+    });
   }
 }
