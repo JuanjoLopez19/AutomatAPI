@@ -20,7 +20,7 @@ const routerAuth = Router();
 
 routerAuth.post("/signup", [verifySignUp], Signup);
 routerAuth.post("/signin", [verifySignIn], Signin);
-routerAuth.post("/logout", Signout);
+routerAuth.post("/signout", [passport.authorize("jwt")], Signout);
 
 routerAuth.put("/activate_account", activateAccount);
 routerAuth.get("/remember_password", rememberPassword);
@@ -42,7 +42,7 @@ routerAuth.get("/succes/google", (req: Request, res: Response) => {
 					if (!user.activeUser) {
 						res
 							.status(200)
-							.cookie("socialAuth", token, { httpOnly: true, secure: false }) // Redirect to the socialAuthGoogle component in the front to add the things
+							.cookie("socialAuth", token, { httpOnly: true, secure: false })
 							.redirect(
 								`${config.front}${config.completeRoute}?token=${user.access_token}&type=google`
 							);
@@ -51,9 +51,11 @@ routerAuth.get("/succes/google", (req: Request, res: Response) => {
 						let token = jwt.sign(
 							{
 								id: user.id,
-								expiration: Date.now() + config.expiration,
 							},
-							config.secretKey
+							config.secretKey,
+							{
+								expiresIn: `${config.expiration}s`,
+							}
 						);
 						if (
 							sessionObject &&
@@ -140,12 +142,18 @@ routerAuth.get("/failure", (req: Request, res: Response) => {
 	res.redirect("http://localhost:4200/#/forbidden");
 });
 
-
-
 routerAuth.post(
 	"/complete_registration",
 	[verifySignUp, passport.authorize("jwtSocialAuth")],
 	CompleteRegistration
+);
+
+routerAuth.get(
+	"/authorize",
+	passport.authorize("jwt", { session: false }),
+	(req: Request, res: Response) => {
+		res.status(200).send();
+	}
 );
 
 export default routerAuth;

@@ -135,10 +135,11 @@ export const Signin = async (req: Request, res: Response) => {
 	let token = jwt.sign(
 		{
 			id: user.id,
-			username: user.username,
-			expiration: Date.now() + config.expiration,
 		},
-		config.secretKey
+		config.secretKey,
+		{
+			expiresIn: `${config.expiration}s`,
+		}
 	);
 	if (
 		sessionObject &&
