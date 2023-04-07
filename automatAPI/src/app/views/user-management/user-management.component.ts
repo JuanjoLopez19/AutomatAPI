@@ -2,6 +2,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Navigation, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Sizes } from 'src/app/common/enums/enums';
+import { AuthService } from 'src/app/api/auth/auth/auth.service';
+import { httpResponse } from 'src/app/common/interfaces/interfaces';
 
 @Component({
   selector: 'app-user-management',
@@ -12,11 +14,15 @@ export class UserManagementComponent implements OnInit {
   readonly sizes: typeof Sizes = Sizes;
   currentSize!: string;
   active: string;
-  constructor(private router: Router, private translate: TranslateService) {
+  constructor(
+    private router: Router,
+    private translate: TranslateService,
+    private authService: AuthService
+  ) {
     translate.addLangs(['en', 'es-ES']);
     translate.setDefaultLang('es-ES');
     translate.use('es-ES');
-
+    this.checkSession();
     const currentNavigation: Navigation = this.router.getCurrentNavigation();
     if (currentNavigation && currentNavigation.extras.state) {
       const active: string = currentNavigation.extras.state['active'];
@@ -70,5 +76,16 @@ export class UserManagementComponent implements OnInit {
 
   onRegister(event: string) {
     this.active = event;
+  }
+
+  checkSession() {
+    this.authService.generateSession().subscribe({
+      next: (response: httpResponse) => {
+        this.router.navigate(['/home'], {
+          state: { data: response.data },
+        });
+      },
+      error: (error) => {},
+    });
   }
 }

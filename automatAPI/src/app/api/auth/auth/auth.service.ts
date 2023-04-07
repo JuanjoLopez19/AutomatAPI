@@ -70,4 +70,15 @@ export class AuthService {
       }
     );
   }
+
+  generateSession(){
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.get(
+      `${environment.apiHost}${environment.apiPort}/api/auth/generate_session`,
+      {
+        withCredentials: true,
+        headers,
+      }
+    );
+  }
 }
