@@ -20,7 +20,7 @@ const routerAuth = Router();
 
 routerAuth.post("/signup", [verifySignUp], Signup);
 routerAuth.post("/signin", [verifySignIn], Signin);
-routerAuth.post("/signout", [passport.authorize("jwt")], Signout);
+routerAuth.get("/signout", [passport.authorize("jwt")], Signout);
 
 routerAuth.put("/activate_account", activateAccount);
 routerAuth.get("/remember_password", rememberPassword);
