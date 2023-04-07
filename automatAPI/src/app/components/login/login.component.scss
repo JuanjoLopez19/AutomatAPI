@@ -45,4 +45,20 @@
       box-shadow: 0 0 0 0.2rem $blue-transparent;
     }
   }
+
+  .error {
+    background-color: #e9967a !important;
+    color: $black-not-black !important;
+    border-color: #e9967a !important;
+  }
+
+  .error:focus {
+    box-shadow: 0 0 0 0.2rem #b36b53;
+  }
+
+  .error:hover {
+    background-color: #b36b53 !important;
+    color: $black-not-black !important;
+    border-color: #b36b53 !important;
+  }
 }

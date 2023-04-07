@@ -4,6 +4,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegisterService } from 'src/app/api/auth/register/register.service';
 import { registerParams } from 'src/app/common/interfaces/interfaces';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import {
+  nameRegEx,
+  passwordRegex,
+  usernameRegex,
+} from 'src/app/common/constants';
 
 @Component({
   selector: 'app-register',
@@ -18,6 +23,7 @@ export class RegisterComponent {
   params: registerParams;
   showDialog: boolean = false;
   statusCode: number;
+  maxDate: Date = new Date();
 
   constructor(
     private registerService: RegisterService,
@@ -29,33 +35,23 @@ export class RegisterComponent {
         updateOn: 'submit',
       }),
       username: new FormControl(undefined, {
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.pattern(usernameRegex)],
         updateOn: 'submit',
       }),
       name: new FormControl(undefined, {
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.pattern(nameRegEx)],
         updateOn: 'submit',
       }),
       surname: new FormControl(undefined, {
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.pattern(nameRegEx)],
         updateOn: 'submit',
       }),
       password: new FormControl(undefined, {
-        validators: [
-          Validators.required,
-          Validators.pattern(
-            '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{8,}$'
-          ),
-        ],
+        validators: [Validators.required, Validators.pattern(passwordRegex)],
         updateOn: 'submit',
       }),
       repeatPassword: new FormControl(undefined, {
-        validators: [
-          Validators.required,
-          Validators.pattern(
-            '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
-          ),
-        ],
+        validators: [Validators.required, Validators.pattern(passwordRegex)],
         updateOn: 'submit',
       }),
       birthdate: new FormControl(undefined, {
@@ -93,8 +89,11 @@ export class RegisterComponent {
               this.waitingState = false;
               this.statusCode = response.status;
               this.showDialog = true;
+            }, 1000);
+
+            setTimeout(() => {
               this.goToLogin.emit('sign_in');
-            }, 1500);
+            }, 3000);
           },
           error: (error: HttpErrorResponse) => {
             setTimeout(() => {

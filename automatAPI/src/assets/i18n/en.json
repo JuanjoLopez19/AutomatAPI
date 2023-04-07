@@ -85,6 +85,13 @@
   "T_CHOSE_KEY_FILE": "Choose the key file",
   "T_BASIC_HTML": "Basic HTML",
   "T_METHOD": "HTTP Method",
+  "T_PICK_PWD": "Pick a password",
+  "T_REQ": "Required",
+  "T_LOWER": "A lowercase letter",
+  "T_UPPER": "An uppercase letter",
+  "T_NUMBER": "A number",
+  "T_SYMBOL": "A symbol",
+  "T_8_CHAR": "8 characters",
   "db":{
     "T_DB_TYPE": "Database type",
     "T_DB_NAME": "Database name",
@@ -137,7 +144,11 @@
     "T_ENDP_METHOD_REQ": "Choose a HTTP method",
     "T_CONTROLLER_NAME_REQ": "The controller name is required",
     "T_CONTROLLER_NAME_INVALID": "The controller name is invalid",
-    "T_CONTROLLER_NAME_DUPL": "Controller already exists"
+    "T_CONTROLLER_NAME_DUPL": "Controller already exists",
+    "T_PWDS_NOT_MATCH": "The passwords don't match",
+    "T_USERNAME_INVALID": "The username is invalid",
+    "T_NAME_INVALID": "The name is invalid",
+    "T_SURNAME_INVALID": "The surname is invalid"
   },
   "flask":{
     "T_APP_NAME": "Application name",

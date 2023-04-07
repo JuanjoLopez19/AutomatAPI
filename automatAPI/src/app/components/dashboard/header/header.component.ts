@@ -12,13 +12,13 @@ import { menuItems } from 'src/app/common/interfaces/interfaces';
 })
 export class HeaderComponent implements OnInit {
   @Input() username: string = 'Username';
-  @Input() userImg: string = null //'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png';
+  @Input() userImg: string = null; //'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png';
   items: any[];
 
   @Output() navigateToProfile: EventEmitter<string> =
     new EventEmitter<string>();
 
-  letter!: string ;
+  letter!: string;
 
   constructor(
     private translate: TranslateService,
@@ -28,17 +28,17 @@ export class HeaderComponent implements OnInit {
     translate.addLangs(['en', 'es-ES']);
     translate.setDefaultLang('es-ES');
     translate.use('es-ES');
-    if(this.userImg == null){
-      this.letter = this.username.charAt(0);
-    }else{
-      this.letter = null;
-    }
-    if(this.username.length > 10){
-      this.username = this.username.substring(0,10) + '...';
-    }
   }
 
   ngOnInit() {
+    if (this.userImg == null) {
+      this.letter = this.username.charAt(0);
+    } else {
+      this.letter = null;
+    }
+    if (this.username.length > 10) {
+      this.username = this.username.substring(0, 10) + '...';
+    }
     this.chooseLanguage(navigator.language);
     this.translate.get(['T_PROFILE', 'T_LOGOUT']).subscribe((res) => {
       this.items = [
