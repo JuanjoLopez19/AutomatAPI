@@ -123,9 +123,9 @@ routerAuth.post(
 
 routerAuth.get(
 	"/authorize",
-	passport.authorize("jwt", { session: false }),
+	passport.authorize("jwt"),
 	(req: Request, res: Response) => {
-		res.status(200).send();
+		res.status(200).send({status:200});
 	}
 );
 

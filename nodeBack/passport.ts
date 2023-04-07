@@ -50,6 +50,7 @@ const jwtSocialAuth = new JWTStrategy(
 		secretOrKey: config.secretKey,
 	},
 	(jwtPayload, done) => {
+		
 		const { expiration } = jwtPayload;
 
 		if (Date.now() > expiration) {
