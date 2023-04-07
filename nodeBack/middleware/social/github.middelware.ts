@@ -19,7 +19,6 @@ const github = new githubStrategy(
 		profile: passportGithub.Profile,
 		done: any
 	) => {
-		console.log(profile);
 		try {
 			const githubId = profile.id;
 			const githubIdHashed = await bcrypt.hash(githubId, config.saltRounds);
@@ -58,7 +57,7 @@ const github = new githubStrategy(
 						newUser.access_token = generateToken(100);
 						newUser.password_token = generateToken(100);
 						newUser.image = profile.photos![0].value;
-						
+
 						newUser
 							.save()
 							.then((savedUser: User) => {
