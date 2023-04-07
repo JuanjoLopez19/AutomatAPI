@@ -26,9 +26,16 @@ const google = new googleStrategy(
 			const googleIdHashed = await bcrypt.hash(googleId, config.saltRounds);
 			User.findAll({
 				where: {
-					google_id: {
-						[Op.ne]: null,
-					},
+					[Op.or]: [
+						{
+							google_id: {
+								[Op.ne]: null,
+							},
+						},
+						{
+							email: profile.emails![0].value,
+						},
+					],
 				} as WhereOptions<User>,
 			})
 				.then((users: User[]) => {
@@ -36,9 +43,11 @@ const google = new googleStrategy(
 					let registeredUser: User | undefined;
 					if (users) {
 						for (let i: number = 0; i < users.length; i++) {
-							const googleIdHashedDB = users[i].google_id;
+							const googleIdHashedDB =
+								users[i].google_id !== null ? users[i].google_id : "";
 							const idMatched = bcrypt.compareSync(googleId, googleIdHashedDB);
-							if (idMatched) {
+
+							if (idMatched || users[i].email === profile.emails![0].value) {
 								notFound = false;
 								registeredUser = users[i];
 								break;
@@ -60,7 +69,7 @@ const google = new googleStrategy(
 						newUser.access_token = generateToken(100);
 						newUser.password_token = generateToken(100);
 						newUser.image = profile.photos![0].value;
-						// Add field for the image
+
 						newUser
 							.save()
 							.then((savedUser: User) => {
@@ -76,17 +85,24 @@ const google = new googleStrategy(
 								return done(error, false);
 							});
 					} else {
-						if (registeredUser?.activeUser === false) {
-							return done(null, {
-								profile: registeredUser.id,
-								accessToken: registeredUser.access_token,
-							});
-						}
+						registeredUser
+							?.update({
+								google_id: googleIdHashed,
+								image: profile.photos![0].value,
+							})
+							.then(() => {
+								if (registeredUser?.activeUser === false) {
+									return done(null, {
+										profile: registeredUser.id,
+										accessToken: registeredUser.access_token,
+									});
+								}
 
-						return done(null, {
-							profile: registeredUser?.id,
-							accessToken: null,
-						});
+								return done(null, {
+									profile: registeredUser?.id,
+									accessToken: null,
+								});
+							});
 					}
 				})
 				.catch((error: any) => {
