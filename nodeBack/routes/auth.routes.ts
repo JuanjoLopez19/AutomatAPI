@@ -4,6 +4,7 @@ import {
 	activateAccount,
 	CompleteRegistration,
 	formatSessionObject,
+	genSession,
 	rememberPassword,
 	resetPassword,
 	Signin,
@@ -47,8 +48,7 @@ routerAuth.get("/succes/google", (req: Request, res: Response) => {
 								`${config.front}${config.completeRoute}?token=${user.access_token}&type=google`
 							);
 					} else {
-						const sessionObject = formatSessionObject(user);
-						let token = jwt.sign(
+						const token = jwt.sign(
 							{
 								id: user.id,
 							},
@@ -57,24 +57,10 @@ routerAuth.get("/succes/google", (req: Request, res: Response) => {
 								expiresIn: `${config.expiration}s`,
 							}
 						);
-						if (
-							sessionObject &&
-							Object.keys(sessionObject).length !== 0 &&
-							Object.getPrototypeOf(sessionObject) === Object.prototype
-						) {
-							return res
-								.cookie("jwt", token, { httpOnly: true, secure: false })
-								.status(200)
-								.send({
-									data: sessionObject,
-									status: 200,
-									message: "User logged in",
-								});
-						} else {
-							return res
-								.status(500)
-								.send({ message: "Internal server error", status: 500 });
-						}
+						res
+							.status(200)
+							.cookie("jwt", token, { httpOnly: true, secure: false })
+							.redirect(config.front);
 					}
 				}
 			});
@@ -105,32 +91,19 @@ routerAuth.get("/succes/github", (req: Request, res: Response) => {
 								`${config.front}${config.completeRoute}?token=${user.access_token}&type=github`
 							);
 					} else {
-						const sessionObject = formatSessionObject(user);
-						let token = jwt.sign(
+						const token = jwt.sign(
 							{
 								id: user.id,
-								expiration: Date.now() + config.expiration,
 							},
-							config.secretKey
+							config.secretKey,
+							{
+								expiresIn: `${config.expiration}s`,
+							}
 						);
-						if (
-							sessionObject &&
-							Object.keys(sessionObject).length !== 0 &&
-							Object.getPrototypeOf(sessionObject) === Object.prototype
-						) {
-							return res
-								.cookie("jwt", token, { httpOnly: true, secure: false })
-								.status(200)
-								.send({
-									data: sessionObject,
-									status: 200,
-									message: "User logged in",
-								});
-						} else {
-							return res
-								.status(500)
-								.send({ message: "Internal server error", status: 500 });
-						}
+						res
+							.status(200)
+							.cookie("jwt", token, { httpOnly: true, secure: false })
+							.redirect(config.front);
 					}
 				}
 			});
@@ -155,5 +128,7 @@ routerAuth.get(
 		res.status(200).send();
 	}
 );
+
+routerAuth.get("/generate_session", passport.authorize("jwt"), genSession);
 
 export default routerAuth;
