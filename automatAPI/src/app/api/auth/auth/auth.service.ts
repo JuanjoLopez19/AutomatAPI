@@ -54,7 +54,8 @@ export class AuthService {
 
   checkToken(): Observable<any> {
     return this.http.get(
-      `${environment.apiHost}${environment.apiPort}/api/auth/check_token`
+      `${environment.apiHost}${environment.apiPort}/api/auth/authorize`,
+      { withCredentials: true }
     );
   }
 
@@ -68,9 +69,5 @@ export class AuthService {
         headers,
       }
     );
-  }
-
-  public setUserInfo(userInfo: any) {
-    localStorage.setItem('userInfo', JSON.stringify(userInfo));
   }
 }
