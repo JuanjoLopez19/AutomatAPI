@@ -1,9 +1,15 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ElementRef,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LogoutService } from 'src/app/api/auth/logout/logout.service';
-import { menuItems } from 'src/app/common/interfaces/interfaces';
 
 @Component({
   selector: 'app-header',
@@ -23,23 +29,13 @@ export class HeaderComponent implements OnInit {
   constructor(
     private translate: TranslateService,
     private logoutService: LogoutService,
-    private router: Router
+    private router: Router,
+    private elementRef: ElementRef
   ) {
     translate.addLangs(['en', 'es-ES']);
     translate.setDefaultLang('es-ES');
     translate.use('es-ES');
-  }
 
-  ngOnInit() {
-    if (this.userImg == null) {
-      this.letter = this.username.charAt(0);
-    } else {
-      this.letter = null;
-    }
-    if (this.username.length > 10) {
-      this.username = this.username.substring(0, 10) + '...';
-    }
-    this.chooseLanguage(navigator.language);
     this.translate.get(['T_PROFILE', 'T_LOGOUT']).subscribe((res) => {
       this.items = [
         {
@@ -58,6 +54,30 @@ export class HeaderComponent implements OnInit {
         },
       ];
     });
+  }
+
+  ngOnInit() {
+    if (this.userImg == null) {
+      this.letter = this.username.charAt(0).toLocaleUpperCase();
+    } else {
+      this.letter = null;
+    }
+    if (this.username.length > 10) {
+      this.username = this.username.substring(0, 10) + '...';
+    }
+    this.chooseLanguage(navigator.language);
+  }
+
+  ngAfterViewInit() {
+    const avatar = this.elementRef.nativeElement.querySelector(
+      '#avatar'
+    ) as HTMLElement;
+    if (this.userImg !== null) {
+      (avatar.childNodes[0] as HTMLElement).style.backgroundColor = "rgba(0, 0, 0, 0)"
+      const image = avatar.childNodes[0].firstChild as HTMLImageElement;
+      image.setAttribute('onerror', 'this.style.display = "none"');
+      image.setAttribute('referrerPolicy', 'no-referrer');
+    }
   }
 
   chooseLanguage(language: string) {
