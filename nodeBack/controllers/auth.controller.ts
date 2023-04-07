@@ -358,7 +358,6 @@ export const CompleteRegistration = async (req: Request, res: Response) => {
 		const userId = await jwt.decode(req.cookies["socialAuth"]).id;
 		const access_token = req.body.access_token;
 		const password = req.body.password;
-		console.log(userId);
 		User.findOne({
 			where: { id: userId, access_token: access_token } as WhereOptions<User>,
 		})
@@ -454,4 +453,32 @@ export const CompleteRegistration = async (req: Request, res: Response) => {
 			status: 400,
 		});
 	}
+};
+
+export const genSession = async (req: Request, res: Response) => {
+	// @ts-ignore
+	const userId = await jwt.decode(req.cookies["jwt"]).id;
+
+	User.findByPk(userId)
+		.then((user: User | null) => {
+			if (user) {
+				const sessionObject = formatSessionObject(user);
+				res.status(200).send({
+					data: sessionObject,
+					status: 200,
+					message: "User logged in",
+				});
+			} else {
+				return res.status(404).send({
+					message: "User not found",
+					status: 404,
+				});
+			}
+		})
+		.catch((err) => {
+			return res.status(500).send({
+				message: err.message || "Some error occurred.",
+				status: 500,
+			});
+		});
 };
