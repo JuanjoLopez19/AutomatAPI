@@ -57,3 +57,21 @@ export interface dropdownParams{
 export interface sslFilesInterface {
   [key: string]: string;
 }
+
+export interface httpResponse{
+  data?:any;
+  message?:string;
+  status?:number;
+}
+
+export interface userParams{
+  username:string;
+  email:string;
+  name:string;
+  firstName:string;
+  lastName:string;
+  date:string;
+  image:string;
+  role:string;
+  id:string;
+}

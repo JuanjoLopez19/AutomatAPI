@@ -19,6 +19,7 @@ export class LoginService {
       `${environment.apiHost}${environment.apiPort}/api/auth/signin`,
       loginData,
       {
+        withCredentials: true,
         headers,
       }
     );

@@ -77,6 +77,12 @@
                       *ngIf="registerForm.get('username').errors?.[ 'required' ] && registerForm.get('username').touched"
                       >{{ "error.T_USERNAME_REQ" | translate }}
                     </small>
+                    <small
+                      id="username-help"
+                      class="p-error block"
+                      *ngIf="registerForm.get('username').errors?.[ 'pattern' ] && registerForm.get('username').touched"
+                      >{{ "error.T_USERNAME_INVALID" | translate }}
+                    </small>
                   </div>
                 </div>
               </div>
@@ -110,6 +116,12 @@
                           *ngIf="registerForm.get('name').errors?.[ 'required' ] && registerForm.get('name').touched"
                           >{{ "error.T_NAME_REQ" | translate }}
                         </small>
+                        <small
+                          id="name-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('name').errors?.[ 'pattern' ] && registerForm.get('name').touched"
+                          >{{ "error.T_NAME_INVALID" | translate }}
+                        </small>
                       </div>
                     </div>
                   </div>
@@ -140,6 +152,12 @@
                           class="p-error block"
                           *ngIf="registerForm.get('surname').errors?.[ 'required' ] && registerForm.get('surname').touched"
                           >{{ "error.T_SURNAME_REQ" | translate }}
+                        </small>
+                         <small
+                          id="surname-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('surname').errors?.[ 'pattern' ] && registerForm.get('surname').touched"
+                          >{{ "error.T_SURNAME_INVALID" | translate }}
                         </small>
                       </div>
                     </div>
@@ -272,6 +290,7 @@
                           [showIcon]="true"
                           placeholder="{{'T_DATE_PLACEHOLDER' | translate}}"
                           dateFormat="{{'T_DATE_PLACEHOLDER' | translate}}"
+                          [maxDate]="maxDate"
                           [readonlyInput]="true"
                         ></p-calendar>
                       </span>
@@ -281,12 +300,6 @@
                           class="p-error block"
                           *ngIf="registerForm.get('birthdate').errors?.[ 'required' ] && registerForm.get('birthdate').touched"
                           >{{ "error.T_DATE_REQ" | translate }}
-                        </small>
-                        <small
-                          id="date-help"
-                          class="p-error block"
-                          *ngIf="registerForm.get('birthdate').errors?.[ 'pattern' ] && registerForm.get('birthdate').touched"
-                          >{{ "error.T_DATE_INVALID" | translate }}
                         </small>
                       </div>
                     </div>
@@ -301,7 +314,7 @@
                           pRipple
                           icon="pi pi-send"
                           iconPos="right"
-                          [label]="'T_REGISTER' | translate"
+                          [label]="'T_SIGN_UP' | translate"
                           type="submit"
                           [loading]="waitingState"
                           class="p-button-rounded p-button-info"

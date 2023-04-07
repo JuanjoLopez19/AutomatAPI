@@ -87,12 +87,16 @@
                     <div class="row justify-content-end">
                       <div class="col-10">
                         <button
+                          [ngClass]="{
+                            error: icon === 'pi pi-exclamation-triangle'
+                          }"
                           pButton
                           pRipple
-                          icon="pi pi-send"
+                          [icon]="icon"
                           iconPos="right"
                           [label]="'T_SIGN_IN' | translate"
                           type="submit"
+                          [loading]="waitingState"
                           class="p-button-rounded p-button-info"
                         ></button>
                       </div>
@@ -138,91 +142,6 @@
             </div>
           </div>
         </div>
-        <!--<div class="col-7 d-grid justify-content-center">
-          <div class="row pt-3">
-            <div class="col-12">
-              <div class="row">
-                <div class="col-3"></div>
-                <span class="col-6">
-                  <h3>{{ "T_EMAIL" | translate }}</h3>
-                </span>
-                <div class="col-3"></div>
-              </div>
-              <div class="row">
-                <div class="col-3"></div>
-                <div class="field col-6">
-                  <span class="p-input-icon-right">
-                    <i class="pi pi-user"></i>
-                    <input
-                      formControlName="email"
-                      type="email"
-                      id="email"
-                      placeholder="{{ 'T_EMAIL_PLACEHOLDER' | translate }}"
-                      pInputText
-                    />
-                  </span>
-                  <small
-                    id="email-help"
-                    class="p-error block mt-2"
-                    *ngIf="loginForm.get('email').errors?.[ 'required' ] && loginForm.get('email').touched"
-                    >{{ "error.T_EMAIL_REQ" | translate }}
-                  </small>
-                  <small
-                    id="email-help"
-                    class="p-error block"
-                    *ngIf="loginForm.get('email').errors?.[ 'email' ]"
-                  >
-                    {{ "error.T_EMAIL_INVALID" | translate }}
-                  </small>
-                </div>
-                <div class="col-3"></div>
-              </div>
-            </div>
-          </div>
-          <div class="row pt-3">
-            <div class="col-12">
-              <div class="row">
-                <div class="col-3"></div>
-                <span class="col-6"
-                  ><h3>{{ "T_PWD" | translate }}</h3>
-                </span>
-                <div class="col-3"></div>
-              </div>
-              <div class="row">
-                <div class="col-3"></div>
-                <div class="col-6 field">
-                  <p-password
-                    formControlName="password"
-                    placeholder="{{ 'T_PWD_PLACEHOLDER' | translate }}"
-                    id="password"
-                    [toggleMask]="true"
-                    [feedback]="false"
-                  ></p-password>
-                  <small
-                    id="password-help"
-                    class="p-error block mt-2"
-                    *ngIf="loginForm.get('password').errors?.[ 'required' ] && loginForm.get('password').touched"
-                    >{{ "error.T_PWD_REQ" | translate }}
-                  </small>
-                </div>
-                <div class="col-4"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-3">
-          <div class="row mb-5"></div>
-          <div class="row mb-4"></div>
-          <div class="row mr-5">
-            <div class="field">
-              <button type="submit" class="btn btn-warning w-100">
-                <span>
-                  {{ "T_SIGN_IN" | translate }}
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>-->
       </form>
     </div>
   </div>

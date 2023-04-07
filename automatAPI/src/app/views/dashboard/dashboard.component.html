@@ -21,7 +21,11 @@
     <span class="w-100 d-flex justify-content-end">
       <div class="col-8"></div>
       <div class="col-4">
-        <app-header (navigateToProfile)="activeView = $event"></app-header>
+        <app-header
+          [username]="user.username"
+          [userImg]="user.image"
+          (navigateToProfile)="activeView = $event"
+        ></app-header>
       </div>
     </span>
   </mat-toolbar>
@@ -34,7 +38,10 @@
       fixedTopGap="0"
       [opened]="true"
     >
-      <app-sidebar (activeTabChange)="onActiveTabChange($event)" [activeTab]="activeView"></app-sidebar>
+      <app-sidebar
+        (activeTabChange)="onActiveTabChange($event)"
+        [activeTab]="activeView"
+      ></app-sidebar>
     </mat-sidenav>
     <mat-sidenav-content class="page-wrapper">
       <div class="page-content h-100">

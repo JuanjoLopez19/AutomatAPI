@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/api/auth/auth/auth.service';
 import { Sizes } from 'src/app/common/enums/enums';
 import { changePasswordParams } from 'src/app/common/interfaces/interfaces';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { passwordRegex } from 'src/app/common/constants';
 
 @Component({
   selector: 'app-change-password',
@@ -35,21 +36,11 @@ export class ChangePasswordComponent implements OnInit {
 
     this.changePasswordForm = new FormGroup({
       password: new FormControl(undefined, {
-        validators: [
-          Validators.required,
-          Validators.pattern(
-            '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
-          ),
-        ],
+        validators: [Validators.required, Validators.pattern(passwordRegex)],
         updateOn: 'submit',
       }),
       repeatPassword: new FormControl(undefined, {
-        validators: [
-          Validators.required,
-          Validators.pattern(
-            '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
-          ),
-        ],
+        validators: [Validators.required, Validators.pattern(passwordRegex)],
         updateOn: 'submit',
       }),
     });
