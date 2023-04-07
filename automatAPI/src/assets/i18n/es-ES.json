@@ -92,6 +92,8 @@
   "T_NUMBER": "Un número",
   "T_SYMBOL": "Un símbolo",
   "T_8_CHAR": "8 caracteres o más",
+  "T_COMPLETE_REGISTER": "Completa el registro",
+  "T_COMPLETE_REGISTER_STEPS": "Introduce los datos para acabar de configurar tu cuenta",
   "db": {
     "T_DB_TYPE": "Tipo de Base de datos",
     "T_DB_NAME": "Nombre de la base de datos",

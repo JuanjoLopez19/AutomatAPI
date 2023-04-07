@@ -92,6 +92,8 @@
   "T_NUMBER": "A number",
   "T_SYMBOL": "A symbol",
   "T_8_CHAR": "8 characters",
+  "T_COMPLETE_REGISTER": "Complete the register",
+  "T_COMPLETE_REGISTER_STEPS": "Introduce the following data to complete the register",
   "db":{
     "T_DB_TYPE": "Database type",
     "T_DB_NAME": "Database name",
