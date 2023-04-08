@@ -13,8 +13,6 @@ import "./passport";
 
 const app: Express = express();
 
-app.use(BodyParser.json());
-
 app.use(
 	cors({
 		origin: ["http://localhost:4200", "http://192.168.0.55:4200"],
@@ -30,9 +28,9 @@ app.use(
 		cookie: { secure: true },
 	})
 );
-app.use(express.json());
+
 app.use(cookieParser());
-app.use(express.urlencoded({ extended: true }));
+app.use(BodyParser.json());
 
 app.use(passport.initialize());
 app.use(passport.session()); // Need to use session for social auth
@@ -47,6 +45,7 @@ app.use(function (
 	next: NextFunction
 ) {
 	// set locals, only providing error in development
+	console.log(err);
 	res.locals.message = err.message;
 	res.locals.error = req.app.get("env") === "development" ? err : {};
 
