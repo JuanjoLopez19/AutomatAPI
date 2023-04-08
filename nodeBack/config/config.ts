@@ -55,6 +55,10 @@ const config = {
 		secretKey: process.env.AWS_SECRET_KEY || "secretKey",
 		region: process.env.AWS_REGION || "region",
 		bucket: process.env.AWS_BUCKET || "bucket",
+	},
+	python:{
+		host: process.env.PYTHON_BACKEND_HOST || "localhost",
+		port: process.env.PYTHON_BACKEND_PORT || "5000",
 	}
 };
 
