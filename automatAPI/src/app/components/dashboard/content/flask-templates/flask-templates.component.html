@@ -30,6 +30,12 @@
                           *ngIf="firstStepErrors.app_name['required']"
                           >{{ "error.T_APP_NAME_REQ" | translate }}</small
                         >
+                        <small
+                          id="endp-name-help"
+                          class="p-error block firstStep"
+                          *ngIf="firstStepErrors.app_name['pattern']"
+                          >{{ "error.T_APP_NAME_INVALID" | translate }}</small
+                        >
                       </div>
                     </div>
                   </div>
@@ -41,11 +47,11 @@
                         {{ "flask.T_APP_DESC" | translate }}
                       </div>
                       <div class="row w-50">
-                        <input
-                          type="text"
-                          pInputText
+                        <textarea
+                          pInputTextarea
                           formControlName="app_description"
-                        />
+                          maxlength="200"
+                        ></textarea>
                       </div>
                     </div>
                   </div>
@@ -328,8 +334,11 @@
                                       <button
                                         type="button"
                                         pButton
-                                        icon="pi pi-upload"
+                                        [icon]="iconCertFile"
                                         iconPos="right"
+                                        [pTooltip]="
+                                          'T_ONLY_CRT_PEM' | translate
+                                        "
                                         (click)="certInput.click()"
                                         [label]="certFileName | translate"
                                       ></button>
@@ -337,6 +346,7 @@
                                         hidden
                                         #certInput
                                         type="file"
+                                        accept=".crt, .pem"
                                         (change)="onFileChange($event, 'cert')"
                                       />
                                     </div>
@@ -344,8 +354,11 @@
                                       <button
                                         type="button"
                                         pButton
-                                        icon="pi pi-upload"
+                                        [icon]="iconKeyFile"
                                         iconPos="right"
+                                        [pTooltip]="
+                                          'T_ONLY_CRT_PEM' | translate
+                                        "
                                         (click)="keyInput.click()"
                                         [label]="keyFileName | translate"
                                       ></button>
@@ -353,6 +366,7 @@
                                         (change)="onFileChange($event, 'key')"
                                         hidden
                                         #keyInput
+                                        accept=".crt, .pem"
                                         type="file"
                                       />
                                     </div>
@@ -398,14 +412,12 @@
                                           .value === 'yes'
                                       "
                                     >
-                                      <div class="col-6" formGroupName="db">
+                                      <div class="col" formGroupName="db">
                                         <div class="row">
                                           <div class="col-12">
                                             <div class="row">
-                                              <div class="col-6">
-                                                {{
-                                                  "db.T_DB_TYPE" | translate
-                                                }}
+                                              <div class="col">
+                                                {{ "db.T_DB_TYPE" | translate }}
                                               </div>
                                             </div>
                                             <div class="row">
@@ -426,7 +438,7 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-8 mt-3">
+                              <div class="col-8">
                                 <div
                                   *ngIf="
                                     apiConfigFormGroup.get('db.db_type')
@@ -439,7 +451,7 @@
                                   <div class="row">
                                     <div class="col-6">
                                       <div class="row justify-content-start">
-                                        <div class="col-4">
+                                        <div class="col">
                                           {{ "db.T_DB_HOST" | translate }}
                                         </div>
                                       </div>
@@ -473,10 +485,8 @@
                                   <div class="row my-3">
                                     <div class="col-6">
                                       <div class="row justify-content-start">
-                                        <div class="col-4">
-                                          {{
-                                            "db.T_DB_USERNAME" | translate
-                                          }}
+                                        <div class="col">
+                                          {{ "db.T_DB_USERNAME" | translate }}
                                         </div>
                                       </div>
                                       <div class="row justify-content-start">
@@ -491,10 +501,8 @@
                                     </div>
                                     <div class="col-6">
                                       <div class="row">
-                                        <div class="col-6">
-                                          {{
-                                            "db.T_DB_PWD" | translate
-                                          }}
+                                        <div class="col">
+                                          {{ "db.T_DB_PWD" | translate }}
                                         </div>
                                       </div>
                                       <div class="row">
@@ -505,7 +513,7 @@
                                               'T_PWD_PLACEHOLDER' | translate
                                             }}"
                                             id="password"
-                                            [toggleMask]="true"
+                                            [toggleMask]="false"
                                             [feedback]="false"
                                           ></p-password>
                                         </div>
@@ -515,7 +523,7 @@
                                   <div class="row">
                                     <div class="col-6">
                                       <div class="row justify-content-start">
-                                        <div class="col-4">
+                                        <div class="col">
                                           {{ "db.T_DB_NAME" | translate }}
                                         </div>
                                       </div>
@@ -754,6 +762,7 @@
                 [editMode]="editMode"
                 [endpointData]="endpointSelection"
                 [endpointNameList]="getEndpointNameList()"
+                [endpointUrlList]="getEndpointUrlList()"
                 (Hide)="onHide()"
                 (endpointAdded)="onEndpointAdded($event)"
                 (endpointEdited)="onEndpointEdited($event)"
@@ -868,6 +877,7 @@
                 [editMode]="editMode"
                 [endpointData]="endpointSelection"
                 [endpointNameList]="getEndpointNameList(true)"
+                [endpointUrlList]="getEndpointUrlList(true)"
                 (Hide)="onHide()"
                 (endpointAdded)="onEndpointAdded($event, true)"
                 (endpointEdited)="onEndpointEdited($event, true)"

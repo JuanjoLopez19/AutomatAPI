@@ -50,7 +50,7 @@ interface djangoMethods {
   get_m: string;
   post: string;
   put: string;
-  del: string;
+  delete: string;
 }
 
 export interface djangoSubAppServicesTemplate {

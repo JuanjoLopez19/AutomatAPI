@@ -27,7 +27,7 @@ export interface flaskWebApp {
   cors: string;
   connect_DB: string;
   use_ssl: string;
-  ssl_files: sslFilesInterface;
+  certs: sslFilesInterface;
   db: databaseParams;
   table_name: string;
   config_file: string;
@@ -51,7 +51,7 @@ export interface flaskMethods {
   get_m: string;
   post: string;
   put: string;
-  del: string;
+  delete: string;
 }
 
 export interface flaskBlueprintAux {

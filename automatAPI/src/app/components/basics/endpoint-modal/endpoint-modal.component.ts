@@ -24,6 +24,7 @@ export class EndpointModalComponent implements OnInit {
   @Input() endpointDataExpress: expressEndpointTemplate = null;
   @Input() endpointDataDjango: djangoEndpointTemplate = null;
   @Input() endpointNameList: string[] = [];
+  @Input() endpointUrlList: string[] = [];
   @Input() type: string = 'flask';
 
   @Output() Hide: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -49,8 +50,11 @@ export class EndpointModalComponent implements OnInit {
   validName: boolean = false;
   validUrl: boolean = false;
   noMethodChecked: boolean = false;
+  duplicatedUrl: boolean = false;
 
   httpMethodSelector: dropdownParams[];
+
+  urlBackUp: string = '';
 
   constructor(private translate: TranslateService) {
     this.translate.get('T_SELECT_ONE').subscribe((res: string) => {
@@ -134,6 +138,8 @@ export class EndpointModalComponent implements OnInit {
     this.validUrl = false;
     this.noMethodChecked = false;
     this.duplicatedName = false;
+    this.duplicatedUrl = false;
+
     if (
       this.editMode &&
       (this.endpointData || this.endpointDataExpress || this.endpointDataDjango)
@@ -153,9 +159,10 @@ export class EndpointModalComponent implements OnInit {
             get_m: new FormControl(this.endpointData.methods.get_m === 'yes'),
             post: new FormControl(this.endpointData.methods.post === 'yes'),
             put: new FormControl(this.endpointData.methods.put === 'yes'),
-            del: new FormControl(this.endpointData.methods.del === 'yes'),
+            del: new FormControl(this.endpointData.methods.delete === 'yes'),
           }),
         });
+        this.urlBackUp = this.endpointData.endpoint_url;
       } else if (this.type == 'django') {
         this.addEndpointFormControl = new FormGroup({
           endpoint_name: new FormControl(
@@ -181,9 +188,12 @@ export class EndpointModalComponent implements OnInit {
               this.endpointDataDjango.methods.post === 'yes'
             ),
             put: new FormControl(this.endpointDataDjango.methods.put === 'yes'),
-            del: new FormControl(this.endpointDataDjango.methods.del === 'yes'),
+            del: new FormControl(
+              this.endpointDataDjango.methods.delete === 'yes'
+            ),
           }),
         });
+        this.urlBackUp = this.endpointDataDjango.endpoint_url;
       } else {
         this.addEndpointFormControl = new FormGroup({
           endpoint_name: new FormControl(
@@ -205,6 +215,7 @@ export class EndpointModalComponent implements OnInit {
             updateOn: 'blur',
           }),
         });
+        this.urlBackUp = this.endpointDataExpress.endpoint_url;
       }
     } else {
       if (this.type == 'flask') {
@@ -270,7 +281,8 @@ export class EndpointModalComponent implements OnInit {
       this.validateName() &&
       this.validateUrl() &&
       this.validateMethods() &&
-      this.validateDuplicatedName()
+      this.validateDuplicatedName() &&
+      this.validateDuplicatedUrl()
     ) {
       if (this.type == 'flask') {
         const endpoint: flaskEndpointTemplate = {
@@ -290,7 +302,7 @@ export class EndpointModalComponent implements OnInit {
             put: this.addEndpointFormControl.get('methods').get('put').value
               ? 'yes'
               : 'no',
-            del: this.addEndpointFormControl.get('methods').get('del').value
+            delete: this.addEndpointFormControl.get('methods').get('del').value
               ? 'yes'
               : 'no',
           },
@@ -316,7 +328,7 @@ export class EndpointModalComponent implements OnInit {
             put: this.addEndpointFormControl.get('methods').get('put').value
               ? 'yes'
               : 'no',
-            del: this.addEndpointFormControl.get('methods').get('del').value
+            delete: this.addEndpointFormControl.get('methods').get('del').value
               ? 'yes'
               : 'no',
           },
@@ -389,6 +401,25 @@ export class EndpointModalComponent implements OnInit {
     const result = this.endpointNameList.includes(name);
     if (result && !this.editMode) {
       this.duplicatedName = true;
+      return false;
+    }
+    return true;
+  }
+
+  validateDuplicatedUrl() {
+    const url = this.addEndpointFormControl.get('endpoint_url').value as string;
+    let substring: string;
+    let result: boolean;
+    if (url.startsWith('/')) {
+      substring = url.substring(1);
+      result = this.endpointUrlList.includes(substring);
+    } else result = this.endpointUrlList.includes(url);
+
+    if (
+      (result && !this.editMode) ||
+      (result && substring !== this.urlBackUp)
+    ) {
+      this.duplicatedUrl = true;
       return false;
     }
     return true;

@@ -5,14 +5,20 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { TranslateService } from '@ngx-translate/core';
-import { endpointRegex, hostRegex } from 'src/app/common/constants';
+import { FlaskTemplatesService } from 'src/app/api/templates/flask-templates.service';
+import {
+  endpointRegex,
+  functionNamePythonRegex,
+  hostRegex,
+} from 'src/app/common/constants';
 import {
   techUse,
   configFileTypes,
   dataBaseTypes,
+  techType,
 } from 'src/app/common/enums/enums';
 import {
   flaskBlueprint,
@@ -38,7 +44,7 @@ export class FlaskTemplatesComponent implements OnInit {
   flaskServicesData!: flaskServices;
   flaskWebAppData!: flaskWebApp;
 
-  private technology: string = 'flask';
+  private technology: techType = techType.flask;
   isLinear: boolean = true;
   useBlueprints: boolean = false;
   basicFormGroup: FormGroup;
@@ -52,6 +58,8 @@ export class FlaskTemplatesComponent implements OnInit {
 
   certFileName: string = 'T_CHOSE_CERT_FILE';
   keyFileName: string = 'T_CHOSE_KEY_FILE';
+  iconCertFile: string = 'pi pi-upload';
+  iconKeyFile: string = 'pi pi-upload';
 
   endpointBPList: flaskEndpointTemplate[] = [];
 
@@ -69,6 +77,7 @@ export class FlaskTemplatesComponent implements OnInit {
   firstStepErrors: any = {
     app_name: {
       required: false,
+      pattern: false,
     },
     app_description: {},
     host: {
@@ -84,7 +93,10 @@ export class FlaskTemplatesComponent implements OnInit {
     },
   };
 
-  constructor(private translate: TranslateService) {
+  constructor(
+    private translate: TranslateService,
+    private flaskService: FlaskTemplatesService
+  ) {
     this.translate
       .get(['T_SERVICES', 'T_APP_WEB', 'T_SELECT_ONE', 'T_DEV', 'T_PROD'])
       .subscribe((res) => {
@@ -149,7 +161,11 @@ export class FlaskTemplatesComponent implements OnInit {
   ngOnInit() {
     this.basicFormGroup = new FormGroup({
       app_name: new FormControl('', {
-        validators: [Validators.required],
+        validators: [
+          Validators.required,
+          Validators.pattern(functionNamePythonRegex),
+          Validators.maxLength(200),
+        ],
         updateOn: 'blur',
       }),
       app_description: new FormControl(''),
@@ -242,15 +258,32 @@ export class FlaskTemplatesComponent implements OnInit {
   onFileChange(event: any, type: string) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.apiConfigFormGroup.get('ssl_files')?.get(type)?.setValue(file);
-      if (type === 'cert') {
-        this.certFileName = file.name;
-        if (this.certFileName.length > 20)
-          this.certFileName = this.certFileName.substring(0, 15) + '...';
+      const splitFileName = file.name.split('.');
+      if (
+        splitFileName[splitFileName.length - 1] !== 'pem' &&
+        splitFileName[splitFileName.length - 1] !== 'crt'
+      ) {
+        this.apiConfigFormGroup.get('ssl_files')?.get(type)?.setValue('');
+        if (type === 'cert') {
+          this.certFileName = 'error.T_FILE_INVALID';
+          this.iconCertFile = 'pi pi-times';
+        } else {
+          this.keyFileName = 'error.T_FILE_INVALID';
+          this.iconKeyFile = 'pi pi-times';
+        }
       } else {
-        this.keyFileName = file.name;
-        if (this.keyFileName.length > 20)
-          this.keyFileName = this.keyFileName.substring(0, 15) + '...';
+        this.apiConfigFormGroup.get('ssl_files')?.get(type)?.setValue(file);
+        if (type === 'cert') {
+          this.certFileName = file.name;
+          if (this.certFileName.length > 20)
+            this.certFileName = this.certFileName.substring(0, 15) + '...';
+          this.iconCertFile = 'pi pi-check';
+        } else {
+          this.keyFileName = file.name;
+          if (this.keyFileName.length > 20)
+            this.keyFileName = this.keyFileName.substring(0, 15) + '...';
+          this.iconKeyFile = 'pi pi-check';
+        }
       }
     }
   }
@@ -343,7 +376,6 @@ export class FlaskTemplatesComponent implements OnInit {
   }
 
   onBPSelected(event: any) {
-    console.log(event);
     this.endpointBPList = event.data['endpoints'];
     this.bpName = event.data['name'];
     this.invalidBpName = false;
@@ -356,16 +388,20 @@ export class FlaskTemplatesComponent implements OnInit {
     else return this.endpointBPList.map((endpoint) => endpoint.endpoint_name);
   }
 
+  getEndpointUrlList(type: boolean = false) {
+    if (type)
+      return this.endpointList.map((endpoint) =>
+        endpoint.endpoint_url.split('/').pop()
+      );
+    else
+      return this.endpointBPList.map((endpoint) =>
+        endpoint.endpoint_url.split('/').pop()
+      );
+  }
+
   checkSelection() {
     if (this.bpSelection) return false;
     else return this.blueprintList.find((bp) => bp.name === this.bpName);
-  }
-
-  createTemplate() {
-    console.log(this.basicFormGroup.value);
-    console.log(this.apiConfigFormGroup.value);
-    console.log(this.blueprintsFormGroup.value);
-    console.log(this.endpointsFormGroup.value);
   }
 
   manageFirstStep() {
@@ -379,5 +415,110 @@ export class FlaskTemplatesComponent implements OnInit {
         this.firstStepErrors[key]['pattern'] = true;
       } else this.firstStepErrors[key]['pattern'] = false;
     });
+  }
+
+  createTemplate() {
+    if (this.basicFormGroup.get('tech_type').value === 'services') {
+      this.flaskServicesData = {
+        app_name: this.basicFormGroup.get('app_name')?.value,
+        app_description: this.basicFormGroup.get('app_description')?.value,
+        host: this.basicFormGroup.get('host')?.value,
+        port: this.basicFormGroup.get('port')?.value,
+
+        cors: this.apiConfigFormGroup.get('cors')?.value,
+        config_file: this.apiConfigFormGroup.get('config_file')?.value,
+        type_config_file:
+          this.apiConfigFormGroup.get('type_config_file')?.value,
+        connect_DB: this.apiConfigFormGroup.get('connect_DB')?.value,
+        db: {
+          db_name: this.apiConfigFormGroup.get('db')?.get('db_name')?.value,
+          db_user: this.apiConfigFormGroup.get('db')?.get('db_user')?.value,
+          db_pwd: this.apiConfigFormGroup.get('db')?.get('db_pwd')?.value,
+          db_host: this.apiConfigFormGroup.get('db')?.get('db_host')?.value,
+          db_port: this.apiConfigFormGroup.get('db')?.get('db_port')?.value,
+          db_type: this.apiConfigFormGroup.get('db')?.get('db_type')?.value,
+        },
+        table_name: this.apiConfigFormGroup.get('db')?.get('table_name')?.value,
+        use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
+        certs: {
+          cert: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+            'name'
+          ],
+          key: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+            'name'
+          ],
+        },
+        endpoints: [...this.endpointList],
+      };
+
+      this.flaskService
+        .createTemplateServices(
+          this.technology,
+          techUse.services,
+          this.flaskServicesData,
+          this.apiConfigFormGroup.get('ssl_files').get('cert').value,
+          this.apiConfigFormGroup.get('ssl_files').get('key').value
+        )
+        .subscribe();
+    } else if (this.basicFormGroup.get('tech_type').value === 'app_web') {
+      this.flaskWebAppData = {
+        app_name: this.basicFormGroup.get('app_name')?.value,
+        app_description: this.basicFormGroup.get('app_description')?.value,
+        host: this.basicFormGroup.get('host')?.value,
+        port: this.basicFormGroup.get('port')?.value,
+
+        cors: this.apiConfigFormGroup.get('cors')?.value,
+        config_file: this.apiConfigFormGroup.get('config_file')?.value,
+        type_config_file:
+          this.apiConfigFormGroup.get('type_config_file')?.value,
+        connect_DB: this.apiConfigFormGroup.get('connect_DB')?.value,
+        db: {
+          db_name: this.apiConfigFormGroup.get('db')?.get('db_name')?.value,
+          db_user: this.apiConfigFormGroup.get('db')?.get('db_user')?.value,
+          db_pwd: this.apiConfigFormGroup.get('db')?.get('db_pwd')?.value,
+          db_host: this.apiConfigFormGroup.get('db')?.get('db_host')?.value,
+          db_port: this.apiConfigFormGroup.get('db')?.get('db_port')?.value,
+          db_type: this.apiConfigFormGroup.get('db')?.get('db_type')?.value,
+        },
+        table_name: this.apiConfigFormGroup.get('db')?.get('table_name')?.value,
+        use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
+        certs: {
+          cert: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+            'name'
+          ],
+          key: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+            'name'
+          ],
+        },
+        endpoints: [...this.endpointList],
+
+        use_bp: this.apiConfigFormGroup.get('use_bp')?.value,
+        bp_list: {
+          list: this.mapBPList(
+            this.blueprintsFormGroup.get('bp_list')?.get('list')?.value
+          ),
+        },
+      };
+
+      this.flaskService
+        .createTemplateAppWeb(
+          this.technology,
+          techUse.services,
+          this.flaskWebAppData,
+          this.apiConfigFormGroup.get('ssl_files').get('cert').value,
+          this.apiConfigFormGroup.get('ssl_files').get('key').value
+        )
+        .subscribe();
+    }
+  }
+
+  mapBPList(bp: flaskBlueprint[]): any[] {
+    console.log(bp);
+    const aux: any[] = bp.reduce((result: any, { name, endpoints }) => {
+      result[name] = endpoints;
+      return result;
+    }, {});
+
+    return aux;
   }
 }

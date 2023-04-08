@@ -8,7 +8,7 @@ import { userParams } from 'src/app/common/interfaces/interfaces';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
-  activeView: string = 'django';
+  activeView: string = 'flask';
   user: userParams;
 
   constructor(private router: Router) {

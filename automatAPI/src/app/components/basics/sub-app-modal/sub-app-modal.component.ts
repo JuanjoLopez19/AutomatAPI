@@ -106,7 +106,7 @@ export class SubAppModalComponent implements OnInit {
             put: new FormControl(this.subAppData.methods.put, [
               Validators.required,
             ]),
-            del: new FormControl(this.subAppData.methods.del, [
+            del: new FormControl(this.subAppData.methods.delete, [
               Validators.required,
             ]),
           }),
@@ -138,7 +138,7 @@ export class SubAppModalComponent implements OnInit {
             put: new FormControl(this.subAppDataApp.methods.put, [
               Validators.required,
             ]),
-            del: new FormControl(this.subAppDataApp.methods.del, [
+            del: new FormControl(this.subAppDataApp.methods.delete, [
               Validators.required,
             ]),
           }),
@@ -190,7 +190,7 @@ export class SubAppModalComponent implements OnInit {
             get_m: this.addSubAppFormGroup.get('methods').get('get_m').value,
             post: this.addSubAppFormGroup.get('methods').get('post').value,
             put: this.addSubAppFormGroup.get('methods').get('put').value,
-            del: this.addSubAppFormGroup.get('methods').get('del').value,
+            delete: this.addSubAppFormGroup.get('methods').get('del').value,
           },
         };
         if (this.editMode) {
@@ -212,7 +212,7 @@ export class SubAppModalComponent implements OnInit {
             get_m: this.addSubAppFormGroup.get('methods').get('get_m').value,
             post: this.addSubAppFormGroup.get('methods').get('post').value,
             put: this.addSubAppFormGroup.get('methods').get('put').value,
-            del: this.addSubAppFormGroup.get('methods').get('del').value,
+            delete: this.addSubAppFormGroup.get('methods').get('del').value,
           },
         };
         if (this.editMode) {
