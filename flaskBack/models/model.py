@@ -48,12 +48,16 @@ class Users(db.Model):
     role = db.Column(db.Enum(Role), nullable=False)
     username = db.Column(db.String(200), nullable=False)
     password = db.Column(db.String(200), nullable=False)
-    first_name = db.Column(db.String(200), nullable=False)
-    last_name = db.Column(db.String(200), nullable=False)
+    firstName = db.Column(db.String(200), nullable=True)
+    lastName = db.Column(db.String(200), nullable=True)
     email = db.Column(db.String, nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+    activeUser = db.Column(db.Boolean, nullable=False, default=False)
     access_token = db.Column(db.String(200), nullable=False)
     password_token = db.Column(db.String(200), nullable=False)
+    google_id = db.Column(db.String(200), nullable=True)
+    github_id = db.Column(db.String(200), nullable=True)
+    image = db.Column(db.String(200), nullable=True)
 
     def serialize(self):
         """
@@ -64,12 +68,16 @@ class Users(db.Model):
             "role": self.role,
             "username": self.username,
             "password": self.password,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
+            "first_name": self.firstName,
+            "last_name": self.lastName,
             "email": self.email,
+            "active_user": self.activeUser,
             "date": self.date,
             "access_token": self.access_token,
-            "refresh_token": self.password_token,
+            "password_token": self.password_token,
+            "google_id": self.google_id,
+            "github_id": self.github_id,
+            "image": self.image,
         }
 
     def __getitem__(self, field):
