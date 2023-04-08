@@ -50,6 +50,12 @@ const config = {
 			process.env.TWITTER_CALLBACK ||
 			"http://localhost:3000/auth/twitter/callback",
 	},
+	aws:{
+		accessKey: process.env.AWS_ACCESS_KEY || "accessKey",
+		secretKey: process.env.AWS_SECRET_KEY || "secretKey",
+		region: process.env.AWS_REGION || "region",
+		bucket: process.env.AWS_BUCKET || "bucket",
+	}
 };
 
 export default config;
