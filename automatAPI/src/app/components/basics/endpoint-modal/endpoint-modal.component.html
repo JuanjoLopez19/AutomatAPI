@@ -82,13 +82,19 @@
                     *ngIf="validUrl"
                     >{{ "error.T_ENDP_URL_INVALID" | translate }}</small
                   >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="duplicatedUrl"
+                    >{{ "error.T_ENDP_URL_DUPL" | translate }}</small
+                  >
                 </div>
-                <div class="row justify-content-center">
+                <div class="row justify-content-center" *ngIf="type === 'django'">
                   <div class="row mx-0">
                     {{ "django.T_REQ_AUTH" | translate }}
                   </div>
 
-                  <div class="row pt-2 mx-0 px-0">
+                  <div class="row pt-2 mx-0 px-0" *ngIf="type === 'django'">
                     <div class="col-6">
                       <p-radioButton
                         inputId="admin_yes"

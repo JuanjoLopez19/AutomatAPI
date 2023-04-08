@@ -94,6 +94,8 @@
   "T_8_CHAR": "8 caracteres o más",
   "T_COMPLETE_REGISTER": "Completa el registro",
   "T_COMPLETE_REGISTER_STEPS": "Introduce los datos para acabar de configurar tu cuenta",
+  "T_ONLY_CRT_PEM": "Solo se permiten certificados en formato PEM o CRT",
+  "T_ENDPS": "Endpoints",
   "db": {
     "T_DB_TYPE": "Tipo de Base de datos",
     "T_DB_NAME": "Nombre de la base de datos",
@@ -149,7 +151,10 @@
     "T_PWDS_NOT_MATCH": "Las contraseñas no coinciden",
     "T_USERNAME_INVALID": "El nombre de usuario no es válido",
     "T_NAME_INVALID": "El nombre es inválido",
-    "T_SURNAME_INVALID": "Los apellidos son inválidos"
+    "T_SURNAME_INVALID": "Los apellidos son inválidos",
+    "T_APP_NAME_INVALID": "El nombre de la aplicación no es válido",
+    "T_FILE_INVALID": "El archivo no es válido",
+    "T_ENDP_URL_DUPL": "La URL del endpoint ya existe"
   },
   "flask": {
     "T_APP_NAME": "Nombre de la Aplicación",

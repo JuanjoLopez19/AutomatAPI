@@ -94,6 +94,8 @@
   "T_8_CHAR": "8 characters",
   "T_COMPLETE_REGISTER": "Complete the register",
   "T_COMPLETE_REGISTER_STEPS": "Introduce the following data to complete the register",
+  "T_ONLY_CRT_PEM": "Only .crt and .pem files are allowed",
+  "T_ENDPS": "Endpoints",
   "db":{
     "T_DB_TYPE": "Database type",
     "T_DB_NAME": "Database name",
@@ -150,7 +152,10 @@
     "T_PWDS_NOT_MATCH": "The passwords don't match",
     "T_USERNAME_INVALID": "The username is invalid",
     "T_NAME_INVALID": "The name is invalid",
-    "T_SURNAME_INVALID": "The surname is invalid"
+    "T_SURNAME_INVALID": "The surname is invalid",
+    "T_APP_NAME_INVALID": "The app's name is invalid",
+    "T_FILE_INVALID": "The file is invalid",
+    "T_ENDP_URL_DUPL": "Endpoint path already exists"
   },
   "flask":{
     "T_APP_NAME": "Application name",
