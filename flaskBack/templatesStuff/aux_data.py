@@ -350,7 +350,7 @@ express_test_app = {
         "strict":"yes",
         "body_parser":"no",
         "cors":"no",
-        "use_ssl": "yes",
+        "use_ssl": "no",
         "certs":{
             "cert_name": "cert",
             "key_name": "key"
@@ -358,10 +358,10 @@ express_test_app = {
         "view_engine":"pug",
         "css_engine":"css",
         "config_file":"yes",
-        "connect_DB":"no",
+        "connect_DB":"yes",
         "db":{
             "db_host": "localhost",
-            "db_type": "postgres",
+            "db_type": "sqlite",
             "db_port": "123",
             "db_name": "prueba",
             "db_user": "pruebaUser",

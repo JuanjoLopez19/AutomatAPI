@@ -48,6 +48,8 @@ class Users(db.Model):
     role = db.Column(db.Enum(Role), nullable=False)
     username = db.Column(db.String(200), nullable=False)
     password = db.Column(db.String(200), nullable=False)
+    first_name = db.Column(db.String(200), nullable=False)
+    last_name = db.Column(db.String(200), nullable=False)
     email = db.Column(db.String, nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     access_token = db.Column(db.String(200), nullable=False)
@@ -62,6 +64,8 @@ class Users(db.Model):
             "role": self.role,
             "username": self.username,
             "password": self.password,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
             "email": self.email,
             "date": self.date,
             "access_token": self.access_token,

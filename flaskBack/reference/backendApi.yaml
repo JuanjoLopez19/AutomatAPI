@@ -213,7 +213,7 @@ paths:
   '/templates/{templateId}':
     parameters:
       - schema:
-          type: string
+          type: integer
         description: template Identifier
         name: templateId
         in: path
@@ -333,14 +333,15 @@ paths:
               properties:
                 user_id:
                   type: integer
-  '/templates/{templatesId}/update':
+      parameters: []
+  '/templates/{templateId}/update':
     parameters:
       - schema:
           type: string
-        description: template Identifier
-        name: templatesId
+        name: templateId
         in: path
         required: true
+        description: Template Id
     put:
       tags:
         - Update Templates
@@ -478,14 +479,15 @@ paths:
                   template_data: {}
                   create_temp: true
         description: ''
-  '/templates/{templatesId}/delete':
+      parameters: []
+  '/templates/{templateId}/delete':
     parameters:
       - schema:
           type: string
-        description: template Identifier
-        name: templatesId
+        name: templateId
         in: path
         required: true
+        description: Template Id
     delete:
       tags:
         - Delete Templates
@@ -617,6 +619,7 @@ paths:
               Example 3:
                 value:
                   user_id: 43
+      parameters: []
   '/templates/{templateId}/create':
     parameters:
       - schema:
@@ -757,6 +760,7 @@ paths:
       tags:
         - Create Templates
         - Templates
+      parameters: []
 components:
   schemas:
     User:
@@ -798,10 +802,12 @@ components:
         - email
         - date
         - role
+      x-stoplight:
+        id: 9f72ypxmjsz1e
     Templates:
       title: Templates
       x-stoplight:
-        id: ugdw8fpr67sgu
+        id: 9f72ypxmjsz1e
       type: object
       properties:
         id:

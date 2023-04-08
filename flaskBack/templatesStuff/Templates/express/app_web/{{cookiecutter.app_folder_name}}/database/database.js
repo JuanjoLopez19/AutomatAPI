@@ -6,12 +6,18 @@ const db = new Sequelize(config.db.database, config.db.dbUser, config.db.passwor
     host: config.db.host,
     dialect: config.db.environment,/* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
     port: config.db.port
+    {%- if cookiecutter.db.db_type == "sqlite" %}
+    , storage: './database/{{cookiecutter.app_name}}.sqlite'
+    {%- endif %}
 });
 {%- else %}
 const db = new Sequelize({{cookiecutter.db.db_name}}, {{cookiecutter.db.db_user}}, {{cookiecutter.db.db_pwd}}, {
     host: {{cookiecutter.db.db_host}},
     dialect: {{cookiecutter.db.db_type}},/* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
     port: {{cookiecutter.db.db_port}}
+    {%- if cookiecutter.db.db_type == "sqlite" %}
+    , storage: './database/{{cookiecutter.app_name}}.sqlite'
+    {%- endif %}
 });
 {%- endif %}
 

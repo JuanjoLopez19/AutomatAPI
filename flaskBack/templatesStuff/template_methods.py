@@ -34,8 +34,8 @@ def temp_creator(
 
     # Set the tech and type to the template_args dict
 
-    template_args["tecnology"] = tech.name
-    template_args["type"] = type.name
+    template_args["tecnology"] = tech
+    template_args["type"] = type
 
     # Statics paths for the main template and the output path
     cookiecutter_template_path = add_base_path(
@@ -216,8 +216,15 @@ def temp_creator(
                 f.write(f2.read())
 
     # Compress the template and delete the temp files
-    path = compress_api(template_path, args["app_name"], args["app_name"])
-    return path
+    path = compress_api(template_path, args["app_folder_name"])
+    """if path:
+        key = upload_to_S3(path, args["app_folder_name"])
+        if key:
+            remove_temp_files(output_path)
+            return key
+    else:
+        return None"""
+    #return path
 
 
 def endpoint_creator(
@@ -618,9 +625,9 @@ def create_sub_app(
 
 
 if __name__ == "__main__":
-    temp_creator(flask_test_service, "flask", "services")
+    """temp_creator(flask_test_service, "flask", "services")
     temp_creator(flask_test_app, "flask", "app_web")
-    temp_creator(express_test_service, "express", "services")
+    temp_creator(express_test_service, "express", "services")"""
     temp_creator(express_test_app, "express", "app_web")
-    temp_creator(django_test_service, "django", "services")
-    temp_creator(django_test_app, "django", "app_web")
+    """temp_creator(django_test_service, "django", "services")
+    temp_creator(django_test_app, "django", "app_web")"""
