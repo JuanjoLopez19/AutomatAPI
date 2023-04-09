@@ -34,9 +34,9 @@ def temp_creator(
 
     # Set the tech and type to the template_args dict
 
-    template_args["tecnology"] = tech
-    template_args["type"] = type
-
+    template_args["tecnology"] = tech.name
+    template_args["type"] = type.name
+    
     # Statics paths for the main template and the output path
     cookiecutter_template_path = add_base_path(
         DEFAULT_CONFIG["cookiecutter"]["tecnology_args"][
@@ -217,14 +217,14 @@ def temp_creator(
 
     # Compress the template and delete the temp files
     path = compress_api(template_path, args["app_folder_name"])
-    """if path:
+    if path:
         key = upload_to_S3(path, args["app_folder_name"])
         if key:
             remove_temp_files(output_path)
             return key
     else:
-        return None"""
-    #return path
+        return None
+    
 
 
 def endpoint_creator(

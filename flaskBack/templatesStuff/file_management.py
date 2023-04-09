@@ -70,7 +70,7 @@ def upload_to_S3(path: str, key: str) -> str:
     bucket = os.getenv('BUCKET')
     try:
         s3 = boto3.client("s3")
-        response = s3.upload_file(path, bucket, f'{key}.zip')
+        response = s3.upload_file(path, bucket, f'templates/{key}.zip')
         if response is None:
             return f'{key}.zip'
         else:
