@@ -32,10 +32,6 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private elementRef: ElementRef
   ) {
-    translate.addLangs(['en', 'es-ES']);
-    translate.setDefaultLang('es-ES');
-    translate.use('es-ES');
-
     this.translate.get(['T_PROFILE', 'T_LOGOUT']).subscribe((res) => {
       this.items = [
         {
@@ -65,7 +61,6 @@ export class HeaderComponent implements OnInit {
     if (this.username.length > 10) {
       this.username = this.username.substring(0, 10) + '...';
     }
-    this.chooseLanguage(navigator.language);
   }
 
   ngAfterViewInit() {
@@ -73,15 +68,12 @@ export class HeaderComponent implements OnInit {
       '#avatar'
     ) as HTMLElement;
     if (this.userImg !== null) {
-      (avatar.childNodes[0] as HTMLElement).style.backgroundColor = "rgba(0, 0, 0, 0)"
+      (avatar.childNodes[0] as HTMLElement).style.backgroundColor =
+        'rgba(0, 0, 0, 0)';
       const image = avatar.childNodes[0].firstChild as HTMLImageElement;
       image.setAttribute('onerror', 'this.style.display = "none"');
       image.setAttribute('referrerPolicy', 'no-referrer');
     }
-  }
-
-  chooseLanguage(language: string) {
-    this.translate.use(language);
   }
 
   goToProfile() {
@@ -91,13 +83,9 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.logoutService.logout().subscribe({
       next: (response: HttpResponse<any>) => {
-        console.log('next');
-        console.log(response);
         this.router.navigate(['']);
       },
       error: (error: HttpErrorResponse) => {
-        console.log('error');
-        console.log(error);
         this.router.navigate(['']);
       },
     });

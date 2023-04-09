@@ -11,8 +11,10 @@ import {
 import {
   djangoEndpointTemplate,
   djangoModelFields,
+  djangoServices,
   djangoSubAppServicesTemplate,
   djangoSubAppWebAppTemplate,
+  djangoWebApp,
 } from 'src/app/common/interfaces/djangoTemplates';
 import { dropdownParams } from 'src/app/common/interfaces/interfaces';
 
@@ -26,6 +28,9 @@ export class DjangoTemplatesComponent implements OnInit {
   readonly techUse: typeof techUse = techUse;
 
   techType: techUse = techUse.services;
+
+  djangoServiceData!: djangoServices;
+  djangoWebAppData!: djangoWebApp;
 
   basicFormGroup: FormGroup;
   apiConfigFormGroup: FormGroup;
@@ -419,9 +424,92 @@ export class DjangoTemplatesComponent implements OnInit {
   }
 
   createTemplate() {
-    console.log(this.basicFormGroup.value);
-    console.log(this.apiConfigFormGroup.value);
-    console.log(this.subAppsFormGroup.value);
-    console.log(this.endpointsFormGroup.value);
+    if (this.techType === this.techUse.services) {
+      this.djangoServiceData = {
+        app_name: this.basicFormGroup.get('app_name')?.value,
+        app_description: this.basicFormGroup.get('app_description')?.value,
+        port: this.basicFormGroup.get('port')?.value,
+        host: this.basicFormGroup.get('host')?.value,
+        language_code: this.basicFormGroup.get('language_code')?.value,
+
+        admin_url: this.apiConfigFormGroup.get('admin_url')?.value,
+        admin_url_name: this.apiConfigFormGroup.get('admin_url_name')?.value,
+        web_browser: this.apiConfigFormGroup.get('web_browser')?.value,
+        web_browser_url: this.apiConfigFormGroup.get('web_browser_url')?.value,
+        db: {
+          db_name: this.apiConfigFormGroup.get('db')?.get('db_name')?.value,
+          db_user: this.apiConfigFormGroup.get('db')?.get('db_user')?.value,
+          db_pwd: this.apiConfigFormGroup.get('db')?.get('db_pwd')?.value,
+          db_host: this.apiConfigFormGroup.get('db')?.get('db_host')?.value,
+          db_port: this.apiConfigFormGroup.get('db')?.get('db_port')?.value,
+          db_type: this.apiConfigFormGroup.get('db')?.get('db_type')?.value,
+        },
+        use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
+        certs: {
+          cert: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+            'name'
+          ],
+          key: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+            'name'
+          ],
+        },
+        endpoints: [...this.endpointList],
+        sub_apps: {
+          apps: this.mapSubappsServices(
+            this.subAppsFormGroup.get('sub_apps')?.get('apps')?.value
+          ),
+        },
+      };
+
+      console.log(this.djangoServiceData);
+    } else if (this.techType === this.techUse.webApp) {
+      this.djangoWebAppData = {
+        app_name: this.basicFormGroup.get('app_name')?.value,
+        app_description: this.basicFormGroup.get('app_description')?.value,
+        port: this.basicFormGroup.get('port')?.value,
+        host: this.basicFormGroup.get('host')?.value,
+        language_code: this.basicFormGroup.get('language_code')?.value,
+
+        admin_url: this.apiConfigFormGroup.get('admin_url')?.value,
+        admin_url_name: this.apiConfigFormGroup.get('admin_url_name')?.value,
+        web_browser: this.apiConfigFormGroup.get('web_browser')?.value,
+        web_browser_url: this.apiConfigFormGroup.get('web_browser_url')?.value,
+        db: {
+          db_name: this.apiConfigFormGroup.get('db')?.get('db_name')?.value,
+          db_user: this.apiConfigFormGroup.get('db')?.get('db_user')?.value,
+          db_pwd: this.apiConfigFormGroup.get('db')?.get('db_pwd')?.value,
+          db_host: this.apiConfigFormGroup.get('db')?.get('db_host')?.value,
+          db_port: this.apiConfigFormGroup.get('db')?.get('db_port')?.value,
+          db_type: this.apiConfigFormGroup.get('db')?.get('db_type')?.value,
+        },
+        use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
+        certs: {
+          cert: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+            'name'
+          ],
+          key: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+            'name'
+          ],
+        },
+        endpoints: [...this.endpointList],
+        sub_apps: {
+          apps: this.mapSubappsApp(
+            this.subAppsFormGroup.get('sub_apps')?.get('apps')?.value
+          ),
+        },
+      };
+
+      console.log(this.djangoWebAppData);
+    }
+  }
+
+  mapSubappsApp(subApps: djangoSubAppWebAppTemplate[]): any[] {
+    console.log(subApps);
+    return null;
+  }
+
+  mapSubappsServices(subApps: djangoSubAppServicesTemplate[]): any[] {
+    console.log(subApps);
+    return null;
   }
 }

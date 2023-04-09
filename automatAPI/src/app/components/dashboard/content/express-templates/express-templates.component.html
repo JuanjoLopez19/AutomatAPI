@@ -183,6 +183,68 @@
                       <div class="row py-2">
                         <div class="col-3">
                           <div class="row">
+                            {{ "express.T_USE_STRICT" | translate }}
+                          </div>
+                        </div>
+                        <div class="col-8">
+                          <div class="row">
+                            <div class="col-6 d-flex justify-content-center">
+                              <p-radioButton
+                                inputId="strict_yes"
+                                value="yes"
+                                formControlName="strict"
+                              ></p-radioButton>
+                              <label for="strict_yes" class="ml-2">{{
+                                "T_YES" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6">
+                              <p-radioButton
+                                inputId="strict_no"
+                                value="no"
+                                formControlName="strict"
+                              ></p-radioButton>
+                              <label for="strict_no" class="ml-2">{{
+                                "T_NO" | translate
+                              }}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row py-2">
+                        <div class="col-3">
+                          <div class="row">
+                            {{ "express.T_USE_BODY_PARSER" | translate }}
+                          </div>
+                        </div>
+                        <div class="col-8">
+                          <div class="row">
+                            <div class="col-6 d-flex justify-content-center">
+                              <p-radioButton
+                                inputId="strict_yes"
+                                value="yes"
+                                formControlName="body_parser"
+                              ></p-radioButton>
+                              <label for="strict_yes" class="ml-2">{{
+                                "T_YES" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6">
+                              <p-radioButton
+                                inputId="strict_no"
+                                value="no"
+                                formControlName="body_parser"
+                              ></p-radioButton>
+                              <label for="strict_no" class="ml-2">{{
+                                "T_NO" | translate
+                              }}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row py-2">
+                        <div class="col-3">
+                          <div class="row">
                             {{ "flask.T_USE_CONFIG_FILE" | translate }}
                           </div>
                         </div>
@@ -242,7 +304,12 @@
                           </div>
                         </div>
                       </div>
-                      <div class="row pb-2">
+                      <div
+                        class="row pb-2"
+                        *ngIf="
+                          basicFormGroup.get('tech_type').value === 'app_web'
+                        "
+                      >
                         <div class="col-3">
                           <div class="row">
                             {{ "express.T_VIEW_ENGINE" | translate }}
@@ -313,7 +380,7 @@
                                 <button
                                   type="button"
                                   pButton
-                                  icon="pi pi-upload"
+                                  [icon]="iconCertFile"
                                   iconPos="right"
                                   (click)="certInput.click()"
                                   [label]="certFileName | translate"
@@ -329,7 +396,7 @@
                                 <button
                                   type="button"
                                   pButton
-                                  icon="pi pi-upload"
+                                  [icon]="iconKeyFile"
                                   iconPos="right"
                                   (click)="keyInput.click()"
                                   [label]="keyFileName | translate"
@@ -409,7 +476,13 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="row py-2">
+                            <div
+                              class="row py-2"
+                              *ngIf="
+                                basicFormGroup.get('tech_type').value ===
+                                'app_web'
+                              "
+                            >
                               <div class="col-3">
                                 <div>
                                   <div class="row">
@@ -555,12 +628,7 @@
             </div>
           </form>
         </mat-step>
-        <mat-step
-          *ngIf="
-            useControllers &&
-            basicFormGroup.get('tech_type').value === 'app_web'
-          "
-        >
+        <mat-step *ngIf="useControllers">
           <ng-template matStepLabel>{{
             "express.T_CONTROLLERS" | translate
           }}</ng-template>
@@ -580,7 +648,7 @@
                             styleClass="p-button-danger"
                             [label]="'T_DELETE' | translate"
                             [disabled]="controllerSelection === null"
-                            (click)="deleteBlueprint()"
+                            (click)="deleteController()"
                           ></p-button>
                         </div>
                       </div>
@@ -629,7 +697,7 @@
                         <div class="col-7 d-flex justify-content-end">
                           <p-button
                             [label]="'express.T_SAVE_CONTROLLER' | translate"
-                            (onClick)="saveBluePrint()"
+                            (onClick)="saveController()"
                           ></p-button>
                         </div>
                       </div>
@@ -749,7 +817,7 @@
                   </button>
                 </div>
                 <div class="col-2">
-                  <button pButton matStepperNext (click)="addBlueprints()">
+                  <button pButton matStepperNext (click)="addController()">
                     {{ "T_NEXT" | translate }}
                   </button>
                 </div>

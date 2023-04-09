@@ -5,6 +5,7 @@ export interface expressServices {
   app_description: string;
   host: string;
   port: number;
+
   strict: string;
   cors: string;
   body_parser: string;
@@ -14,6 +15,7 @@ export interface expressServices {
   connect_DB: string;
   db: databaseParams;
   use_controllers: string;
+
   controllers_list: expressControllerAux;
   endpoints: expressEndpointTemplate[];
 }
