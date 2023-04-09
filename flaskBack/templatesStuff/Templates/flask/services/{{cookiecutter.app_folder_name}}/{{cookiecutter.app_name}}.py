@@ -8,7 +8,7 @@ from flask_cors import CORS
 {%- endif %}
 
 app = Flask(__name__)
-{%- if cookiecutter.cors %}
+{%- if cookiecutter.cors == "yes" %}
 CORS(app)
 {%- endif %}
 {% if cookiecutter.config_file == 'yes' %}
