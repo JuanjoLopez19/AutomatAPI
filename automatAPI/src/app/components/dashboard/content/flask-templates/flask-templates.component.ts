@@ -8,6 +8,7 @@ import {
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { TranslateService } from '@ngx-translate/core';
+import { FileDownloaderService } from 'src/app/api/templates/fileDownloader/file-downloader.service';
 import { FlaskTemplatesService } from 'src/app/api/templates/flask-templates.service';
 import {
   endpointRegex,
@@ -95,7 +96,8 @@ export class FlaskTemplatesComponent implements OnInit {
 
   constructor(
     private translate: TranslateService,
-    private flaskService: FlaskTemplatesService
+    private flaskService: FlaskTemplatesService,
+    private fileDownloaderService: FileDownloaderService
   ) {
     this.translate
       .get(['T_SERVICES', 'T_APP_WEB', 'T_SELECT_ONE', 'T_DEV', 'T_PROD'])
@@ -459,7 +461,12 @@ export class FlaskTemplatesComponent implements OnInit {
           this.apiConfigFormGroup.get('ssl_files').get('cert').value,
           this.apiConfigFormGroup.get('ssl_files').get('key').value
         )
-        .subscribe();
+        .subscribe({
+          next: (data: any) => {
+            this.fileDownloaderService.downloadFile(data.data, this.flaskServicesData.app_name);
+          },
+          error: (error) => { console.log(error); },
+        });
     } else if (this.basicFormGroup.get('tech_type').value === 'app_web') {
       this.flaskWebAppData = {
         app_name: this.basicFormGroup.get('app_name')?.value,

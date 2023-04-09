@@ -35,7 +35,6 @@ export class FlaskTemplatesService {
       formData,
       {
         withCredentials: true,
-        headers: new HttpHeaders().set('Content-Type', 'multipart/form-data'),
       }
     );
   }
@@ -61,7 +60,6 @@ export class FlaskTemplatesService {
       formData,
       {
         withCredentials: true,
-        headers: new HttpHeaders().set('Content-Type', 'multipart/form-data'),
       }
     );
   }
