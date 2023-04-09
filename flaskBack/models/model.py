@@ -99,6 +99,7 @@ class Templates(db.Model):
         db.DateTime, nullable=False, default=db.func.current_timestamp()
     )
     template_ref = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.String(200), nullable=True)
 
     def serialize(self):
         """
@@ -112,6 +113,7 @@ class Templates(db.Model):
             "tech_type": self.tech_type,
             "date_created": self.date_created,
             "template_ref": self.template_ref,
+            "description": self.description,
         }
 
     def __getitem__(self, field):
