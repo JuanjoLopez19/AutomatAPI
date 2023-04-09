@@ -463,9 +463,14 @@ export class FlaskTemplatesComponent implements OnInit {
         )
         .subscribe({
           next: (data: any) => {
-            this.fileDownloaderService.downloadFile(data.data, this.flaskServicesData.app_name);
+            this.fileDownloaderService.downloadFile(
+              data.data,
+              this.flaskServicesData.app_name
+            );
           },
-          error: (error) => { console.log(error); },
+          error: (error) => {
+            console.log(error);
+          },
         });
     } else if (this.basicFormGroup.get('tech_type').value === 'app_web') {
       this.flaskWebAppData = {
@@ -507,25 +512,42 @@ export class FlaskTemplatesComponent implements OnInit {
         },
       };
 
+      console.log(this.flaskWebAppData);
       this.flaskService
         .createTemplateAppWeb(
           this.technology,
-          techUse.services,
+          techUse.webApp,
           this.flaskWebAppData,
           this.apiConfigFormGroup.get('ssl_files').get('cert').value,
           this.apiConfigFormGroup.get('ssl_files').get('key').value
         )
-        .subscribe();
+        .subscribe({
+          next: (data: any) => {
+            this.fileDownloaderService.downloadFile(
+              data.data,
+              this.flaskWebAppData.app_name
+            );
+          },
+          error: (error) => {
+            console.log(error);
+          },
+        });
     }
   }
 
-  mapBPList(bp: flaskBlueprint[]): any[] {
-    console.log(bp);
-    const aux: any[] = bp.reduce((result: any, { name, endpoints }) => {
+  mapBPList(bp: flaskBlueprint[]): any {
+    const aux: any = bp.reduce((result: any, { name, endpoints }) => {
       result[name] = endpoints;
       return result;
-    }, {});
+    }, {}) as Object;
 
-    return aux;
+    const aux2: any[] = [];
+    for (let key in aux) {
+      console.log(key);
+      let obj = { [key]: aux[key] };
+      aux2.push(obj);
+    }
+
+    return aux2;
   }
 }
