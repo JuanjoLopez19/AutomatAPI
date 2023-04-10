@@ -2,6 +2,8 @@ import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { TranslateService } from '@ngx-translate/core';
+import { ExpressTemplatesService } from 'src/app/api/templates/express/express-templates.service';
+import { FileDownloaderService } from 'src/app/api/templates/fileDownloader/file-downloader.service';
 import {
   endpointRegex,
   functionNamePythonRegex,
@@ -12,6 +14,7 @@ import {
   dataBaseTypes,
   viewEngines,
   cssEngines,
+  techType,
 } from 'src/app/common/enums/enums';
 import {
   expressController,
@@ -37,7 +40,7 @@ export class ExpressTemplatesComponent {
   expressServiceData!: expressServices;
   expressWebAppData!: expressWebApp;
 
-  private technology: string = 'express';
+  private technology: techType = techType.express;
   isLinear: boolean = true;
   useControllers: boolean = false;
   basicFormGroup: FormGroup;
@@ -86,7 +89,11 @@ export class ExpressTemplatesComponent {
     },
   };
 
-  constructor(private translate: TranslateService) {
+  constructor(
+    private translate: TranslateService,
+    private expressService: ExpressTemplatesService,
+    private fileDownloaderService: FileDownloaderService
+  ) {
     this.translate
       .get(['T_SERVICES', 'T_APP_WEB', 'T_SELECT_ONE', 'T_BASIC_HTML'])
       .subscribe((res) => {
@@ -496,6 +503,26 @@ export class ExpressTemplatesComponent {
       };
 
       console.log(this.expressServiceData); // add the service call here
+
+      this.expressService
+        .createTemplateServices(
+          this.technology,
+          techUse.services,
+          this.expressServiceData,
+          this.apiConfigFormGroup.get('ssl_files').get('cert').value,
+          this.apiConfigFormGroup.get('ssl_files').get('key').value
+        )
+        .subscribe({
+          next: (data: any) => {
+            this.fileDownloaderService.downloadFile(
+              data.data,
+              this.expressServiceData.app_name
+            );
+          },
+          error: (error) => {
+            console.log(error);
+          },
+        });
     } else if (this.basicFormGroup.get('tech_type')?.value === 'app_web') {
       this.expressWebAppData = {
         app_name: this.basicFormGroup.get('app_name')?.value,
@@ -535,6 +562,26 @@ export class ExpressTemplatesComponent {
       };
 
       console.log(this.expressWebAppData); // add the service call here
+
+      this.expressService
+        .createTemplateAppWeb(
+          this.technology,
+          techUse.services,
+          this.expressWebAppData,
+          this.apiConfigFormGroup.get('ssl_files').get('cert').value,
+          this.apiConfigFormGroup.get('ssl_files').get('key').value
+        )
+        .subscribe({
+          next: (data: any) => {
+            this.fileDownloaderService.downloadFile(
+              data.data,
+              this.expressWebAppData.app_name
+            );
+          },
+          error: (error) => {
+            console.log(error);
+          },
+        });
     }
   }
 

@@ -9,7 +9,7 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { TranslateService } from '@ngx-translate/core';
 import { FileDownloaderService } from 'src/app/api/templates/fileDownloader/file-downloader.service';
-import { FlaskTemplatesService } from 'src/app/api/templates/flask-templates.service';
+import { FlaskTemplatesService } from 'src/app/api/templates/flask/flask-templates.service';
 import {
   endpointRegex,
   functionNamePythonRegex,
