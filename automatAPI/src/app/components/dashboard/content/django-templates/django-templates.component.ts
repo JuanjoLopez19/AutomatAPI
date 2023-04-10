@@ -69,7 +69,7 @@ export class DjangoTemplatesComponent implements OnInit {
     tech_type: {
       required: false,
     },
-    lang: {
+    language_code: {
       required: false,
     },
   };
@@ -504,12 +504,41 @@ export class DjangoTemplatesComponent implements OnInit {
   }
 
   mapSubappsApp(subApps: djangoSubAppWebAppTemplate[]): any[] {
-    console.log(subApps);
-    return null;
+    if (subApps === undefined || subApps.length === 0) {
+      return subApps;
+    }
+
+    const aux: any = subApps.reduce((acc: any, curr) => {
+      acc[curr.subapp_name] = {
+        subapp_name: curr.subapp_name,
+        middleware: curr.middleware,
+        model: curr.model,
+        logged_in: curr.logged_in,
+        methods: curr.methods,
+        model_editable: curr.model_editable,
+      };
+      return acc;
+    }, {});
+
+    return aux;
   }
 
   mapSubappsServices(subApps: djangoSubAppServicesTemplate[]): any[] {
-    console.log(subApps);
-    return null;
+    if (subApps === undefined || subApps.length === 0) {
+      return subApps;
+    }
+
+    const aux: any = subApps.reduce((acc: any, curr) => {
+      acc[curr.subapp_name] = {
+        subapp_name: curr.subapp_name,
+        middleware: curr.middleware,
+        model: curr.model,
+        logged_in: curr.logged_in,
+        methods: curr.methods,
+      };
+      return acc;
+    }, {});
+
+    return aux;
   }
 }

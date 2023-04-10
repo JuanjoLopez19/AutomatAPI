@@ -62,7 +62,7 @@
                     <input
                       pInputText
                       id="endpoint_url"
-                      formControlName="middleware_name"
+                      formControlName="middleware"
                     />
                     <label htmlFor="endpoint_url">{{
                       "django.T_ACCESS_ROUTE" | translate
@@ -73,7 +73,7 @@
                   <small
                     id="endp-name-help"
                     class="p-error block"
-                    *ngIf="addSubAppFormGroup.get('middleware_name').errors?.[ 'required' ] && addSubAppFormGroup.get('middleware_name').touched"
+                    *ngIf="addSubAppFormGroup.get('middleware').errors?.[ 'required' ] && addSubAppFormGroup.get('middleware').touched"
                     >{{ "error.T_ENDP_URL_REQ" | translate }}</small
                   >
                   <small

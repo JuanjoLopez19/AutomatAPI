@@ -58,7 +58,7 @@ export class SubAppModalComponent implements OnInit {
       // From endpoint_name take it to the model_name when adding the subapp
       this.addSubAppFormGroup = new FormGroup({
         subapp_name: new FormControl('', [Validators.required]),
-        middleware_name: new FormControl('', [Validators.required]),
+        middleware: new FormControl('', [Validators.required]),
         logged_in: new FormControl('no', [Validators.required]),
         endpoint_name: new FormControl('', [Validators.required]),
         model_editable: new FormControl('no', [Validators.required]),
@@ -86,7 +86,7 @@ export class SubAppModalComponent implements OnInit {
           subapp_name: new FormControl(this.subAppData.subapp_name, [
             Validators.required,
           ]),
-          middleware_name: new FormControl(this.subAppData.middleware_name, [
+          middleware: new FormControl(this.subAppData.middleware, [
             Validators.required,
           ]),
           logged_in: new FormControl(this.subAppData.logged_in, [
@@ -116,7 +116,7 @@ export class SubAppModalComponent implements OnInit {
           subapp_name: new FormControl(this.subAppDataApp.subapp_name, [
             Validators.required,
           ]),
-          middleware_name: new FormControl(this.subAppDataApp.middleware_name, [
+          middleware: new FormControl(this.subAppDataApp.middleware, [
             Validators.required,
           ]),
           logged_in: new FormControl(this.subAppDataApp.logged_in, [
@@ -147,7 +147,7 @@ export class SubAppModalComponent implements OnInit {
     } else {
       this.addSubAppFormGroup = new FormGroup({
         subapp_name: new FormControl('', [Validators.required]),
-        middleware_name: new FormControl('', [Validators.required]),
+        middleware: new FormControl('', [Validators.required]),
         logged_in: new FormControl('no', [Validators.required]),
         endpoint_name: new FormControl('', [Validators.required]),
         model_editable: new FormControl('no', [Validators.required]),
@@ -178,7 +178,7 @@ export class SubAppModalComponent implements OnInit {
       if (this.subAppType === techUse.webApp) {
         const subApp: djangoSubAppWebAppTemplate = {
           subapp_name: this.addSubAppFormGroup.get('subapp_name').value,
-          middleware_name: this.addSubAppFormGroup.get('middleware_name').value,
+          middleware: this.addSubAppFormGroup.get('middleware').value,
           logged_in: this.addSubAppFormGroup.get('logged_in').value,
           endpoint_name: this.addSubAppFormGroup.get('endpoint_name').value,
           model_editable: this.addSubAppFormGroup.get('model_editable').value,
@@ -201,7 +201,7 @@ export class SubAppModalComponent implements OnInit {
       } else {
         const subApp: djangoSubAppServicesTemplate = {
           subapp_name: this.addSubAppFormGroup.get('subapp_name').value,
-          middleware_name: this.addSubAppFormGroup.get('middleware_name').value,
+          middleware: this.addSubAppFormGroup.get('middleware').value,
           logged_in: this.addSubAppFormGroup.get('logged_in').value,
           endpoint_name: this.addSubAppFormGroup.get('endpoint_name').value,
           model: {
@@ -266,7 +266,7 @@ export class SubAppModalComponent implements OnInit {
 
   validateURL(): boolean {
     const result = endpointRegex.test(
-      this.addSubAppFormGroup.get('middleware_name').value
+      this.addSubAppFormGroup.get('middleware').value
     );
     if (!result) this.validUrl = true;
     return result;
