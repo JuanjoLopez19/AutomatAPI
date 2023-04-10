@@ -1,12 +1,15 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { DjangoTemplatesService } from 'src/app/api/templates/django/django-templates.service';
+import { FileDownloaderService } from 'src/app/api/templates/fileDownloader/file-downloader.service';
 import { hostRegex } from 'src/app/common/constants';
 import {
   techUse,
   dataBaseTypes,
   LanguageNames,
   LanguageNamesSpanish,
+  techType,
 } from 'src/app/common/enums/enums';
 import {
   djangoEndpointTemplate,
@@ -26,7 +29,7 @@ import { dropdownParams } from 'src/app/common/interfaces/interfaces';
 export class DjangoTemplatesComponent implements OnInit {
   @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
   readonly techUse: typeof techUse = techUse;
-
+  readonly technology: techType = techType.django;
   techType: techUse = techUse.services;
 
   djangoServiceData!: djangoServices;
@@ -85,7 +88,11 @@ export class DjangoTemplatesComponent implements OnInit {
   endpointSelection: djangoEndpointTemplate = null;
   endpointList: djangoEndpointTemplate[] = [];
 
-  constructor(private translate: TranslateService) {
+  constructor(
+    private translate: TranslateService,
+    private djangoService: DjangoTemplatesService,
+    private fileDownloaderService: FileDownloaderService
+  ) {
     this.translate
       .get(['T_SERVICES', 'T_APP_WEB', 'T_SELECT_ONE', 'T_BASIC_HTML'])
       .subscribe((res) => {
@@ -446,10 +453,10 @@ export class DjangoTemplatesComponent implements OnInit {
         },
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
             'name'
           ],
-          key: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
             'name'
           ],
         },
@@ -462,6 +469,26 @@ export class DjangoTemplatesComponent implements OnInit {
       };
 
       console.log(this.djangoServiceData);
+
+      this.djangoService
+        .createTemplateAppWeb(
+          this.technology,
+          techUse.services,
+          this.djangoServiceData,
+          this.apiConfigFormGroup.get('ssl_files').get('cert').value,
+          this.apiConfigFormGroup.get('ssl_files').get('key').value
+        )
+        .subscribe({
+          next: (data: any) => {
+            this.fileDownloaderService.downloadFile(
+              data.data,
+              this.djangoServiceData.app_name
+            );
+          },
+          error: (error) => {
+            console.log(error);
+          },
+        });
     } else if (this.techType === this.techUse.webApp) {
       this.djangoWebAppData = {
         app_name: this.basicFormGroup.get('app_name')?.value,
@@ -484,10 +511,10 @@ export class DjangoTemplatesComponent implements OnInit {
         },
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
             'name'
           ],
-          key: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
             'name'
           ],
         },
@@ -500,6 +527,26 @@ export class DjangoTemplatesComponent implements OnInit {
       };
 
       console.log(this.djangoWebAppData);
+
+      this.djangoService
+        .createTemplateAppWeb(
+          this.technology,
+          techUse.services,
+          this.djangoWebAppData,
+          this.apiConfigFormGroup.get('ssl_files').get('cert').value,
+          this.apiConfigFormGroup.get('ssl_files').get('key').value
+        )
+        .subscribe({
+          next: (data: any) => {
+            this.fileDownloaderService.downloadFile(
+              data.data,
+              this.djangoWebAppData.app_name
+            );
+          },
+          error: (error) => {
+            console.log(error);
+          },
+        });
     }
   }
 
@@ -516,11 +563,19 @@ export class DjangoTemplatesComponent implements OnInit {
         logged_in: curr.logged_in,
         methods: curr.methods,
         model_editable: curr.model_editable,
+        endpoint_name: curr.endpoint_name,
       };
       return acc;
     }, {});
 
-    return aux;
+    const aux2: any[] = [];
+    for (let key in aux) {
+      console.log(key);
+      let obj = { [key]: aux[key] };
+      aux2.push(obj);
+    }
+
+    return aux2;
   }
 
   mapSubappsServices(subApps: djangoSubAppServicesTemplate[]): any[] {
@@ -535,10 +590,18 @@ export class DjangoTemplatesComponent implements OnInit {
         model: curr.model,
         logged_in: curr.logged_in,
         methods: curr.methods,
+        endpoint_name: curr.endpoint_name,
       };
       return acc;
     }, {});
 
-    return aux;
+    const aux2: any[] = [];
+    for (let key in aux) {
+      console.log(key);
+      let obj = { [key]: aux[key] };
+      aux2.push(obj);
+    }
+
+    return aux2;
   }
 }

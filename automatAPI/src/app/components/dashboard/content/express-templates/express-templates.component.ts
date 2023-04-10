@@ -474,10 +474,10 @@ export class ExpressTemplatesComponent {
         body_parser: this.apiConfigFormGroup.get('body_parser')?.value,
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
             'name'
           ],
-          key: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
             'name'
           ],
         },
@@ -535,8 +535,8 @@ export class ExpressTemplatesComponent {
         body_parser: this.apiConfigFormGroup.get('body_parser')?.value,
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value,
-          key: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value,
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value,
+          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value,
         },
         use_controllers: this.apiConfigFormGroup.get('use_controllers')?.value,
         connect_DB: this.apiConfigFormGroup.get('connect_DB')?.value,
