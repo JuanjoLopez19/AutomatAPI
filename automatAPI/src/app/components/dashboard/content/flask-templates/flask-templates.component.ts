@@ -443,10 +443,10 @@ export class FlaskTemplatesComponent implements OnInit {
         table_name: this.apiConfigFormGroup.get('db')?.get('table_name')?.value,
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
             'name'
           ],
-          key: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
             'name'
           ],
         },
@@ -495,10 +495,10 @@ export class FlaskTemplatesComponent implements OnInit {
         table_name: this.apiConfigFormGroup.get('db')?.get('table_name')?.value,
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
             'name'
           ],
-          key: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
             'name'
           ],
         },
