@@ -197,7 +197,9 @@
     "T_ENDP_NAME": "Endpoint name",
     "T_ENDP_DESC": "Endpoint description",
     "T_ENDP_URL": "Endpoint URL",
-    "T_ENDP_METHOD": "Endpoint method"
+    "T_ENDP_METHOD": "Endpoint method",
+    "T_USE_STRICT": "Use strict mode?",
+    "T_USE_BODY_PARSER": "Use body parser?"
   },
   "django":{
     "T_LANGUAGE": "Language",

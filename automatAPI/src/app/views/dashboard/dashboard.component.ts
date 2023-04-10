@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { userParams } from 'src/app/common/interfaces/interfaces';
 
 @Component({
@@ -7,19 +8,31 @@ import { userParams } from 'src/app/common/interfaces/interfaces';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent {
-  activeView: string = 'flask';
+export class DashboardComponent implements OnInit {
+  activeView: string = 'django';
   user: userParams;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private translate: TranslateService) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation.extras.state) {
       const aux = navigation.extras.state as { data: userParams };
       if (aux) this.user = aux.data;
       else this.router.navigate(['/']);
     } else this.router.navigate(['/']);
+
+    translate.addLangs(['en', 'es-ES']);
+    translate.setDefaultLang('es-ES');
+    translate.use('es-ES');
   }
   onActiveTabChange(event: string) {
     this.activeView = event;
+  }
+
+  ngOnInit(): void {
+    this.chooseLanguage(navigator.language);
+  }
+
+  chooseLanguage(language: string) {
+    this.translate.use(language);
   }
 }

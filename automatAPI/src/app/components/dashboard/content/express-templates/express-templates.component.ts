@@ -2,7 +2,11 @@ import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { TranslateService } from '@ngx-translate/core';
-import { endpointRegex, hostRegex } from 'src/app/common/constants';
+import {
+  endpointRegex,
+  functionNamePythonRegex,
+  hostRegex,
+} from 'src/app/common/constants';
 import {
   techUse,
   dataBaseTypes,
@@ -30,8 +34,8 @@ export class ExpressTemplatesComponent {
   showDialog: boolean = false;
   editMode: boolean = false;
 
-  flaskServicesData!: expressServices;
-  flaskWebAppData!: expressWebApp;
+  expressServiceData!: expressServices;
+  expressWebAppData!: expressWebApp;
 
   private technology: string = 'express';
   isLinear: boolean = true;
@@ -48,6 +52,8 @@ export class ExpressTemplatesComponent {
 
   certFileName: string = 'T_CHOSE_CERT_FILE';
   keyFileName: string = 'T_CHOSE_KEY_FILE';
+  iconCertFile: string = 'pi pi-upload';
+  iconKeyFile: string = 'pi pi-upload';
 
   endpointControllerList: expressEndpointTemplate[] = [];
 
@@ -193,7 +199,11 @@ export class ExpressTemplatesComponent {
   ngOnInit() {
     this.basicFormGroup = new FormGroup({
       app_name: new FormControl('', {
-        validators: [Validators.required],
+        validators: [
+          Validators.required,
+          Validators.pattern(functionNamePythonRegex),
+          Validators.maxLength(200),
+        ],
         updateOn: 'blur',
       }),
       app_description: new FormControl(''),
@@ -219,6 +229,14 @@ export class ExpressTemplatesComponent {
         validators: [Validators.required],
         updateOn: 'blur',
       }),
+      strict: new FormControl('no', {
+        validators: [Validators.required],
+        updateOn: 'blur',
+      }),
+      body_parser: new FormControl('no', {
+        validators: [Validators.required],
+        updateOn: 'blur',
+      }),
       connect_DB: new FormControl('no', {
         validators: [Validators.required],
         updateOn: 'change',
@@ -234,7 +252,7 @@ export class ExpressTemplatesComponent {
       db: new FormGroup({
         db_name: new FormControl('expressDatabase'),
         db_user: new FormControl('expressUser'),
-        db_pwd: new FormControl('flaskPassword'),
+        db_pwd: new FormControl('expressPassword'),
         db_host: new FormControl('localhost'),
         db_port: new FormControl('1234'),
         db_type: new FormControl('sqlite'),
@@ -248,7 +266,6 @@ export class ExpressTemplatesComponent {
         updateOn: 'blur',
       }),
       css_engine: new FormControl('', {
-        validators: [Validators.required],
         updateOn: 'blur',
       }),
       use_controllers: new FormControl('no', {
@@ -267,7 +284,7 @@ export class ExpressTemplatesComponent {
     });
   }
 
-  addBlueprints() {
+  addController() {
     // Here is where the object will be created
     this.controllersFormGroup
       .get('controllers_list')
@@ -291,15 +308,32 @@ export class ExpressTemplatesComponent {
   onFileChange(event: any, type: string) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.apiConfigFormGroup.get('ssl_files')?.get(type)?.setValue(file);
-      if (type === 'cert') {
-        this.certFileName = file.name;
-        if (this.certFileName.length > 20)
-          this.certFileName = this.certFileName.substring(0, 15) + '...';
+      const splitFileName = file.name.split('.');
+      if (
+        splitFileName[splitFileName.length - 1] !== 'pem' &&
+        splitFileName[splitFileName.length - 1] !== 'crt'
+      ) {
+        this.apiConfigFormGroup.get('ssl_files')?.get(type)?.setValue('');
+        if (type === 'cert') {
+          this.certFileName = 'error.T_FILE_INVALID';
+          this.iconCertFile = 'pi pi-times';
+        } else {
+          this.keyFileName = 'error.T_FILE_INVALID';
+          this.iconKeyFile = 'pi pi-times';
+        }
       } else {
-        this.keyFileName = file.name;
-        if (this.keyFileName.length > 20)
-          this.keyFileName = this.keyFileName.substring(0, 15) + '...';
+        this.apiConfigFormGroup.get('ssl_files')?.get(type)?.setValue(file);
+        if (type === 'cert') {
+          this.certFileName = file.name;
+          if (this.certFileName.length > 20)
+            this.certFileName = this.certFileName.substring(0, 15) + '...';
+          this.iconCertFile = 'pi pi-check';
+        } else {
+          this.keyFileName = file.name;
+          if (this.keyFileName.length > 20)
+            this.keyFileName = this.keyFileName.substring(0, 15) + '...';
+          this.iconKeyFile = 'pi pi-check';
+        }
       }
     }
   }
@@ -347,7 +381,7 @@ export class ExpressTemplatesComponent {
     this.endpointSelection = null;
   }
 
-  deleteBlueprint() {
+  deleteController() {
     this.controllerList = this.controllerList.filter(
       (controller) => controller !== this.controllerSelection
     );
@@ -362,7 +396,7 @@ export class ExpressTemplatesComponent {
     this.showDialog = true;
   }
 
-  saveBluePrint() {
+  saveController() {
     if (this.checkSelection()) {
       this.duplicatedControllerName = true;
     } else if (
@@ -421,10 +455,87 @@ export class ExpressTemplatesComponent {
   }
 
   createTemplate() {
-    console.log(this.basicFormGroup.value);
-    console.log(this.apiConfigFormGroup.value);
-    console.log(this.controllersFormGroup.value);
-    console.log(this.endpointsFormGroup.value);
+    if (this.basicFormGroup.get('tech_type')?.value === 'services') {
+      this.expressServiceData = {
+        app_name: this.basicFormGroup.get('app_name')?.value,
+        app_description: this.basicFormGroup.get('app_description')?.value,
+        host: this.basicFormGroup.get('host')?.value,
+        port: this.basicFormGroup.get('port')?.value,
+
+        strict: this.apiConfigFormGroup.get('strict')?.value,
+        cors: this.apiConfigFormGroup.get('cors')?.value,
+        body_parser: this.apiConfigFormGroup.get('body_parser')?.value,
+        use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
+        certs: {
+          cert: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+            'name'
+          ],
+          key: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+            'name'
+          ],
+        },
+        use_controllers: this.apiConfigFormGroup.get('use_controllers')?.value,
+        connect_DB: this.apiConfigFormGroup.get('connect_DB')?.value,
+        config_file: this.apiConfigFormGroup.get('config_file')?.value,
+        db: {
+          db_name: this.apiConfigFormGroup.get('db')?.get('db_name')?.value,
+          db_user: this.apiConfigFormGroup.get('db')?.get('db_user')?.value,
+          db_pwd: this.apiConfigFormGroup.get('db')?.get('db_pwd')?.value,
+          db_host: this.apiConfigFormGroup.get('db')?.get('db_host')?.value,
+          db_port: this.apiConfigFormGroup.get('db')?.get('db_port')?.value,
+          db_type: this.apiConfigFormGroup.get('db')?.get('db_type')?.value,
+        },
+
+        controllers_list: {
+          list: this.mapControllers(
+            this.controllersFormGroup.get('controllers_list')?.get('list')
+              ?.value
+          ),
+        },
+        endpoints: [...this.endpointList],
+      };
+
+      console.log(this.expressServiceData); // add the service call here
+    } else if (this.basicFormGroup.get('tech_type')?.value === 'app_web') {
+      this.expressWebAppData = {
+        app_name: this.basicFormGroup.get('app_name')?.value,
+        app_description: this.basicFormGroup.get('app_description')?.value,
+        host: this.basicFormGroup.get('host')?.value,
+        port: this.basicFormGroup.get('port')?.value,
+
+        strict: this.apiConfigFormGroup.get('strict')?.value,
+        cors: this.apiConfigFormGroup.get('cors')?.value,
+        body_parser: this.apiConfigFormGroup.get('body_parser')?.value,
+        use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
+        certs: {
+          cert: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value,
+          key: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value,
+        },
+        use_controllers: this.apiConfigFormGroup.get('use_controllers')?.value,
+        connect_DB: this.apiConfigFormGroup.get('connect_DB')?.value,
+        config_file: this.apiConfigFormGroup.get('config_file')?.value,
+        view_engine: this.apiConfigFormGroup.get('view_engine')?.value,
+        css_engine: this.apiConfigFormGroup.get('css_engine')?.value,
+        db: {
+          db_name: this.apiConfigFormGroup.get('db')?.get('db_name')?.value,
+          db_user: this.apiConfigFormGroup.get('db')?.get('db_user')?.value,
+          db_pwd: this.apiConfigFormGroup.get('db')?.get('db_pwd')?.value,
+          db_host: this.apiConfigFormGroup.get('db')?.get('db_host')?.value,
+          db_port: this.apiConfigFormGroup.get('db')?.get('db_port')?.value,
+          db_type: this.apiConfigFormGroup.get('db')?.get('db_type')?.value,
+        },
+
+        controllers_list: {
+          list: this.mapControllers(
+            this.controllersFormGroup.get('controllers_list')?.get('list')
+              ?.value
+          ),
+        },
+        endpoints: [...this.endpointList],
+      };
+
+      console.log(this.expressWebAppData); // add the service call here
+    }
   }
 
   manageFirstStep() {
@@ -438,5 +549,23 @@ export class ExpressTemplatesComponent {
         this.firstStepErrors[key]['pattern'] = true;
       } else this.firstStepErrors[key]['pattern'] = false;
     });
+  }
+
+  mapControllers(controllers: expressController[]) {
+    if (controllers === undefined || controllers.length === 0)
+      return controllers;
+    const aux: any = controllers.reduce((result: any, { name, endpoints }) => {
+      result[name] = endpoints;
+      return result;
+    }, {}) as Object;
+
+    const aux2: any[] = [];
+    for (let key in aux) {
+      console.log(key);
+      let obj = { [key]: aux[key] };
+      aux2.push(obj);
+    }
+
+    return aux2;
   }
 }
