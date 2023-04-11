@@ -10,7 +10,7 @@ export class FileDownloaderService {
   constructor(private http: HttpClient) {}
 
   downloadFile(token: string, fileName: string) {
-    const path = `${environment.awsRoute}${environment.awsBucket}${environment.awsTemplates}/${token}`;
+    const path = `${environment.awsRoute}${environment.awsTemplates}/${token}`;
     this.http.get(path, { responseType: 'blob' }).subscribe((res) => {
       saveAs(res, `${fileName}.zip`);
     });
