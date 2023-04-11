@@ -86,7 +86,7 @@ export class SubAppModalComponent implements OnInit {
           subapp_name: new FormControl(this.subAppData.subapp_name, [
             Validators.required,
           ]),
-          middleware_name: new FormControl(this.subAppData.middleware_name, [
+          middleware_name: new FormControl(this.subAppData.middleware, [
             Validators.required,
           ]),
           logged_in: new FormControl(this.subAppData.logged_in, [
@@ -116,7 +116,7 @@ export class SubAppModalComponent implements OnInit {
           subapp_name: new FormControl(this.subAppDataApp.subapp_name, [
             Validators.required,
           ]),
-          middleware_name: new FormControl(this.subAppDataApp.middleware_name, [
+          middleware_name: new FormControl(this.subAppDataApp.middleware, [
             Validators.required,
           ]),
           logged_in: new FormControl(this.subAppDataApp.logged_in, [
@@ -178,7 +178,7 @@ export class SubAppModalComponent implements OnInit {
       if (this.subAppType === techUse.webApp) {
         const subApp: djangoSubAppWebAppTemplate = {
           subapp_name: this.addSubAppFormGroup.get('subapp_name').value,
-          middleware_name: this.addSubAppFormGroup.get('middleware_name').value,
+          middleware: this.addSubAppFormGroup.get('middleware_name').value,
           logged_in: this.addSubAppFormGroup.get('logged_in').value,
           endpoint_name: this.addSubAppFormGroup.get('endpoint_name').value,
           model_editable: this.addSubAppFormGroup.get('model_editable').value,
@@ -201,7 +201,7 @@ export class SubAppModalComponent implements OnInit {
       } else {
         const subApp: djangoSubAppServicesTemplate = {
           subapp_name: this.addSubAppFormGroup.get('subapp_name').value,
-          middleware_name: this.addSubAppFormGroup.get('middleware_name').value,
+          middleware: this.addSubAppFormGroup.get('middleware_name').value,
           logged_in: this.addSubAppFormGroup.get('logged_in').value,
           endpoint_name: this.addSubAppFormGroup.get('endpoint_name').value,
           model: {

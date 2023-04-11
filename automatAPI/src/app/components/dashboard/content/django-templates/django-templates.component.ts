@@ -551,15 +551,6 @@ export class DjangoTemplatesComponent implements OnInit {
   }
 
   mapSubappsApp(subApps: djangoSubAppWebAppTemplate[]): any[] {
-<<<<<<< Updated upstream
-    console.log(subApps);
-    return null;
-  }
-
-  mapSubappsServices(subApps: djangoSubAppServicesTemplate[]): any[] {
-    console.log(subApps);
-    return null;
-=======
     if (subApps === undefined || subApps.length === 0) {
       return subApps;
     }
@@ -610,6 +601,5 @@ export class DjangoTemplatesComponent implements OnInit {
       aux2.push(obj);
     }
     return aux2;
->>>>>>> Stashed changes
   }
 }

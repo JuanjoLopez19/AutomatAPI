@@ -55,7 +55,7 @@ interface djangoMethods {
 
 export interface djangoSubAppServicesTemplate {
   subapp_name: string;
-  middleware_name: string;
+  middleware: string;
   logged_in: string;
   model: djangoModel;
   endpoint_name: string;
