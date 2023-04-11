@@ -96,7 +96,7 @@
   "T_COMPLETE_REGISTER_STEPS": "Introduce the following data to complete the register",
   "T_ONLY_CRT_PEM": "Only .crt and .pem files are allowed",
   "T_ENDPS": "Endpoints",
-  "db":{
+  "db": {
     "T_DB_TYPE": "Database type",
     "T_DB_NAME": "Database name",
     "T_DB_HOST": "Database host",
@@ -105,7 +105,7 @@
     "T_DB_PWD": "Database password",
     "T_TABLE_NAME": "Table name"
   },
-  "dashboard":{
+  "dashboard": {
     "T_HOME": "Home",
     "T_CREATE_TEMP": "Create template",
     "T_SAVED_TEMPLATES": "Saved Templates",
@@ -120,7 +120,22 @@
     "T_BASICS": "Basic configuration",
     "T_API_CONFIG": "API configuration",
     "T_ENDPOINTS": "Endpoints",
-    "T_SUMMARY": "Summary"
+    "T_SUMMARY": "Summary",
+    "T_SELECT_FIELD": "Select a field",
+    "T_SELECT_AN_OPTION": "Select an option",
+    "T_FILTER": "Filter",
+    "T_GENERAL_FILTER": "General filter",
+    "T_MANAGE_TEMPLATES": "Manage templates",
+    "T_MANAGE_TEMPLATES_SUBTITLE": "Here there is a list of the templates associated to your account",
+    "T_TEMPLATE_ID": "ID",
+    "T_TEMPLATE_USER": "User",
+    "T_TEMPLATE_NAME": "Name",
+    "T_TEMPLATE_DESC": "Description",
+    "T_TEMPLATE_TECH": "Technology",
+    "T_TEMPLATE_TECH_TYPE": "Type of use",
+    "T_TEMPLATE_DATE": "Creation date",
+    "T_TEMPLATE_EMPTY": "There are no templates associated to your account",
+    "T_TEMPLATE_OPTIONS": "Options"
   },
   "error": {
     "T_EMAIL_REQ": "The email is required",
@@ -157,7 +172,7 @@
     "T_FILE_INVALID": "The file is invalid",
     "T_ENDP_URL_DUPL": "Endpoint path already exists"
   },
-  "flask":{
+  "flask": {
     "T_APP_NAME": "Application name",
     "T_APP_DESC": "Application description",
     "T_TECH_TYPE": "Technology type",
@@ -173,18 +188,18 @@
     "T_BP_NAME": "Blueprint name",
     "T_ENDP_COUNT": "Endpoint count",
     "T_MANAGE_BP": "Manage blueprints",
-    "T_ENDP_NAME":"Endpoint name",
-    "T_ENDP_DESC":"Endpoint description",
-    "T_ENDP_URL":"Endpoint URL",
-    "T_ENDP_METHOD":"Endpoint method",
-    "T_ENDP_GET":"GET",
-    "T_ENDP_POST":"POST",
-    "T_ENDP_PUT":"PUT",
-    "T_ENDP_DEL":"DELETE",
+    "T_ENDP_NAME": "Endpoint name",
+    "T_ENDP_DESC": "Endpoint description",
+    "T_ENDP_URL": "Endpoint URL",
+    "T_ENDP_METHOD": "Endpoint method",
+    "T_ENDP_GET": "GET",
+    "T_ENDP_POST": "POST",
+    "T_ENDP_PUT": "PUT",
+    "T_ENDP_DEL": "DELETE",
     "T_SAVE_BP": "Save blueprint",
     "T_MANAGE_ENDP": "Manage endpoints"
   },
-  "express":{
+  "express": {
     "T_CONTROLLERS": "Controllers",
     "T_USE_CONTROLLER": "Use controllers?",
     "T_VIEW_ENGINE": "View engine",
@@ -201,7 +216,7 @@
     "T_USE_STRICT": "Use strict mode?",
     "T_USE_BODY_PARSER": "Use body parser?"
   },
-  "django":{
+  "django": {
     "T_LANGUAGE": "Language",
     "T_ADMIN_URL": "Admin URL?",
     "T_ADMIN_URL_PATH": "Admin path",
@@ -223,7 +238,7 @@
     "T_MODEL_NAME": "Model name",
     "T_MODEL_EDITABLE": "Model Editable?"
   },
-  "model":{
+  "model": {
     "T_FIELD_NAME": "Field name",
     "T_FIELD_TYPE": "Field type",
     "T_FIELD_NULL": "Null?",

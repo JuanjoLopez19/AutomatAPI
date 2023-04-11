@@ -41,6 +41,7 @@
       <app-sidebar
         (activeTabChange)="onActiveTabChange($event)"
         [activeTab]="activeView"
+        [isAdmin]="user.role === 'admin'"
       ></app-sidebar>
     </mat-sidenav>
     <mat-sidenav-content class="page-wrapper">
@@ -57,9 +58,9 @@
           *ngIf="activeView === 'express'"
         ></app-express-templates>
         <app-manage-users
-          *ngIf="activeView === 'manage_users'"
+          *ngIf="activeView === 'manage_users' && user.role === 'admin'"
         ></app-manage-users>
-        <app-manage-templates
+        <app-manage-templates [isAdmin]="user.role === 'admin'"
           *ngIf="activeView === 'manage_templates'"
         ></app-manage-templates>
         <app-profile *ngIf="activeView === 'profile'"></app-profile>

@@ -61,6 +61,8 @@ import { ProfileComponent } from './components/dashboard/profile/profile.compone
 import { SubAppModalComponent } from './components/basics/sub-app-modal/sub-app-modal.component';
 import { ModelModalComponent } from './components/basics/model-modal/model-modal.component';
 import { CompleteRegisterComponent } from './views/user-management/complete-register/complete-register.component';
+import { TemplateTableComponent } from './components/basics/tables/template-table/template-table.component';
+import { UsersTableComponent } from './components/basics/tables/users-table/users-table.component';
 
 
 
@@ -99,6 +101,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     SubAppModalComponent,
     ModelModalComponent,
     CompleteRegisterComponent,
+    TemplateTableComponent,
+    UsersTableComponent,
 
   ],
   imports: [

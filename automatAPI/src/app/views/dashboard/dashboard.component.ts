@@ -9,7 +9,7 @@ import { userParams } from 'src/app/common/interfaces/interfaces';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  activeView: string = 'django';
+  activeView: string = 'manage_templates';
   user: userParams;
 
   constructor(private router: Router, private translate: TranslateService) {
@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit {
       else this.router.navigate(['/']);
     } else this.router.navigate(['/']);
 
+    console.log(this.user);
     translate.addLangs(['en', 'es-ES']);
     translate.setDefaultLang('es-ES');
     translate.use('es-ES');

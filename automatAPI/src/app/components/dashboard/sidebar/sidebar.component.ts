@@ -7,6 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class SidebarComponent {
   @Input() activeTab: string = 'home';
+  @Input() isAdmin: boolean = false;
   state: number = -1;
 
   @Output() activeTabChange: EventEmitter<string> = new EventEmitter<string>();

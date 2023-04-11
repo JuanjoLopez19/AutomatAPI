@@ -135,7 +135,7 @@
       </div>
     </div>
   </div>
-  <div
+  <div *ngIf="isAdmin"
     class="row w-100 mx-0 py-2 pointer"
     name="manage_users"
     (click)="toggleActive('manage_users')"

@@ -1,0 +1,79 @@
+<div class="container-fluid">
+  <p-table
+    [value]="[
+      {
+        id: 1,
+        user_id: 1,
+        app_name: 'test',
+        description: 'test',
+        technology: 'test',
+        tech_type: 'test',
+        date_created: 'test'
+      }
+    ]"
+  >
+    ><ng-template pTemplate="header">
+      <tr>
+        <th *ngIf="isAdmin">{{ "dashboard.T_TEMPLATE_ID" | translate }}</th>
+        <th *ngIf="isAdmin">{{ "dashboard.T_TEMPLATE_USER" | translate }}</th>
+        <th>{{ "dashboard.T_TEMPLATE_NAME" | translate }}</th>
+        <th>{{ "dashboard.T_TEMPLATE_DESC" | translate }}</th>
+        <th>{{ "dashboard.T_TEMPLATE_TECH" | translate }}</th>
+        <th>{{ "dashboard.T_TEMPLATE_TECH_TYPE" | translate }}</th>
+        <th>{{ "dashboard.T_TEMPLATE_DATE" | translate }}</th>
+        <th style="width: 10rem;">{{"dashboard.T_TEMPLATE_OPTIONS" | translate}}</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-template *ngIf="true">
+      <tr [pSelectableRow]="template">
+        <td *ngIf="isAdmin">{{ template.id }}</td>
+        <td *ngIf="isAdmin">{{ template.user_id }}</td>
+        <td>{{ template.app_name }}</td>
+        <td>{{ template.description }}</td>
+        <td>{{ template.technology }}</td>
+        <td>{{ template.tech_type }}</td>
+        <td>{{ template.date_created }}</td>
+        <td>
+          <div class="row">
+            <div class="col-4">
+              <button
+                pButton
+                icon="pi pi-download"
+                class="p-button-rounded p-button-success p-mr-2"
+                (click)="(null)"
+              ></button>
+            </div>
+            <div class="col-4">
+              <button
+                pButton
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-warning p-mr-2"
+                (click)="(null)"
+              ></button>
+            </div>
+            <div class="col-4">
+              <button
+                pButton
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-danger"
+                (click)="(null)"
+              ></button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7">
+          <div class="d-flex align-items-center justify-content-center">
+            <span class="p-3">{{
+              "dashboard.T_TEMPLATE_EMPTY" | translate
+            }}</span>
+            <i class="pi pi-spin pi-spinner"></i>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
