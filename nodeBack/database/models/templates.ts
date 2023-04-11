@@ -1,5 +1,6 @@
 import db from "../database";
 import { DataTypes, Model, Optional } from "sequelize";
+import User from "./user";
 
 export enum techType {
 	"services" = "services",
@@ -60,10 +61,12 @@ Templates.init(
 		tech_type: {
 			type: DataTypes.ENUM("services", "app_web"),
 			allowNull: false,
+			values: Object.values(techType),
 		},
 		technology: {
 			type: DataTypes.ENUM("flask", "django", "express"),
 			allowNull: false,
+			values: Object.values(technology),
 		},
 		template_ref: {
 			type: DataTypes.STRING(200),
@@ -75,5 +78,8 @@ Templates.init(
 		tableName: "templates",
 	}
 );
+
+Templates.belongsTo(db.models.users, { foreignKey: "user_id" });
+User.hasMany(Templates, { foreignKey: "user_id" });
 
 export default Templates;
