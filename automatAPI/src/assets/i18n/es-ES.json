@@ -120,7 +120,22 @@
     "T_BASICS": "Configuración básica",
     "T_API_CONFIG": "Configuración de la API",
     "T_ENDPOINTS": "Endpoints",
-    "T_SUMMARY": "Resumen"
+    "T_SUMMARY": "Resumen",
+    "T_SELECT_FIELD": "Selecciona un campo",
+    "T_SELECT_AN_OPTION": "Selecciona una opción",
+    "T_FILTER": "Filtrar",
+    "T_GENERAL_FILTER": "Filtro global",
+    "T_MANAGE_TEMPLATES": "Gestionar plantillas",
+    "T_MANAGE_TEMPLATES_SUBTITLE": "Aquí puedes ver todas las plantillas que has creado",
+    "T_TEMPLATE_ID": "ID",
+    "T_TEMPLATE_USER": "Usuario",
+    "T_TEMPLATE_NAME": "Nombre",
+    "T_TEMPLATE_DESC": "Descripción",
+    "T_TEMPLATE_TECH": "Tecnología",
+    "T_TEMPLATE_TECH_TYPE": "Tipo de tecnología",
+    "T_TEMPLATE_DATE": "Fecha de creación",
+    "T_TEMPLATE_EMPTY": "No hay plantillas guardadas",
+    "T_TEMPLATE_OPTIONS": "Opciones"
   },
   "error": {
     "T_EMAIL_REQ": "El correo electrónico es obligatorio",
@@ -222,7 +237,7 @@
     "T_MODEL_NAME": "Nombre del modelo",
     "T_MODEL_EDITABLE": "Modelo Editable?"
   },
-  "model":{
+  "model": {
     "T_FIELD_NAME": "Nombre",
     "T_FIELD_TYPE": "Tipo",
     "T_FIELD_NULL": "Null?",
