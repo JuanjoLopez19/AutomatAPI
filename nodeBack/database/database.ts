@@ -1,5 +1,7 @@
 import { Sequelize, Dialect } from "sequelize";
 import config from "../config/config";
+import User from "./models/user";
+import Templates from "./models/templates";
 
 const dbName = config.db.database || "test";
 const dbUser = config.db.username || "test";
