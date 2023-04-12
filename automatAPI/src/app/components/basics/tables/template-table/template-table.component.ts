@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-
+import { templates } from 'src/app/common/interfaces/interfaces';
 
 @Component({
   selector: 'app-template-table',
@@ -8,12 +8,7 @@ import { Component, Input } from '@angular/core';
 })
 export class TemplateTableComponent {
   @Input() isAdmin: boolean = false;
+  @Input() templates: templates[] = null;
 
-
-  constructor() {
-
-  }
-
-
-
+  constructor() {}
 }
