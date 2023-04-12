@@ -1,7 +1,5 @@
 <div class="container-fluid">
-  <p-table
-    [value]="templates"
-  >
+  <p-table [value]="templates" [scrollable]="true" scrollHeight="500px">
     ><ng-template pTemplate="header">
       <tr>
         <th *ngIf="isAdmin">{{ "dashboard.T_TEMPLATE_ID" | translate }}</th>
@@ -11,7 +9,9 @@
         <th>{{ "dashboard.T_TEMPLATE_TECH" | translate }}</th>
         <th>{{ "dashboard.T_TEMPLATE_TECH_TYPE" | translate }}</th>
         <th>{{ "dashboard.T_TEMPLATE_DATE" | translate }}</th>
-        <th style="width: 10rem;">{{"dashboard.T_TEMPLATE_OPTIONS" | translate}}</th>
+        <th style="width: 10rem">
+          {{ "dashboard.T_TEMPLATE_OPTIONS" | translate }}
+        </th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-template *ngIf="true">
@@ -55,7 +55,7 @@
     </ng-template>
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td colspan="7">
+        <td colspan="8">
           <div class="d-flex align-items-center justify-content-center">
             <span class="p-3">{{
               "dashboard.T_TEMPLATE_EMPTY" | translate

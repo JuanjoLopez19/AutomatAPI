@@ -96,6 +96,13 @@
   "T_COMPLETE_REGISTER_STEPS": "Introduce the following data to complete the register",
   "T_ONLY_CRT_PEM": "Only .crt and .pem files are allowed",
   "T_ENDPS": "Endpoints",
+  "T_TEMPLATE_ID": "ID",
+  "T_TEMPLATE_USER": "User",
+  "T_TEMPLATE_NAME": "Name",
+  "T_TEMPLATE_DESC": "Description",
+  "T_TEMPLATE_TECH": "Technology",
+  "T_TEMPLATE_TECH_TYPE": "Type of use",
+  "T_TEMPLATE_DATE": "Creation date",
   "db": {
     "T_DB_TYPE": "Database type",
     "T_DB_NAME": "Database name",

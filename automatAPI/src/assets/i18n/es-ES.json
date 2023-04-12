@@ -96,6 +96,13 @@
   "T_COMPLETE_REGISTER_STEPS": "Introduce los datos para acabar de configurar tu cuenta",
   "T_ONLY_CRT_PEM": "Solo se permiten certificados en formato PEM o CRT",
   "T_ENDPS": "Endpoints",
+  "T_TEMPLATE_ID": "ID",
+  "T_TEMPLATE_USER": "Usuario",
+  "T_TEMPLATE_NAME": "Nombre",
+  "T_TEMPLATE_DESC": "Descripción",
+  "T_TEMPLATE_TECH": "Tecnología",
+  "T_TEMPLATE_TECH_TYPE": "Tipo de tecnología",
+  "T_TEMPLATE_DATE": "Fecha de creación",
   "db": {
     "T_DB_TYPE": "Tipo de Base de datos",
     "T_DB_NAME": "Nombre de la base de datos",
