@@ -20,7 +20,6 @@ export class DashboardComponent implements OnInit {
       else this.router.navigate(['/']);
     } else this.router.navigate(['/']);
 
-    console.log(this.user);
     translate.addLangs(['en', 'es-ES']);
     translate.setDefaultLang('es-ES');
     translate.use('es-ES');

@@ -1,3 +1,5 @@
+import { techType, techUse } from "../enums/enums";
+
 export interface loginParms {
   email: string;
   password: string;
@@ -74,4 +76,14 @@ export interface userParams{
   image:string;
   role:string;
   id:string;
+}
+
+export interface templates{
+  id:string;
+  user_id:string;
+  app_name:string;
+  description: string;
+  technology: techType;
+  tech_type: techUse;
+  date_created: string;
 }
