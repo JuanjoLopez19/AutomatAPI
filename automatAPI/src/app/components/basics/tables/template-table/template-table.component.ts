@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { templates } from 'src/app/common/interfaces/interfaces';
 
 @Component({
@@ -11,4 +11,16 @@ export class TemplateTableComponent {
   @Input() templates: templates[] = null;
 
   constructor() {}
+
+  downloadTemplate(template: templates) {
+    console.log(template);
+  }
+
+  editTemplate(template: templates) {
+    console.log(template);
+  }
+
+  deleteTemplate(template: templates) {
+    console.log(template);
+  }
 }

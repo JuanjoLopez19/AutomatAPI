@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ManageTemplatesService } from 'src/app/api/templates/manageTemplates/manage-templates.service';
 import { TemplateField } from 'src/app/common/enums/enums';
@@ -20,14 +21,18 @@ export class ManageTemplatesComponent implements OnInit {
   readonly templateField: any = TemplateField;
 
   templateData!: templates[];
+  backUpData!: templates[];
   filterForm: FormGroup;
 
   filterOptions: dropdownParams[] = [];
   fieldOptions: dropdownParams[] = [];
   constructor(
     private manageTemplatesServices: ManageTemplatesService,
-    private translate: TranslateService
-  ) {
+    private translate: TranslateService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
     this.translate
       .get([
         'T_TEMPLATE_ID',
@@ -54,37 +59,54 @@ export class ManageTemplatesComponent implements OnInit {
           }
         }
       });
-  }
-
-  ngOnInit(): void {
     this.filterForm = new FormGroup({
-      field: new FormControl(undefined, { updateOn: 'submit' }),
-      value: new FormControl(undefined, { updateOn: 'submit' }),
+      field: new FormControl(undefined, {
+        validators: [Validators.required],
+        updateOn: 'change',
+      }),
+      value: new FormControl(undefined, {
+        validators: [Validators.required],
+        updateOn: 'submit',
+      }),
     });
     this.manageTemplatesServices.getTemplates().subscribe({
       next: (res: httpResponse) => {
         if (res.status === 200) {
           this.templateData = res.data as templates[];
+          this.backUpData = res.data as templates[];
         }
       },
       error: (err: HttpErrorResponse) => {
-        console.log(err.status);
+        if (err.status === 401) this.router.navigate(['/']);
       },
     });
   }
 
   filterTable(event: SubmitEvent) {
-    console.log(event);
+    console.log(this.filterForm.value);
+    if (this.filterForm.invalid) return;
+    const auxData: templates[] = [];
+    this.backUpData.forEach((template) => {
+      if (template[this.filterForm.value.field] === this.filterForm.value.value)
+        auxData.push(template);
+    });
+    this.templateData = auxData;
   }
 
   filterChanged(event: any) {
-    console.log(event);
     this.mapFields(event.value);
+  }
+
+  resetTable() {
+    this.templateData = this.backUpData;
+    this.filterForm.get('field')?.setValue(undefined);
+    this.filterForm.get('value')?.reset();
+    this.fieldOptions = [];
   }
 
   mapFields(value: string) {
     const auxParams: dropdownParams[] = [];
-    this.templateData.forEach((template) => {
+    this.backUpData.forEach((template) => {
       auxParams.push({
         name: template[value],
         value: template[value],
