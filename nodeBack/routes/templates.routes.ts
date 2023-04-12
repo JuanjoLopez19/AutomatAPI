@@ -7,7 +7,8 @@ import {
 	makeFlaskTemplate,
 	makeExpressTemplate,
 	makeDjangoTemplate,
-	getTemplates
+	getTemplates,
+	deleteTemplate,
 } from "../controllers/templates.controllers";
 
 const routerTemplates = Router();
@@ -40,5 +41,7 @@ routerTemplates.post(
 );
 
 routerTemplates.get("/",passport.authorize("jwt"), getTemplates);
+
+routerTemplates.delete("/deleteTemplate", passport.authorize("jwt"), deleteTemplate);
 
 export default routerTemplates;
