@@ -402,3 +402,13 @@ export enum DjangoFieldType {
   URL = 'URL',
   UUID = 'UUID',
 }
+
+export enum  TemplateField {
+  "T_TEMPLATE_ID" = 'id',
+  "T_TEMPLATE_USER" = 'user_id',
+  "T_TEMPLATE_NAME" = 'app_name',
+  "T_TEMPLATE_DESC" = 'description',
+  "T_TEMPLATE_TECH" = 'technology',
+  "T_TEMPLATE_TECH_TYPE" = 'tech_type',
+  "T_TEMPLATE_DATE" = 'date_created',
+}
