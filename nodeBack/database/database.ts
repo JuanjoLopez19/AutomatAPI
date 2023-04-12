@@ -1,7 +1,6 @@
 import { Sequelize, Dialect } from "sequelize";
 import config from "../config/config";
-import User from "./models/user";
-import Templates from "./models/templates";
+
 
 const dbName = config.db.database || "test";
 const dbUser = config.db.username || "test";
@@ -23,8 +22,13 @@ const db = new Sequelize(dbName, dbUser, dbPass, {
 async function testConnection() {
 	try {
 		//alter = true updates the database if schema has changed
-		await db.sync();
-		await db.authenticate();
+		await db.authenticate().then(() => {
+			console.log("Connection has been established successfully.");
+			db.sync().then(() => {
+				console.log(db.models);
+				console.log("Database & tables created!");
+			});
+		});
 		console.log("Connection has been established successfully.");
 	} catch (error) {
 		console.error("Unable to connect to the database:", error);

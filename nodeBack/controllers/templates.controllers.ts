@@ -113,7 +113,7 @@ export const makeDjangoTemplate = async (req: any, res: Response) => {
 	}
 };
 
-export const getTemplates = async (req: any, res: Response) => {
+export const getTemplates = async (req: Request, res: Response) => {
 	//@ts-ignore
 	const user_id = await jwt.decode(req.cookies["jwt"]).id;
 	User.findByPk(user_id)
@@ -168,4 +168,54 @@ export const getTemplates = async (req: any, res: Response) => {
 			console.log(err);
 			res.status(500).json({ message: "Internal Server Error", status: 500 });
 		});
+};
+
+export const deleteTemplate = async (req: Request, res: Response) => {
+	if (req.body.template_id !== undefined) {
+		//@ts-ignore
+		const user_id = await jwt.decode(req.cookies["jwt"]).id;
+		try {
+			const response = await axios.post(
+				`${config.python.host}:${config.python.port}/templates/${req.body.template_id}/delete`,
+				{
+					user_id: user_id,
+				}
+			);
+			console.log(response.status);
+			res.status(response.status).json(response.data);
+		} catch (err) {
+			console.log(err);
+			res.status(500).json({ message: "Internal Server Error", status: 500 });
+		}
+	} else {
+		res.status(400).json({ message: "Bad Request", status: 400 });
+	}
+};
+
+export const updateTemplate = async (req: Request, res: Response) => {
+	if (
+		req.body.template_id !== undefined &&
+		req.body.template_data !== undefined
+	) {
+		//@ts-ignore
+		const user_id = await jwt.decode(req.cookies["jwt"]).id;
+		const { template_id, template_data, create_temp } = req.body;
+		try {
+			const response = await axios.post(
+				`${config.python.host}:${config.python.port}/templates/${template_id}/update`,
+				{
+					template_data: template_data,
+					user_id: user_id,
+					create_temp: create_temp,
+				}
+			);
+			console.log(response.status);
+			res.status(response.status).json(response.data);
+		} catch (err) {
+			console.log(err);
+			res.status(500).json({ message: "Internal Server Error", status: 500 });
+		}
+	} else {
+		res.status(400).json({ message: "Bad Request", status: 400 });
+	}
 };
