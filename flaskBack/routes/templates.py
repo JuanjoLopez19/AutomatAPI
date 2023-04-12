@@ -201,6 +201,7 @@ def get_templates():
                             "status": "ok",
                             "message": "The template was created successfully",
                             "data": template_path,
+                            "template_id": template.id
                         }
                     ),
                     201,

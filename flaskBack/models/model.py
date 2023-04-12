@@ -130,7 +130,7 @@ class Tokens(db.Model):
     """
 
     __tablename__ = "Tokens"
-    id = db.column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     template_id = db.Column(db.Integer, db.ForeignKey("templates.id"), nullable=False)
     cert_key = db.Column(db.String(200), nullable=True)
     private_key = db.Column(db.String(200), nullable=True)
