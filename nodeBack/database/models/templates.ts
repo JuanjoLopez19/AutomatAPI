@@ -21,6 +21,7 @@ export interface TemplateAttributes {
 	tech_type: techType;
 	technology: technology;
 	template_ref: string;
+	description?: string;
 }
 
 export interface TemplateInput extends Optional<TemplateAttributes, "id"> {}
@@ -37,6 +38,7 @@ class Templates
 	public tech_type!: techType;
 	public technology!: technology;
 	public template_ref!: string;
+	public description?: string;
 }
 
 Templates.init(
@@ -49,6 +51,10 @@ Templates.init(
 		user_id: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
+		},
+		description: {
+			type: DataTypes.STRING(200),
+			allowNull: true,
 		},
 		app_name: {
 			type: DataTypes.STRING(200),
@@ -78,8 +84,5 @@ Templates.init(
 		tableName: "templates",
 	}
 );
-
-Templates.belongsTo(db.models.users, { foreignKey: "user_id" });
-User.hasMany(Templates, { foreignKey: "user_id" });
 
 export default Templates;

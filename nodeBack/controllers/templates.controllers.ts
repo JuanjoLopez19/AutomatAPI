@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import config from "../config/config";
 import jwt from "jsonwebtoken";
 import axios from "axios";
+import User from "../database/models/user";
+import Templates from "../database/models/templates";
 
 export const makeFlaskTemplate = async (req: any, res: Response) => {
 	if (
@@ -104,9 +106,66 @@ export const makeDjangoTemplate = async (req: any, res: Response) => {
 			res.status(response.status).json(response.data);
 		} catch (err) {
 			console.log(err);
-			res.status(500).json({ message: "Internal Server Error" });
+			res.status(500).json({ message: "Internal Server Error", status: 500 });
 		}
 	} else {
-		res.status(400).json({ message: "Bad Request" });
+		res.status(400).json({ message: "Bad Request", status: 400 });
 	}
+};
+
+export const getTemplates = async (req: any, res: Response) => {
+	//@ts-ignore
+	const user_id = await jwt.decode(req.cookies["jwt"]).id;
+	User.findByPk(user_id)
+		.then((user: User | null) => {
+			if (user == null) {
+				res.status(404).json({ message: "User not found", status: 404 });
+			} else {
+				if (user.role == "admin") {
+					Templates.findAll()
+						.then((templates: Templates[]) => {
+							if (templates == null)
+								res
+									.status(404)
+									.json({ message: "No templates found", status: 404 });
+							else
+								res
+									.status(200)
+									.json({ data: templates, status: 200, message: "Success" });
+						})
+						.catch((err) => {
+							console.log(err);
+							res
+								.status(500)
+								.json({ message: "Internal Server Error", status: 500 });
+						});
+				} else {
+					Templates.findAll({
+						where: {
+							user_id: user_id,
+						},
+					})
+						.then((templates: Templates[]) => {
+							if (templates == null)
+								res
+									.status(404)
+									.json({ message: "No templates found", status: 404 });
+							else
+								res
+									.status(200)
+									.json({ data: templates, status: 200, message: "Success" });
+						})
+						.catch((err) => {
+							console.log(err);
+							res
+								.status(500)
+								.json({ message: "Internal Server Error", status: 500 });
+						});
+				}
+			}
+		})
+		.catch((err) => {
+			console.log(err);
+			res.status(500).json({ message: "Internal Server Error", status: 500 });
+		});
 };
