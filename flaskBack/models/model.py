@@ -100,6 +100,9 @@ class Templates(db.Model):
     )
     template_ref = db.Column(db.String(200), nullable=False)
     description = db.Column(db.String(200), nullable=True)
+    last_updated = db.Column( 
+        db.DateTime, nullable=False, default=db.func.current_timestamp()
+    )
 
     def serialize(self):
         """
@@ -114,6 +117,35 @@ class Templates(db.Model):
             "date_created": self.date_created,
             "template_ref": self.template_ref,
             "description": self.description,
+            "last_updated": self.last_updated,
+        }
+
+    def __getitem__(self, field):
+        return self.__dict__[field]
+
+
+class Tokens(db.Model):
+    """
+    Class for tokens table in database
+    """
+
+    __tablename__ = "Tokens"
+    id = db.column(db.Integer, primary_key=True)
+    template_id = db.Column(db.Integer, db.ForeignKey("templates.id"), nullable=False)
+    cert_key = db.Column(db.String(200), nullable=True)
+    private_key = db.Column(db.String(200), nullable=True)
+    template_token = db.Column(db.String(200), nullable=False)
+
+    def serialize(self):
+        """
+        Method to serialize the object Token and return a dictionary
+        """
+        return {
+            "id": self.id,
+            "template_id": self.template_id,
+            "cert_key": self.cert_key,
+            "private_key": self.private_key,
+            "template_token": self.template_token,
         }
 
     def __getitem__(self, field):
