@@ -19,34 +19,40 @@
         <td *ngIf="isAdmin">{{ template.id }}</td>
         <td *ngIf="isAdmin">{{ template.user_id }}</td>
         <td>{{ template.app_name }}</td>
-        <td>{{ template.description }}</td>
+        <td>
+          {{
+            template.description !== ""
+              ? template.description
+              : ("dashboard.T_NO_DESC" | translate)
+          }}
+        </td>
         <td>{{ template.technology }}</td>
         <td>{{ template.tech_type }}</td>
         <td>{{ template.date_created }}</td>
         <td>
           <div class="row">
-            <div class="col-4">
+            <div class="col-4 button">
               <button
                 pButton
                 icon="pi pi-download"
                 class="p-button-rounded p-button-success p-mr-2"
-                (click)="(null)"
+                (click)="downloadTemplate(template)"
               ></button>
             </div>
-            <div class="col-4">
+            <div class="col-4 button">
               <button
                 pButton
                 icon="pi pi-pencil"
                 class="p-button-rounded p-button-warning p-mr-2"
-                (click)="(null)"
+                (click)="editTemplate(template)"
               ></button>
             </div>
-            <div class="col-4">
+            <div class="col-4 button">
               <button
                 pButton
                 icon="pi pi-trash"
                 class="p-button-rounded p-button-danger"
-                (click)="(null)"
+                (click)="deleteTemplate(template)"
               ></button>
             </div>
           </div>

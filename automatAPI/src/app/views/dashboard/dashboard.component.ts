@@ -21,8 +21,6 @@ export class DashboardComponent implements OnInit {
     } else this.router.navigate(['/']);
 
     translate.addLangs(['en', 'es-ES']);
-    translate.setDefaultLang('es-ES');
-    translate.use('es-ES');
   }
   onActiveTabChange(event: string) {
     this.activeView = event;

@@ -18,7 +18,7 @@
               <span class="p-float-label w-100">
                 <p-dropdown
                   id="selectField"
-                  formControName="field"
+                  formControlName="field"
                   [options]="filterOptions"
                   optionLabel="name"
                   optionValue="value"
@@ -43,16 +43,31 @@
                 }}</label>
               </div>
             </div>
-            <div class="col-3">
-              <p-button
-                [label]="'dashboard.T_FILTER' | translate"
-                icon="pi pi-filter"
-                type="submit"
-                iconPos="right"
-                styleClass="p-button-rounded"
-              ></p-button>
+            <div class="col-4">
+              <div class="row">
+                <div class="col-4">
+                  <p-button
+                    [label]="'dashboard.T_FILTER' | translate"
+                    icon="pi pi-filter"
+                    type="submit"
+                    iconPos="right"
+                    styleClass="p-button-rounded"
+                  ></p-button>
+                </div>
+
+                <div class="col-6">
+                  <p-button
+                    [label]="'dashboard.T_RESET' | translate"
+                    icon="pi pi-refresh"
+                    type="button"
+                    iconPos="right"
+                    (onClick)="resetTable()"
+                    styleClass="p-button-rounded"
+                  ></p-button>
+                </div>
+              </div>
             </div>
-            <div class="col-3">
+            <div class="col-2">
               <div class="p-float-label">
                 <input pInputText />
                 <label for="in">{{

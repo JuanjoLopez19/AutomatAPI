@@ -142,7 +142,9 @@
     "T_TEMPLATE_TECH_TYPE": "Tipo de tecnología",
     "T_TEMPLATE_DATE": "Fecha de creación",
     "T_TEMPLATE_EMPTY": "No hay plantillas guardadas",
-    "T_TEMPLATE_OPTIONS": "Opciones"
+    "T_TEMPLATE_OPTIONS": "Opciones",
+    "T_NO_DESC": "Sin descripción",
+    "T_RESET": "Reiniciar tabla"
   },
   "error": {
     "T_EMAIL_REQ": "El correo electrónico es obligatorio",

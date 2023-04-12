@@ -142,7 +142,9 @@
     "T_TEMPLATE_TECH_TYPE": "Type of use",
     "T_TEMPLATE_DATE": "Creation date",
     "T_TEMPLATE_EMPTY": "There are no templates associated to your account",
-    "T_TEMPLATE_OPTIONS": "Options"
+    "T_TEMPLATE_OPTIONS": "Options",
+    "T_NO_DESC": "No description",
+    "T_RESET": "Reset table"
   },
   "error": {
     "T_EMAIL_REQ": "The email is required",
