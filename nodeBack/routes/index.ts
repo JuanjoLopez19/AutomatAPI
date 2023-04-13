@@ -6,7 +6,8 @@ import routerTemplates from "./templates.routes";
 const routes: Router = Router();
 
 routes.use("/auth", routerAuth);
-routes.use("/user", routerUser);
+routes.use("/users", routerUser);
 routes.use("/templates", routerTemplates)
+
 
 export default routes;
