@@ -87,42 +87,23 @@ export const makeExpressTemplate = async (req: any, res: Response) => {
 			);
 			const token = response.data.data;
 			const template_id = response.data.template_id;
-			bcrypt.genSalt(
-				config.saltRounds,
-				(err: Error | undefined, salt: string) => {
-					if (!err) {
-						bcrypt.hash(token, salt, (err: Error | undefined, hash: string) => {
-							if (!err) {
-								Tokens.create({
-									template_token: hash,
-									template_id: template_id,
-									cert_key:
-										aws_key_cert === null
-											? undefined
-											: bcrypt.hashSync(aws_key_cert, salt),
-									private_key:
-										aws_key_key === null
-											? undefined
-											: bcrypt.hashSync(aws_key_key, salt),
-								})
-									.then((token: any) => {
-										res.status(response.status).json(response.data);
-									})
-									.catch((err: Error) => {
-										console.log(err);
-										res.status(500).json({ message: "Internal Server Error" });
-									});
-							} else {
-								console.log(err);
-								res.status(500).json({ message: "Internal Server Error" });
-							}
-						});
-					} else {
-						console.log(err);
+			Tokens.create({
+				template_token: encryptData(token),
+				template_id: template_id,
+				cert_key: aws_key_cert === null ? undefined : encryptData(aws_key_cert),
+				private_key:
+					aws_key_key === null ? undefined : encryptData(aws_key_key),
+			})
+				.then((token: any) => {
+					if (!token) {
 						res.status(500).json({ message: "Internal Server Error" });
 					}
-				}
-			);
+					res.status(response.status).json(response.data);
+				})
+				.catch((err: Error) => {
+					console.log(err);
+					res.status(500).json({ message: "Internal Server Error" });
+				});
 		} catch (err) {
 			console.log(err);
 			res.status(500).json({ message: "Internal Server Error" });
@@ -159,42 +140,23 @@ export const makeDjangoTemplate = async (req: any, res: Response) => {
 			);
 			const token = response.data.data;
 			const template_id = response.data.template_id;
-			bcrypt.genSalt(
-				config.saltRounds,
-				(err: Error | undefined, salt: string) => {
-					if (!err) {
-						bcrypt.hash(token, salt, (err: Error | undefined, hash: string) => {
-							if (!err) {
-								Tokens.create({
-									template_token: hash,
-									template_id: template_id,
-									cert_key:
-										aws_key_cert === null
-											? undefined
-											: bcrypt.hashSync(aws_key_cert, salt),
-									private_key:
-										aws_key_key === null
-											? undefined
-											: bcrypt.hashSync(aws_key_key, salt),
-								})
-									.then((token: any) => {
-										res.status(response.status).json(response.data);
-									})
-									.catch((err: Error) => {
-										console.log(err);
-										res.status(500).json({ message: "Internal Server Error" });
-									});
-							} else {
-								console.log(err);
-								res.status(500).json({ message: "Internal Server Error" });
-							}
-						});
-					} else {
-						console.log(err);
+			Tokens.create({
+				template_token: encryptData(token),
+				template_id: template_id,
+				cert_key: aws_key_cert === null ? undefined : encryptData(aws_key_cert),
+				private_key:
+					aws_key_key === null ? undefined : encryptData(aws_key_key),
+			})
+				.then((token: any) => {
+					if (!token) {
 						res.status(500).json({ message: "Internal Server Error" });
 					}
-				}
-			);
+					res.status(response.status).json(response.data);
+				})
+				.catch((err: Error) => {
+					console.log(err);
+					res.status(500).json({ message: "Internal Server Error" });
+				});
 		} catch (err) {
 			console.log(err);
 			res.status(500).json({ message: "Internal Server Error", status: 500 });

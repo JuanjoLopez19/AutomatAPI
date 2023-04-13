@@ -59,6 +59,11 @@ const config = {
 	python:{
 		host: process.env.PYTHON_BACKEND_HOST || "localhost",
 		port: process.env.PYTHON_BACKEND_PORT || "5000",
+	},
+	cypher: {
+		algorithm: process.env.ENC_ALGORITHM || "aes-256-abc",
+		iv: process.env.IV_VECTOR || "iv",
+		key: process.env.CYPHER_KEY || "key",
 	}
 };
 
