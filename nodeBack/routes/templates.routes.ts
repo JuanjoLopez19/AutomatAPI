@@ -9,6 +9,7 @@ import {
 	makeDjangoTemplate,
 	getTemplates,
 	deleteTemplate,
+	getToken,
 } from "../controllers/templates.controllers";
 
 const routerTemplates = Router();
@@ -40,8 +41,14 @@ routerTemplates.post(
 	makeDjangoTemplate
 );
 
-routerTemplates.get("/",passport.authorize("jwt"), getTemplates);
+routerTemplates.get("/", passport.authorize("jwt"), getTemplates);
 
-routerTemplates.delete("/deleteTemplate", passport.authorize("jwt"), deleteTemplate);
+routerTemplates.delete(
+	"/deleteTemplate",
+	passport.authorize("jwt"),
+	deleteTemplate
+);
+
+routerTemplates.post("/getToken", passport.authorize("jwt"), getToken);
 
 export default routerTemplates;
