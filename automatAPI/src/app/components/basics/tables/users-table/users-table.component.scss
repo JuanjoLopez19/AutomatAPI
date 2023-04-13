@@ -1,0 +1,26 @@
+:host {
+  ::ng-deep .p-datatable tbody tr td {
+    text-align: center;
+  }
+
+  ::ng-deep .p-datatable tbody tr td {
+    text-align: center;
+  }
+
+  ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+    text-align: center;
+  }
+
+  .button {
+    padding-left: 0%;
+  }
+
+  .pi-google,
+  .pi-github .pi-check-circle {
+    color: green;
+  }
+
+  .pi-times {
+    color: #ff0000;
+  }
+}

@@ -166,7 +166,9 @@
     "T_USER_GITHUB": "Registro con github",
     "T_USER_ROLE": "Rol",
     "T_MANAGE_USERS": "Gestionar usuarios",
-    "T_MANAGE_USERS_SUBTITLE": "Aquí puedes ver todos los usuarios registrados"
+    "T_MANAGE_USERS_SUBTITLE": "Aquí puedes ver todos los usuarios registrados",
+    "T_NO_DATA": "No hay datos",
+    "T_USER_ACTIVE": "Activo"
   },
   "error": {
     "T_EMAIL_REQ": "El correo electrónico es obligatorio",

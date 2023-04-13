@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FileDownloaderService } from 'src/app/api/templates/fileDownloader/file-downloader.service';
 import { ManageTemplatesService } from 'src/app/api/templates/manageTemplates/manage-templates.service';
 import { templates, httpResponse, userParams } from 'src/app/common/interfaces/interfaces';
@@ -11,7 +11,7 @@ import { templates, httpResponse, userParams } from 'src/app/common/interfaces/i
 export class UsersTableComponent {
   @Input() isAdmin = false;
   @Input() userId: number = null;
-  @Input() templates: userParams[] = null;
+  @Input() users: userParams[] = null;
   @Output() refreshTable: EventEmitter<void> = new EventEmitter();
   constructor(
     private templateService: ManageTemplatesService,
@@ -46,5 +46,9 @@ export class UsersTableComponent {
         console.log(err);
       },
     });
+  }
+
+  OnChanges(changes: SimpleChanges){
+    console.log(changes);
   }
 }
