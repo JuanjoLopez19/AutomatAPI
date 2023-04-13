@@ -2,9 +2,6 @@ import { mailOptions, sendMail } from "./smtp";
 import config from "../config/config";
 import * as crypto from "crypto";
 
-const algorithm = "aes-256-cbc";
-const iv = crypto.randomBytes(16);
-const key = crypto.scryptSync(config.secretKey, "salt", 32);
 // Access and password token generator
 export const generateToken = (length: number) => {
 	var result = "";
@@ -85,22 +82,23 @@ export const sendPasswordResetEmail = async (
 	} else return 500;
 };
 
+const iv = Buffer.from(config.cypher.iv, "hex");
+const key = crypto.scryptSync(config.cypher.key, "salt", 32);
+
 export const encryptData = (data: string) => {
-	const cipher = crypto.createCipheriv(algorithm, key, iv);
+	const cipher = crypto.createCipheriv(config.cypher.algorithm, key, iv);
 
 	let encrypted = cipher.update(data, "utf8", "hex");
 	encrypted += cipher.final("hex");
 
-	console.log("Encrypted: " + encrypted);
 	return encrypted;
 };
 
 export const decryptData = (data: string) => {
-	const decipher = crypto.createDecipheriv(algorithm, key, iv);
+	const decipher = crypto.createDecipheriv(config.cypher.algorithm, key, iv);
 
 	let decrypted = decipher.update(data, "hex", "utf8");
 	decrypted += decipher.final("utf8");
 
-	console.log("Decrypted: " + decrypted);
 	return decrypted;
 };
