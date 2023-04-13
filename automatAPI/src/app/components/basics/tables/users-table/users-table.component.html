@@ -1,1 +1,73 @@
-<p>users-table works!</p>
+<div class="container-fluid">
+  <p-table [value]="templates" [scrollable]="true" scrollHeight="500px">
+    ><ng-template pTemplate="header">
+      <tr>
+        <th>{{ "dashboard.T_USER_ID" | translate }}</th>
+        <th>{{ "dashboard.T_USER_USERNAME" | translate }}</th>
+        <th>{{ "dashboard.T_USER_EMAIL" | translate }}</th>
+        <th>{{ "dashboard.T_USER_FIRSTNAME" | translate }}</th>
+        <th>{{ "dashboard.T_USER_LASTNAME" | translate }}</th>
+        <th>{{ "dashboard.T_USER_DATE" | translate }}</th>
+        <th>{{ "dashboard.T_USER_GOOGLE" | translate }}</th>
+        <th>{{ "dashboard.T_USER_GITHUB" | translate }}</th>
+        <th>{{ "dashboard.T_USER_ROLE" | translate }}</th>
+        <th style="width: 10rem">
+          {{ "dashboard.T_TEMPLATE_OPTIONS" | translate }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr [pSelectableRow]="user">
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.date }}</td>
+        <td>{{ user.google_id }}</td>
+        <td>{{ user.github_id }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+          <div class="row">
+            <div class="col-4 button">
+              <button
+                pButton
+                icon="pi pi-download"
+                class="p-button-rounded p-button-success p-mr-2"
+                (click)="downloadTemplate(null)"
+              ></button>
+            </div>
+            <div class="col-4 button">
+              <button
+                pButton
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-warning p-mr-2"
+                (click)="editTemplate(null)"
+              ></button>
+            </div>
+            <div class="col-4 button">
+              <button
+                pButton
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-danger"
+                (click)="deleteTemplate(null)"
+              ></button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="10">
+          <div class="d-flex align-items-center justify-content-center">
+            <span class="p-3">{{
+              "dashboard.T_USERS_EMPTY" | translate
+            }}</span>
+            <i class="pi pi-spin pi-spinner"></i>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

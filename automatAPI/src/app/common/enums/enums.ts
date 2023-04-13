@@ -403,12 +403,24 @@ export enum DjangoFieldType {
   UUID = 'UUID',
 }
 
-export enum  TemplateField {
-  "T_TEMPLATE_ID" = 'id',
-  "T_TEMPLATE_USER" = 'user_id',
-  "T_TEMPLATE_NAME" = 'app_name',
-  "T_TEMPLATE_DESC" = 'description',
-  "T_TEMPLATE_TECH" = 'technology',
-  "T_TEMPLATE_TECH_TYPE" = 'tech_type',
-  "T_TEMPLATE_DATE" = 'date_created',
+export enum TemplateField {
+  'T_TEMPLATE_ID' = 'id',
+  'T_TEMPLATE_USER' = 'user_id',
+  'T_TEMPLATE_NAME' = 'app_name',
+  'T_TEMPLATE_DESC' = 'description',
+  'T_TEMPLATE_TECH' = 'technology',
+  'T_TEMPLATE_TECH_TYPE' = 'tech_type',
+  'T_TEMPLATE_DATE' = 'date_created',
+}
+
+export enum UserField {
+  'T_USER_ID' = 'id',
+  'T_USER_USERNAME' = 'username',
+  'T_USER_EMAIL' = 'email',
+  'T_USER_DATE' = 'date',
+  'T_USER_FIRSTNAME' = 'firstName',
+  'T_USER_LASTNAME' = 'lastName',
+  'T_USER_GOOGLE' = 'google_id',
+  'T_USER_GITHUB' = 'github_id',
+  'T_USER_ROLE' = 'role',
 }
