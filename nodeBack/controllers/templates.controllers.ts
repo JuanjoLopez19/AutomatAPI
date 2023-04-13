@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 import axios, { AxiosRequestConfig } from "axios";
 import User from "../database/models/user";
 import Templates, { Tokens } from "../database/models/templates";
-import bcrypt from "bcrypt";
 import { decryptData, encryptData } from "../middleware/auxiliaryFunctions";
 
 export const makeFlaskTemplate = async (req: any, res: Response) => {
