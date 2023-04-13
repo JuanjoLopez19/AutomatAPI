@@ -566,7 +566,7 @@ export class ExpressTemplatesComponent {
       this.expressService
         .createTemplateAppWeb(
           this.technology,
-          techUse.services,
+          techUse.webApp,
           this.expressWebAppData,
           this.apiConfigFormGroup.get('ssl_files').get('cert').value,
           this.apiConfigFormGroup.get('ssl_files').get('key').value

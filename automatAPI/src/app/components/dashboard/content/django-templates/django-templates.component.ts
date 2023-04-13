@@ -531,7 +531,7 @@ export class DjangoTemplatesComponent implements OnInit {
       this.djangoService
         .createTemplateAppWeb(
           this.technology,
-          techUse.services,
+          techUse.webApp,
           this.djangoWebAppData,
           this.apiConfigFormGroup.get('ssl_files').get('cert').value,
           this.apiConfigFormGroup.get('ssl_files').get('key').value

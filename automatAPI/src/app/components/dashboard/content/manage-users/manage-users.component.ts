@@ -111,8 +111,10 @@ export class ManageUsersComponent {
     this.manageUserServices.getUsers().subscribe({
       next: (res: httpResponse) => {
         if (res.status === 200) {
+          console.log(res);
           this.userData = res.data as userParams[];
           this.backUpData = res.data as userParams[];
+
         }
       },
       error: (err: HttpErrorResponse) => {

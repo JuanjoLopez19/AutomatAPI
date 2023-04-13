@@ -166,7 +166,9 @@
     "T_USER_GITHUB": "Github User",
     "T_USER_ROLE": "Role",
     "T_MANAGE_USERS": "Manage users",
-    "T_MANAGE_USERS_SUBTITLE": "Here there is a list of the users in the database"
+    "T_MANAGE_USERS_SUBTITLE": "Here there is a list of the users in the database",
+    "T_NO_DATA": "No data",
+    "T_USER_ACTIVE": "Active user"
   },
   "error": {
     "T_EMAIL_REQ": "The email is required",
