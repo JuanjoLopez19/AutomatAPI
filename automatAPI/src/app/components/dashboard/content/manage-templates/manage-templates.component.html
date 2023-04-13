@@ -83,7 +83,9 @@
         <div class="col-12">
           <app-template-table
             [isAdmin]="isAdmin"
+            [userId]="parseInt(userId)"
             [templates]="templateData"
+            (refreshTable)="onTemplateChanged()"
           ></app-template-table>
         </div>
       </div>

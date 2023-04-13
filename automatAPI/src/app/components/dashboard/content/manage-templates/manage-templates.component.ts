@@ -18,6 +18,7 @@ import {
 })
 export class ManageTemplatesComponent implements OnInit {
   @Input() isAdmin: boolean = false;
+  @Input() userId: string = null;
   readonly templateField: any = TemplateField;
 
   templateData!: templates[];
@@ -69,17 +70,7 @@ export class ManageTemplatesComponent implements OnInit {
         updateOn: 'submit',
       }),
     });
-    this.manageTemplatesServices.getTemplates().subscribe({
-      next: (res: httpResponse) => {
-        if (res.status === 200) {
-          this.templateData = res.data as templates[];
-          this.backUpData = res.data as templates[];
-        }
-      },
-      error: (err: HttpErrorResponse) => {
-        if (err.status === 401) this.router.navigate(['/']);
-      },
-    });
+    this.getTemplateData();
   }
 
   filterTable(event: SubmitEvent) {
@@ -117,5 +108,27 @@ export class ManageTemplatesComponent implements OnInit {
         (item) => JSON.parse(item)
       ),
     ];
+  }
+
+  getTemplateData() {
+    this.manageTemplatesServices.getTemplates().subscribe({
+      next: (res: httpResponse) => {
+        if (res.status === 200) {
+          this.templateData = res.data as templates[];
+          this.backUpData = res.data as templates[];
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        if (err.status === 401) this.router.navigate(['/']);
+      },
+    });
+  }
+
+  onTemplateChanged(){
+    this.getTemplateData();
+  }
+
+  parseInt(value: string) {
+    return Number(value);
   }
 }
