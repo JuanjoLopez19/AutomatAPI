@@ -1,6 +1,7 @@
 import User from "../database/models/user";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export const verifySignUp = (req: Request, res: Response, next: any) => {
 	// Username Check
@@ -38,7 +39,7 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 								.send();
 							return;
 						}
-						
+
 						next();
 					})
 					.catch((err: any) => {
@@ -124,4 +125,40 @@ export const verifySignIn = (req: Request, res: Response, next: any) => {
 			.send();
 		return;
 	}
+};
+
+export const isAdmin = async (req: Request, res: Response, next: any) => {
+	// @ts-ignore: Object is possibly 'null'.
+	const user_id = await jwt.decode(req.cookies["jwt"]).id;
+	User.findByPk(user_id)
+		.then((user: User | null) => {
+			if (user === null) {
+				res
+					.status(404)
+					.contentType("application/json")
+					.json({ message: "User not found", status: 404 })
+					.send();
+				return;
+			} else {
+				if (user.role === "admin") {
+					req.user = user;
+					next();
+				} else {
+					res
+						.status(403)
+						.contentType("application/json")
+						.json({ message: "Forbidden", status: 403 })
+						.send();
+					return;
+				}
+			}
+		})
+		.catch((err: any) => {
+			res
+				.status(500)
+				.contentType("application/json")
+				.json({ message: err.message, status: 500 })
+				.send();
+			return;
+		});
 };
