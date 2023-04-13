@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import config from "../config/config";
 import jwt from "jsonwebtoken";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import User from "../database/models/user";
 import Templates, { Tokens } from "../database/models/templates";
 import bcrypt from "bcrypt";
+import { decryptData, encryptData } from "../middleware/auxiliaryFunctions";
 
 export const makeFlaskTemplate = async (req: any, res: Response) => {
 	if (
@@ -33,42 +34,23 @@ export const makeFlaskTemplate = async (req: any, res: Response) => {
 			);
 			const token = response.data.data;
 			const template_id = response.data.template_id;
-			bcrypt.genSalt(
-				config.saltRounds,
-				(err: Error | undefined, salt: string) => {
-					if (!err) {
-						bcrypt.hash(token, salt, (err: Error | undefined, hash: string) => {
-							if (!err) {
-								Tokens.create({
-									template_token: hash,
-									template_id: template_id,
-									cert_key:
-										aws_key_cert === null
-											? undefined
-											: bcrypt.hashSync(aws_key_cert, salt),
-									private_key:
-										aws_key_key === null
-											? undefined
-											: bcrypt.hashSync(aws_key_key, salt),
-								})
-									.then((token: any) => {
-										res.status(response.status).json(response.data);
-									})
-									.catch((err: Error) => {
-										console.log(err);
-										res.status(500).json({ message: "Internal Server Error" });
-									});
-							} else {
-								console.log(err);
-								res.status(500).json({ message: "Internal Server Error" });
-							}
-						});
-					} else {
-						console.log(err);
+			Tokens.create({
+				template_token: encryptData(token),
+				template_id: template_id,
+				cert_key: aws_key_cert === null ? undefined : encryptData(aws_key_cert),
+				private_key:
+					aws_key_key === null ? undefined : encryptData(aws_key_key),
+			})
+				.then((token: any) => {
+					if (!token) {
 						res.status(500).json({ message: "Internal Server Error" });
 					}
-				}
-			);
+					res.status(response.status).json(response.data);
+				})
+				.catch((err: Error) => {
+					console.log(err);
+					res.status(500).json({ message: "Internal Server Error" });
+				});
 		} catch (err) {
 			console.log(err);
 			res.status(500).json({ message: "Internal Server Error" });
@@ -284,11 +266,12 @@ export const deleteTemplate = async (req: Request, res: Response) => {
 		//@ts-ignore
 		const user_id = await jwt.decode(req.cookies["jwt"]).id;
 		try {
-			const response = await axios.post(
+			const body = { user_id: user_id };
+			const response = await axios.delete(
 				`${config.python.host}:${config.python.port}/templates/${req.body.template_id}/delete`,
 				{
-					user_id: user_id,
-				}
+					data: body,
+				} as AxiosRequestConfig
 			);
 			console.log(response.status);
 			res.status(response.status).json(response.data);
@@ -324,6 +307,57 @@ export const updateTemplate = async (req: Request, res: Response) => {
 			console.log(err);
 			res.status(500).json({ message: "Internal Server Error", status: 500 });
 		}
+	} else {
+		res.status(400).json({ message: "Bad Request", status: 400 });
+	}
+};
+
+export const getToken = async (req: Request, res: Response) => {
+	if (req.body.template_id !== undefined) {
+		//@ts-ignore
+		const user_id = await jwt.decode(req.cookies["jwt"]).id;
+		Templates.findOne({
+			where: {
+				id: req.body.template_id,
+				user_id: user_id,
+			},
+		})
+			.then((template: Templates | null) => {
+				if (template == null) {
+					res.status(404).json({ message: "Template not found", status: 404 });
+				} else {
+					Tokens.findOne({
+						where: {
+							template_id: template.id,
+						},
+					})
+						.then((token: Tokens | null) => {
+							if (token == null) {
+								res
+									.status(404)
+									.json({ message: "Token not found", status: 404 });
+							} else {
+								const tokenDecrypt = decryptData(token.template_token);
+								console.log(tokenDecrypt);
+								res.status(200).json({
+									data: tokenDecrypt,
+									status: 200,
+									message: "Success",
+								});
+							}
+						})
+						.catch((err) => {
+							console.log(err);
+							res
+								.status(500)
+								.json({ message: "Internal Server Error", status: 500 });
+						});
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+				res.status(500).json({ message: "Internal Server Error", status: 500 });
+			});
 	} else {
 		res.status(400).json({ message: "Bad Request", status: 400 });
 	}
