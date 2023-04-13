@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, make_response, request
-from models.model import db, Users, Templates, Role, Tech, TechType
+from models.model import db, Users, Templates, Role, Tech, TechType, Tokens
 from templatesStuff.template_methods import *
 from mongo_db import (
     insert_one,
@@ -479,6 +479,7 @@ def delete_template(template_id):
         ref = template["template_ref"]
         temp = delete_one(mongo_collection, ObjectId(ref.replace(" ", "")))
         if temp.acknowledged:
+            db.session.query(Tokens).filter(Tokens.template_id == template_id).delete()
             db.session.delete(template)
             db.session.commit()
             close_connection(mongo_client)
