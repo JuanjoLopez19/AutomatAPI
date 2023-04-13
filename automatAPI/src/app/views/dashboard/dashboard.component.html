@@ -60,7 +60,7 @@
         <app-manage-users
           *ngIf="activeView === 'manage_users' && user.role === 'admin'"
         ></app-manage-users>
-        <app-manage-templates [isAdmin]="user.role === 'admin'"
+        <app-manage-templates [isAdmin]="user.role === 'admin'" [userId]="user.id"
           *ngIf="activeView === 'manage_templates'"
         ></app-manage-templates>
         <app-profile *ngIf="activeView === 'profile'"></app-profile>

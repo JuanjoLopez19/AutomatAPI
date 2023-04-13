@@ -28,7 +28,7 @@
         </td>
         <td>{{ template.technology }}</td>
         <td>{{ template.tech_type }}</td>
-        <td>{{ template.date_created }}</td>
+        <td>{{ template.date_created | date }}</td>
         <td>
           <div class="row">
             <div class="col-4 button">
@@ -37,6 +37,7 @@
                 icon="pi pi-download"
                 class="p-button-rounded p-button-success p-mr-2"
                 (click)="downloadTemplate(template)"
+                [disabled]="template.user_id !== userId"
               ></button>
             </div>
             <div class="col-4 button">
@@ -45,6 +46,7 @@
                 icon="pi pi-pencil"
                 class="p-button-rounded p-button-warning p-mr-2"
                 (click)="editTemplate(template)"
+                [disabled]="template.user_id !== userId"
               ></button>
             </div>
             <div class="col-4 button">

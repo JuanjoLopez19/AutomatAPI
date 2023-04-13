@@ -14,4 +14,20 @@ export class ManageTemplatesService {
       { withCredentials: true }
     );
   }
+
+  deleteTemplate(template_id: number) {
+    return this.http.delete(
+      `${environment.apiHost}${environment.apiPort}/api/templates/deleteTemplate`,
+
+      { body: { template_id: template_id }, withCredentials: true }
+    );
+  }
+
+  getToken(template_id: number) {
+    return this.http.post(
+      `${environment.apiHost}${environment.apiPort}/api/templates/getToken`,
+      { template_id: template_id },
+      { withCredentials: true }
+    );
+  }
 }
