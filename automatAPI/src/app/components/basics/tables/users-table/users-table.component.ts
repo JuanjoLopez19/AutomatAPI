@@ -1,7 +1,12 @@
-import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { FileDownloaderService } from 'src/app/api/templates/fileDownloader/file-downloader.service';
-import { ManageTemplatesService } from 'src/app/api/templates/manageTemplates/manage-templates.service';
-import { templates, httpResponse, userParams } from 'src/app/common/interfaces/interfaces';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+} from '@angular/core';
+import { ManageUsersService } from 'src/app/api/users/manageUsers/manage-users.service';
+import { httpResponse, userParams } from 'src/app/common/interfaces/interfaces';
 
 @Component({
   selector: 'app-users-table',
@@ -13,31 +18,13 @@ export class UsersTableComponent {
   @Input() userId: number = null;
   @Input() users: userParams[] = null;
   @Output() refreshTable: EventEmitter<void> = new EventEmitter();
-  constructor(
-    private templateService: ManageTemplatesService,
-    private fileDownloaderService: FileDownloaderService
-  ) {}
 
-  downloadTemplate(template: templates) {
-    this.templateService.getToken(Number(template.id)).subscribe({
-      next: (data: httpResponse) => {
-        console.log(data);
-        if (data.status == 200) {
-          this.fileDownloaderService.downloadFile(data.data, template.app_name);
-        }
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
+  constructor(private userService: ManageUsersService) {}
 
-  editTemplate(template: templates) {
-    console.log(template);
-  }
+  editUser(user: userParams) {}
 
-  deleteTemplate(template: templates) {
-    this.templateService.deleteTemplate(Number(template.id)).subscribe({
+  deleteUser(user: userParams) {
+    this.userService.deleteUser(Number(user.id)).subscribe({
       next: (data: httpResponse) => {
         console.log(data);
         if (data.status == 200) this.refreshTable.emit();
@@ -48,7 +35,7 @@ export class UsersTableComponent {
     });
   }
 
-  OnChanges(changes: SimpleChanges){
+  OnChanges(changes: SimpleChanges) {
     console.log(changes);
   }
 }

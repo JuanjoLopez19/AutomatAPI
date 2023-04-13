@@ -53,28 +53,21 @@
         </td>
         <td>
           <div class="row">
-            <div class="col-4 button">
-              <button
-                pButton
-                icon="pi pi-download"
-                class="p-button-rounded p-button-success p-mr-2"
-                (click)="downloadTemplate(null)"
-              ></button>
-            </div>
-            <div class="col-4 button">
+            <div class="col-6 button">
               <button
                 pButton
                 icon="pi pi-pencil"
                 class="p-button-rounded p-button-warning p-mr-2"
-                (click)="editTemplate(null)"
+                (click)="editUser(user)"
+                [disabled]="true"
               ></button>
             </div>
-            <div class="col-4 button">
+            <div class="col-6 button">
               <button
                 pButton
                 icon="pi pi-trash"
                 class="p-button-rounded p-button-danger"
-                (click)="deleteTemplate(null)"
+                (click)="deleteUser(user)"
               ></button>
             </div>
           </div>
