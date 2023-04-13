@@ -73,9 +73,12 @@ export interface userParams {
   firstName: string;
   lastName: string;
   date: string;
+  github_id?: string;
+  google_id?: string;
   image: string;
   role: string;
   id: string;
+  [key: string]: string;
 }
 
 export interface templates {

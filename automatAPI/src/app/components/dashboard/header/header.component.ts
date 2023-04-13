@@ -31,7 +31,9 @@ export class HeaderComponent implements OnInit {
     private logoutService: LogoutService,
     private router: Router,
     private elementRef: ElementRef
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.translate.get(['T_PROFILE', 'T_LOGOUT']).subscribe((res) => {
       this.items = [
         {
@@ -50,9 +52,6 @@ export class HeaderComponent implements OnInit {
         },
       ];
     });
-  }
-
-  ngOnInit() {
     if (this.userImg == null) {
       this.letter = this.username.charAt(0).toLocaleUpperCase();
     } else {

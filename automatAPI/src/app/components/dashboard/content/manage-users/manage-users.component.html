@@ -1,7 +1,94 @@
 <div class="container h-100">
-  <div class="row">
-    <div class="col-12">
-      <h1 class="text-center">users</h1>
+  <div class="row flex-grow">
+    <div class="col-12 mt-5 mb-2 main-container">
+      <h1>{{ "dashboard.T_MANAGE_USERS" | translate }}</h1>
+      <div class="row w-100 justify-content-center">
+        <div class="col-11">
+          <h3>{{ "dashboard.T_MANAGE_USERS_SUBTITLE" | translate }}</h3>
+        </div>
+      </div>
+      <div class="row w-100 justify-content-center mt-4">
+        <div class="col-11">
+          <form
+            class="row"
+            [formGroup]="filterForm"
+            (ngSubmit)="filterTable($event)"
+          >
+            <div class="col-3">
+              <span class="p-float-label w-100">
+                <p-dropdown
+                  id="selectField"
+                  formControlName="field"
+                  [options]="filterOptions"
+                  optionLabel="name"
+                  optionValue="value"
+                  (onChange)="filterChanged($event)"
+                ></p-dropdown>
+                <label htmlFor="selectField">{{
+                  "dashboard.T_SELECT_FIELD" | translate
+                }}</label>
+              </span>
+            </div>
+            <div class="col-3">
+              <div class="p-float-label">
+                <p-dropdown
+                  Id="ina"
+                  formControlName="value"
+                  [options]="fieldOptions"
+                  optionLabel="name"
+                  optionValue="value"
+                ></p-dropdown>
+                <label for="ina">{{
+                  "dashboard.T_SELECT_AN_OPTION" | translate
+                }}</label>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="row">
+                <div class="col-4">
+                  <p-button
+                    [label]="'dashboard.T_FILTER' | translate"
+                    icon="pi pi-filter"
+                    type="submit"
+                    iconPos="right"
+                    styleClass="p-button-rounded"
+                  ></p-button>
+                </div>
+
+                <div class="col-6">
+                  <p-button
+                    [label]="'dashboard.T_RESET' | translate"
+                    icon="pi pi-refresh"
+                    type="button"
+                    iconPos="right"
+                    (onClick)="resetTable()"
+                    styleClass="p-button-rounded"
+                  ></p-button>
+                </div>
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="p-float-label">
+                <input pInputText />
+                <label for="in">{{
+                  "dashboard.T_GENERAL_FILTER" | translate
+                }}</label>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="row justify-content-center mt-4">
+        <div class="col-12">
+          <app-users-table
+            [isAdmin]="isAdmin"
+            [userId]="parseInt(userId)"
+            [templates]="userData"
+            (refreshTable)="onTemplateChanged()"
+          ></app-users-table>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -19,9 +19,8 @@ export class UserManagementComponent implements OnInit {
     private translate: TranslateService,
     private authService: AuthService
   ) {
-    translate.addLangs(['en', 'es-ES']);
-    translate.setDefaultLang('es-ES');
-    translate.use('es-ES');
+    this.translate.addLangs(['en', 'es-ES']);
+
     this.checkSession();
     const currentNavigation: Navigation = this.router.getCurrentNavigation();
     if (currentNavigation && currentNavigation.extras.state) {
