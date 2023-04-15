@@ -19,26 +19,23 @@ def get_templates(user_id):
         aux = []
         for template in templates:
             aux.append(template.template_ref)
-            # db.session.delete(template)
-
-        print(aux)
+            db.session.delete(template)
 
         mongo_client = get_client()
         mongo_collection = get_collection(
             get_db(mongo_client, "automatAPI"), "templates"
         )
-        
+
         aux = [ObjectId(x.replace(" ", "")) for x in aux]
-        print(aux)
-        
+
         temp = delete_many(mongo_collection, {"_id": {"$in": aux}})
-        if (not temp.acknowledged):
+        if not temp.acknowledged:
             return make_response(
                 jsonify({"message": "Error deleting templates", "status": "error"}), 500
             )
 
-        # user.delete()
-        # db.session.commit()
+        db.session.delete(user)
+        db.session.commit()
         return make_response(
             jsonify({"message": "User deleted", "status": "success"}), 200
         )
