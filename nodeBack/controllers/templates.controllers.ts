@@ -273,8 +273,11 @@ export const deleteTemplate = async (req: Request, res: Response) => {
 														data: body,
 													} as AxiosRequestConfig
 												);
-												console.log(response.status);
-												res.status(response.status).json(response.data);
+												
+												res.status(response.status).json({
+													status: response.status,
+													message: response.data.message,
+												});
 											})
 											.catch((err) => {
 												console.log(err);
@@ -363,7 +366,7 @@ export const getToken = async (req: Request, res: Response) => {
 									.json({ message: "Token not found", status: 404 });
 							} else {
 								const tokenDecrypt = decryptData(token.template_token);
-								console.log(tokenDecrypt);
+								
 								res.status(200).json({
 									data: tokenDecrypt,
 									status: 200,
