@@ -17,7 +17,7 @@ export const getUsers = async (req: Request, res: Response) => {
 
 export const deleteUser = async (req: Request, res: Response) => {
 	if (req.body.user_id !== undefined) {
-		User.findByPk(req.body.user_id).then((user) => {
+		User.findByPk(req.body.user_id).then(async (user) => {
 			if (user == null) {
 				res.status(404).json({ message: "User not found", status: 404 });
 				return;
@@ -63,11 +63,10 @@ export const deleteUser = async (req: Request, res: Response) => {
 					console.log(err);
 					res.status(500).json({ message: "Internal Server Error" });
 				});
-			/*const response = await axios.delete(
-			`${config.python.host}:${config.python.port}/users/${user.id}/delete`
-		);
-		console.log(response.status);
-		res.status(response.status).json(response.data);*/
+			const response = await axios.delete(
+				`${config.python.host}:${config.python.port}/users/${user.id}/delete`
+			);
+			res.status(response.status).json(response.data);
 			res.status(200).json({ message: "User deleted", status: 200 });
 		});
 	} else {
