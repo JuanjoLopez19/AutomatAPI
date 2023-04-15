@@ -4,7 +4,12 @@ import jwt from "jsonwebtoken";
 import axios, { AxiosRequestConfig } from "axios";
 import User from "../database/models/user";
 import Templates, { Tokens } from "../database/models/templates";
-import { decryptData, encryptData } from "../middleware/auxiliaryFunctions";
+import {
+	decryptData,
+	deleteItemsAWS,
+	encryptData,
+} from "../middleware/auxiliaryFunctions";
+import { Op, WhereOptions } from "sequelize";
 
 export const makeFlaskTemplate = async (req: any, res: Response) => {
 	if (
@@ -150,7 +155,10 @@ export const makeDjangoTemplate = async (req: any, res: Response) => {
 					if (!token) {
 						res.status(500).json({ message: "Internal Server Error" });
 					}
-					res.status(response.status).json(response.data);
+					res.status(response.status).json({
+						status: response.status,
+						message: response.data.message,
+					});
 				})
 				.catch((err: Error) => {
 					console.log(err);
@@ -227,15 +235,71 @@ export const deleteTemplate = async (req: Request, res: Response) => {
 		//@ts-ignore
 		const user_id = await jwt.decode(req.cookies["jwt"]).id;
 		try {
-			const body = { user_id: user_id };
-			const response = await axios.delete(
-				`${config.python.host}:${config.python.port}/templates/${req.body.template_id}/delete`,
-				{
-					data: body,
-				} as AxiosRequestConfig
-			);
-			console.log(response.status);
-			res.status(response.status).json(response.data);
+			Templates.findOne({
+				where: {
+					user_id: user_id,
+					id: req.body.template_id,
+				} as WhereOptions<Templates>,
+			})
+				.then((template: Templates | null) => {
+					if (template == null) {
+						res
+							.status(404)
+							.json({ message: "Template not found", status: 404 });
+					} else {
+						Tokens.findOne({
+							where: {
+								template_id: req.body.template_id,
+							} as WhereOptions<Tokens>,
+						})
+							.then((token: Tokens | null) => {
+								if (token == null) {
+									res
+										.status(404)
+										.json({ message: "Token not found", status: 404 });
+								} else {
+									{
+										deleteItemsAWS(
+											[token.cert_key || "", token.private_key || ""],
+											token.template_token
+										);
+										token
+											.destroy()
+											.then(async () => {
+												const body = { user_id: user_id };
+												const response = await axios.delete(
+													`${config.python.host}:${config.python.port}/templates/${req.body.template_id}/delete`,
+													{
+														data: body,
+													} as AxiosRequestConfig
+												);
+												console.log(response.status);
+												res.status(response.status).json(response.data);
+											})
+											.catch((err) => {
+												console.log(err);
+												res.status(500).json({
+													message: "Internal Server Error",
+													status: 500,
+												});
+											});
+									}
+								}
+							})
+							.catch((err) => {
+								console.log(err);
+								res
+									.status(500)
+									.json({ message: "Internal Server Error", status: 500 });
+							});
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+					res
+						.status(500)
+						.json({ message: "Internal Server Error", status: 500 });
+				});
 		} catch (err) {
 			console.log(err);
 			res.status(500).json({ message: "Internal Server Error", status: 500 });
