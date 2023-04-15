@@ -51,7 +51,7 @@ def temp_creator(
     args = DEFAULT_CONFIG["cookiecutter"]["tecnology_args"][
         template_args.get("tecnology")
     ][template_args.get("type")]
-    args["app_folder_name"] = f" {template_args.get('app_name')}_{str(uuid.uuid4())}"
+    args["app_folder_name"] = f"{template_args.get('app_name')}_{str(uuid.uuid4())}"
     for key, value in template_args.items():
         if template_args["type"] == "flask" and key == "secrets":
             args[key] = secrets.token_hex(16)

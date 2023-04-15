@@ -13,4 +13,7 @@ if __name__ == '__main__':
     api.register_blueprint(users)
     db.init_app(api)
 
+    with api.test_request_context():
+        print(api.url_map)
+        
     api.run() 
