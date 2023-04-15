@@ -1,4 +1,5 @@
 import { mailOptions, sendMail } from "./smtp";
+import AWS from "aws-sdk";
 import config from "../config/config";
 import * as crypto from "crypto";
 
@@ -101,4 +102,38 @@ export const decryptData = (data: string) => {
 	decrypted += decipher.final("utf8");
 
 	return decrypted;
+};
+
+export const deleteItemsAWS = (certs: string[], template: string) => {
+	AWS.config.update({
+		accessKeyId: config.aws.accessKey,
+		secretAccessKey: config.aws.secretKey,
+		region: config.aws.region,
+	});
+
+	const s3 = new AWS.S3();
+	certs.forEach((cert) => {
+		if (cert !== "") {
+			const decrypt = decryptData(cert);
+			const params = {
+				Bucket: config.aws.bucket,
+				Key: decrypt,
+			};
+			s3.deleteObject(params, function (err, data) {
+				if (err) console.log(err, err.stack);
+				// an error occurred
+				else console.log(data); // successful response
+			});
+		}
+	});
+
+	const params = {
+		Bucket: config.aws.bucket,
+		Key: `templates/${decryptData(template)}`,
+	};
+	s3.deleteObject(params, function (err, data) {
+		if (err) console.log(err, err.stack);
+		// an error occurred
+		else console.log(data); // successful response
+	});
 };
