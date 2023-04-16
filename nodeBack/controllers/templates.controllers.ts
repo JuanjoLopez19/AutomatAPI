@@ -155,10 +155,7 @@ export const makeDjangoTemplate = async (req: any, res: Response) => {
 					if (!token) {
 						res.status(500).json({ message: "Internal Server Error" });
 					}
-					res.status(response.status).json({
-						status: response.status,
-						message: response.data.message,
-					});
+					res.status(response.status).json(response.data);
 				})
 				.catch((err: Error) => {
 					console.log(err);
@@ -273,7 +270,7 @@ export const deleteTemplate = async (req: Request, res: Response) => {
 														data: body,
 													} as AxiosRequestConfig
 												);
-												
+
 												res.status(response.status).json({
 													status: response.status,
 													message: response.data.message,
@@ -366,7 +363,7 @@ export const getToken = async (req: Request, res: Response) => {
 									.json({ message: "Token not found", status: 404 });
 							} else {
 								const tokenDecrypt = decryptData(token.template_token);
-								
+
 								res.status(200).json({
 									data: tokenDecrypt,
 									status: 200,
