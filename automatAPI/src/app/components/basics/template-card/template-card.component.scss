@@ -1,0 +1,13 @@
+@import "src/shared/variables";
+:host {
+  p-card {
+    ::ng-deep .p-card {
+      border-radius: 30px;
+    }
+  }
+
+  .icon {
+    height: fit-content;
+    width: fit-content;
+  }
+}

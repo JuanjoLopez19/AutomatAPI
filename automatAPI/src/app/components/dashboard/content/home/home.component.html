@@ -1,7 +1,122 @@
 <div class="container h-100">
-  <div class="row">
-    <div class="col-12">
-      <h1 class="text-center">Home</h1>
+  <div class="row flex-grow">
+    <div class="col-12 mt-5 mb-2 main-container">
+      <h1>{{ "dashboard.T_WELCOME" }} {{ username }}</h1>
+      <div class="row w-100 justify-content-center">
+        <div class="col-11">
+          <h3>{{ "dashboard.T_WELCOME_SUBTITLE" | translate }}</h3>
+        </div>
+      </div>
+      <div class="row w-100 justify-content-center mt-4">
+        <div class="col-11">
+          <p-carousel
+            *ngIf="false && templates.length >= 3"
+            [value]="templates"
+            [numVisible]="3"
+            [numScroll]="1"
+            [circular]="true"
+            [indicatorStyleClass]="'indicators'"
+          >
+            <ng-template let-template pTemplate="item">
+              <div class="p-3">
+                <app-template-card
+                  [template]="template"
+                  [numTemplates]="templates.length"
+                ></app-template-card>
+              </div>
+            </ng-template>
+          </p-carousel>
+          <div class="row" *ngIf="templates.length === 2">
+            <div class="col-6">
+              <div class="row justify-content-center">
+                <app-template-card
+                  [template]="templates[0]"
+                  [numTemplates]="2"
+                ></app-template-card>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="row justify-content-center">
+                <app-template-card
+                  [template]="templates[1]"
+                  [numTemplates]="2"
+                ></app-template-card>
+              </div>
+            </div>
+          </div>
+          <div
+            class="row justify-content-center"
+            *ngIf="templates.length === 1"
+          >
+            <div class="col-10">
+              <app-template-card
+                [template]="templates[0]"
+                [numTemplates]="1"
+              ></app-template-card>
+            </div>
+          </div>
+          <div
+            class="row justify-content-center"
+            *ngIf="templates.length === 0"
+          >
+            <div class="col-10">
+              <div class="row">
+                <div class="col-7">
+                  <img
+                    src="assets/icons/prompt_EN.svg"
+                    alt="empty"
+                    class="img-fluid"
+                    *ngIf="chooseLang() === 'en'"
+                  />
+                  <img
+                    src="assets/icons/prompt_EN.svg"
+                    alt="empty"
+                    class="img-fluid"
+                    *ngIf="chooseLang() === 'es-ES'"
+                  />
+                </div>
+              </div>
+              <div class="row justify-content-end">
+                <div class="col-6 d-flex align-items-center">
+                  <div class="row w-100">
+                    <div class="col-4">
+                      <p-button
+                        icon="assets/icons/flask_svg.svg"
+                        [label]="'dashboard.T_FLASK' | translate"
+                        (onClick)="changeView('flask')"
+                        ><mat-icon svgIcon="flask"></mat-icon
+                      ></p-button>
+                    </div>
+                    <div class="col-4">
+                      <p-button
+                        icon="assets/icons/express_svg.svg"
+                        [label]="'dashboard.T_EXPRESS' | translate"
+                        (onClick)="changeView('express')"
+                        ><mat-icon svgIcon="express"></mat-icon
+                      ></p-button>
+                    </div>
+                    <div class="col-4">
+                      <p-button
+                        icon="assets/icons/django_svg.svg"
+                        [label]="'dashboard.T_DJANGO' | translate"
+                        (onClick)="changeView('django')"
+                        ><mat-icon svgIcon="django"></mat-icon
+                      ></p-button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6" [style]="{ marginTop: '-60px' }">
+                  <img
+                    src="assets/icons/Monke_svg.svg"
+                    alt="empty"
+                    class="img-fluid"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

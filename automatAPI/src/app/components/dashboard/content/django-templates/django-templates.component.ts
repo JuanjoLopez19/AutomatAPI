@@ -156,7 +156,7 @@ export class DjangoTemplatesComponent implements OnInit {
         updateOn: 'blur',
       }),
       app_description: new FormControl(''),
-      port: new FormControl('3000', {
+      port: new FormControl('5000', {
         validators: [
           Validators.required,
           Validators.min(0),
@@ -168,7 +168,7 @@ export class DjangoTemplatesComponent implements OnInit {
         validators: [Validators.required, Validators.pattern(hostRegex)],
         updateOn: 'blur',
       }),
-      tech_type: new FormControl('services', {
+      tech_type: new FormControl('', {
         validators: [Validators.required],
         updateOn: 'blur',
       }),

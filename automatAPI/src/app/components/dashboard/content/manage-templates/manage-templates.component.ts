@@ -10,11 +10,13 @@ import {
   httpResponse,
   templates,
 } from 'src/app/common/interfaces/interfaces';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-manage-templates',
   templateUrl: './manage-templates.component.html',
   styleUrls: ['./manage-templates.component.scss'],
+  providers: [DatePipe],
 })
 export class ManageTemplatesComponent implements OnInit {
   @Input() isAdmin: boolean = false;
@@ -30,7 +32,8 @@ export class ManageTemplatesComponent implements OnInit {
   constructor(
     private manageTemplatesServices: ManageTemplatesService,
     private translate: TranslateService,
-    private router: Router
+    private router: Router,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -74,7 +77,6 @@ export class ManageTemplatesComponent implements OnInit {
   }
 
   filterTable(event: SubmitEvent) {
-    console.log(this.filterForm.value);
     if (this.filterForm.invalid) return;
     const auxData: templates[] = [];
     this.backUpData.forEach((template) => {
@@ -98,10 +100,17 @@ export class ManageTemplatesComponent implements OnInit {
   mapFields(value: string) {
     const auxParams: dropdownParams[] = [];
     this.backUpData.forEach((template) => {
-      auxParams.push({
-        name: template[value],
-        value: template[value],
-      } as dropdownParams);
+      if (value === 'date_created') {
+        auxParams.push({
+          name: this.datePipe.transform(template[value]),
+          value: template[value],
+        } as dropdownParams);
+      } else {
+        auxParams.push({
+          name: template[value],
+          value: template[value],
+        } as dropdownParams);
+      }
     });
     this.fieldOptions = [
       ...Array.from(new Set(auxParams.map((item) => JSON.stringify(item)))).map(
@@ -124,7 +133,7 @@ export class ManageTemplatesComponent implements OnInit {
     });
   }
 
-  onTemplateChanged(){
+  onTemplateChanged() {
     this.getTemplateData();
   }
 

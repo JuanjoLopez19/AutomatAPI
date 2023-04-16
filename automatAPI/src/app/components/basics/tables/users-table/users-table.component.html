@@ -68,6 +68,7 @@
                 icon="pi pi-trash"
                 class="p-button-rounded p-button-danger"
                 (click)="deleteUser(user)"
+                [disabled]="user.id === userId"
               ></button>
             </div>
           </div>

@@ -41,11 +41,11 @@
                         {{ "flask.T_APP_DESC" | translate }}
                       </div>
                       <div class="row w-50">
-                        <input
-                          type="text"
-                          pInputText
+                        <textarea
+                          pInputTextarea
                           formControlName="app_description"
-                        />
+                          maxlength="200"
+                        ></textarea>
                       </div>
                     </div>
                   </div>
@@ -389,6 +389,7 @@
                                   hidden
                                   #certInput
                                   type="file"
+                                  accept=".crt, .pem"
                                   (change)="onFileChange($event, 'cert')"
                                 />
                               </div>
@@ -405,6 +406,7 @@
                                   (change)="onFileChange($event, 'key')"
                                   hidden
                                   #keyInput
+                                  accept=".crt, .pem"
                                   type="file"
                                 />
                               </div>
