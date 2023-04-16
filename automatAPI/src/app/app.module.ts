@@ -44,6 +44,8 @@ import {TableModule} from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { AvatarModule } from 'primeng/avatar';
+import {CardModule} from 'primeng/card';
+import { CarouselModule } from 'primeng/carousel';
 
 // Material components
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -63,12 +65,7 @@ import { ModelModalComponent } from './components/basics/model-modal/model-modal
 import { CompleteRegisterComponent } from './views/user-management/complete-register/complete-register.component';
 import { TemplateTableComponent } from './components/basics/tables/template-table/template-table.component';
 import { UsersTableComponent } from './components/basics/tables/users-table/users-table.component';
-
-
-
-
-
-
+import { TemplateCardComponent } from './components/basics/template-card/template-card.component';
 
 
 // AoT requires an exported function for factories
@@ -103,6 +100,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CompleteRegisterComponent,
     TemplateTableComponent,
     UsersTableComponent,
+    TemplateCardComponent,
 
   ],
   imports: [
@@ -143,7 +141,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     TableModule,
     CheckboxModule,
     InputTextareaModule,
-    AvatarModule
+    AvatarModule,
+    CardModule,
+    CarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent],

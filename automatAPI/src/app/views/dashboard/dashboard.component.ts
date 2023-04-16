@@ -9,7 +9,7 @@ import { userParams } from 'src/app/common/interfaces/interfaces';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  activeView: string = 'manage_users';
+  activeView: string = 'home';
   user: userParams;
 
   constructor(private router: Router, private translate: TranslateService) {
@@ -32,5 +32,9 @@ export class DashboardComponent implements OnInit {
 
   chooseLanguage(language: string) {
     this.translate.use(language);
+  }
+
+  changeView(tech: string): void {
+    this.activeView = tech;
   }
 }

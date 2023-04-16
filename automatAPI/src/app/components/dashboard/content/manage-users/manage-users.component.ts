@@ -1,22 +1,22 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { ManageTemplatesService } from 'src/app/api/templates/manageTemplates/manage-templates.service';
 import { ManageUsersService } from 'src/app/api/users/manageUsers/manage-users.service';
-import { TemplateField } from 'src/app/common/enums/enums';
 import {
   dropdownParams,
   httpResponse,
-  templates,
   userParams,
 } from 'src/app/common/interfaces/interfaces';
 import { UserField } from 'src/app/common/enums/enums';
+import { DatePipe } from '@angular/common';
+
 @Component({
   selector: 'app-manage-users',
   templateUrl: './manage-users.component.html',
   styleUrls: ['./manage-users.component.scss'],
+  providers: [DatePipe],
 })
 export class ManageUsersComponent {
   @Input() isAdmin: boolean = false;
@@ -32,7 +32,8 @@ export class ManageUsersComponent {
   constructor(
     private manageUserServices: ManageUsersService,
     private translate: TranslateService,
-    private router: Router
+    private router: Router,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -74,10 +75,28 @@ export class ManageUsersComponent {
     console.log(this.filterForm.value);
     if (this.filterForm.invalid) return;
     const auxData: userParams[] = [];
-    this.backUpData.forEach((user) => {
-      if (user[this.filterForm.value.field] === this.filterForm.value.value)
-        auxData.push(user);
-    });
+    if (
+      this.filterForm.value.field === 'google_id' ||
+      this.filterForm.value.field === 'github_id'
+    ) {
+      this.backUpData.forEach((user) => {
+        if (
+          this.filterForm.value.value === 'Yes' &&
+          user[this.filterForm.value.field] !== null
+        )
+          auxData.push(user);
+        else if (
+          this.filterForm.value.value === 'No' &&
+          user[this.filterForm.value.field] === null
+        )
+          auxData.push(user);
+      });
+    } else {
+      this.backUpData.forEach((user) => {
+        if (user[this.filterForm.value.field] === this.filterForm.value.value)
+          auxData.push(user);
+      });
+    }
     this.userData = auxData;
   }
 
@@ -94,12 +113,29 @@ export class ManageUsersComponent {
 
   mapFields(value: string) {
     const auxParams: dropdownParams[] = [];
-    this.backUpData.forEach((template) => {
+    if (value === 'google_id' || value === 'github_id') {
       auxParams.push({
-        name: template[value],
-        value: template[value],
+        name: 'Yes',
+        value: 'Yes',
       } as dropdownParams);
-    });
+      auxParams.push({
+        name: 'No',
+        value: 'No',
+      } as dropdownParams);
+    } else {
+      this.backUpData.forEach((template) => {
+        if (value === 'date') {
+          auxParams.push({
+            name: this.datePipe.transform(template[value]),
+            value: template[value],
+          } as dropdownParams);
+        } else
+          auxParams.push({
+            name: template[value],
+            value: template[value],
+          } as dropdownParams);
+      });
+    }
     this.fieldOptions = [
       ...Array.from(new Set(auxParams.map((item) => JSON.stringify(item)))).map(
         (item) => JSON.parse(item)
@@ -111,10 +147,8 @@ export class ManageUsersComponent {
     this.manageUserServices.getUsers().subscribe({
       next: (res: httpResponse) => {
         if (res.status === 200) {
-          console.log(res);
           this.userData = res.data as userParams[];
           this.backUpData = res.data as userParams[];
-
         }
       },
       error: (err: HttpErrorResponse) => {

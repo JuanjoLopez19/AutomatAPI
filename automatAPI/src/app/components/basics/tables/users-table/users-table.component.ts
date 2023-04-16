@@ -34,8 +34,4 @@ export class UsersTableComponent {
       },
     });
   }
-
-  OnChanges(changes: SimpleChanges) {
-    console.log(changes);
-  }
 }

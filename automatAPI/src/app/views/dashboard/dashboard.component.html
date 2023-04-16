@@ -46,7 +46,12 @@
     </mat-sidenav>
     <mat-sidenav-content class="page-wrapper">
       <div class="page-content h-100">
-        <app-home *ngIf="activeView === 'home'"></app-home>
+        <app-home
+          *ngIf="activeView === 'home'"
+          [username]="user.username"
+          [isAdmin]="user.role === 'admin'"
+          (changeViewEvent)="changeView($event)"
+        ></app-home>
         <app-flask-templates
           *ngIf="activeView === 'flask'"
           (closeSidenav)="snav.close()"
@@ -59,8 +64,12 @@
         ></app-express-templates>
         <app-manage-users
           *ngIf="activeView === 'manage_users' && user.role === 'admin'"
+          [isAdmin]="user.role === 'admin'"
+          [userId]="user.id"
         ></app-manage-users>
-        <app-manage-templates [isAdmin]="user.role === 'admin'" [userId]="user.id"
+        <app-manage-templates
+          [isAdmin]="user.role === 'admin'"
+          [userId]="user.id"
           *ngIf="activeView === 'manage_templates'"
         ></app-manage-templates>
         <app-profile *ngIf="activeView === 'profile'"></app-profile>
