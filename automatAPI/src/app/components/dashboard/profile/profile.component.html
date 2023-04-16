@@ -1,1 +1,145 @@
-<p>profile works!</p>
+<div class="container h-100">
+  <div class="row flex-grow">
+    <div class="col-12 mt-5 mb-2 main-container p-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-3">
+              <div class="row">
+                <p-image
+                  [src]="user.image"
+                  alt="Image"
+                  width="225"
+                  class="d-flex justify-content-center"
+                ></p-image>
+              </div>
+              <div class="row text-center mt-2">
+                <h1>{{ user.username }}</h1>
+              </div>
+              <div class="row text-center mt-2">
+                <h3>
+                  {{ "dashboard.T_USER_ROLE" | translate }}: {{ user.role }}
+                </h3>
+              </div>
+            </div>
+            <div class="col-5">
+              <div class="row">
+                <div class="col-6">
+                  <div class="row mt-5">
+                    <h2>{{ "dashboard.T_USER_EMAIL" | translate }}:</h2>
+                    <p>{{ user.email }}</p>
+                  </div>
+                  <div class="row">
+                    <h2>{{ "dashboard.T_USER_FIRSTNAME" | translate }}:</h2>
+                    <p>
+                      {{
+                        user.firstName
+                          ? user.firstName
+                          : ("dashboard.T_NO_DATA" | translate)
+                      }}
+                    </p>
+                  </div>
+                  <div class="row">
+                    <h2>{{ "dashboard.T_USER_LASTNAME" | translate }}:</h2>
+                    <p>
+                      {{
+                        user.lastName
+                          ? user.lastName
+                          : ("dashboard.T_NO_DATA" | translate)
+                      }}
+                    </p>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="row mt-5">
+                    <h2>{{ "dashboard.T_USER_DATE" | translate }}:</h2>
+                    <p>
+                      {{
+                        user.date
+                          ? (user.date | date)
+                          : ("dashboard.T_NO_DATA" | translate)
+                      }}
+                    </p>
+                  </div>
+                  <div class="row">
+                    <h2>{{ "dashboard.T_USER_BIRTHDATE" | translate }}:</h2>
+                    <p>
+                      {{
+                        user.birthdate
+                          ? (user.birthdate | date)
+                          : ("dashboard.T_NO_DATA" | translate)
+                      }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="row w-100">
+                <div class="col-6 d-flex justify-content-center">
+                  <p-button
+                    icon="pi pi-pencil"
+                    iconPos="right"
+                    styleClass="p-button-warning"
+                    [label]="'dashboard.T_USER_EDIT' | translate"
+                  ></p-button>
+                </div>
+                <div class="col-6 d-flex justify-content-center">
+                  <p-button
+                    icon="pi pi-trash"
+                    iconPos="right"
+                    styleClass="p-button-danger"
+                    [label]="'dashboard.T_USER_DELETE' | translate"
+                  ></p-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 mt-3 mb-2 main-container p-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12">
+              <div class="d-flex">
+                <h3 [ngStyle]="{ marginRight: '3rem' }">
+                  {{ "dashboard.T_NUM_TEMPLATES" | translate }}:
+                </h3>
+                <p class="d-flex align-items-center">
+                  {{
+                    user.template_count
+                      ? user.template_count
+                      : ("dashboard.T_NO_DATA" | translate)
+                  }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <div class="row justify-content-center">
+                <div class="col-4">
+                  <app-summary-card
+                    [technologyName]="'Flask'"
+                  ></app-summary-card>
+                </div>
+                <div class="col-4">
+                  <app-summary-card
+                    [technologyName]="'Express'"
+                  ></app-summary-card>
+                </div>
+                <div class="col-4">
+                  <app-summary-card
+                    [technologyName]="'Django'"
+                  ></app-summary-card>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

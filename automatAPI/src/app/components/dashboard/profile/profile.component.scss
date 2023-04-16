@@ -1,0 +1,22 @@
+@import "src/shared/variables";
+
+:host {
+  .container {
+    max-height: fit-content;
+  }
+  .main-container {
+    background-color: $white-not-white;
+    border-radius: 24px;
+    padding: 1rem;
+  }
+
+  p-image {
+    ::ng-deep .p-image {
+      ::ng-deep img {
+        background-color: $white;
+        border: 5px solid $black;
+        border-radius: 50%;
+      }
+    }
+  }
+}

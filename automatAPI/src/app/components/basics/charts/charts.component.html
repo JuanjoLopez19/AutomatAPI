@@ -1,0 +1,9 @@
+<div class="h-100 w-100">
+  <div
+    *ngIf="chartOptions"
+    echarts
+    [options]="chartOptions"
+    class="chart"
+    (chartInit)="onChartInit($event)"
+  ></div>
+</div>

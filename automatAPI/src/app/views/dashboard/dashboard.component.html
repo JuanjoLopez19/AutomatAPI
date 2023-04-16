@@ -47,11 +47,15 @@
     <mat-sidenav-content class="page-wrapper">
       <div class="page-content h-100">
         <app-home
-          *ngIf="activeView === 'home'"
+          *ngIf="activeView === 'home' && user.role !== 'admin'"
           [username]="user.username"
-          [isAdmin]="user.role === 'admin'"
           (changeViewEvent)="changeView($event)"
         ></app-home>
+        <app-home-admin
+          *ngIf="activeView === 'home' && user.role === 'admin'"
+          [username]="user.username"
+          (changeViewEvent)="changeView($event)"
+        ></app-home-admin>
         <app-flask-templates
           *ngIf="activeView === 'flask'"
           (closeSidenav)="snav.close()"
@@ -72,7 +76,7 @@
           [userId]="user.id"
           *ngIf="activeView === 'manage_templates'"
         ></app-manage-templates>
-        <app-profile *ngIf="activeView === 'profile'"></app-profile>
+        <app-profile *ngIf="activeView === 'profile'" [user]="user"></app-profile>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
