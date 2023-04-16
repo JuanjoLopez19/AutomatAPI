@@ -168,7 +168,13 @@
     "T_MANAGE_USERS": "Manage users",
     "T_MANAGE_USERS_SUBTITLE": "Here there is a list of the users in the database",
     "T_NO_DATA": "No data",
-    "T_USER_ACTIVE": "Active user"
+    "T_USER_ACTIVE": "Active user",
+    "T_WELCOME": "Welcome back,",
+    "T_WELCOME_SUBTITLE": "Here you can see your last templates",
+    "T_USER_EDIT": "Edit profile",
+    "T_USER_DELETE": "Delete user",
+    "T_USER_BIRTHDATE": "Birthdate",
+    "T_NUM_TEMPLATES": "Number of templates created"
   },
   "error": {
     "T_EMAIL_REQ": "The email is required",

@@ -1,15 +1,18 @@
 import { Component, Input } from '@angular/core';
-import { templates } from 'src/app/common/interfaces/interfaces';
 import { techUse } from 'src/app/common/enums/enums';
+import { templates } from 'src/app/common/interfaces/interfaces';
 
 @Component({
-  selector: 'app-template-card',
-  templateUrl: './template-card.component.html',
-  styleUrls: ['./template-card.component.scss'],
+  selector: 'app-summary-card',
+  templateUrl: './summary-card.component.html',
+  styleUrls: ['./summary-card.component.scss'],
 })
-export class TemplateCardComponent {
+export class SummaryCardComponent {
   @Input() template: templates = null;
   @Input() numTemplates: number = 0;
+  @Input() technologyName: string = '';
+  @Input() numServices: number = 0;
+  @Input() numApps: number = 0;
   readonly techUse = techUse;
 
   getIcon(): string {
@@ -19,7 +22,6 @@ export class TemplateCardComponent {
   }
 
   getCardWidth(): string {
-    if (this.numTemplates >= 3) return '350px';
-    else return '100%';
+    return '85%';
   }
 }

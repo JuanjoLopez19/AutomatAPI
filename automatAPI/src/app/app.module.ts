@@ -26,6 +26,15 @@ import { DjangoTemplatesComponent } from './components/dashboard/content/django-
 import { ManageTemplatesComponent } from './components/dashboard/content/manage-templates/manage-templates.component';
 import { ManageUsersComponent } from './components/dashboard/content/manage-users/manage-users.component';
 import { EndpointModalComponent } from './components/basics/endpoint-modal/endpoint-modal.component';
+import { HomeAdminComponent } from './components/dashboard/content/homeAdmin/home.component';
+import { ProfileComponent } from './components/dashboard/profile/profile.component';
+import { SubAppModalComponent } from './components/basics/sub-app-modal/sub-app-modal.component';
+import { ModelModalComponent } from './components/basics/model-modal/model-modal.component';
+import { CompleteRegisterComponent } from './views/user-management/complete-register/complete-register.component';
+import { TemplateTableComponent } from './components/basics/tables/template-table/template-table.component';
+import { UsersTableComponent } from './components/basics/tables/users-table/users-table.component';
+import { TemplateCardComponent } from './components/cards/template-card/template-card.component';
+import { SummaryCardComponent } from './components/cards/summary-card/summary-card.component';
 
 // NG Prime components
 import { InputTextModule } from 'primeng/inputtext';
@@ -40,12 +49,13 @@ import { DialogModule } from 'primeng/dialog';
 import { MenuModule } from 'primeng/menu';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
-import {TableModule} from 'primeng/table';
+import { TableModule } from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { AvatarModule } from 'primeng/avatar';
-import {CardModule} from 'primeng/card';
+import { CardModule } from 'primeng/card';
 import { CarouselModule } from 'primeng/carousel';
+import { ImageModule } from 'primeng/image';
 
 // Material components
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -56,17 +66,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { HeaderComponent } from './components/dashboard/header/header.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
-import { ProfileComponent } from './components/dashboard/profile/profile.component';
-import { SubAppModalComponent } from './components/basics/sub-app-modal/sub-app-modal.component';
-import { ModelModalComponent } from './components/basics/model-modal/model-modal.component';
-import { CompleteRegisterComponent } from './views/user-management/complete-register/complete-register.component';
-import { TemplateTableComponent } from './components/basics/tables/template-table/template-table.component';
-import { UsersTableComponent } from './components/basics/tables/users-table/users-table.component';
-import { TemplateCardComponent } from './components/basics/template-card/template-card.component';
-
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { ChartsComponent } from './components/basics/charts/charts.component';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -101,7 +105,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     TemplateTableComponent,
     UsersTableComponent,
     TemplateCardComponent,
-
+    SummaryCardComponent,
+    HomeAdminComponent,
+    ChartsComponent,
   ],
   imports: [
     BrowserModule,
@@ -114,6 +120,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient],
       },
     }),
+    NgxEchartsModule,
     InputTextModule,
     FontAwesomeModule,
     PasswordModule,
@@ -143,7 +150,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     InputTextareaModule,
     AvatarModule,
     CardModule,
-    CarouselModule
+    CarouselModule,
+    ImageModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

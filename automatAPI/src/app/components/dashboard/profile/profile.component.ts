@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { userParams } from 'src/app/common/interfaces/interfaces';
 
 @Component({
   selector: 'app-profile',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent {
+
+  @Input() user: userParams;
 
 }
