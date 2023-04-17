@@ -51,7 +51,10 @@ class Users(db.Model):
     firstName = db.Column(db.String(200), nullable=True)
     lastName = db.Column(db.String(200), nullable=True)
     email = db.Column(db.String, nullable=False)
-    date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+    create_date = db.Column(
+        db.DateTime, nullable=False, default=db.func.current_timestamp()
+    )
+    birthdate = db.Column(db.DateTime, nullable=True)
     activeUser = db.Column(db.Boolean, nullable=False, default=False)
     access_token = db.Column(db.String(200), nullable=False)
     password_token = db.Column(db.String(200), nullable=False)
@@ -72,7 +75,8 @@ class Users(db.Model):
             "last_name": self.lastName,
             "email": self.email,
             "active_user": self.activeUser,
-            "date": self.date,
+            "create_date": self.create_date,
+            "birthdate": self.birthdate,
             "access_token": self.access_token,
             "password_token": self.password_token,
             "google_id": self.google_id,
@@ -100,7 +104,7 @@ class Templates(db.Model):
     )
     template_ref = db.Column(db.String(200), nullable=False)
     description = db.Column(db.String(200), nullable=True)
-    last_updated = db.Column( 
+    last_updated = db.Column(
         db.DateTime, nullable=False, default=db.func.current_timestamp()
     )
 
