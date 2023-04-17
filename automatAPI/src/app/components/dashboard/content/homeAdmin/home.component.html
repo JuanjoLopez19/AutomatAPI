@@ -13,19 +13,19 @@
             <div class="col-4">
               <app-charts
                 [chartType]="'flask'"
-                [chartData]="['10', '12']"
+                [chartData]="[templates['flask']['services'], templates['flask']['app_web']]"
               ></app-charts>
             </div>
             <div class="col-4">
               <app-charts
                 [chartType]="'express'"
-                [chartData]="['10', '12']"
+                [chartData]="[templates['express']['services'], templates['express']['app_web']]"
               ></app-charts>
             </div>
             <div class="col-4">
               <app-charts
                 [chartType]="'django'"
-                [chartData]="['10', '12']"
+                [chartData]="[templates['django']['services'], templates['django']['app_web']]"
               ></app-charts>
             </div>
           </div>
