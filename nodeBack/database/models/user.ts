@@ -12,7 +12,8 @@ export interface UserAttributes {
 	firstName: string;
 	lastName: string;
 	email: string;
-	date: Date;
+	create_date?: Date;
+	birthDate?: Date;
 	role: role;
 	activeUser: boolean;
 	access_token: string;
@@ -33,7 +34,7 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
 	public firstName!: string;
 	public lastName!: string;
 	public email!: string;
-	public date!: Date;
+	public create_date!: Date;
 	public role!: role;
 	public activeUser!: boolean;
 	public access_token!: string;
@@ -42,6 +43,7 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
 	public github_id!: string;
 	public image!: string;
 	public template_count!: number;
+	public birthDate!: Date;
 }
 
 User.init(
@@ -71,9 +73,14 @@ User.init(
 			type: DataTypes.STRING(200),
 			allowNull: false,
 		},
-		date: {
+		create_date: {
 			type: DataTypes.DATE,
-			allowNull: false,
+			allowNull: true,
+			defaultValue: db.fn("NOW"),
+		},
+		birthDate: {
+			type: DataTypes.DATE,
+			allowNull: true,
 		},
 		role: {
 			type: DataTypes.ENUM("admin", "client"),

@@ -23,7 +23,7 @@ export const Signup = async (req: Request, res: Response) => {
 			username: req.body.username,
 			email: req.body.email,
 			role: role.client,
-			date: req.body.date,
+			birthDate: req.body.date,
 			firstName: req.body.name,
 			lastName: req.body.surname,
 			password: "",
@@ -342,7 +342,8 @@ export const formatSessionObject = (user: User | null) => {
 				lastName: user.lastName,
 				email: user.email,
 				role: user.role,
-				date: user.date,
+				date: user.create_date,
+				birthdate: user.birthDate,
 				image: user.image,
 				template_count: user.template_count,
 			};
