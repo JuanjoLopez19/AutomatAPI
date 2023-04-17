@@ -72,8 +72,8 @@
                     <h2>{{ "dashboard.T_USER_BIRTHDATE" | translate }}:</h2>
                     <p>
                       {{
-                        user.birthdate
-                          ? (user.birthdate | date)
+                        user['birthdate']
+                          ? (user['birthdate'] | date)
                           : ("dashboard.T_NO_DATA" | translate)
                       }}
                     </p>

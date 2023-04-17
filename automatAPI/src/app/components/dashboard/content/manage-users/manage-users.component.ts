@@ -149,6 +149,7 @@ export class ManageUsersComponent {
         if (res.status === 200) {
           this.userData = res.data as userParams[];
           this.backUpData = res.data as userParams[];
+          console.log(this.userData);
         }
       },
       error: (err: HttpErrorResponse) => {
