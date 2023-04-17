@@ -117,25 +117,39 @@
               </div>
             </div>
           </div>
-          <div class="row mt-2">
+          <div class="row mt-2" *ngIf="templates !== null">
             <div class="col-12">
               <div class="row justify-content-center">
                 <div class="col-4">
                   <app-summary-card
                     [technologyName]="'Flask'"
+                    [numApps]="templates['flask']['app_web']"
+                    [numServices]="templates['flask']['services']"
                   ></app-summary-card>
                 </div>
                 <div class="col-4">
                   <app-summary-card
                     [technologyName]="'Express'"
+                    [numApps]="templates['express']['app_web']"
+                    [numServices]="templates['express']['services']"
                   ></app-summary-card>
                 </div>
                 <div class="col-4">
                   <app-summary-card
                     [technologyName]="'Django'"
+                    [numApps]="templates['django']['app_web']"
+                    [numServices]="templates['django']['services']"
                   ></app-summary-card>
                 </div>
               </div>
+            </div>
+          </div>
+          <div
+            class="row w-100 justify-content-center mt-4"
+            *ngIf="templates === null"
+          >
+            <div class="col-1">
+              <p-progressSpinner></p-progressSpinner>
             </div>
           </div>
         </div>

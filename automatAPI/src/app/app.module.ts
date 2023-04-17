@@ -5,7 +5,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { NgxEchartsModule } from 'ngx-echarts';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -35,6 +35,7 @@ import { TemplateTableComponent } from './components/basics/tables/template-tabl
 import { UsersTableComponent } from './components/basics/tables/users-table/users-table.component';
 import { TemplateCardComponent } from './components/cards/template-card/template-card.component';
 import { SummaryCardComponent } from './components/cards/summary-card/summary-card.component';
+import { ChartsComponent } from './components/basics/charts/charts.component';
 
 // NG Prime components
 import { InputTextModule } from 'primeng/inputtext';
@@ -56,6 +57,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { CardModule } from 'primeng/card';
 import { CarouselModule } from 'primeng/carousel';
 import { ImageModule } from 'primeng/image';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 // Material components
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -69,8 +71,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { ChartsComponent } from './components/basics/charts/charts.component';
-import { NgxEchartsModule } from 'ngx-echarts';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -152,6 +152,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CardModule,
     CarouselModule,
     ImageModule,
+    ProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
