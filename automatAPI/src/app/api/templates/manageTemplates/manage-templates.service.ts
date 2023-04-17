@@ -30,4 +30,11 @@ export class ManageTemplatesService {
       { withCredentials: true }
     );
   }
+
+  getTemplateStats() {
+    return this.http.get(
+      `${environment.apiHost}${environment.apiPort}/api/templates/getTemplateStats`,
+      { withCredentials: true }
+    );
+  }
 }

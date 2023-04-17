@@ -113,6 +113,10 @@
   "T_USER_GOOGLE": "Registro con google",
   "T_USER_GITHUB": "Registro con github",
   "T_USER_ROLE": "Rol",
+  "T_FLASK_STATS": "Estadísticas de Flask",
+  "T_EXPRESS_STATS": "Estadísticas de Express",
+  "T_DJANGO_STATS": "Estadísticas de Django",
+  "T_NUM_TEMPLATES": "Número de plantillas",
   "db": {
     "T_DB_TYPE": "Tipo de Base de datos",
     "T_DB_NAME": "Nombre de la base de datos",
@@ -174,7 +178,8 @@
     "T_USER_EDIT": "Editar usuario",
     "T_USER_DELETE": "Eliminar usuario",
     "T_USER_BIRTHDATE": "Fecha de nacimiento",
-    "T_NUM_TEMPLATES": "Número de plantillas creadas"
+    "T_NUM_TEMPLATES": "Número de plantillas creadas",
+    "T_WELCOME_ADMIN_SUBTITLE": "Aquí puedes ver algunas estadísticas de la aplicación"
   },
   "error": {
     "T_EMAIL_REQ": "El correo electrónico es obligatorio",
