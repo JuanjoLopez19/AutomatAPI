@@ -344,6 +344,7 @@ export const formatSessionObject = (user: User | null) => {
 				role: user.role,
 				date: user.date,
 				image: user.image,
+				template_count: user.template_count,
 			};
 		} catch (err) {
 			console.log("Error on formatting the session Object", err);
