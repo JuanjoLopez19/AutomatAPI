@@ -463,3 +463,80 @@ export const getTemplatesStats = async (req: Request, res: Response) => {
 		res.status(500).json({ message: "Internal Server Error", status: 500 });
 	}
 };
+
+export const getUserTemplatesStats = async (req: Request, res: Response) => {
+	//@ts-ignore
+	const user_id = await jwt.decode(req.cookies["jwt"]).id;
+	const temp = {
+		flask: { services: 0, app_web: 0 },
+		express: { services: 0, app_web: 0 },
+		django: { services: 0, app_web: 0 },
+	};
+	try {
+		Templates.findAll({
+			where: {
+				technology: technology.flask,
+				user_id: user_id,
+			},
+		})
+			.then((templates) => {
+				if (templates.length > 0) {
+					templates.forEach((template) => {
+						if (template.tech_type === techType.services) {
+							temp.flask.services += 1;
+						} else {
+							temp.flask.app_web += 1;
+						}
+					});
+				}
+			})
+			.then(() => {
+				Templates.findAll({
+					where: {
+						technology: technology.express,
+						user_id: user_id,
+					},
+				})
+					.then((templates) => {
+						if (templates.length > 0) {
+							templates.forEach((template) => {
+								if (template.tech_type === techType.services) {
+									temp.express.services += 1;
+								} else {
+									temp.express.app_web += 1;
+								}
+							});
+						}
+					})
+					.then(() => {
+						Templates.findAll({
+							where: {
+								technology: technology.django,
+								user_id: user_id,
+							},
+						})
+							.then((templates) => {
+								if (templates.length > 0) {
+									templates.forEach((template) => {
+										if (template.tech_type === techType.services) {
+											temp.django.services += 1;
+										} else {
+											temp.django.app_web += 1;
+										}
+									});
+								}
+							})
+							.then(() => {
+								res.status(200).json({
+									data: temp,
+									status: 200,
+									message: "Success",
+								});
+							});
+					});
+			});
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ message: "Internal Server Error", status: 500 });
+	}
+};
