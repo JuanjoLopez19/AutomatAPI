@@ -3,7 +3,11 @@ import config from "../config/config";
 import jwt from "jsonwebtoken";
 import axios, { AxiosRequestConfig } from "axios";
 import User from "../database/models/user";
-import Templates, { Tokens } from "../database/models/templates";
+import Templates, {
+	Tokens,
+	techType,
+	technology,
+} from "../database/models/templates";
 import {
 	decryptData,
 	deleteItemsAWS,
@@ -385,5 +389,77 @@ export const getToken = async (req: Request, res: Response) => {
 			});
 	} else {
 		res.status(400).json({ message: "Bad Request", status: 400 });
+	}
+};
+
+export const getTemplatesStats = async (req: Request, res: Response) => {
+	const temp = {
+		flask: { services: 0, app_web: 0 },
+		express: { services: 0, app_web: 0 },
+		django: { services: 0, app_web: 0 },
+	};
+	try {
+		Templates.findAll({
+			where: {
+				technology: technology.flask,
+			},
+		})
+			.then((templates) => {
+				if (templates.length > 0) {
+					templates.forEach((template) => {
+						if (template.tech_type === techType.services) {
+							temp.flask.services += 1;
+						} else {
+							temp.flask.app_web += 1;
+						}
+					});
+				}
+			})
+			.then(() => {
+				Templates.findAll({
+					where: {
+						technology: technology.express,
+					},
+				})
+					.then((templates) => {
+						if (templates.length > 0) {
+							templates.forEach((template) => {
+								if (template.tech_type === techType.services) {
+									temp.express.services += 1;
+								} else {
+									temp.express.app_web += 1;
+								}
+							});
+						}
+					})
+					.then(() => {
+						Templates.findAll({
+							where: {
+								technology: technology.django,
+							},
+						})
+							.then((templates) => {
+								if (templates.length > 0) {
+									templates.forEach((template) => {
+										if (template.tech_type === techType.services) {
+											temp.django.services += 1;
+										} else {
+											temp.django.app_web += 1;
+										}
+									});
+								}
+							})
+							.then(() => {
+								res.status(200).json({
+									data: temp,
+									status: 200,
+									message: "Success",
+								});
+							});
+					});
+			});
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ message: "Internal Server Error", status: 500 });
 	}
 };
