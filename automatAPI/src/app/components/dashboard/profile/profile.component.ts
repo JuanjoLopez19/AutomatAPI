@@ -15,6 +15,7 @@ import { ManageUsersService } from 'src/app/api/users/manageUsers/manage-users.s
 })
 export class ProfileComponent {
   @Input() user: userParams;
+  letter: string;
   templates: templatesStats = null;
 
   constructor(
@@ -24,6 +25,7 @@ export class ProfileComponent {
   ) {}
 
   ngOnInit(): void {
+    this.letter = this.user.username.charAt(0).toLocaleUpperCase();
     this.manageTemplatesService.getUserTemplateStats().subscribe({
       next: (data: httpResponse) => {
         this.templates = data.data as templatesStats;
