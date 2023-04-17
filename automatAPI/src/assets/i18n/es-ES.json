@@ -176,7 +176,7 @@
     "T_WELCOME": "Bienvenido de nuevo,",
     "T_WELCOME_SUBTITLE": "Aquí puedes ver las plantillas que has creado",
     "T_USER_EDIT": "Editar usuario",
-    "T_USER_DELETE": "Eliminar usuario",
+    "T_USER_DELETE": "Eliminar cuenta",
     "T_USER_BIRTHDATE": "Fecha de nacimiento",
     "T_NUM_TEMPLATES": "Número de plantillas creadas",
     "T_WELCOME_ADMIN_SUBTITLE": "Aquí puedes ver algunas estadísticas de la aplicación"

@@ -21,4 +21,11 @@ export class ManageUsersService {
       { body: { user_id: userId }, withCredentials: true }
     );
   }
+
+  deleteAccount(){
+    return this.http.delete(
+      `${environment.apiHost}${environment.apiPort}/api/users/deleteAccount`,
+      { withCredentials: true }
+    );
+  }
 }

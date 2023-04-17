@@ -7,28 +7,48 @@
           <h3>{{ "dashboard.T_WELCOME_ADMIN_SUBTITLE" | translate }}</h3>
         </div>
       </div>
-      <div class="row w-100 justify-content-center mt-4">
+      <div
+        class="row w-100 justify-content-center mt-4"
+        *ngIf="templates !== null"
+      >
         <div class="col-11">
           <div class="row w-100">
             <div class="col-4">
               <app-charts
                 [chartType]="'flask'"
-                [chartData]="[templates['flask']['services'], templates['flask']['app_web']]"
+                [chartData]="[
+                  templates['flask']['services'],
+                  templates['flask']['app_web']
+                ]"
               ></app-charts>
             </div>
             <div class="col-4">
               <app-charts
                 [chartType]="'express'"
-                [chartData]="[templates['express']['services'], templates['express']['app_web']]"
+                [chartData]="[
+                  templates['express']['services'],
+                  templates['express']['app_web']
+                ]"
               ></app-charts>
             </div>
             <div class="col-4">
               <app-charts
                 [chartType]="'django'"
-                [chartData]="[templates['django']['services'], templates['django']['app_web']]"
+                [chartData]="[
+                  templates['django']['services'],
+                  templates['django']['app_web']
+                ]"
               ></app-charts>
             </div>
           </div>
+        </div>
+      </div>
+      <div
+        class="row w-100 justify-content-center mt-4"
+        *ngIf="templates === null"
+      >
+        <div class="col-1">
+          <p-progressSpinner></p-progressSpinner>
         </div>
       </div>
     </div>

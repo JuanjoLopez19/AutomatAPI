@@ -9,10 +9,9 @@ import { templates } from 'src/app/common/interfaces/interfaces';
 })
 export class SummaryCardComponent {
   @Input() template: templates = null;
-  @Input() numTemplates: number = 0;
   @Input() technologyName: string = '';
-  @Input() numServices: number = 0;
-  @Input() numApps: number = 0;
+  @Input() numServices: string = '';
+  @Input() numApps: string = '';
   readonly techUse = techUse;
 
   getIcon(): string {

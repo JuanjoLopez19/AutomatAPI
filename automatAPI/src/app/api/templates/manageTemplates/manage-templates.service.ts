@@ -37,4 +37,11 @@ export class ManageTemplatesService {
       { withCredentials: true }
     );
   }
+
+  getUserTemplateStats() {
+    return this.http.get(
+      `${environment.apiHost}${environment.apiPort}/api/templates/getUserTemplateStats`,
+      { withCredentials: true }
+    );
+  }
 }

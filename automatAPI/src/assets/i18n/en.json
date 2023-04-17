@@ -176,7 +176,7 @@
     "T_WELCOME": "Welcome back,",
     "T_WELCOME_SUBTITLE": "Here you can see your last templates",
     "T_USER_EDIT": "Edit profile",
-    "T_USER_DELETE": "Delete user",
+    "T_USER_DELETE": "Delete account",
     "T_USER_BIRTHDATE": "Birthdate",
     "T_NUM_TEMPLATES": "Number of templates created",
     "T_WELCOME_ADMIN_SUBTITLE": "Here you can see some statistics from the platform"
