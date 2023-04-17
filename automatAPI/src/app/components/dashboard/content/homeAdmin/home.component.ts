@@ -20,18 +20,7 @@ export class HomeAdminComponent {
   ngOnInit(): void {
     this.getTemplateData();
   }
-  getTemplateData() {
-    this.manageTemplatesServices.getTemplates().subscribe({
-      next: (res: httpResponse) => {
-        if (res.status === 200) {
-          this.templates = res.data as templates[];
-        }
-      },
-      error: (err: HttpErrorResponse) => {
-        //if (err.status === 401) this.router.navigate(['/']);
-      },
-    });
-  }
+  getTemplateData() {}
 
   chooseLang(): string {
     return 'es-ES';

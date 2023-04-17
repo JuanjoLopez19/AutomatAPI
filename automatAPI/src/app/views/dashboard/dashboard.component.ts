@@ -9,7 +9,7 @@ import { userParams } from 'src/app/common/interfaces/interfaces';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  activeView: string = 'profile';
+  activeView: string = 'home';
   user: userParams;
 
   constructor(private router: Router, private translate: TranslateService) {

@@ -113,6 +113,10 @@
   "T_USER_GOOGLE": "Google User",
   "T_USER_GITHUB": "Github User",
   "T_USER_ROLE": "Role",
+  "T_FLASK_STATS": "Flask statistics",
+  "T_EXPRESS_STATS": "Express statistics",
+  "T_DJANGO_STATS": "Django statistics",
+  "T_NUM_TEMPLATES": "Number of templates",
   "db": {
     "T_DB_TYPE": "Database type",
     "T_DB_NAME": "Database name",
@@ -174,7 +178,8 @@
     "T_USER_EDIT": "Edit profile",
     "T_USER_DELETE": "Delete user",
     "T_USER_BIRTHDATE": "Birthdate",
-    "T_NUM_TEMPLATES": "Number of templates created"
+    "T_NUM_TEMPLATES": "Number of templates created",
+    "T_WELCOME_ADMIN_SUBTITLE": "Here you can see some statistics from the platform"
   },
   "error": {
     "T_EMAIL_REQ": "The email is required",
