@@ -20,6 +20,7 @@ export interface UserAttributes {
 	google_id?: string;
 	github_id?: string;
 	image?: string;
+	template_count?: number;
 }
 
 export interface UserInput extends Optional<UserAttributes, "id"> {}
@@ -40,6 +41,7 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
 	public google_id!: string;
 	public github_id!: string;
 	public image!: string;
+	public template_count!: number;
 }
 
 User.init(
@@ -105,6 +107,11 @@ User.init(
 			type: DataTypes.STRING(200),
 			allowNull: true,
 			defaultValue: null,
+		},
+		template_count: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			defaultValue: 0,
 		},
 	},
 	{
