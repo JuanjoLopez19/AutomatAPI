@@ -14,8 +14,20 @@
     ::ng-deep .p-image {
       ::ng-deep img {
         background-color: $white;
-        border: 5px solid $black;
+        border: 5px solid $black-not-black;
         border-radius: 50%;
+      }
+    }
+  }
+
+  p-avatar {
+    ::ng-deep .p-avatar.p-avatar-circle {
+      background-color: $white;
+      border: 5px solid $black-not-black;
+      width: 14rem;
+      height: 14rem;
+      ::ng-deep span {
+        font-size: 5rem;
       }
     }
   }

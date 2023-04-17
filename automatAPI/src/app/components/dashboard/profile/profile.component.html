@@ -7,11 +7,18 @@
             <div class="col-3">
               <div class="row">
                 <p-image
+                  *ngIf="user.image"
                   [src]="user.image"
                   alt="Image"
                   width="225"
                   class="d-flex justify-content-center"
                 ></p-image>
+                <p-avatar *ngIf="user.image === null"
+                  class="d-flex justify-content-center"
+                  id="avatar"
+                  [label]="letter"
+                  shape="circle"
+                ></p-avatar>
               </div>
               <div class="row text-center mt-2">
                 <h1>{{ user.username }}</h1>
