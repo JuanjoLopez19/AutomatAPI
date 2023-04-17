@@ -49,7 +49,6 @@ const github = new githubStrategy(
 						newUser.username = "";
 						newUser.email = "";
 						newUser.role = role.client;
-						newUser.date = new Date();
 						newUser.firstName = profile.displayName || "";
 						newUser.lastName = profile?.name?.familyName || "";
 						newUser.password = "";

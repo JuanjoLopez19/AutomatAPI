@@ -61,7 +61,6 @@ const google = new googleStrategy(
 						newUser.username = "";
 						newUser.email = profile.emails![0].value;
 						newUser.role = role.client;
-						newUser.date = new Date();
 						newUser.firstName = profile?.name?.givenName || "";
 						newUser.lastName = profile?.name?.familyName || "";
 						newUser.password = "";
