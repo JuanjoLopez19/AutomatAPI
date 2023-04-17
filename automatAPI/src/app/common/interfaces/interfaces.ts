@@ -93,3 +93,12 @@ export interface templates {
   date_created: string;
   [key: string]: string;
 }
+
+export interface templatesStats {
+  [key: string]: stat;
+}
+
+interface stat {
+  services: string;
+  app_web: string;
+}

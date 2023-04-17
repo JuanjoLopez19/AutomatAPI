@@ -1,8 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ManageTemplatesService } from 'src/app/api/templates/manageTemplates/manage-templates.service';
-import { httpResponse, templates } from 'src/app/common/interfaces/interfaces';
-import * as echart from 'echarts';
+import { httpResponse, templates, templatesStats } from 'src/app/common/interfaces/interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-admin',
@@ -13,14 +13,30 @@ export class HomeAdminComponent {
   @Input() username: string = null;
   @Input() isAdmin: boolean = false;
   @Output() changeViewEvent: EventEmitter<string> = new EventEmitter<string>();
-  templates: templates[] = [];
+  templates: templatesStats
 
-  constructor(private manageTemplatesServices: ManageTemplatesService) {}
+  constructor(
+    private manageTemplatesServices: ManageTemplatesService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getTemplateData();
   }
-  getTemplateData() {}
+  getTemplateData() {
+    this.manageTemplatesServices.getTemplateStats().subscribe({
+      next: (data: httpResponse) => {
+        this.templates = data.data as templatesStats;
+        console.log(this.templates);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err);
+        if (err.status == 401) {
+          this.router.navigate(['/']);
+        }
+      },
+    });
+  }
 
   chooseLang(): string {
     return 'es-ES';
