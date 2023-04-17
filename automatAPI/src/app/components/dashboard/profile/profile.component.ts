@@ -6,6 +6,7 @@ import {
   userParams,
 } from 'src/app/common/interfaces/interfaces';
 import { Router } from '@angular/router';
+import { ManageUsersService } from 'src/app/api/users/manageUsers/manage-users.service';
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +19,8 @@ export class ProfileComponent {
 
   constructor(
     private manageTemplatesService: ManageTemplatesService,
-    private router: Router
+    private router: Router,
+    private userService: ManageUsersService
   ) {}
 
   ngOnInit(): void {
@@ -26,6 +28,20 @@ export class ProfileComponent {
       next: (data: httpResponse) => {
         this.templates = data.data as templatesStats;
         console.log(this.templates);
+      },
+      error: (err: httpResponse) => {
+        console.log(err);
+        if (err.status == 401) {
+          this.router.navigate(['/']);
+        }
+      },
+    });
+  }
+
+  deleteAccount() {
+    this.userService.deleteAccount().subscribe({
+      next: (data: httpResponse) => {
+        this.router.navigate(['/']);
       },
       error: (err: httpResponse) => {
         console.log(err);

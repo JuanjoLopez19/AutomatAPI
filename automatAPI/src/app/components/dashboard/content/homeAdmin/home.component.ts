@@ -23,7 +23,6 @@ export class HomeAdminComponent {
   constructor(
     private manageTemplatesServices: ManageTemplatesService,
     private router: Router,
-    private userService: ManageUsersService
   ) {}
 
   ngOnInit(): void {
@@ -52,17 +51,5 @@ export class HomeAdminComponent {
     this.changeViewEvent.emit(tech);
   }
 
-  deleteAccount() {
-    this.userService.deleteAccount().subscribe({
-      next: (data: httpResponse) => {
-        this.router.navigate(['/']);
-      },
-      error: (err: HttpErrorResponse) => {
-        console.log(err);
-        if (err.status == 401) {
-          this.router.navigate(['/']);
-        }
-      },
-    });
-  }
+
 }
