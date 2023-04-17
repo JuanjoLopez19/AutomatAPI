@@ -73,7 +73,7 @@ export interface userParams {
   firstName: string;
   lastName: string;
   date: string;
-  birthdate: string;
+  birthDate: string;
   github_id?: string;
   google_id?: string;
   image: string;
