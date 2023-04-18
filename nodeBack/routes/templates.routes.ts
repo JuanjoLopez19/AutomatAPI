@@ -11,7 +11,8 @@ import {
 	deleteTemplate,
 	getToken,
 	getTemplatesStats,
-	getUserTemplatesStats
+	getUserTemplatesStats,
+	deleteTemplateAdmin
 } from "../controllers/templates.controllers";
 import { isAdmin } from "../middleware/auth.middelware";
 
@@ -51,6 +52,8 @@ routerTemplates.delete(
 	passport.authorize("jwt"),
 	deleteTemplate
 );
+
+routerTemplates.delete("/deleteTemplateAdmin", [passport.authorize("jwt"), isAdmin], deleteTemplateAdmin);
 
 routerTemplates.post("/getToken", passport.authorize("jwt"), getToken);
 

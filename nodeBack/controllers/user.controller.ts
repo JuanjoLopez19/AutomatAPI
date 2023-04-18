@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import User from "../database/models/user";
 import config from "../config/config";
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 import Templates, { Tokens } from "../database/models/templates";
-import { Op, WhereOptions } from "sequelize";
+import { WhereOptions } from "sequelize";
 import { deleteItemsAWS } from "../middleware/auxiliaryFunctions";
 import jwt from "jsonwebtoken";
 
