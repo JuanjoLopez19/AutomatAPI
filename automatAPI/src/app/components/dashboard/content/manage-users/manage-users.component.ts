@@ -153,7 +153,7 @@ export class ManageUsersComponent {
         }
       },
       error: (err: HttpErrorResponse) => {
-        //if (err.status === 401) this.router.navigate(['/']);
+        if (err.status === 401) this.router.navigate(['/']);
       },
     });
   }
@@ -164,5 +164,9 @@ export class ManageUsersComponent {
 
   parseInt(value: string) {
     return Number(value);
+  }
+
+  unauth() {
+    this.router.navigate(['/']);
   }
 }

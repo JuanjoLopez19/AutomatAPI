@@ -140,4 +140,8 @@ export class ManageTemplatesComponent implements OnInit {
   parseInt(value: string) {
     return Number(value);
   }
+
+  unauth(){
+    this.router.navigate(['/']);
+  }
 }

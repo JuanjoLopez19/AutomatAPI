@@ -27,9 +27,8 @@ export class SidebarComponent {
     this.activeTabChange.emit(this.activeTab);
   }
 
-  toggleActiveHeader(flag:boolean = false) {
-    if(!flag)
-      this.activeTab = '';
+  toggleActiveHeader(flag: boolean = false) {
+    if (!flag) this.activeTab = '';
     const target = document.getElementsByName('header');
     const targets = document.getElementsByName('text');
     target[0].classList.toggle('selected');
@@ -42,11 +41,15 @@ export class SidebarComponent {
     this.state = stateNumb;
   }
 
-  selectedView(): boolean{
-    if(this.activeTab === 'flask' || this.activeTab === 'express' || this.activeTab === 'django'){
+  selectedView(): boolean {
+    if (
+      this.activeTab === 'flask' ||
+      this.activeTab === 'express' ||
+      this.activeTab === 'django'
+    ) {
       this.toggleActiveHeader(true);
-      return true
+      return true;
     }
-    return false
+    return false;
   }
 }

@@ -28,6 +28,7 @@ import {
   flaskWebApp,
 } from 'src/app/common/interfaces/flaskTemplates';
 import { dropdownParams } from 'src/app/common/interfaces/interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-flask-templates',
@@ -97,7 +98,8 @@ export class FlaskTemplatesComponent implements OnInit {
   constructor(
     private translate: TranslateService,
     private flaskService: FlaskTemplatesService,
-    private fileDownloaderService: FileDownloaderService
+    private fileDownloaderService: FileDownloaderService,
+    private router: Router
   ) {
     this.translate
       .get(['T_SERVICES', 'T_APP_WEB', 'T_SELECT_ONE', 'T_DEV', 'T_PROD'])
@@ -443,9 +445,8 @@ export class FlaskTemplatesComponent implements OnInit {
         table_name: this.apiConfigFormGroup.get('db')?.get('table_name')?.value,
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
-            'name'
-          ],
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')
+            ?.value['name'],
           key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
             'name'
           ],
@@ -469,7 +470,9 @@ export class FlaskTemplatesComponent implements OnInit {
             );
           },
           error: (error) => {
-            console.log(error);
+            if (error.status === 401) {
+              this.router.navigate(['/']);
+            }
           },
         });
     } else if (this.basicFormGroup.get('tech_type').value === 'app_web') {
@@ -495,9 +498,8 @@ export class FlaskTemplatesComponent implements OnInit {
         table_name: this.apiConfigFormGroup.get('db')?.get('table_name')?.value,
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
-            'name'
-          ],
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')
+            ?.value['name'],
           key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
             'name'
           ],
@@ -512,7 +514,6 @@ export class FlaskTemplatesComponent implements OnInit {
         },
       };
 
-      console.log(this.flaskWebAppData);
       this.flaskService
         .createTemplateAppWeb(
           this.technology,
@@ -529,7 +530,9 @@ export class FlaskTemplatesComponent implements OnInit {
             );
           },
           error: (error) => {
-            console.log(error);
+            if (error.status === 401) {
+              this.router.navigate(['/']);
+            }
           },
         });
     }
@@ -543,7 +546,6 @@ export class FlaskTemplatesComponent implements OnInit {
 
     const aux2: any[] = [];
     for (let key in aux) {
-      console.log(key);
       let obj = { [key]: aux[key] };
       aux2.push(obj);
     }

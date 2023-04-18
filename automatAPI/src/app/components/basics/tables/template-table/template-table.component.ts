@@ -13,6 +13,7 @@ export class TemplateTableComponent {
   @Input() userId: number = null;
   @Input() templates: templates[] = null;
   @Output() refreshTable: EventEmitter<void> = new EventEmitter();
+  @Output() unauthorized: EventEmitter<void> = new EventEmitter();
 
   constructor(
     private templateService: ManageTemplatesService,
@@ -28,7 +29,7 @@ export class TemplateTableComponent {
         }
       },
       error: (err) => {
-        console.log(err);
+        if (err.status == 401) this.unauthorized.emit();
       },
     });
   }
@@ -38,14 +39,28 @@ export class TemplateTableComponent {
   }
 
   deleteTemplate(template: templates) {
-    this.templateService.deleteTemplate(Number(template.id)).subscribe({
-      next: (data: httpResponse) => {
-        console.log(data);
-        if (data.status == 200) this.refreshTable.emit();
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    if (this.isAdmin) {
+      this.templateService
+        .deleteTemplateAdmin(Number(template.user_id), Number(template.id))
+        .subscribe({
+          next: (data: httpResponse) => {
+            console.log(data);
+            if (data.status == 200) this.refreshTable.emit();
+          },
+          error: (err) => {
+            if (err.status == 401) this.unauthorized.emit();
+          },
+        });
+    } else {
+      this.templateService.deleteTemplate(Number(template.id)).subscribe({
+        next: (data: httpResponse) => {
+          console.log(data);
+          if (data.status == 200) this.refreshTable.emit();
+        },
+        error: (err) => {
+          if (err.status == 401) this.unauthorized.emit();
+        },
+      });
+    }
   }
 }

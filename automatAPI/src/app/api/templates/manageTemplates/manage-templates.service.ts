@@ -23,6 +23,17 @@ export class ManageTemplatesService {
     );
   }
 
+  deleteTemplateAdmin(user_id: number, template_id: number) {
+    return this.http.delete(
+      `${environment.apiHost}${environment.apiPort}/api/templates/deleteTemplateAdmin`,
+
+      {
+        body: { user_id: user_id, template_id: template_id },
+        withCredentials: true,
+      }
+    );
+  }
+
   getToken(template_id: number) {
     return this.http.post(
       `${environment.apiHost}${environment.apiPort}/api/templates/getToken`,

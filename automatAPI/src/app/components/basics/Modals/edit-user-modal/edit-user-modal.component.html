@@ -1,0 +1,183 @@
+<p-dialog
+  header="{{ 'T_MESSAGE' | translate }}"
+  [modal]="true"
+  [(visible)]="show"
+  [position]="'top'"
+  [style]="{ width: '650px', height: '320px' }"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="true"
+  class="dialog"
+  (onHide)="manageHide()"
+  (onShow)="onShow()"
+>
+  <ng-template pTemplate="header">
+    <div class="container">
+      <div class="row w-100 border-bottom">
+        <h1>{{ "edit.T_EDIT_ACCOUNT" | translate }}</h1>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div class="row h-100">
+      <div class="col-12">
+        <div class="row p-4">
+          <div class="col-5">
+            <form class="row" [formGroup]="userFormGroup">
+              <div class="row">
+                <span class="p-float-label">
+                  <input
+                    pInputText
+                    id="endpoint_name"
+                    formControlName="firstName"
+                  />
+                  <label htmlFor="endpoint_name">{{
+                    "edit.T_FIRST_NAME" | translate
+                  }}</label>
+                </span>
+              </div>
+              <div class="row pt-4">
+                <span class="p-float-label">
+                  <input
+                    pInputText
+                    id="endpoint_name"
+                    formControlName="lastName"
+                  />
+                  <label htmlFor="endpoint_name">{{
+                    "edit.T_LAST_NAME" | translate
+                  }}</label>
+                </span>
+              </div>
+              <div class="row pt-2">
+                <div class="row">
+                  <span>
+                    {{ "T_BIRTHDATE" | translate }}
+                  </span>
+                </div>
+                <span>
+                  <p-calendar
+                    formControlName="birthDate"
+                    [showIcon]="true"
+                    placeholder="{{ 'T_DATE_PLACEHOLDER' | translate }}"
+                    dateFormat="{{ 'T_DATE_PLACEHOLDER' | translate }}"
+                    [readonlyInput]="true"
+                    [maxDate]="maxDate"
+                  ></p-calendar>
+                </span>
+              </div>
+            </form>
+          </div>
+          <div class="col-2">
+            <p-divider layout="vertical">
+              <b>{{ "T_OR" | translate }}</b>
+            </p-divider>
+          </div>
+          <div class="col-5">
+            <form class="row" [formGroup]="passwordFormGroup" #passwordForm>
+              <div class="col-12">
+                <div class="row">
+                  <span class="p-float-label">
+                    <p-password
+                      [feedback]="false"
+                      formControlName="currentPassword"
+                      [toggleMask]="true"
+                    ></p-password>
+                    <label for="password">{{
+                      "edit.T_CURRENT_PWD" | translate
+                    }}</label>
+                  </span>
+                </div>
+                <div class="row pt-4">
+                  <span class="p-float-label">
+                    <p-password
+                      formControlName="password"
+                      [toggleMask]="true"
+                      [weakLabel]="'T_WEAK_PWD' | translate"
+                      [mediumLabel]="'T_MEDIUM_PWD' | translate"
+                      [strongLabel]="'T_STRONG_PWD' | translate"
+                      [promptLabel]="'T_PICK_PWD' | translate"
+                      ><ng-template pTemplate="header">
+                        <h6>{{ "T_PICK_PWD" | translate }}</h6>
+                      </ng-template>
+                      <ng-template pTemplate="footer">
+                        <p-divider></p-divider>
+                        <p class="mt-2">{{ "T_REQ" | translate }}</p>
+                        <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                          <li>{{ "T_LOWER" | translate }}</li>
+                          <li>{{ "T_UPPER" | translate }}</li>
+                          <li>{{ "T_NUMBER" | translate }}</li>
+                          <li>{{ "T_SYMBOL" | translate }}</li>
+                          <li>{{ "T_8_CHAR" | translate }}</li>
+                        </ul>
+                      </ng-template></p-password
+                    >
+                    <label for="password">{{
+                      "edit.T_NEW_PWD" | translate
+                    }}</label>
+                  </span>
+                </div>
+                <div class="row pt-4">
+                  <span class="p-float-label">
+                    <p-password
+                      formControlName="confirmPassword"
+                      [toggleMask]="true"
+                      [weakLabel]="'T_WEAK_PWD' | translate"
+                      [mediumLabel]="'T_MEDIUM_PWD' | translate"
+                      [strongLabel]="'T_STRONG_PWD' | translate"
+                      [promptLabel]="'T_PICK_PWD' | translate"
+                      ><ng-template pTemplate="header">
+                        <h6>{{ "T_PICK_PWD" | translate }}</h6>
+                      </ng-template>
+                      <ng-template pTemplate="footer">
+                        <p-divider></p-divider>
+                        <p class="mt-2">{{ "T_REQ" | translate }}</p>
+                        <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                          <li>{{ "T_LOWER" | translate }}</li>
+                          <li>{{ "T_UPPER" | translate }}</li>
+                          <li>{{ "T_NUMBER" | translate }}</li>
+                          <li>{{ "T_SYMBOL" | translate }}</li>
+                          <li>{{ "T_8_CHAR" | translate }}</li>
+                        </ul>
+                      </ng-template></p-password
+                    >
+                    <label for="password">{{
+                      "edit.T_REPEAT_PWD" | translate
+                    }}</label>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="row w-100 justify-content-end">
+      <div class="col-6">
+        <div class="row">
+          <div class="col-10 d-flex">
+            <p-button
+              [label]="'edit.T_EDIT_ACCOUNT' | translate"
+              icon="pi pi-times"
+              iconPos="right"
+              (onClick)="submitForm(true)"
+            ></p-button>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="row justify-content-end">
+          <div class="col-10">
+            <p-button
+              [label]="'edit.T_CHANGE_PWD' | translate"
+              icon="pi pi-check"
+              iconPos="right"
+              (onClick)="submitForm()"
+            ></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

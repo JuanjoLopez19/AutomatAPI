@@ -13,7 +13,8 @@
                   width="225"
                   class="d-flex justify-content-center"
                 ></p-image>
-                <p-avatar *ngIf="user.image === null"
+                <p-avatar
+                  *ngIf="user.image === null"
                   class="d-flex justify-content-center"
                   id="avatar"
                   [label]="letter"
@@ -72,8 +73,8 @@
                     <h2>{{ "dashboard.T_USER_BIRTHDATE" | translate }}:</h2>
                     <p>
                       {{
-                        user['birthdate']
-                          ? (user['birthdate'] | date)
+                        user["birthdate"]
+                          ? (user["birthdate"] | date)
                           : ("dashboard.T_NO_DATA" | translate)
                       }}
                     </p>
@@ -89,6 +90,7 @@
                     iconPos="right"
                     styleClass="p-button-warning"
                     [label]="'dashboard.T_USER_EDIT' | translate"
+                    (onClick)="openModal()"
                   ></p-button>
                 </div>
                 <div class="col-6 d-flex justify-content-center">
@@ -97,8 +99,9 @@
                     iconPos="right"
                     styleClass="p-button-danger"
                     [label]="'dashboard.T_USER_DELETE' | translate"
-                    (onClick)="deleteAccount()"
+                    (onClick)="deleteAccount($event)"
                   ></p-button>
+                  <p-confirmPopup></p-confirmPopup>
                 </div>
               </div>
             </div>
@@ -162,6 +165,11 @@
           </div>
         </div>
       </div>
+      <app-edit-user-modal
+        [show]="true || showDialog"
+        [userData]="user"
+        (Hide)="onHide()"
+      ></app-edit-user-modal>
     </div>
   </div>
 </div>

@@ -22,7 +22,7 @@ export class HomeAdminComponent {
 
   constructor(
     private manageTemplatesServices: ManageTemplatesService,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +35,6 @@ export class HomeAdminComponent {
         this.templates = data.data as templatesStats;
       },
       error: (err: HttpErrorResponse) => {
-        console.log(err);
         if (err.status == 401) {
           this.router.navigate(['/']);
         }
@@ -50,6 +49,4 @@ export class HomeAdminComponent {
   changeView(tech: string): void {
     this.changeViewEvent.emit(tech);
   }
-
-
 }

@@ -32,3 +32,40 @@
     }
   }
 }
+
+::ng-deep .p-confirm-popup-footer {
+  .p-button-text {
+    color: $light-blue;
+    font-weight: 600;
+    font-size: 1.25rem;
+
+    &:hover {
+      color: $blue-transparent;
+    }
+  }
+  .p-confirm-popup-accept {
+    font-weight: 600;
+    font-size: 1.25rem;
+    background-color: $light-blue;
+    border-color: $light-blue;
+    color: $white;
+
+    &:hover {
+      background-color: $blue-transparent;
+      border-color: $blue-transparent;
+      color: $white;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem $blue-transparent;
+    }
+  }
+}
+
+::ng-deep .p-confirm-popup-icon {
+  color: $primary-color;
+}
+
+::ng-deep .p-confirm-popup {
+  border-radius: 12px;
+}

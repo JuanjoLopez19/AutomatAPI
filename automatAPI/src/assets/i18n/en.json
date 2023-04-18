@@ -117,6 +117,10 @@
   "T_EXPRESS_STATS": "Express statistics",
   "T_DJANGO_STATS": "Django statistics",
   "T_NUM_TEMPLATES": "Number of templates",
+  "T_DELETE_ACCOUNT": "Are you sure you want to delete your account?",
+  "T_WEAK_PWD": "The password is weak",
+  "T_STRONG_PWD": "The password is strong",
+  "T_MEDIUM_PWD": "The password is not strong enough",
   "db": {
     "T_DB_TYPE": "Database type",
     "T_DB_NAME": "Database name",
@@ -288,5 +292,14 @@
     "T_FIELD_NULL": "Null?",
     "T_FIELD_DEFAULT": "Default value",
     "T_FIELD_BLANK": "Blank?"
+  },
+  "edit": {
+    "T_EDIT_ACCOUNT": "Edit account",
+    "T_CHANGE_PWD": "Change password",
+    "T_FIRST_NAME": "First name",
+    "T_LAST_NAME": "Last name",
+    "T_CURRENT_PWD": "Current password",
+    "T_NEW_PWD": "New password",
+    "T_REPEAT_PWD": "Confirm password"
   }
 }
