@@ -13,7 +13,7 @@ import {
 	deleteItemsAWS,
 	encryptData,
 } from "../middleware/auxiliaryFunctions";
-import { Op, WhereOptions } from "sequelize";
+import { WhereOptions } from "sequelize";
 
 export const makeFlaskTemplate = async (req: any, res: Response) => {
 	if (
@@ -313,6 +313,89 @@ export const deleteTemplate = async (req: Request, res: Response) => {
 	}
 };
 
+export const deleteTemplateAdmin = async (req: Request, res: Response) => {
+	if (
+		req.user &&
+		req.body.user_id !== undefined &&
+		req.body.template_id !== undefined
+	) {
+		try {
+			const { template_id, user_id } = req.body;
+			Templates.findOne({
+				where: {
+					id: template_id,
+				} as WhereOptions<Templates>,
+			})
+				.then((template: Templates | null) => {
+					if (template == null) {
+						res
+							.status(404)
+							.json({ message: "Template not found", status: 404 });
+					} else {
+						Tokens.findOne({
+							where: {
+								template_id: template_id,
+							} as WhereOptions<Tokens>,
+						})
+							.then((token: Tokens | null) => {
+								if (token == null) {
+									res
+										.status(404)
+										.json({ message: "Token not found", status: 404 });
+								} else {
+									{
+										deleteItemsAWS(
+											[token.cert_key || "", token.private_key || ""],
+											token.template_token
+										);
+										token
+											.destroy()
+											.then(async () => {
+												const body = { user_id: user_id };
+												const response = await axios.delete(
+													`${config.python.host}:${config.python.port}/templates/${template_id}/delete`,
+													{
+														data: body,
+													} as AxiosRequestConfig
+												);
+
+												res.status(response.status).json({
+													status: response.status,
+													message: response.data.message,
+												});
+											})
+											.catch((err) => {
+												console.log(err);
+												res.status(500).json({
+													message: "Internal Server Error",
+													status: 500,
+												});
+											});
+									}
+								}
+							})
+							.catch((err) => {
+								console.log(err);
+								res
+									.status(500)
+									.json({ message: "Internal Server Error", status: 500 });
+							});
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+					res
+						.status(500)
+						.json({ message: "Internal Server Error", status: 500 });
+				});
+		} catch (err) {
+			console.log(err);
+			res.status(500).json({ message: "Internal Server Error", status: 500 });
+		}
+	} else {
+		res.status(400).json({ message: "Bad Request", status: 400 });
+	}
+};
 export const updateTemplate = async (req: Request, res: Response) => {
 	if (
 		req.body.template_id !== undefined &&
