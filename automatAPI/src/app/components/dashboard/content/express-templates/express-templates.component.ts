@@ -23,6 +23,7 @@ import {
   expressWebApp,
 } from 'src/app/common/interfaces/expressTemplates';
 import { dropdownParams } from 'src/app/common/interfaces/interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-express-templates',
@@ -92,7 +93,8 @@ export class ExpressTemplatesComponent {
   constructor(
     private translate: TranslateService,
     private expressService: ExpressTemplatesService,
-    private fileDownloaderService: FileDownloaderService
+    private fileDownloaderService: FileDownloaderService,
+    private router: Router
   ) {
     this.translate
       .get(['T_SERVICES', 'T_APP_WEB', 'T_SELECT_ONE', 'T_BASIC_HTML'])
@@ -474,9 +476,8 @@ export class ExpressTemplatesComponent {
         body_parser: this.apiConfigFormGroup.get('body_parser')?.value,
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
-            'name'
-          ],
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')
+            ?.value['name'],
           key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
             'name'
           ],
@@ -502,8 +503,6 @@ export class ExpressTemplatesComponent {
         endpoints: [...this.endpointList],
       };
 
-      console.log(this.expressServiceData); // add the service call here
-
       this.expressService
         .createTemplateServices(
           this.technology,
@@ -520,7 +519,9 @@ export class ExpressTemplatesComponent {
             );
           },
           error: (error) => {
-            console.log(error);
+            if (error.status === 401) {
+              this.router.navigate(['/']);
+            }
           },
         });
     } else if (this.basicFormGroup.get('tech_type')?.value === 'app_web') {
@@ -535,7 +536,8 @@ export class ExpressTemplatesComponent {
         body_parser: this.apiConfigFormGroup.get('body_parser')?.value,
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value,
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')
+            ?.value,
           key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value,
         },
         use_controllers: this.apiConfigFormGroup.get('use_controllers')?.value,
@@ -561,8 +563,6 @@ export class ExpressTemplatesComponent {
         endpoints: [...this.endpointList],
       };
 
-      console.log(this.expressWebAppData); // add the service call here
-
       this.expressService
         .createTemplateAppWeb(
           this.technology,
@@ -579,7 +579,9 @@ export class ExpressTemplatesComponent {
             );
           },
           error: (error) => {
-            console.log(error);
+            if (error.status === 401) {
+              this.router.navigate(['/']);
+            }
           },
         });
     }
@@ -608,7 +610,6 @@ export class ExpressTemplatesComponent {
 
     const aux2: any[] = [];
     for (let key in aux) {
-      console.log(key);
       let obj = { [key]: aux[key] };
       aux2.push(obj);
     }

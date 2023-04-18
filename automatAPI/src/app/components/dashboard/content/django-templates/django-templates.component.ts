@@ -20,6 +20,7 @@ import {
   djangoWebApp,
 } from 'src/app/common/interfaces/djangoTemplates';
 import { dropdownParams } from 'src/app/common/interfaces/interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-django-templates',
@@ -91,7 +92,8 @@ export class DjangoTemplatesComponent implements OnInit {
   constructor(
     private translate: TranslateService,
     private djangoService: DjangoTemplatesService,
-    private fileDownloaderService: FileDownloaderService
+    private fileDownloaderService: FileDownloaderService,
+    private router: Router
   ) {
     this.translate
       .get(['T_SERVICES', 'T_APP_WEB', 'T_SELECT_ONE', 'T_BASIC_HTML'])
@@ -453,9 +455,8 @@ export class DjangoTemplatesComponent implements OnInit {
         },
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
-            'name'
-          ],
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')
+            ?.value['name'],
           key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
             'name'
           ],
@@ -467,8 +468,6 @@ export class DjangoTemplatesComponent implements OnInit {
           ),
         },
       };
-
-      console.log(this.djangoServiceData);
 
       this.djangoService
         .createTemplateAppWeb(
@@ -486,7 +485,9 @@ export class DjangoTemplatesComponent implements OnInit {
             );
           },
           error: (error) => {
-            console.log(error);
+            if (error.status === 401) {
+              this.router.navigate(['/']);
+            }
           },
         });
     } else if (this.techType === this.techUse.webApp) {
@@ -511,9 +512,8 @@ export class DjangoTemplatesComponent implements OnInit {
         },
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
-            'name'
-          ],
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')
+            ?.value['name'],
           key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
             'name'
           ],
@@ -525,8 +525,6 @@ export class DjangoTemplatesComponent implements OnInit {
           ),
         },
       };
-
-      console.log(this.djangoWebAppData);
 
       this.djangoService
         .createTemplateAppWeb(
@@ -544,7 +542,9 @@ export class DjangoTemplatesComponent implements OnInit {
             );
           },
           error: (error) => {
-            console.log(error);
+            if (error.status === 401) {
+              this.router.navigate(['/']);
+            }
           },
         });
     }
@@ -570,7 +570,6 @@ export class DjangoTemplatesComponent implements OnInit {
 
     const aux2: any[] = [];
     for (let key in aux) {
-      console.log(key);
       let obj = { [key]: aux[key] };
       aux2.push(obj);
     }
@@ -597,7 +596,6 @@ export class DjangoTemplatesComponent implements OnInit {
 
     const aux2: any[] = [];
     for (let key in aux) {
-      console.log(key);
       let obj = { [key]: aux[key] };
       aux2.push(obj);
     }

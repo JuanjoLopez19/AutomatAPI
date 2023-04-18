@@ -25,16 +25,16 @@ import { ExpressTemplatesComponent } from './components/dashboard/content/expres
 import { DjangoTemplatesComponent } from './components/dashboard/content/django-templates/django-templates.component';
 import { ManageTemplatesComponent } from './components/dashboard/content/manage-templates/manage-templates.component';
 import { ManageUsersComponent } from './components/dashboard/content/manage-users/manage-users.component';
-import { EndpointModalComponent } from './components/basics/endpoint-modal/endpoint-modal.component';
+import { EndpointModalComponent } from './components/basics/Modals/endpoint-modal/endpoint-modal.component';
 import { HomeAdminComponent } from './components/dashboard/content/homeAdmin/home.component';
 import { ProfileComponent } from './components/dashboard/profile/profile.component';
-import { SubAppModalComponent } from './components/basics/sub-app-modal/sub-app-modal.component';
-import { ModelModalComponent } from './components/basics/model-modal/model-modal.component';
+import { SubAppModalComponent } from './components/basics/Modals/sub-app-modal/sub-app-modal.component';
+import { ModelModalComponent } from './components/basics/Modals/model-modal/model-modal.component';
 import { CompleteRegisterComponent } from './views/user-management/complete-register/complete-register.component';
 import { TemplateTableComponent } from './components/basics/tables/template-table/template-table.component';
 import { UsersTableComponent } from './components/basics/tables/users-table/users-table.component';
-import { TemplateCardComponent } from './components/cards/template-card/template-card.component';
-import { SummaryCardComponent } from './components/cards/summary-card/summary-card.component';
+import { TemplateCardComponent } from './components/basics/cards/template-card/template-card.component';
+import { SummaryCardComponent } from './components/basics/cards/summary-card/summary-card.component';
 import { ChartsComponent } from './components/basics/charts/charts.component';
 
 // NG Prime components
@@ -58,6 +58,7 @@ import { CardModule } from 'primeng/card';
 import { CarouselModule } from 'primeng/carousel';
 import { ImageModule } from 'primeng/image';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 // Material components
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -71,6 +72,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { EditUserModalComponent } from './components/basics/Modals/edit-user-modal/edit-user-modal.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -108,6 +110,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SummaryCardComponent,
     HomeAdminComponent,
     ChartsComponent,
+    EditUserModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -153,6 +156,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CarouselModule,
     ImageModule,
     ProgressSpinnerModule,
+    ConfirmPopupModule
   ],
   providers: [],
   bootstrap: [AppComponent],

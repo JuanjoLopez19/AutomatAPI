@@ -86,6 +86,7 @@
             [userId]="parseInt(userId)"
             [users]="userData"
             (refreshTable)="onTemplateChanged()"
+            (unauthorized)="unauth()"
           ></app-users-table>
         </div>
       </div>

@@ -117,6 +117,10 @@
   "T_EXPRESS_STATS": "Estadísticas de Express",
   "T_DJANGO_STATS": "Estadísticas de Django",
   "T_NUM_TEMPLATES": "Número de plantillas",
+  "T_DELETE_ACCOUNT": "¿Estás seguro de que quieres eliminar la cuenta?",
+  "T_WEAK_PWD": "La contraseña es demasiado débil",
+  "T_STRONG_PWD": "La contraseña es segura",
+  "T_MEDIUM_PWD": "La contraseña es segura pero podría ser más fuerte",
   "db": {
     "T_DB_TYPE": "Tipo de Base de datos",
     "T_DB_NAME": "Nombre de la base de datos",
@@ -287,5 +291,14 @@
     "T_FIELD_NULL": "Null?",
     "T_FIELD_DEFAULT": "Valor por defecto",
     "T_FIELD_BLANK": "En blanco?"
+  },
+  "edit":{
+    "T_EDIT_ACCOUNT": "Editar cuenta",
+    "T_CHANGE_PWD": "Cambiar contraseña",
+    "T_FIRST_NAME": "Nombre",
+    "T_LAST_NAME": "Apellidos",
+    "T_CURRENT_PWD": "Contraseña actual",
+    "T_NEW_PWD": "Nueva contraseña",
+    "T_REPEAT_PWD": "Repetir contraseña"
   }
 }

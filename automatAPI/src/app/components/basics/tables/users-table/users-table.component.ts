@@ -18,6 +18,7 @@ export class UsersTableComponent {
   @Input() userId: number = null;
   @Input() users: userParams[] = null;
   @Output() refreshTable: EventEmitter<void> = new EventEmitter();
+  @Output() unauthorized: EventEmitter<void> = new EventEmitter();
 
   constructor(private userService: ManageUsersService) {}
 
@@ -30,7 +31,7 @@ export class UsersTableComponent {
         if (data.status == 200) this.refreshTable.emit();
       },
       error: (err) => {
-        console.log(err);
+        if (err.status == 401) this.unauthorized.emit();
       },
     });
   }

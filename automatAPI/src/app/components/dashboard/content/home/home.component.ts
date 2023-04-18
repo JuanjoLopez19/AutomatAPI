@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ManageTemplatesService } from 'src/app/api/templates/manageTemplates/manage-templates.service';
 import { httpResponse, templates } from 'src/app/common/interfaces/interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,10 @@ export class HomeComponent {
   @Output() changeViewEvent: EventEmitter<string> = new EventEmitter<string>();
   templates: templates[] = [];
 
-  constructor(private manageTemplatesServices: ManageTemplatesService) {}
+  constructor(
+    private manageTemplatesServices: ManageTemplatesService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getTemplateData();
@@ -27,7 +31,7 @@ export class HomeComponent {
         }
       },
       error: (err: HttpErrorResponse) => {
-        //if (err.status === 401) this.router.navigate(['/']);
+        if (err.status === 401) this.router.navigate(['/']);
       },
     });
   }

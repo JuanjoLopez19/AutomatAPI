@@ -14,6 +14,6 @@ export const passwordRegex = new RegExp(
   '^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*_])[a-zA-Z0-9!@#$%^&*_]{8,20}$'
 );
 
-export const nameRegEx = new RegExp('^[a-zA-Z\s ]*$');
+export const nameRegEx = new RegExp('^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]+$');
 
-export const usernameRegex = new RegExp('^[a-zA-Z0-9_\.]+$');
+export const usernameRegex = new RegExp('^[a-zA-Z0-9_.]+$');

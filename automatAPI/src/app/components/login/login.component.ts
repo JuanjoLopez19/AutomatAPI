@@ -64,18 +64,6 @@ export class LoginComponent {
     );
   }
 
-  loginWithFacebook(): void {
-    this.socialService.loginFacebook().subscribe({
-      next: (response: HttpResponse<any>) => {
-        console.log('next');
-        console.log(response);
-      },
-      error: (error: HttpErrorResponse) => {
-        console.log('error');
-        console.log(error);
-      },
-    });
-  }
   loginWithGithub(): void {
     window.open(
       `${environment.apiHost}${environment.apiPort}${environment.githubRoute}`,
