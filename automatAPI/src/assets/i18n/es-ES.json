@@ -121,6 +121,9 @@
   "T_WEAK_PWD": "La contraseña es demasiado débil",
   "T_STRONG_PWD": "La contraseña es segura",
   "T_MEDIUM_PWD": "La contraseña es segura pero podría ser más fuerte",
+  "T_INTERNAL_SERVER_ERROR": "¡Error interno del servidor!",
+  "T_BAD_REQUEST": "¡Petición incorrecta!",
+  "T_USER_UPDATED": "Usuario actualizado correctamente",
   "db": {
     "T_DB_TYPE": "Tipo de Base de datos",
     "T_DB_NAME": "Nombre de la base de datos",
@@ -217,13 +220,7 @@
     "T_SURNAME_INVALID": "Los apellidos son inválidos",
     "T_APP_NAME_INVALID": "El nombre de la aplicación no es válido",
     "T_FILE_INVALID": "El archivo no es válido",
-    "T_ENDP_URL_DUPL": "La URL del endpoint ya existe",
-    "T_NOT_FOUND": "¡No se ha encontrado el recurso!",
-    "T_INTERNAL_SERVER_ERROR": "¡Error interno del servidor!",
-    "T_BAD_REQUEST": "¡Petición incorrecta!"
-  },
-  "response": {
-    "T_USER_UPDATED": "Usuario actualizado correctamente"
+    "T_ENDP_URL_DUPL": "La URL del endpoint ya existe"
   },
   "flask": {
     "T_APP_NAME": "Nombre de la Aplicación",
