@@ -54,7 +54,7 @@ class Users(db.Model):
     create_date = db.Column(
         db.DateTime, nullable=False, default=db.func.current_timestamp()
     )
-    birthdate = db.Column(db.DateTime, nullable=True)
+    birthDate = db.Column(db.DateTime, nullable=True)
     activeUser = db.Column(db.Boolean, nullable=False, default=False)
     access_token = db.Column(db.String(200), nullable=False)
     password_token = db.Column(db.String(200), nullable=False)
