@@ -167,7 +167,9 @@ export class FlaskTemplateEditComponent {
           },
         ];
       });
+  }
 
+  ngOnInit() {
     this.manageTemplates.getTemplateConfig(this.templateId).subscribe({
       next: (data: httpResponse) => {
         console.log(data);
@@ -176,9 +178,6 @@ export class FlaskTemplateEditComponent {
         if (error.status === 401) this.router.navigate(['/']);
       },
     });
-  }
-
-  ngOnInit() {
     this.basicFormGroup = new FormGroup({
       app_name: new FormControl('', {
         validators: [
