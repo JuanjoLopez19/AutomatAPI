@@ -53,6 +53,7 @@ export class FlaskTemplateEditComponent {
   flaskWebAppData: flaskWebApp = null;
 
   private technology: techType = techType.flask;
+  techUseVar: techUse = techUse.services;
   isLinear: boolean = true;
   useBlueprints: boolean = false;
   basicFormGroup: FormGroup;
@@ -170,88 +171,190 @@ export class FlaskTemplateEditComponent {
   }
 
   ngOnInit() {
-    this.manageTemplates.getTemplateConfig(this.templateId).subscribe({
-      next: (data: httpResponse) => {
-        console.log(data);
-      },
-      error: (error) => {
-        if (error.status === 401) this.router.navigate(['/']);
-      },
-    });
-    this.basicFormGroup = new FormGroup({
-      app_name: new FormControl('', {
-        validators: [
-          Validators.required,
-          Validators.pattern(functionNamePythonRegex),
-          Validators.maxLength(200),
-        ],
-        updateOn: 'blur',
-      }),
-      app_description: new FormControl(''),
-      port: new FormControl('5000', {
-        validators: [
-          Validators.required,
-          Validators.min(0),
-          Validators.max(65535),
-        ],
-        updateOn: 'blur',
-      }),
-      host: new FormControl('127.0.0.1', {
-        validators: [Validators.required, Validators.pattern(hostRegex)],
-        updateOn: 'blur',
-      }),
-      tech_type: new FormControl('', {
-        validators: [Validators.required],
-        updateOn: 'blur',
-      }),
-    });
-    this.apiConfigFormGroup = new FormGroup({
-      cors: new FormControl('no', {
-        validators: [Validators.required],
-        updateOn: 'blur',
-      }),
-      connect_DB: new FormControl('no', {
-        validators: [Validators.required],
-        updateOn: 'change',
-      }),
-      use_ssl: new FormControl('no', {
-        validators: [Validators.required],
-        updateOn: 'change',
-      }),
-      ssl_files: new FormGroup({
-        cert: new FormControl(''),
-        key: new FormControl(''),
-      }),
-      db: new FormGroup({
-        db_name: new FormControl('flaskDatabase'),
-        db_user: new FormControl('flaskUser'),
-        db_pwd: new FormControl('flaskPassword'),
-        db_host: new FormControl('localhost'),
-        db_port: new FormControl('0000'),
-        db_type: new FormControl('sqlite'),
-        table_name: new FormControl('flaskTable'),
-      }),
-      config_file: new FormControl('no', {
-        validators: [Validators.required],
-        updateOn: 'change',
-      }),
-      type_config_file: new FormControl('dev', {
-        updateOn: 'blur',
-      }),
-      use_bp: new FormControl('no', {
-        validators: [Validators.required],
-        updateOn: 'blur',
-      }),
-    });
+    this.manageTemplates
+      .getTemplateConfig(this.templateId)
+      .subscribe({
+        next: (data: httpResponse) => {
+          console.log(data);
+          this.techUseVar = data.data.tech_type;
+          if (data.data.tech_type === techUse.services) {
+            this.flaskServicesData = data.data.template_args;
+            this.flaskWebAppData = null;
+          } else {
+            this.flaskWebAppData = data.data.template_args;
+            this.flaskServicesData = null;
+          }
+          this.endpointList = data.data.template_args.endpoints;
 
-    this.blueprintsFormGroup = new FormGroup({
-      bp_list: new FormGroup({
-        list: new FormControl([]),
-      }),
-    });
-    this.endpointsFormGroup = new FormGroup({
-      endpoints: new FormControl([]),
-    });
+          this.certFileName = data.data.template_args.certs.cert_name
+            ? data.data.template_args.certs.cert_name
+            : 'T_CHOSE_CERT_FILE';
+          this.iconCertFile = data.data.template_args.certs.cert_name
+            ? 'pi pi-check'
+            : 'pi pi-upload';
+
+          this.keyFileName = data.data.template_args.certs.key_name
+            ? data.data.template_args.certs.key_name
+            : 'T_CHOSE_KEY_FILE';
+          this.iconKeyFile = data.data.template_args.certs.key_name
+            ? 'pi pi-check'
+            : 'pi pi-upload';
+        },
+        error: (error) => {
+          if (error.status === 401) this.router.navigate(['/']);
+        },
+      })
+      .add(() => {
+        this.basicFormGroup = new FormGroup({
+          app_name: new FormControl(
+            this.flaskServicesData
+              ? this.flaskServicesData.app_name
+              : this.flaskWebAppData.app_name,
+            {
+              validators: [
+                Validators.required,
+                Validators.pattern(functionNamePythonRegex),
+                Validators.maxLength(200),
+              ],
+              updateOn: 'blur',
+            }
+          ),
+          app_description: new FormControl(
+            this.flaskServicesData
+              ? this.flaskServicesData.app_description
+              : this.flaskWebAppData.app_description
+          ),
+          port: new FormControl(
+            this.flaskServicesData
+              ? this.flaskServicesData.port
+              : this.flaskWebAppData.port,
+            {
+              validators: [
+                Validators.required,
+                Validators.min(0),
+                Validators.max(65535),
+              ],
+              updateOn: 'blur',
+            }
+          ),
+          host: new FormControl(
+            this.flaskServicesData
+              ? this.flaskServicesData.host
+              : this.flaskWebAppData.host,
+            {
+              validators: [Validators.required, Validators.pattern(hostRegex)],
+              updateOn: 'blur',
+            }
+          ),
+          tech_type: new FormControl(this.techUseVar, {
+            validators: [Validators.required],
+            updateOn: 'blur',
+          }),
+        });
+        this.apiConfigFormGroup = new FormGroup({
+          cors: new FormControl(
+            this.flaskServicesData
+              ? this.flaskServicesData.cors
+              : this.flaskWebAppData.cors,
+            {
+              validators: [Validators.required],
+              updateOn: 'blur',
+            }
+          ),
+          connect_DB: new FormControl(
+            this.flaskServicesData
+              ? this.flaskServicesData.connect_DB
+              : this.flaskWebAppData.connect_DB,
+            {
+              validators: [Validators.required],
+              updateOn: 'change',
+            }
+          ),
+          use_ssl: new FormControl(
+            this.flaskServicesData
+              ? this.flaskServicesData.use_ssl
+              : this.flaskWebAppData.use_ssl,
+            {
+              validators: [Validators.required],
+              updateOn: 'change',
+            }
+          ),
+          ssl_files: new FormGroup({
+            cert: new FormControl(''),
+            key: new FormControl(''),
+          }),
+          db: new FormGroup({
+            db_name: new FormControl(
+              this.flaskServicesData
+                ? this.flaskServicesData.db.db_name
+                : this.flaskWebAppData.db.db_name
+            ),
+            db_user: new FormControl(
+              this.flaskServicesData
+                ? this.flaskServicesData.db.db_user
+                : this.flaskWebAppData.db.db_user
+            ),
+            db_pwd: new FormControl(
+              this.flaskServicesData
+                ? this.flaskServicesData.db.db_pwd
+                : this.flaskWebAppData.db.db_pwd
+            ),
+            db_host: new FormControl(
+              this.flaskServicesData
+                ? this.flaskServicesData.db.db_host
+                : this.flaskWebAppData.db.db_host
+            ),
+            db_port: new FormControl(
+              this.flaskServicesData
+                ? this.flaskServicesData.db.db_port
+                : this.flaskWebAppData.db.db_port
+            ),
+            db_type: new FormControl(
+              this.flaskServicesData
+                ? this.flaskServicesData.db.db_type
+                : this.flaskWebAppData.db.db_type
+            ),
+            table_name: new FormControl(
+              this.flaskServicesData
+                ? this.flaskServicesData.table_name
+                : this.flaskWebAppData.table_name
+            ),
+          }),
+          config_file: new FormControl(
+            this.flaskServicesData
+              ? this.flaskServicesData.config_file
+              : this.flaskWebAppData.config_file,
+            {
+              validators: [Validators.required],
+              updateOn: 'change',
+            }
+          ),
+          type_config_file: new FormControl(
+            this.flaskServicesData
+              ? this.flaskServicesData.type_config_file
+              : this.flaskWebAppData.type_config_file,
+            {
+              updateOn: 'blur',
+            }
+          ),
+          use_bp: new FormControl(
+            this.flaskServicesData ? 'no' : this.flaskWebAppData.use_bp,
+            {
+              validators: [Validators.required],
+              updateOn: 'blur',
+            }
+          ),
+        });
+
+        this.blueprintsFormGroup = new FormGroup({
+          bp_list: new FormGroup({
+            list: new FormControl([]),
+          }),
+        });
+        this.endpointsFormGroup = new FormGroup({
+          endpoints: new FormControl([]),
+        });
+      });
   }
 
   addBlueprints() {
