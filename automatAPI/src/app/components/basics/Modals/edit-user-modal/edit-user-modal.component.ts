@@ -57,7 +57,10 @@ export class EditUserModalComponent {
 
   maxDate: Date = new Date();
 
-  constructor(private userService: ManageUsersService) {}
+  constructor(
+    private userService: ManageUsersService,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit(): void {
     this.userFormGroup = new FormGroup({
@@ -137,15 +140,25 @@ export class EditUserModalComponent {
           )
           .subscribe({
             next: (data: httpResponse) => {
-              this.successAccount = true;
-              this.successAccountMsg = data.message;
-              setTimeout(() => {
-                this.manageHide();
-              }, 1500);
+              this.translate
+                .get(data.message)
+                .subscribe((res: string) => {
+                  this.successAccount = true;
+                  this.successAccountMsg = res;
+                })
+                .add(() => {
+                  setTimeout(() => {
+                    this.manageHide();
+                  }, 1500);
+                });
             },
             error: (error) => {
-              this.accountError = true;
-              this.accountErrorMsg = error.error.message;
+              this.translate
+                .get(error.error.message)
+                .subscribe((res: string) => {
+                  this.accountError = true;
+                  this.accountErrorMsg = res;
+                });
             },
           });
       }
@@ -158,21 +171,27 @@ export class EditUserModalComponent {
           })
           .subscribe({
             next: (data: httpResponse) => {
-              this.successPassword = true;
-              this.successPasswordMsg = data.message;
-              setTimeout(() => {
-                this.manageHide();
-              }, 1500);
+              this.translate
+                .get(data.message)
+                .subscribe((res: string) => {
+                  this.successPassword = true;
+                  this.successPasswordMsg = res;
+                })
+                .add(() => {
+                  setTimeout(() => {
+                    this.manageHide();
+                  }, 1500);
+                });
             },
             error: (error) => {
-              this.passwordError = true;
-              this.passwordErrorMsg = error.error.message;
+              this.translate
+                .get(error.error.message)
+                .subscribe((res: string) => {
+                  this.passwordError = true;
+                  this.passwordErrorMsg = res;
+                });
             },
           });
-        this.editPassword.emit({
-          currentPassword: this.passwordFormGroup.value.currentPassword,
-          newPassword: this.passwordFormGroup.value.password,
-        });
       }
     }
   }

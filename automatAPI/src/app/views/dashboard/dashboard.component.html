@@ -76,7 +76,11 @@
           [userId]="user.id"
           *ngIf="activeView === 'manage_templates'"
         ></app-manage-templates>
-        <app-profile *ngIf="activeView === 'profile'" [user]="user"></app-profile>
+        <app-profile
+          *ngIf="activeView === 'profile'"
+          [user]="user"
+          (closeSidenav)="snav.close()"
+        ></app-profile>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>

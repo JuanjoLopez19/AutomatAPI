@@ -121,6 +121,9 @@
   "T_WEAK_PWD": "The password is weak",
   "T_STRONG_PWD": "The password is strong",
   "T_MEDIUM_PWD": "The password is not strong enough",
+  "T_INTERNAL_SERVER_ERROR": "Internal server error",
+  "T_BAD_REQUEST": "Bad request",
+  "T_USER_UPDATE": "User updated successfully",
   "db": {
     "T_DB_TYPE": "Database type",
     "T_DB_NAME": "Database name",
@@ -218,13 +221,7 @@
     "T_SURNAME_INVALID": "The surname is invalid",
     "T_APP_NAME_INVALID": "The app's name is invalid",
     "T_FILE_INVALID": "The file is invalid",
-    "T_ENDP_URL_DUPL": "Endpoint path already exists",
-    "T_NOT_FOUND": "Not found",
-    "T_INTERNAL_SERVER_ERROR": "Internal server error",
-    "T_BAD_REQUEST": "Bad request"
-  },
-  "response": {
-    "T_USER_UPDATED": "User updated successfully"
+    "T_ENDP_URL_DUPL": "Endpoint path already exists"
   },
   "flask": {
     "T_APP_NAME": "Application name",
