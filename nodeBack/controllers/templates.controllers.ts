@@ -623,3 +623,27 @@ export const getUserTemplatesStats = async (req: Request, res: Response) => {
 		res.status(500).json({ message: "Internal Server Error", status: 500 });
 	}
 };
+
+export const getTemplateConfig = async (req: Request, res: Response) => {
+	if (req.body.template_id != undefined) {
+		//@ts-ignore
+		const user_id = await jwt.decode(req.cookies["jwt"]).id;
+
+		try {
+			const response = await axios.post(
+				`${config.python.host}:${config.python.port}/templates/getTemplateConfig`,
+				{
+					template_id: req.body.template_id,
+					user_id: user_id,
+				}
+			);
+
+			return res.status(response.status).json(response.data);
+		} catch (err) {
+			console.log(err);
+			res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
+		}
+	} else {
+		res.status(400).json({ message: "T_BAD_REQUEST", status: 400 });
+	}
+};
