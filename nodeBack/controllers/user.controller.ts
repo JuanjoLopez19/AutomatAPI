@@ -152,7 +152,7 @@ export const editAccount = async (req: Request, res: Response) => {
 		User.findByPk(user_id)
 			.then((user: User | null) => {
 				if (user == null) {
-					res.status(404).json({ message: "error.T_NOT_FOUND", status: 404 });
+					res.status(404).json({ message: "T_NOT_FOUND", status: 404 });
 					return;
 				}
 				user
@@ -162,16 +162,14 @@ export const editAccount = async (req: Request, res: Response) => {
 						birthDate: req.body.birthDate,
 					})
 					.then(() => {
-						res
-							.status(200)
-							.json({ message: "response.T_USER_UPDATE", status: 200 });
+						res.status(200).json({ message: "T_USER_UPDATE", status: 200 });
 						return;
 					})
 					.catch((err) => {
 						console.log(err);
 						res
 							.status(500)
-							.json({ message: "error.T_INTERNAL_SERVER_ERROR", status: 500 });
+							.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 						return;
 					});
 			})
@@ -179,11 +177,11 @@ export const editAccount = async (req: Request, res: Response) => {
 				console.log(err);
 				res
 					.status(500)
-					.json({ message: "error.T_INTERNAL_SERVER_ERROR", status: 500 });
+					.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 				return;
 			});
 	} else {
-		res.status(400).json({ message: "error.T_BAD_REQ", status: 400 });
+		res.status(400).json({ message: "T_BAD_REQ", status: 400 });
 	}
 };
 
@@ -196,7 +194,7 @@ export const editPassword = async (req: Request, res: Response) => {
 		const user_id = await jwt.decode(req.cookies["jwt"]).id;
 		User.findByPk(user_id).then((user: User | null) => {
 			if (user == null) {
-				res.status(404).json({ message: "error.T_NOT_FOUND", status: 404 });
+				res.status(404).json({ message: "T_NOT_FOUND", status: 404 });
 				return;
 			}
 			bcrypt.compare(
@@ -207,7 +205,7 @@ export const editPassword = async (req: Request, res: Response) => {
 						console.log(err);
 						res
 							.status(500)
-							.json({ message: "error.T_INTERNAL_SERVER_ERROR", status: 500 });
+							.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 						return;
 					}
 					if (result) {
@@ -219,7 +217,7 @@ export const editPassword = async (req: Request, res: Response) => {
 											.update({ password: hash })
 											.then(() => {
 												res.status(200).json({
-													message: "response.T_USER_UPDATE",
+													message: "T_USER_UPDATE",
 													status: 200,
 												});
 												return;
@@ -227,7 +225,7 @@ export const editPassword = async (req: Request, res: Response) => {
 											.catch((err) => {
 												console.log(err);
 												res.status(500).json({
-													message: "error.T_INTERNAL_SERVER_ERROR",
+													message: "T_INTERNAL_SERVER_ERROR",
 													status: 500,
 												});
 												return;
@@ -235,7 +233,7 @@ export const editPassword = async (req: Request, res: Response) => {
 									} else {
 										console.log(err);
 										res.status(500).json({
-											message: "error.T_INTERNAL_SERVER_ERROR",
+											message: "T_INTERNAL_SERVER_ERROR",
 											status: 500,
 										});
 										return;
@@ -244,23 +242,21 @@ export const editPassword = async (req: Request, res: Response) => {
 							} else {
 								console.log(err);
 								res.status(500).json({
-									message: "error.T_INTERNAL_SERVER_ERROR",
+									message: "T_INTERNAL_SERVER_ERROR",
 									status: 500,
 								});
 								return;
 							}
 						});
 					} else {
-						res
-							.status(401)
-							.json({ message: "error.T_UNAUTHORIZED", status: 401 });
+						res.status(401).json({ message: "T_UNAUTHORIZED", status: 401 });
 						return;
 					}
 				}
 			);
 		});
 	} else {
-		res.status(400).json({ message: "error.T_BAD_REQ", status: 400 });
+		res.status(400).json({ message: "T_BAD_REQ", status: 400 });
 		return;
 	}
 };
