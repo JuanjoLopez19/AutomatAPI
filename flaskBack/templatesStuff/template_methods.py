@@ -6,17 +6,20 @@ import sys
 import uuid
 from cookiecutter import exceptions
 from cookiecutter.main import cookiecutter
+
 sys.path.append("..")
 
 from models.model import Tech, TechType
-from templatesStuff.aux_data import (django_test_app, django_test_service,
-                                     express_test_app, express_test_service,
-                                     flask_test_app, flask_test_service)
+from templatesStuff.aux_data import express_test_app
 from templatesStuff.file_management import *
 
 
 def temp_creator(
-    template_args: dict = None, tech: Tech = None, type: TechType = None
+    template_args: dict = None,
+    tech: Tech = None,
+    type: TechType = None,
+    cert_key: str = None,
+    private_key: str = None,
 ) -> str:
     """
     @param: template_args -> Dictionary with the arguments to create the template
@@ -36,7 +39,7 @@ def temp_creator(
 
     template_args["tecnology"] = tech.name
     template_args["type"] = type.name
-    
+
     # Statics paths for the main template and the output path
     cookiecutter_template_path = add_base_path(
         DEFAULT_CONFIG["cookiecutter"]["tecnology_args"][
@@ -214,6 +217,15 @@ def temp_creator(
                 "r",
             ) as f2:
                 f.write(f2.read())
+    if template_args.get("use_ssl") == "yes":
+        if not setCertFiles(
+            template_path,
+            template_args.get("certs").get("cert_name"),
+            template_args.get("certs").get("key_name"),
+            cert_key,
+            private_key,
+        ):
+            return None
 
     # Compress the template and delete the temp files
     path = compress_api(template_path, args["app_folder_name"])
@@ -224,7 +236,6 @@ def temp_creator(
             return key
     else:
         return None
-    
 
 
 def endpoint_creator(

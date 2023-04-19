@@ -1,6 +1,6 @@
 {%- if cookiecutter.view_engine == "hbs" %}
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<h1>{{"title"}}</h1>
+<p>Welcome to {{"title"}}</p>
 {%- elif cookiecutter.view_engine == "ejs" %}
 <!DOCTYPE html>
 <html>
@@ -17,12 +17,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{{ title }}</title>
+    <title>{{ "title" }}</title>
     <link rel='stylesheet' href='/stylesheets/style.{{cookiecutter.css_engine}}' />
   </head>
   <body>
-    <h1>{{ title }}</h1>
-    <p>Welcome to {{ title }}</p>
+    <h1>{{ "title" }}</h1>
+    <p>Welcome to {{ "title" }}</p>
   </body>
 </html>
 {%- elif cookiecutter.view_engine == "pug" or cookiecutter.view_engine == "jade" %}
@@ -36,8 +36,8 @@ block content
 {% extends 'layout.twig' %}
 
 {% block body %}
-  <h1>{{title}}</h1>
-  <p>Welcome to {{title}}</p>
+  <h1>{{"title"}}</h1>
+  <p>Welcome to {{"title"}}</p>
 {% endblock %}
 {%- elif cookiecutter.view_engine == "vash" %}
 @html.extend('layout', function(model) {
