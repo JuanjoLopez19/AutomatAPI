@@ -3,9 +3,9 @@
 <h2><%= error.status %></h2>
 <pre><%= error.stack %></pre>
 {%- elif cookiecutter.view_engine == "hjs" or cookiecutter.view_engine == "hbs" %}
-<h1>{{ message }}</h1>
-<h2>{{ error.status }}</h2>
-<pre>{{ error.stack }}</pre>
+<h1>{{ "message" }}</h1>
+<h2>{{ "error.status" }}</h2>
+<pre>{{" error.stack" }}</pre>
 {%- elif cookiecutter.view_engine == "pug" or cookiecutter.view_engine == "jade" %}
 extends layout
 
@@ -17,9 +17,9 @@ block content
 {% extends 'layout.twig' %}
 
 {% block body %}
-  <h1>{{message}}</h1>
-  <h2>{{error.status}}</h2>
-  <pre>{{error.stack}}</pre>
+  <h1>{{"message"}}</h1>
+  <h2>{{"error.status"}}</h2>
+  <pre>{{"error.stack"}}</pre>
 {% endblock %}
 {%- elif cookiecutter.view_engine == "vash" %}
 @html.extend('layout', function(model) {

@@ -153,7 +153,12 @@ def get_templates():
 
             tech_type = TechType[tech_type]
 
-            template_path = temp_creator(template_data, tech, tech_type)
+            cert_key = body.get("aws_key_cert", None)
+            private_key = body.get("aws_key_key", None)
+
+            template_path = temp_creator(
+                template_data, tech, tech_type, cert_key, private_key
+            )
             if not template_path:
                 return make_response(
                     jsonify(
@@ -201,7 +206,7 @@ def get_templates():
                             "status": "ok",
                             "message": "The template was created successfully",
                             "data": template_path,
-                            "template_id": template.id
+                            "template_id": template.id,
                         }
                     ),
                     201,

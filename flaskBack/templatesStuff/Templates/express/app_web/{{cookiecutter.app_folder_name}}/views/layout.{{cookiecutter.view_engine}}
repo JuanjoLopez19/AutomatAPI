@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{{title}}</title>
+    <title>{{"title"}}</title>
     <link rel='stylesheet' href='/stylesheets/style.{{cookiecutter.css_engine}}' />
   </head>
   <body>
-    {{body}}
+    {{"body"}}
   </body>
 </html>
 {%- elif cookiecutter.view_engine == "jade" %}
