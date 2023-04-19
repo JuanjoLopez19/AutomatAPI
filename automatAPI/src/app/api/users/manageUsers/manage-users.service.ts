@@ -22,9 +22,25 @@ export class ManageUsersService {
     );
   }
 
-  deleteAccount(){
+  deleteAccount() {
     return this.http.delete(
       `${environment.apiHost}${environment.apiPort}/api/users/deleteAccount`,
+      { withCredentials: true }
+    );
+  }
+
+  editAccount(data: { firstName: string; lastName: string; birthDate: Date }) {
+    return this.http.put(
+      `${environment.apiHost}${environment.apiPort}/api/users/editAccount`,
+      data,
+      { withCredentials: true }
+    );
+  }
+
+  editPassword(data: { newPassword: string; currentPassword: string }) {
+    return this.http.put(
+      `${environment.apiHost}${environment.apiPort}/api/users/editPassword`,
+      data,
       { withCredentials: true }
     );
   }

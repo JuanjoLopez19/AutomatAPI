@@ -7,8 +7,9 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { nameRegEx } from 'src/app/common/constants';
-import { userParams } from 'src/app/common/interfaces/interfaces';
+import { ManageUsersService } from 'src/app/api/users/manageUsers/manage-users.service';
+import { nameRegEx, passwordRegex } from 'src/app/common/constants';
+import { httpResponse, userParams } from 'src/app/common/interfaces/interfaces';
 
 @Component({
   selector: 'app-edit-user-modal',
@@ -39,12 +40,16 @@ export class EditUserModalComponent {
 
   userFormGroup: FormGroup;
   passwordFormGroup: FormGroup;
-  validName: boolean = false;
-  duplicatedName: boolean = false;
+
+  passwordInvalid: boolean = false;
+  accountError: boolean = false;
+  accountErrorMsg: string = '';
+  passwordError: boolean = false;
+  passwordErrorMsg: string = '';
 
   maxDate: Date = new Date();
 
-  constructor(private translate: TranslateService) {}
+  constructor(private userService: ManageUsersService) {}
 
   ngOnInit(): void {
     this.userFormGroup = new FormGroup({
@@ -59,15 +64,35 @@ export class EditUserModalComponent {
     });
 
     this.passwordFormGroup = new FormGroup({
-      password: new FormControl('', [Validators.required]),
-      confirmPassword: new FormControl('', [Validators.required]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.pattern(passwordRegex),
+      ]),
+      confirmPassword: new FormControl('', [
+        Validators.required,
+        Validators.pattern(passwordRegex),
+      ]),
       currentPassword: new FormControl('', [Validators.required]),
     });
   }
 
   onShow() {
-    this.validName = false;
-    this.duplicatedName = false;
+    this.passwordInvalid = false;
+    this.accountError = false;
+    this.accountErrorMsg = '';
+    this.passwordError = false;
+    this.passwordErrorMsg = '';
+
+    this.userFormGroup = new FormGroup({
+      lastName: new FormControl(this.userData.lastName, [
+        Validators.pattern(nameRegEx),
+      ]),
+      firstName: new FormControl(this.userData.firstName, [
+        Validators.required,
+        Validators.pattern(nameRegEx),
+      ]),
+      birthDate: new FormControl(this.userData.birthDate),
+    });
   }
 
   manageHide() {
@@ -75,31 +100,70 @@ export class EditUserModalComponent {
     this.show = false;
   }
 
-  validateName(): boolean {
-    return null;
-  }
-
   checkPasswords(): boolean {
-    return null;
+    if (
+      this.passwordFormGroup.value.password ===
+      this.passwordFormGroup.value.confirmPassword
+    ) {
+      return true;
+    } else {
+      this.passwordInvalid = true;
+      return false;
+    }
   }
 
   submitForm(type: boolean = false) {
     if (type) {
-      console.log(this.userFormGroup.value);
       if (this.userFormGroup.valid) {
-        this.editAccount.emit(
-          this.userFormGroup.value as {
-            firstName: string;
-            lastName: string;
-            birthDate: Date;
-          }
-        );
-        this.manageHide();
+        this.userService
+          .editAccount(
+            this.userFormGroup.value as {
+              firstName: string;
+              lastName: string;
+              birthDate: Date;
+            }
+          )
+          .subscribe({
+            next: (data: httpResponse) => {
+              this.editAccount.emit(
+                this.userFormGroup.value as {
+                  firstName: string;
+                  lastName: string;
+                  birthDate: Date;
+                }
+              );
+              this.manageHide();
+            },
+            error: (error: httpResponse) => {
+              this.accountError = true;
+              this.accountErrorMsg = error.message;
+            },
+          });
       }
     } else {
       if (this.passwordFormGroup.valid && this.checkPasswords()) {
-        this.editPassword.emit(this.passwordFormGroup.value);
-        this.manageHide();
+        this.userService
+          .editPassword({
+            currentPassword: this.passwordFormGroup.value.currentPassword,
+            newPassword: this.passwordFormGroup.value.password,
+          })
+          .subscribe({
+            next: (data: httpResponse) => {
+              this.editPassword.emit({
+                currentPassword: this.passwordFormGroup.value.currentPassword,
+                newPassword: this.passwordFormGroup.value.password,
+              });
+              this.manageHide();
+            },
+            error: (error: httpResponse) => {
+              this.passwordError = true;
+              this.passwordErrorMsg = error.message;
+            },
+          });
+        this.editPassword.emit({
+          currentPassword: this.passwordFormGroup.value.currentPassword,
+          newPassword: this.passwordFormGroup.value.password,
+        });
       }
     }
   }
