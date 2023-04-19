@@ -73,6 +73,9 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { EditUserModalComponent } from './components/basics/Modals/edit-user-modal/edit-user-modal.component';
+import { FlaskTemplateEditComponent } from './components/dashboard/content/edit/flask-template-edit/flask-template-edit.component';
+import { ExpressTemplateEditComponent } from './components/dashboard/content/edit/express-template-edit/express-template-edit.component';
+import { DjangoTemplateEditComponent } from './components/dashboard/content/edit/django-template-edit/django-template-edit.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -111,6 +114,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     HomeAdminComponent,
     ChartsComponent,
     EditUserModalComponent,
+    FlaskTemplateEditComponent,
+    ExpressTemplateEditComponent,
+    DjangoTemplateEditComponent,
   ],
   imports: [
     BrowserModule,

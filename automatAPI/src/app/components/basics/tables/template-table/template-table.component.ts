@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FileDownloaderService } from 'src/app/api/templates/fileDownloader/file-downloader.service';
 import { ManageTemplatesService } from 'src/app/api/templates/manageTemplates/manage-templates.service';
+import { techType, techUse } from 'src/app/common/enums/enums';
 import { httpResponse, templates } from 'src/app/common/interfaces/interfaces';
 
 @Component({
@@ -14,6 +15,12 @@ export class TemplateTableComponent {
   @Input() templates: templates[] = null;
   @Output() refreshTable: EventEmitter<void> = new EventEmitter();
   @Output() unauthorized: EventEmitter<void> = new EventEmitter();
+  @Output() onEditTemplate: EventEmitter<{
+    id: number;
+    userId: number;
+    technology: techType.django | techType.express | techType.flask;
+    techType: techUse.services | techUse.webApp;
+  }> = new EventEmitter();
 
   constructor(
     private templateService: ManageTemplatesService,
@@ -35,7 +42,12 @@ export class TemplateTableComponent {
   }
 
   editTemplate(template: templates) {
-    console.log(template);
+    this.onEditTemplate.emit({
+      id: Number(template.id),
+      userId: Number(template.user_id),
+      technology: template.technology,
+      techType: template.tech_type,
+    });
   }
 
   deleteTemplate(template: templates) {
