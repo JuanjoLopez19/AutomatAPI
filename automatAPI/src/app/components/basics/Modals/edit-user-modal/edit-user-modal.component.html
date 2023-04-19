@@ -35,6 +35,20 @@
                     "edit.T_FIRST_NAME" | translate
                   }}</label>
                 </span>
+                <div class="row">
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="userFormGroup.get('firstName').errors?.[ 'required' ] && userFormGroup.get('firstName').touched"
+                    >{{ "error.T_FIRST_NAME_REQ" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="userFormGroup.get('firstName').errors?.[ 'pattern' ] && userFormGroup.get('firstName').touched"
+                    >{{ "error.T_FIRST_NAME_INVALID" | translate }}</small
+                  >
+                </div>
               </div>
               <div class="row pt-4">
                 <span class="p-float-label">
@@ -47,6 +61,12 @@
                     "edit.T_LAST_NAME" | translate
                   }}</label>
                 </span>
+                <small
+                  id="endp-name-help"
+                  class="p-error block"
+                  *ngIf="userFormGroup.get('lastName').errors?.[ 'pattern' ] && userFormGroup.get('lastName').touched"
+                  >{{ "error.T_FIRST_NAME_INVALID" | translate }}</small
+                >
               </div>
               <div class="row pt-2">
                 <div class="row">
@@ -64,6 +84,14 @@
                     [maxDate]="maxDate"
                   ></p-calendar>
                 </span>
+              </div>
+              <div class="row py-3">
+                <small
+                  id="endp-name-help"
+                  class="p-error block"
+                  *ngIf="accountError"
+                  >{{ accountErrorMsg | translate }}</small
+                >
               </div>
             </form>
           </div>
@@ -86,6 +114,14 @@
                       "edit.T_CURRENT_PWD" | translate
                     }}</label>
                   </span>
+                  <div class="row">
+                    <small
+                      id="endp-name-help"
+                      class="p-error block"
+                      *ngIf="passwordFormGroup.get('currentPassword').errors?.[ 'required' ] && passwordFormGroup.get('currentPassword').touched"
+                      >{{ "error.T_PWD_REQ" | translate }}</small
+                    >
+                  </div>
                 </div>
                 <div class="row pt-4">
                   <span class="p-float-label">
@@ -116,6 +152,20 @@
                     }}</label>
                   </span>
                 </div>
+                <div class="row">
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="passwordFormGroup.get('password').errors?.[ 'required' ] && passwordFormGroup.get('password').touched"
+                    >{{ "error.T_PWD_REQ" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="passwordFormGroup.get('password').errors?.[ 'pattern' ] && passwordFormGroup.get('password').touched"
+                    >{{ "error.T_PWD_INVALID" | translate }}</small
+                  >
+                </div>
                 <div class="row pt-4">
                   <span class="p-float-label">
                     <p-password
@@ -145,6 +195,34 @@
                     }}</label>
                   </span>
                 </div>
+                <div class="row">
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="passwordFormGroup.get('confirmPassword').errors?.[ 'required' ] && passwordFormGroup.get('confirmPassword').touched"
+                    >{{ "error.T_PWD_REQ" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="passwordFormGroup.get('confirmPassword').errors?.[ 'pattern' ] && passwordFormGroup.get('confirmPassword').touched"
+                    >{{ "error.T_PWD_INVALID" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="passwordInvalid"
+                    >{{ "error.T_PWDS_NOT_MATCH" | translate }}</small
+                  >
+                </div>
+                <div class="row py-3">
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="passwordError"
+                    >{{ passwordErrorMsg | translate }}</small
+                  >
+                </div>
               </div>
             </form>
           </div>
@@ -155,7 +233,7 @@
   <ng-template pTemplate="footer">
     <div class="row w-100 justify-content-end">
       <div class="col-6">
-        <div class="row">
+        <div class="row justify-content-center">
           <div class="col-10 d-flex">
             <p-button
               [label]="'edit.T_EDIT_ACCOUNT' | translate"
@@ -167,7 +245,7 @@
         </div>
       </div>
       <div class="col-6">
-        <div class="row justify-content-end">
+        <div class="row justify-content-center">
           <div class="col-10">
             <p-button
               [label]="'edit.T_CHANGE_PWD' | translate"
