@@ -42,10 +42,18 @@ export class EditUserModalComponent {
   passwordFormGroup: FormGroup;
 
   passwordInvalid: boolean = false;
+
   accountError: boolean = false;
   accountErrorMsg: string = '';
+
   passwordError: boolean = false;
   passwordErrorMsg: string = '';
+
+  successAccount: boolean = false;
+  successAccountMsg: string = '';
+
+  successPassword: boolean = false;
+  successPasswordMsg: string = '';
 
   maxDate: Date = new Date();
 
@@ -82,6 +90,10 @@ export class EditUserModalComponent {
     this.accountErrorMsg = '';
     this.passwordError = false;
     this.passwordErrorMsg = '';
+    this.successAccount = false;
+    this.successAccountMsg = '';
+    this.successPassword = false;
+    this.successPasswordMsg = '';
 
     this.userFormGroup = new FormGroup({
       lastName: new FormControl(this.userData.lastName, [
@@ -125,18 +137,15 @@ export class EditUserModalComponent {
           )
           .subscribe({
             next: (data: httpResponse) => {
-              this.editAccount.emit(
-                this.userFormGroup.value as {
-                  firstName: string;
-                  lastName: string;
-                  birthDate: Date;
-                }
-              );
-              this.manageHide();
+              this.successAccount = true;
+              this.successAccountMsg = data.message;
+              setTimeout(() => {
+                this.manageHide();
+              }, 1500);
             },
-            error: (error: httpResponse) => {
+            error: (error) => {
               this.accountError = true;
-              this.accountErrorMsg = error.message;
+              this.accountErrorMsg = error.error.message;
             },
           });
       }
@@ -149,15 +158,15 @@ export class EditUserModalComponent {
           })
           .subscribe({
             next: (data: httpResponse) => {
-              this.editPassword.emit({
-                currentPassword: this.passwordFormGroup.value.currentPassword,
-                newPassword: this.passwordFormGroup.value.password,
-              });
-              this.manageHide();
+              this.successPassword = true;
+              this.successPasswordMsg = data.message;
+              setTimeout(() => {
+                this.manageHide();
+              }, 1500);
             },
-            error: (error: httpResponse) => {
+            error: (error) => {
               this.passwordError = true;
-              this.passwordErrorMsg = error.message;
+              this.passwordErrorMsg = error.error.message;
             },
           });
         this.editPassword.emit({

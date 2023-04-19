@@ -92,6 +92,12 @@
                   *ngIf="accountError"
                   >{{ accountErrorMsg | translate }}</small
                 >
+                <small
+                  id="endp-name-help"
+                  class="block"
+                  *ngIf="successPassword"
+                  >{{ successPasswordMsg | translate }}</small
+                >
               </div>
             </form>
           </div>
@@ -221,6 +227,12 @@
                     class="p-error block"
                     *ngIf="passwordError"
                     >{{ passwordErrorMsg | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="block"
+                    *ngIf="successAccount"
+                    >{{ successAccountMsg | translate }}</small
                   >
                 </div>
               </div>
