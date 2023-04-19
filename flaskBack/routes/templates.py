@@ -629,3 +629,104 @@ def create_template(template_id):
             ),
             404,
         )
+
+
+@templates.route("/getTemplateConfig", methods=["POST"])
+def get_config():
+    try:
+        body = dict(request.get_json(force=True))
+    except Exception:
+        return make_response(
+            jsonify({"status": "error", "message": "No body provided"}),
+            400,
+        )
+
+    if not body:
+        return make_response(
+            jsonify(
+                {
+                    "status": "error",
+                    "message": "The body of the request is empty",
+                }
+            ),
+            400,
+        )
+
+    user_id = body.get("user_id")
+    if not user_id:
+        return make_response(
+            jsonify(
+                {
+                    "status": "error",
+                    "message": "The user_id is required",
+                }
+            ),
+            400,
+        )
+    template_id = body.get("template_id")
+    if not template_id:
+        return make_response(
+            jsonify(
+                {
+                    "status": "error",
+                    "message": "The template_id is required",
+                }
+            ),
+            400,
+        )
+
+    try:
+        template = db.get_or_404(Templates, template_id)
+        if template["user_id"] != user_id:
+            return make_response(
+                jsonify(
+                    {
+                        "status": "error",
+                        "message": "T_NOT_AUTHORIZED",
+                    }
+                ),
+                403,
+            )
+        mongo_client = get_client()
+        mongo_collection = get_collection(
+            get_db(mongo_client, "automatAPI"), "templates"
+        )
+        ref = template["template_ref"]
+        temp = find_one(mongo_collection, ObjectId(ref.replace(" ", "")))
+        if temp:
+            temp.pop("_id")
+            return make_response(
+                jsonify(
+                    {
+                        "status": "ok",
+                        "message": "T_FOUND",
+                        "data": {
+                            "technology": str(template["technology"]),
+                            "tech_type": str(template["tech_type"]),
+                            "template_args": temp,
+                        },
+                    }
+                ),
+                200,
+            )
+        else:
+            return make_response(
+                jsonify(
+                    {
+                        "status": "error",
+                        "message": "T_NOT_FOUND",
+                    }
+                ),
+                404,
+            )
+    except Exception as e:
+        print(e.with_traceback())
+        return make_response(
+            jsonify(
+                {
+                    "status": "error",
+                    "message": "T_NOT_FOUND",
+                }
+            ),
+            404,
+        )
