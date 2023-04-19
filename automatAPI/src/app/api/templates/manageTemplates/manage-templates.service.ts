@@ -55,4 +55,12 @@ export class ManageTemplatesService {
       { withCredentials: true }
     );
   }
+
+  getTemplateConfig(template_id: string) {
+    return this.http.post(
+      `${environment.apiHost}${environment.apiPort}/api/templates/getTemplateConfig`,
+      { template_id: template_id },
+      { withCredentials: true }
+    );
+  }
 }

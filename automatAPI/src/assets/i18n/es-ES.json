@@ -186,7 +186,8 @@
     "T_USER_DELETE": "Eliminar cuenta",
     "T_USER_BIRTHDATE": "Fecha de nacimiento",
     "T_NUM_TEMPLATES": "Número de plantillas creadas",
-    "T_WELCOME_ADMIN_SUBTITLE": "Aquí puedes ver algunas estadísticas de la aplicación"
+    "T_WELCOME_ADMIN_SUBTITLE": "Aquí puedes ver algunas estadísticas de la aplicación",
+    "T_NO_DESCRIPTION": "Sin descripción para la plantilla"
   },
   "error": {
     "T_EMAIL_REQ": "El correo electrónico es obligatorio",

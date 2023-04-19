@@ -1,10 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ManageTemplatesService } from 'src/app/api/templates/manageTemplates/manage-templates.service';
-import { TemplateField } from 'src/app/common/enums/enums';
+import { TemplateField, techType, techUse } from 'src/app/common/enums/enums';
 import {
   dropdownParams,
   httpResponse,
@@ -21,6 +21,12 @@ import { DatePipe } from '@angular/common';
 export class ManageTemplatesComponent implements OnInit {
   @Input() isAdmin: boolean = false;
   @Input() userId: string = null;
+  @Output() editTemplate: EventEmitter<{
+    id: number;
+    userId: number;
+    technology: techType.django | techType.express | techType.flask;
+    techType: techUse.services | techUse.webApp;
+  }> = new EventEmitter();
   readonly templateField: any = TemplateField;
 
   templateData!: templates[];
@@ -141,7 +147,16 @@ export class ManageTemplatesComponent implements OnInit {
     return Number(value);
   }
 
-  unauth(){
+  unauth() {
     this.router.navigate(['/']);
+  }
+
+  onEditTemplate(event: {
+    id: number;
+    userId: number;
+    technology: techType.django | techType.express | techType.flask;
+    techType: techUse.services | techUse.webApp;
+  }) {
+    this.editTemplate.emit(event);
   }
 }

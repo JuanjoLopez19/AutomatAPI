@@ -186,7 +186,8 @@
     "T_USER_DELETE": "Delete account",
     "T_USER_BIRTHDATE": "Birthdate",
     "T_NUM_TEMPLATES": "Number of templates created",
-    "T_WELCOME_ADMIN_SUBTITLE": "Here you can see some statistics from the platform"
+    "T_WELCOME_ADMIN_SUBTITLE": "Here you can see some statistics from the platform",
+    "T_NO_DESCRIPTION": "No description provided for the template"
   },
   "error": {
     "T_EMAIL_REQ": "The email is required",
