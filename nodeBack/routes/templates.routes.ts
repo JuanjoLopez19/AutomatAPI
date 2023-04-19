@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { Request, Response } from "express";
 import upload from "../middleware/multer.middleware";
 import passport from "passport";
 
@@ -12,7 +11,8 @@ import {
 	getToken,
 	getTemplatesStats,
 	getUserTemplatesStats,
-	deleteTemplateAdmin
+	deleteTemplateAdmin,
+	getTemplateConfig,
 } from "../controllers/templates.controllers";
 import { isAdmin } from "../middleware/auth.middelware";
 
@@ -53,11 +53,29 @@ routerTemplates.delete(
 	deleteTemplate
 );
 
-routerTemplates.delete("/deleteTemplateAdmin", [passport.authorize("jwt"), isAdmin], deleteTemplateAdmin);
+routerTemplates.delete(
+	"/deleteTemplateAdmin",
+	[passport.authorize("jwt"), isAdmin],
+	deleteTemplateAdmin
+);
 
 routerTemplates.post("/getToken", passport.authorize("jwt"), getToken);
 
-routerTemplates.get("/getTemplateStats", [passport.authorize("jwt"), isAdmin], getTemplatesStats )
-routerTemplates.get("/getUserTemplateStats", [passport.authorize("jwt")], getUserTemplatesStats )
+routerTemplates.get(
+	"/getTemplateStats",
+	[passport.authorize("jwt"), isAdmin],
+	getTemplatesStats
+);
+routerTemplates.get(
+	"/getUserTemplateStats",
+	[passport.authorize("jwt")],
+	getUserTemplatesStats
+);
+
+routerTemplates.post(
+	"/getTemplateConfig",
+	[passport.authorize("jwt")],
+	getTemplateConfig
+);
 
 export default routerTemplates;
