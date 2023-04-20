@@ -54,6 +54,8 @@ export class FlaskTemplateEditComponent {
 
   private technology: techType = techType.flask;
   techUseVar: techUse = techUse.services;
+
+  createTemp: string = 'false';
   isLinear: boolean = true;
   useBlueprints: boolean = false;
   basicFormGroup: FormGroup;
@@ -587,20 +589,24 @@ export class FlaskTemplateEditComponent {
       };
 
       console.log(this.flaskServicesData);
-      this.flaskService
-        .createTemplateServices(
-          this.technology,
-          techUse.services,
+      this.manageTemplates
+        .editTemplate(
+          this.templateId,
+          this.createTemp,
           this.flaskServicesData,
           this.apiConfigFormGroup.get('ssl_files').get('cert').value,
           this.apiConfigFormGroup.get('ssl_files').get('key').value
         )
         .subscribe({
           next: (data: any) => {
-            this.fileDownloaderService.downloadFile(
-              data.data,
-              this.flaskServicesData.app_name
-            );
+            if (this.createTemp === 'yes') {
+              this.fileDownloaderService.downloadFile(
+                data.data,
+                this.flaskServicesData.app_name
+              );
+            } else {
+              alert('updated');
+            }
           },
           error: (error) => {
             if (error.status === 401) {
@@ -654,20 +660,24 @@ export class FlaskTemplateEditComponent {
       };
 
       console.log(this.flaskWebAppData);
-      this.flaskService
-        .createTemplateAppWeb(
-          this.technology,
-          techUse.webApp,
+      this.manageTemplates
+        .editTemplate(
+          this.templateId,
+          this.createTemp,
           this.flaskWebAppData,
           this.apiConfigFormGroup.get('ssl_files').get('cert').value,
           this.apiConfigFormGroup.get('ssl_files').get('key').value
         )
         .subscribe({
           next: (data: any) => {
-            this.fileDownloaderService.downloadFile(
-              data.data,
-              this.flaskWebAppData.app_name
-            );
+            if (this.createTemp === 'yes') {
+              this.fileDownloaderService.downloadFile(
+                data.data,
+                this.flaskWebAppData.app_name
+              );
+            } else {
+              alert('updated');
+            }
           },
           error: (error) => {
             if (error.status === 401) {
