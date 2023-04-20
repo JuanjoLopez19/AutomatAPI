@@ -63,4 +63,30 @@ export class ManageTemplatesService {
       { withCredentials: true }
     );
   }
+
+  editTemplate(
+    template_id: string,
+    create_temp: string,
+    template_data: any,
+    certFile: File | null,
+    keyFile: File | null
+  ) {
+    const formData: FormData = new FormData();
+    formData.append('template_id', template_id);
+    formData.append('create_temp', create_temp);
+    formData.append('template_data', JSON.stringify(template_data));
+
+    if (certFile) {
+      formData.append('cert', certFile, certFile.name);
+    }
+
+    if (keyFile) {
+      formData.append('key', keyFile, keyFile.name);
+    }
+    return this.http.put(
+      `${environment.apiHost}${environment.apiPort}/api/templates/editTemplate`,
+      formData,
+      { withCredentials: true }
+    );
+  }
 }
