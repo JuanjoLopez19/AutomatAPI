@@ -55,7 +55,7 @@ export class FlaskTemplateEditComponent {
   private technology: techType = techType.flask;
   techUseVar: techUse = techUse.services;
 
-  createTemp: string = 'false';
+  createTemp: string = 'no';
   isLinear: boolean = true;
   useBlueprints: boolean = false;
   basicFormGroup: FormGroup;
@@ -592,8 +592,8 @@ export class FlaskTemplateEditComponent {
       this.manageTemplates
         .editTemplate(
           this.templateId,
-          this.createTemp,
           this.flaskServicesData,
+          techUse.services,
           this.apiConfigFormGroup.get('ssl_files').get('cert').value,
           this.apiConfigFormGroup.get('ssl_files').get('key').value
         )
@@ -663,8 +663,8 @@ export class FlaskTemplateEditComponent {
       this.manageTemplates
         .editTemplate(
           this.templateId,
-          this.createTemp,
           this.flaskWebAppData,
+          techUse.webApp,
           this.apiConfigFormGroup.get('ssl_files').get('cert').value,
           this.apiConfigFormGroup.get('ssl_files').get('key').value
         )
