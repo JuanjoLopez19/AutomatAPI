@@ -682,6 +682,9 @@ export const editTemplate = async (req: any, res: Response) => {
 		//@ts-ignore
 		const user_id = await jwt.decode(req.cookies["jwt"]).id;
 		const { template_id, create_temp, template_data } = req.body;
+		const aws_key_cert = req.aws_key_cert ? req.aws_key_cert : null;
+		const aws_key_key = req.aws_key_key ? req.aws_key_key : null;
+
 		try {
 			const response = await axios.put(
 				`${config.python.host}:${config.python.port}/templates/${template_id}/update`,
@@ -690,41 +693,46 @@ export const editTemplate = async (req: any, res: Response) => {
 					template_id: template_id,
 					user_id: user_id,
 					create_temp: create_temp,
+					aws_key_cert: aws_key_cert,
+					aws_key_key: aws_key_key,
 				}
 			);
 			const token = response.data.data;
+
 			Tokens.findOne({
 				where: {
 					template_id: template_id,
 				},
 			}).then((tokens) => {
 				if (tokens === null) {
-					if (req.aws_key_cert) deleteItem(req.aws_key_cert, "certs");
-					if (req.aws_key_key) deleteItem(req.aws_key_key, "certs");
+					if (aws_key_cert) deleteItem(aws_key_cert, "certs");
+					if (aws_key_key) deleteItem(aws_key_key, "certs");
 					res.status(400).json({ message: "T_BAD_REQUEST", status: 400 });
 				} else {
-					deleteItem(decryptData(tokens.template_token), "templates");
-					const old_cert_key = decryptData(tokens.cert_key || "");
-					const old_private_key = decryptData(tokens.private_key || "");
+					deleteItem(tokens.template_token, "templates");
+					const old_cert_key = tokens.cert_key;
+					const old_private_key = tokens.private_key;
 					tokens
 						.update({
 							template_token: encryptData(token),
-							cert_key: req.aws_key_cert
-								? encryptData(req.aws_key_cert)
+							cert_key: aws_key_cert
+								? encryptData(aws_key_cert)
 								: tokens.cert_key,
-							private_key: req.aws_key_key
-								? encryptData(req.aws_key_key)
+							private_key: aws_key_key
+								? encryptData(aws_key_key)
 								: tokens.private_key,
 						})
 						.then(() => {
-							if (req.aws_key_cert) deleteItem(old_cert_key, "certs");
-							if (req.aws_key_key) deleteItem(old_private_key, "certs");
+							if (aws_key_cert && old_cert_key)
+								deleteItem(old_cert_key || "", "certs");
+							if (aws_key_key && old_private_key)
+								deleteItem(old_private_key || "", "certs");
 							res.status(response.status).json(response.data);
 						})
 						.catch((err) => {
 							console.log(err);
-							if (req.aws_key_cert) deleteItem(req.aws_key_cert, "certs");
-							if (req.aws_key_key) deleteItem(req.aws_key_key, "certs");
+							if (aws_key_cert) deleteItem(aws_key_cert, "certs");
+							if (aws_key_key) deleteItem(aws_key_key, "certs");
 							res
 								.status(500)
 								.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
@@ -733,8 +741,8 @@ export const editTemplate = async (req: any, res: Response) => {
 			});
 		} catch (err) {
 			console.log(err);
-			if (req.aws_key_cert) deleteItem(req.aws_key_cert, "certs");
-			if (req.aws_key_key) deleteItem(req.aws_key_key, "certs");
+			if (aws_key_cert) deleteItem(aws_key_cert, "certs");
+			if (aws_key_key) deleteItem(aws_key_key, "certs");
 			res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 		}
 	} else {
