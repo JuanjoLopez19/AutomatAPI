@@ -13,6 +13,7 @@ import {
 	getUserTemplatesStats,
 	deleteTemplateAdmin,
 	getTemplateConfig,
+	editTemplate,
 } from "../controllers/templates.controllers";
 import { isAdmin } from "../middleware/auth.middelware";
 
@@ -76,6 +77,15 @@ routerTemplates.post(
 	"/getTemplateConfig",
 	[passport.authorize("jwt")],
 	getTemplateConfig
+);
+
+routerTemplates.put(
+	"/editTemplate",
+	[
+		passport.authorize("jwt"),
+		upload.fields([{ name: "cert" }, { name: "key" }]),
+	],
+	editTemplate
 );
 
 export default routerTemplates;
