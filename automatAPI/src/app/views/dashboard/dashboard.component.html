@@ -87,12 +87,19 @@
           *ngIf="activeView === 'editFlask'"
           [userId]="userId"
           [templateId]="templateId"
+          (closeSidenav)="snav.close()"
         ></app-flask-template-edit>
         <app-django-template-edit
           *ngIf="activeView === 'editDjango'"
+          [userId]="userId"
+          [templateId]="templateId"
+          (closeSidenav)="snav.close()"
         ></app-django-template-edit>
         <app-express-template-edit
           *ngIf="activeView === 'editExpress'"
+          [userId]="userId"
+          [templateId]="templateId"
+          (closeSidenav)="snav.close()"
         ></app-express-template-edit>
       </div>
     </mat-sidenav-content>

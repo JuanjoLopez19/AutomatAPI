@@ -1,1 +1,1004 @@
-<p>express-template-edit works!</p>
+<div class="container h-100">
+  <div class="row flex-grow">
+    <div class="col-12 mt-5 mb-2 main-container">
+      <h1>{{ "dashboard.T_EDIT_EXPRESS_TEMPLATE" | translate }}</h1>
+      <mat-horizontal-stepper
+        [linear]="true"
+        #stepper
+        *ngIf="expressServiceData || expressWebAppData; else loading"
+      >
+        <mat-step [stepControl]="basicFormGroup">
+          <form [formGroup]="basicFormGroup">
+            <ng-template matStepLabel>{{
+              "dashboard.T_BASICS" | translate
+            }}</ng-template>
+            <div class="row mx-0">
+              <div class="d-grid grid">
+                <div class="pb-3">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        {{ "flask.T_APP_NAME" | translate }}
+                      </div>
+                      <div class="row w-50">
+                        <input
+                          type="text"
+                          pInputText
+                          formControlName="app_name"
+                        />
+                      </div>
+                      <div class="row">
+                        <small
+                          id="endp-name-help"
+                          class="p-error block firstStep"
+                          *ngIf="firstStepErrors.app_name['required']"
+                          >{{ "error.T_APP_NAME_REQ" | translate }}</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        {{ "flask.T_APP_DESC" | translate }}
+                      </div>
+                      <div class="row w-50">
+                        <textarea
+                          pInputTextarea
+                          formControlName="app_description"
+                          maxlength="200"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        {{ "flask.T_TECH_TYPE" | translate }}
+                      </div>
+                      <div class="row w-50">
+                        <p-dropdown
+                          formControlName="tech_type"
+                          [options]="dropdownItems"
+                          optionLabel="name"
+                          optionValue="value"
+                          class="p-0"
+                        ></p-dropdown>
+                      </div>
+                      <div class="row">
+                        <small
+                          id="endp-name-help"
+                          class="p-error block firstStep"
+                          *ngIf="firstStepErrors.tech_type['required']"
+                          >{{ "error.T_TECH_TYPE_REQ" | translate }}</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        {{ "flask.T_HOST" | translate }}
+                      </div>
+                      <div class="row w-50">
+                        <input type="text" pInputText formControlName="host" />
+                      </div>
+                      <div class="row">
+                        <small
+                          id="endp-name-help"
+                          class="p-error block firstStep"
+                          *ngIf="firstStepErrors.host['required']"
+                          >{{ "error.T_HOST_REQ" | translate }}</small
+                        >
+                        <small
+                          id="endp-name-help"
+                          class="p-error block firstStep"
+                          *ngIf="firstStepErrors.host['pattern']"
+                          >{{ "error.T_HOST_INVALID" | translate }}</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        {{ "flask.T_PORT" | translate }}
+                      </div>
+                      <div class="row">
+                        <p-inputNumber
+                          formControlName="port"
+                          [min]="0"
+                          [max]="65535"
+                          class="p-0"
+                        >
+                        </p-inputNumber>
+                      </div>
+                      <div class="row">
+                        <small
+                          id="endp-name-help"
+                          class="p-error block firstStep"
+                          *ngIf="firstStepErrors.port['required']"
+                          >{{ "error.T_PORT_REQ" | translate }}</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3 mx-0">
+              <div class="col-2 px-0">
+                <button pButton matStepperNext (click)="manageFirstStep()">
+                  {{ "T_NEXT" | translate }}
+                </button>
+              </div>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="apiConfigFormGroup">
+          <form [formGroup]="apiConfigFormGroup">
+            <ng-template matStepLabel>{{
+              "dashboard.T_API_CONFIG" | translate
+            }}</ng-template>
+            <div class="row w-100 h-100">
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-4 py-3">
+                    <div class="row justify-content-end">
+                      <div class="row py-2">
+                        <div class="col-3">
+                          <div class="row">
+                            {{ "flask.T_USE_CORS" | translate }}
+                          </div>
+                        </div>
+                        <div class="col-8">
+                          <div class="row">
+                            <div class="col-6 d-flex justify-content-center">
+                              <p-radioButton
+                                inputId="cors_yes"
+                                value="yes"
+                                formControlName="cors"
+                              ></p-radioButton>
+                              <label for="cors_yes" class="ml-2">{{
+                                "T_YES" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6">
+                              <p-radioButton
+                                inputId="cors_no"
+                                value="no"
+                                formControlName="cors"
+                              ></p-radioButton>
+                              <label for="cors_no" class="ml-2">{{
+                                "T_NO" | translate
+                              }}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row py-2">
+                        <div class="col-3">
+                          <div class="row">
+                            {{ "express.T_USE_STRICT" | translate }}
+                          </div>
+                        </div>
+                        <div class="col-8">
+                          <div class="row">
+                            <div class="col-6 d-flex justify-content-center">
+                              <p-radioButton
+                                inputId="strict_yes"
+                                value="yes"
+                                formControlName="strict"
+                              ></p-radioButton>
+                              <label for="strict_yes" class="ml-2">{{
+                                "T_YES" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6">
+                              <p-radioButton
+                                inputId="strict_no"
+                                value="no"
+                                formControlName="strict"
+                              ></p-radioButton>
+                              <label for="strict_no" class="ml-2">{{
+                                "T_NO" | translate
+                              }}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row py-2">
+                        <div class="col-3">
+                          <div class="row">
+                            {{ "express.T_USE_BODY_PARSER" | translate }}
+                          </div>
+                        </div>
+                        <div class="col-8">
+                          <div class="row">
+                            <div class="col-6 d-flex justify-content-center">
+                              <p-radioButton
+                                inputId="strict_yes"
+                                value="yes"
+                                formControlName="body_parser"
+                              ></p-radioButton>
+                              <label for="strict_yes" class="ml-2">{{
+                                "T_YES" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6">
+                              <p-radioButton
+                                inputId="strict_no"
+                                value="no"
+                                formControlName="body_parser"
+                              ></p-radioButton>
+                              <label for="strict_no" class="ml-2">{{
+                                "T_NO" | translate
+                              }}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row py-2">
+                        <div class="col-3">
+                          <div class="row">
+                            {{ "flask.T_USE_CONFIG_FILE" | translate }}
+                          </div>
+                        </div>
+                        <div class="col-8">
+                          <div class="row">
+                            <div class="col-6 d-flex justify-content-center">
+                              <p-radioButton
+                                inputId="config_yes"
+                                value="yes"
+                                formControlName="config_file"
+                              ></p-radioButton>
+                              <label for="config_yes" class="ml-2">{{
+                                "T_YES" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6">
+                              <p-radioButton
+                                inputId="config_no"
+                                value="no"
+                                formControlName="config_file"
+                              ></p-radioButton>
+                              <label for="config_no" class="ml-2">{{
+                                "T_NO" | translate
+                              }}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row py-2">
+                        <div class="col-3">
+                          <div class="row">
+                            {{ "express.T_USE_CONTROLLER" | translate }}
+                          </div>
+                        </div>
+                        <div class="col-8">
+                          <div class="row">
+                            <div class="col-6 d-flex justify-content-center">
+                              <p-radioButton
+                                inputId="bp_yes"
+                                value="yes"
+                                formControlName="use_controllers"
+                              ></p-radioButton>
+                              <label for="bp_yes" class="ml-2">{{
+                                "T_YES" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6">
+                              <p-radioButton
+                                inputId="controller_no"
+                                value="no"
+                                formControlName="use_controllers"
+                              ></p-radioButton>
+                              <label for="bp_no" class="ml-2">{{
+                                "T_NO" | translate
+                              }}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="row pb-2"
+                        *ngIf="
+                          basicFormGroup.get('tech_type').value === 'app_web'
+                        "
+                      >
+                        <div class="col-3">
+                          <div class="row">
+                            {{ "express.T_VIEW_ENGINE" | translate }}
+                          </div>
+                        </div>
+                        <div class="col-8">
+                          <div class="row justify-content-center">
+                            <div class="col-10 d-flex justify-content-start">
+                              <p-dropdown
+                                [options]="dropdownItems2"
+                                optionLabel="name"
+                                optionValue="value"
+                                class="p-0"
+                                formControlName="view_engine"
+                              ></p-dropdown>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-8 py-3">
+                    <div class="row">
+                      <div class="row py-2">
+                        <div class="col-4">
+                          <div class="row justify-content-center">
+                            <div class="row">
+                              <div class="col-3">
+                                <div class="row">
+                                  {{ "flask.T_USE_SSL" | translate }}
+                                </div>
+                              </div>
+                              <div class="col-8">
+                                <div class="row">
+                                  <div class="col-6">
+                                    <p-radioButton
+                                      inputId="ssl_yes"
+                                      value="yes"
+                                      formControlName="use_ssl"
+                                    ></p-radioButton>
+                                    <label for="ssl_yes" class="ml-2">{{
+                                      "T_YES" | translate
+                                    }}</label>
+                                  </div>
+                                  <div class="col-6">
+                                    <p-radioButton
+                                      inputId="ssl_no"
+                                      value="no"
+                                      formControlName="use_ssl"
+                                    ></p-radioButton>
+                                    <label for="ssl_no" class="ml-2">{{
+                                      "T_NO" | translate
+                                    }}</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-8">
+                          <div
+                            *ngIf="
+                              apiConfigFormGroup.get('use_ssl').value === 'yes'
+                            "
+                          >
+                            <div class="row">
+                              <div class="col-6">
+                                <button
+                                  type="button"
+                                  pButton
+                                  [icon]="iconCertFile"
+                                  iconPos="right"
+                                  (click)="certInput.click()"
+                                  [label]="certFileName | translate"
+                                ></button>
+                                <input
+                                  hidden
+                                  #certInput
+                                  type="file"
+                                  accept=".crt, .pem"
+                                  (change)="onFileChange($event, 'cert')"
+                                />
+                              </div>
+                              <div class="col-6">
+                                <button
+                                  type="button"
+                                  pButton
+                                  [icon]="iconKeyFile"
+                                  iconPos="right"
+                                  (click)="keyInput.click()"
+                                  [label]="keyFileName | translate"
+                                ></button>
+                                <input
+                                  (change)="onFileChange($event, 'key')"
+                                  hidden
+                                  #keyInput
+                                  accept=".crt, .pem"
+                                  type="file"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row pb-2">
+                        <div class="col-4">
+                          <div class="row justify-content-center">
+                            <div class="row py-2">
+                              <div class="col-3">
+                                <div class="row">
+                                  {{ "flask.T_USE_DB" | translate }}
+                                </div>
+                              </div>
+                              <div class="col-8">
+                                <div class="row">
+                                  <div class="col-6">
+                                    <p-radioButton
+                                      inputId="db_yes"
+                                      value="yes"
+                                      formControlName="connect_DB"
+                                    ></p-radioButton>
+                                    <label for="db_yes" class="ml-2">{{
+                                      "T_YES" | translate
+                                    }}</label>
+                                  </div>
+                                  <div class="col-6">
+                                    <p-radioButton
+                                      inputId="db_no"
+                                      value="no"
+                                      formControlName="connect_DB"
+                                    ></p-radioButton>
+                                    <label for="db_no" class="ml-2">{{
+                                      "T_NO" | translate
+                                    }}</label>
+                                  </div>
+                                </div>
+                                <div
+                                  class="row pt-3"
+                                  *ngIf="
+                                    apiConfigFormGroup.get('connect_DB')
+                                      .value === 'yes'
+                                  "
+                                >
+                                  <div class="col" formGroupName="db">
+                                    <div class="row">
+                                      <div class="col-12">
+                                        <div class="row">
+                                          <div class="col">
+                                            {{ "db.T_DB_TYPE" | translate }}
+                                          </div>
+                                        </div>
+                                        <div class="row">
+                                          <div class="col-6">
+                                            <p-dropdown
+                                              [options]="dropdownItems3"
+                                              optionLabel="name"
+                                              optionValue="value"
+                                              class="p-0"
+                                              formControlName="db_type"
+                                            ></p-dropdown>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="row py-2"
+                              *ngIf="
+                                basicFormGroup.get('tech_type').value ===
+                                'app_web'
+                              "
+                            >
+                              <div class="col-3">
+                                <div>
+                                  <div class="row">
+                                    {{ "express.T_CSS_ENGINE" | translate }}
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-8">
+                                <div class="row">
+                                  <div class="col-6">
+                                    <p-dropdown
+                                      [options]="dropdownItems4"
+                                      optionLabel="name"
+                                      optionValue="value"
+                                      class="p-0"
+                                      formControlName="css_engine"
+                                    ></p-dropdown>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-8 mt-3">
+                          <div
+                            *ngIf="
+                              apiConfigFormGroup.get('db.db_type').value !==
+                                'sqlite' &&
+                              apiConfigFormGroup.get('connect_DB').value ===
+                                'yes'
+                            "
+                            formGroupName="db"
+                          >
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="row justify-content-start">
+                                  <div class="col">
+                                    {{ "db.T_DB_HOST" | translate }}
+                                  </div>
+                                </div>
+                                <div class="row justify-content-start">
+                                  <div class="col-4">
+                                    <input
+                                      type="text"
+                                      pInputText
+                                      formControlName="db_host"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-6">
+                                <div class="row">
+                                  <div class="col">
+                                    {{ "db.T_DB_PORT" | translate }}
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6">
+                                    <input
+                                      type="text"
+                                      pInputText
+                                      formControlName="db_port"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row my-3">
+                              <div class="col-6">
+                                <div class="row justify-content-start">
+                                  <div class="col">
+                                    {{ "db.T_DB_USERNAME" | translate }}
+                                  </div>
+                                </div>
+                                <div class="row justify-content-start">
+                                  <div class="col-4">
+                                    <input
+                                      type="text"
+                                      pInputText
+                                      formControlName="db_user"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-6">
+                                <div class="row">
+                                  <div class="col">
+                                    {{ "db.T_DB_PWD" | translate }}
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6 field">
+                                    <p-password
+                                      formControlName="db_pwd"
+                                      placeholder="{{
+                                        'T_PWD_PLACEHOLDER' | translate
+                                      }}"
+                                      id="password"
+                                      [toggleMask]="true"
+                                      [feedback]="false"
+                                    ></p-password>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-6">
+                                <div class="row justify-content-start">
+                                  <div class="col">
+                                    {{ "db.T_DB_NAME" | translate }}
+                                  </div>
+                                </div>
+                                <div class="row justify-content-start">
+                                  <div class="col-4">
+                                    <input
+                                      type="text"
+                                      pInputText
+                                      formControlName="db_name"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row pt-3">
+              <div class="col-2 pl-0">
+                <button pButton matStepperPrevious>
+                  {{ "T_BACK" | translate }}
+                </button>
+              </div>
+              <div class="col-2">
+                <button pButton (click)="nextStep()">
+                  {{ "T_NEXT" | translate }}
+                </button>
+              </div>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step *ngIf="useControllers">
+          <ng-template matStepLabel>{{
+            "express.T_CONTROLLERS" | translate
+          }}</ng-template>
+          <div class="row">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-4">
+                  <div class="row">
+                    <div class="col-7">
+                      <h1>{{ "express.T_CONTROLLERS_LIST" | translate }}</h1>
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col-4">
+                      <div class="row">
+                        <div class="col-6">
+                          <p-button
+                            styleClass="p-button-danger"
+                            [label]="'T_DELETE' | translate"
+                            [disabled]="controllerSelection === null"
+                            (click)="deleteController()"
+                          ></p-button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <p-divider></p-divider>
+                  <div class="row">
+                    <p-table
+                      selectionMode="single"
+                      dataKey="name"
+                      [value]="controllerList"
+                      [(selection)]="controllerSelection"
+                      [scrollable]="true"
+                      scrollHeight="460px"
+                      (onRowSelect)="onControllerSelected($event)"
+                      (onRowUnselect)="
+                        controllerName = ''; endpointControllerList = []
+                      "
+                    >
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th>{{ "express.T_CONTROLLER_NAME" | translate }}</th>
+                          <th>{{ "express.T_ENDP_COUNT" | translate }}</th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-blueprint>
+                        <tr [pSelectableRow]="blueprint">
+                          <td>{{ blueprint.name }}</td>
+                          <td>
+                            {{ blueprint.endpoints.length }}
+                            {{ "T_ENDPS" | translate }}
+                          </td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </div>
+                </div>
+                <div class="col-8">
+                  <div class="row">
+                    <div class="col-7">
+                      <h1>{{ "express.T_MANAGE_CONTROLLER" | translate }}</h1>
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col-4">
+                      <div class="row justify-content-end">
+                        <div class="col-7 d-flex justify-content-end">
+                          <p-button
+                            [label]="'express.T_SAVE_CONTROLLER' | translate"
+                            (onClick)="saveController()"
+                          ></p-button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <p-divider></p-divider>
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="row">
+                        <span class="p-float-label">
+                          <input
+                            pInputText
+                            id="bp_name"
+                            [(ngModel)]="controllerName"
+                          />
+                          <label htmlFor="bp_name">{{
+                            "express.T_CONTROLLER_NAME" | translate
+                          }}</label>
+                        </span>
+                      </div>
+                      <div class="row">
+                        <small
+                          id="endp-name-help"
+                          class="p-error block"
+                          *ngIf="invalidControllerName"
+                          >{{
+                            "error.T_CONTROLLER_NAME_INVALID" | translate
+                          }}</small
+                        >
+                        <small
+                          id="endp-name-help"
+                          class="p-error block"
+                          *ngIf="duplicatedControllerName"
+                          >{{
+                            "error.T_CONTROLLER_NAME_DUPL" | translate
+                          }}</small
+                        >
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <div class="row">
+                        <div class="col-5">
+                          <p-button
+                            styleClass="p-button-sm"
+                            [label]="'T_ADD_ENDP' | translate"
+                            (onClick)="openDialog(false)"
+                          ></p-button>
+                        </div>
+                        <div class="col-7">
+                          <div class="row">
+                            <div class="col-6 d-flex justify-content-end">
+                              <p-button
+                                styleClass="p-button-sm p-button-warning"
+                                [label]="'T_EDIT_ENDP' | translate"
+                                [disabled]="endpointSelection === null"
+                                (onClick)="openDialog(true)"
+                              ></p-button>
+                            </div>
+                            <div class="col-6 d-flex justify-content-end">
+                              <p-button
+                                styleClass="p-button-sm p-button-danger"
+                                [label]="'T_DEL_ENDP' | translate"
+                                [disabled]="endpointSelection === null"
+                                (onClick)="deleteEndpoint()"
+                              ></p-button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-2">
+                    <p-table
+                      selectionMode="single"
+                      dataKey="endpoint_name"
+                      [value]="endpointControllerList"
+                      [(selection)]="endpointSelection"
+                      [scrollable]="true"
+                      scrollHeight="400px"
+                    >
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th>{{ "express.T_ENDP_NAME" | translate }}</th>
+                          <th>{{ "express.T_ENDP_DESC" | translate }}</th>
+                          <th>{{ "express.T_ENDP_URL" | translate }}</th>
+                          <th class="method">
+                            {{ "express.T_ENDP_METHOD" | translate }}
+                          </th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-endpoint>
+                        <tr [pSelectableRow]="endpoint">
+                          <td>{{ endpoint.endpoint_name }}</td>
+                          <td>{{ endpoint.endpoint_comment }}</td>
+                          <td>{{ endpoint.endpoint_url }}</td>
+                          <td>{{ endpoint.method }}</td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </div>
+                </div>
+              </div>
+              <app-endpoint-modal
+                [show]="showDialog"
+                [editMode]="editMode"
+                [endpointDataExpress]="endpointSelection"
+                [endpointNameList]="getEndpointNameList()"
+                (Hide)="onHide()"
+                (endpointAddedExpress)="onEndpointAdded($event)"
+                (endpointEditedExpress)="onEndpointEdited($event)"
+                [type]="'express'"
+              ></app-endpoint-modal>
+              <div class="row pt-3">
+                <div class="col-2 pl-0">
+                  <button pButton matStepperPrevious>
+                    {{ "T_BACK" | translate }}
+                  </button>
+                </div>
+                <div class="col-2">
+                  <button pButton matStepperNext (click)="addController()">
+                    {{ "T_NEXT" | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>{{
+            "dashboard.T_ENDPOINTS" | translate
+          }}</ng-template>
+          <div class="row">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-7">
+                      <h1>{{ "flask.T_MANAGE_ENDP" | translate }}</h1>
+                    </div>
+                  </div>
+                  <p-divider></p-divider>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        <div class="col-5">
+                          <p-button
+                            styleClass="p-button-sm"
+                            [label]="'T_ADD_ENDP' | translate"
+                            (onClick)="openDialog(false)"
+                          ></p-button>
+                        </div>
+                        <div class="col-7">
+                          <div class="row">
+                            <div class="col-6 d-flex justify-content-end">
+                              <p-button
+                                styleClass="p-button-sm p-button-warning"
+                                [label]="'T_EDIT_ENDP' | translate"
+                                [disabled]="endpointSelection === null"
+                                (onClick)="openDialog(true)"
+                              ></p-button>
+                            </div>
+                            <div class="col-6 d-flex justify-content-end">
+                              <p-button
+                                styleClass="p-button-sm p-button-danger"
+                                [label]="'T_DEL_ENDP' | translate"
+                                [disabled]="endpointSelection === null"
+                                (onClick)="deleteEndpoint(true)"
+                              ></p-button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-2">
+                    <p-table
+                      selectionMode="single"
+                      dataKey="endpoint_name"
+                      [value]="endpointList"
+                      [(selection)]="endpointSelection"
+                      [scrollable]="true"
+                      scrollHeight="400px"
+                    >
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th>{{ "express.T_ENDP_NAME" | translate }}</th>
+                          <th>{{ "express.T_ENDP_DESC" | translate }}</th>
+                          <th>{{ "express.T_ENDP_URL" | translate }}</th>
+                          <th class="method">
+                            {{ "express.T_ENDP_METHOD" | translate }}
+                          </th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-endpoint>
+                        <tr [pSelectableRow]="endpoint">
+                          <td>{{ endpoint.endpoint_name }}</td>
+                          <td>
+                            {{
+                              endpoint.endpoint_comment
+                                ? endpoint.endpoint_comment
+                                : ("dashboard.T_NO_DESC" | translate)
+                            }}
+                          </td>
+                          <td>{{ endpoint.endpoint_url }}</td>
+                          <td>{{ endpoint.method }}</td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </div>
+                </div>
+              </div>
+              <app-endpoint-modal
+                [show]="showDialog"
+                [editMode]="editMode"
+                [endpointDataExpress]="endpointSelection"
+                [endpointNameList]="getEndpointNameList(true)"
+                [endpointUrlList]="getEndpointUrlList(true)"
+                (Hide)="onHide()"
+                (endpointAddedExpress)="onEndpointAdded($event, true)"
+                (endpointEditedExpress)="onEndpointEdited($event, true)"
+                [type]="'express'"
+              ></app-endpoint-modal>
+              <div class="row pt-3">
+                <div class="col-2 pl-0">
+                  <button pButton matStepperPrevious>
+                    {{ "T_BACK" | translate }}
+                  </button>
+                </div>
+                <div class="col-2">
+                  <button pButton matStepperNext (click)="addEndpoints()">
+                    {{ "T_NEXT" | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>{{
+            "dashboard.T_SUMMARY" | translate
+          }}</ng-template>
+          <div class="row">
+            <div class="row py-2">
+              <div class="col-2">
+                <div class="row">
+                  {{ "dashboard.T_CREATE_TEMPLATE" | translate }}
+                </div>
+              </div>
+              <div class="col-8">
+                <div class="row">
+                  <div class="col-6 d-flex justify-content-center">
+                    <p-radioButton
+                      inputId="create_yes"
+                      value="yes"
+                      [(ngModel)]="createTemp"
+                    ></p-radioButton>
+                    <label for="create_yes" class="ml-2">{{
+                      "T_YES" | translate
+                    }}</label>
+                  </div>
+                  <div class="col-6">
+                    <p-radioButton
+                      inputId="create_no"
+                      value="no"
+                      [(ngModel)]="createTemp"
+                    ></p-radioButton>
+                    <label for="create_no" class="ml-2">{{
+                      "T_NO" | translate
+                    }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p-button
+              [label]="'T_EDIT_TEMPLATE' | translate"
+              (onClick)="createTemplate()"
+            ></p-button>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+
+      <ng-template #loading>
+        <div class="row w-100 justify-content-center mt-4">
+          <div class="row text-center">
+            <div>
+              <h3>{{ "dashboard.T_TEMPLATE_LOADING" | translate }}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="row w-100 justify-content-center mt-4">
+          <div class="col-1">
+            <p-progressSpinner></p-progressSpinner>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

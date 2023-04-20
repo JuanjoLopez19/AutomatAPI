@@ -9,6 +9,7 @@
         <th>{{ "dashboard.T_TEMPLATE_TECH" | translate }}</th>
         <th>{{ "dashboard.T_TEMPLATE_TECH_TYPE" | translate }}</th>
         <th>{{ "dashboard.T_TEMPLATE_DATE" | translate }}</th>
+        <th>{{ "dashboard.T_TEMPLATE_LAST_UPDATED" | translate }}</th>
         <th style="width: 10rem">
           {{ "dashboard.T_TEMPLATE_OPTIONS" | translate }}
         </th>
@@ -51,6 +52,7 @@
           ></mat-icon>
         </td>
         <td>{{ template.date_created | date }}</td>
+        <td>{{ template.last_updated | date }}</td>
         <td>
           <div class="row">
             <div class="col-4 button">
