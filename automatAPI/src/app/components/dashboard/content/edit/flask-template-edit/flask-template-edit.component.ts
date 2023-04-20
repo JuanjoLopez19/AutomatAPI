@@ -592,7 +592,6 @@ export class FlaskTemplateEditComponent {
       this.manageTemplates
         .editTemplate(
           this.templateId,
-          this.createTemp,
           this.flaskServicesData,
           this.apiConfigFormGroup.get('ssl_files').get('cert').value,
           this.apiConfigFormGroup.get('ssl_files').get('key').value
@@ -663,7 +662,6 @@ export class FlaskTemplateEditComponent {
       this.manageTemplates
         .editTemplate(
           this.templateId,
-          this.createTemp,
           this.flaskWebAppData,
           this.apiConfigFormGroup.get('ssl_files').get('cert').value,
           this.apiConfigFormGroup.get('ssl_files').get('key').value
