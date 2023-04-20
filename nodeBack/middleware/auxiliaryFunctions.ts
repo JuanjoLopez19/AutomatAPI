@@ -138,7 +138,7 @@ export const deleteItemsAWS = (certs: string[], template: string) => {
 	});
 };
 
-export const deleteItem = (key: string) => {
+export const deleteItem = (key: string, type: string) => {
 AWS.config.update({
 		accessKeyId: config.aws.accessKey,
 		secretAccessKey: config.aws.secretKey,
@@ -148,7 +148,7 @@ AWS.config.update({
 	const s3 = new AWS.S3();
 	const params = {
 		Bucket: config.aws.bucket,
-		Key: key,
+		Key: `${type}/${decryptData(key)}`,
 	};
 	s3.deleteObject(params, function (err, data) {
 		if (err) console.log(err, err.stack);
