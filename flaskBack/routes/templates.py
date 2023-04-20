@@ -332,6 +332,15 @@ def update_template(template_id):
         user = db.get_or_404(Users, user_id)
         template = db.get_or_404(Templates, template_id)
         template_data = body.get("template_data")
+        if not template_data:
+            return make_response(
+                jsonify(
+                    {"status": "error", "message": "The template_data is required"}
+                ),
+                400,
+            )
+
+        template_data = json.loads(template_data)
         if user["role"] != Role.admin and template["user_id"] != user_id:
             return make_response(
                 jsonify(
@@ -352,50 +361,47 @@ def update_template(template_id):
         temp = update_one(
             mongo_collection, ObjectId(ref.replace(" ", "")), template_data
         )
+
+        print(template_data)
         if temp.acknowledged:
-            setattr(template, "date_created", db.func.current_timestamp())
+            
+            setattr(template, "last_updated", db.func.current_timestamp())
+            setattr(template, "app_name", template_data["app_name"])
+            setattr(template, "description", template_data["app_description"])
+            setattr(template, "tech_type", "services")
+            
             db.session.add(template)
             db.session.commit()
-            if create_temp:
-                data = find_one(mongo_collection, ObjectId(ref.replace(" ", "")))
-                data.pop("_id")
-                try:
-                    path = temp_creator(
-                        data, template["technology"], template["tech_type"]
-                    )
-                    close_connection(mongo_client)
-                    return make_response(
-                        jsonify(
-                            {
-                                "status": "ok",
-                                "message": "The template was updated successfully",
-                                "data": path,
-                            }
-                        ),
-                        200,
-                    )
-                except Exception as e:
-                    close_connection(mongo_client)
-                    return make_response(
-                        jsonify(
-                            {
-                                "status": "error",
-                                "message": "The template could not be created",
-                            }
-                        ),
-                        500,
-                    )
 
-            close_connection(mongo_client)
-            return make_response(
-                jsonify(
-                    {
-                        "status": "ok",
-                        "message": "The template was updated successfully",
-                    }
-                ),
-                200,
-            )
+            data = find_one(mongo_collection, ObjectId(ref.replace(" ", "")))
+            data.pop("_id")
+            try:
+                cert_key = body.get("aws_key_cert", None)
+                private_key = body.get("aws_key_key", None)
+                path = temp_creator(data, template.technology, template.tech_type, cert_key, private_key)
+                close_connection(mongo_client)
+                return make_response(
+                    jsonify(
+                        {
+                            "status": "ok",
+                            "message": "The template was updated successfully",
+                            "data": path,
+                        }
+                    ),
+                    200,
+                )
+            except Exception as e:
+                print(e.with_traceback())
+                close_connection(mongo_client)
+                return make_response(
+                    jsonify(
+                        {
+                            "status": "error",
+                            "message": "The template could not be created",
+                        }
+                    ),
+                    500,
+                )
 
         else:
             close_connection(mongo_client)
@@ -410,7 +416,7 @@ def update_template(template_id):
             )
 
     except Exception as e:
-        print("Error", e)
+        print(e.with_traceback())
         return make_response(
             jsonify(
                 {

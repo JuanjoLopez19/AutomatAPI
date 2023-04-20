@@ -76,7 +76,7 @@ class Users(db.Model):
             "email": self.email,
             "active_user": self.activeUser,
             "create_date": self.create_date,
-            "birthdate": self.birthdate,
+            "birthdate": self.birthDate,
             "access_token": self.access_token,
             "password_token": self.password_token,
             "google_id": self.google_id,
