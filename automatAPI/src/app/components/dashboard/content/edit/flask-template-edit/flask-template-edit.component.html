@@ -912,8 +912,39 @@
             "dashboard.T_SUMMARY" | translate
           }}</ng-template>
           <div class="row">
+            <div class="row py-2">
+              <div class="col-2">
+                <div class="row">
+                  {{ "dashboard.T_CREATE_TEMPLATE" | translate }}
+                </div>
+              </div>
+              <div class="col-8">
+                <div class="row">
+                  <div class="col-6 d-flex justify-content-center">
+                    <p-radioButton
+                      inputId="create_yes"
+                      value="yes"
+                      [(ngModel)]="createTemp"
+                    ></p-radioButton>
+                    <label for="create_yes" class="ml-2">{{
+                      "T_YES" | translate
+                    }}</label>
+                  </div>
+                  <div class="col-6">
+                    <p-radioButton
+                      inputId="create_no"
+                      value="no"
+                      [(ngModel)]="createTemp"
+                    ></p-radioButton>
+                    <label for="create_no" class="ml-2">{{
+                      "T_NO" | translate
+                    }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
             <p-button
-              [label]="'T_CREATE_TEMPLATE' | translate"
+              [label]="'T_EDIT_TEMPLATE' | translate"
               (onClick)="createTemplate()"
             ></p-button>
           </div>
