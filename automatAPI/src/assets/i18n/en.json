@@ -124,6 +124,7 @@
   "T_INTERNAL_SERVER_ERROR": "Internal server error",
   "T_BAD_REQUEST": "Bad request",
   "T_USER_UPDATE": "User updated successfully",
+  "T_EDIT_TEMPLATE": "Edit template",
   "db": {
     "T_DB_TYPE": "Database type",
     "T_DB_NAME": "Database name",
@@ -187,7 +188,12 @@
     "T_USER_BIRTHDATE": "Birthdate",
     "T_NUM_TEMPLATES": "Number of templates created",
     "T_WELCOME_ADMIN_SUBTITLE": "Here you can see some statistics from the platform",
-    "T_NO_DESCRIPTION": "No description provided for the template"
+    "T_NO_DESCRIPTION": "No description provided for the template",
+    "T_TEMPLATE_LAST_UPDATED": "Last updated",
+    "T_EDIT_FLASK_TEMPLATE": "Edit Flask template",
+    "T_EDIT_EXPRESS_TEMPLATE": "Edit Express template",
+    "T_EDIT_DJANGO_TEMPLATE": "Edit Django template",
+    "T_CREATE_TEMPLATE": "Do you want to download the updated template?"
   },
   "error": {
     "T_EMAIL_REQ": "The email is required",

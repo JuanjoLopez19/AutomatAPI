@@ -10,7 +10,6 @@ import { MatStepper } from '@angular/material/stepper';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { FileDownloaderService } from 'src/app/api/templates/fileDownloader/file-downloader.service';
-import { FlaskTemplatesService } from 'src/app/api/templates/flask/flask-templates.service';
 import {
   functionNamePythonRegex,
   hostRegex,
@@ -107,7 +106,6 @@ export class FlaskTemplateEditComponent {
   constructor(
     private translate: TranslateService,
     private fileDownloaderService: FileDownloaderService,
-    private flaskService: FlaskTemplatesService,
     private manageTemplates: ManageTemplatesService,
     private router: Router
   ) {
