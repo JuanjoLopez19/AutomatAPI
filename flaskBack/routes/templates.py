@@ -376,7 +376,9 @@ def update_template(template_id):
             data = find_one(mongo_collection, ObjectId(ref.replace(" ", "")))
             data.pop("_id")
             try:
-                path = temp_creator(data, template.technology, template.tech_type)
+                cert_key = body.get("aws_key_cert", None)
+                private_key = body.get("aws_key_key", None)
+                path = temp_creator(data, template.technology, template.tech_type, cert_key, private_key)
                 close_connection(mongo_client)
                 return make_response(
                     jsonify(
