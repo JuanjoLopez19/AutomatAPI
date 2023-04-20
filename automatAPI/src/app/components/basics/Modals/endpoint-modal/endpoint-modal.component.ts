@@ -408,6 +408,7 @@ export class EndpointModalComponent implements OnInit {
 
   validateDuplicatedUrl() {
     const url = this.addEndpointFormControl.get('endpoint_url').value as string;
+
     let substring: string;
     let result: boolean;
     if (url.startsWith('/')) {
@@ -415,10 +416,7 @@ export class EndpointModalComponent implements OnInit {
       result = this.endpointUrlList.includes(substring);
     } else result = this.endpointUrlList.includes(url);
 
-    if (
-      (result && !this.editMode) ||
-      (result && substring !== this.urlBackUp)
-    ) {
+    if ((result && !this.editMode) || (result && url !== this.urlBackUp)) {
       this.duplicatedUrl = true;
       return false;
     }

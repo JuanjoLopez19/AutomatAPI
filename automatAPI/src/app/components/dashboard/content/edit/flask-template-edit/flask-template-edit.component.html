@@ -749,12 +749,18 @@
                       <ng-template pTemplate="body" let-endpoint>
                         <tr [pSelectableRow]="endpoint">
                           <td>{{ endpoint.endpoint_name }}</td>
-                          <td>{{ endpoint.endpoint_comment }}</td>
+                          <td>
+                            {{
+                              endpoint.endpoint_comment
+                                ? endpoint.endpoint_comment
+                                : ("dashboard.T_NO_DESC" | translate)
+                            }}
+                          </td>
                           <td>{{ endpoint.endpoint_url }}</td>
                           <td>{{ endpoint.methods.get_m }}</td>
                           <td>{{ endpoint.methods.post }}</td>
                           <td>{{ endpoint.methods.put }}</td>
-                          <td>{{ endpoint.methods.del }}</td>
+                          <td>{{ endpoint.methods.delete }}</td>
                         </tr>
                       </ng-template>
                     </p-table>
@@ -869,7 +875,7 @@
                           <td>{{ endpoint.methods.get_m }}</td>
                           <td>{{ endpoint.methods.post }}</td>
                           <td>{{ endpoint.methods.put }}</td>
-                          <td>{{ endpoint.methods.del }}</td>
+                          <td>{{ endpoint.methods.delete }}</td>
                         </tr>
                       </ng-template>
                     </p-table>

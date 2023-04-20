@@ -408,8 +408,14 @@ export class DjangoTemplatesComponent implements OnInit {
     this.showDialog = false;
   }
 
-  getEndpointNameList(type: boolean = false) {
+  getEndpointNameList() {
     return this.endpointList.map((endpoint) => endpoint.endpoint_name);
+  }
+
+  getEndpointUrlList() {
+    return this.endpointList.map((endpoint) =>
+      endpoint.endpoint_url.split('/').pop()
+    );
   }
 
   onEndpointAdded(event: djangoEndpointTemplate, type: boolean = false) {
