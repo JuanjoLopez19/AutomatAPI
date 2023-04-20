@@ -455,6 +455,17 @@ export class ExpressTemplatesComponent {
       );
   }
 
+  getEndpointUrlList(type: boolean = false) {
+    if (type)
+      return this.endpointList.map((endpoint) =>
+        endpoint.endpoint_url.split('/').pop()
+      );
+    else
+      return this.endpointControllerList.map((endpoint) =>
+        endpoint.endpoint_url.split('/').pop()
+      );
+  }
+
   checkSelection() {
     if (this.controllerSelection) return false;
     else

@@ -896,7 +896,13 @@
                       <ng-template pTemplate="body" let-endpoint>
                         <tr [pSelectableRow]="endpoint">
                           <td>{{ endpoint.endpoint_name }}</td>
-                          <td>{{ endpoint.endpoint_comment }}</td>
+                          <td>
+                            {{
+                              endpoint.endpoint_comment
+                                ? endpoint.endpoint_comment
+                                : ("dashboard.T_NO_DESC" | translate)
+                            }}
+                          </td>
                           <td>{{ endpoint.endpoint_url }}</td>
                           <td>{{ endpoint.method }}</td>
                         </tr>
@@ -910,6 +916,7 @@
                 [editMode]="editMode"
                 [endpointDataExpress]="endpointSelection"
                 [endpointNameList]="getEndpointNameList(true)"
+                [endpointUrlList]="getEndpointUrlList(true)"
                 (Hide)="onHide()"
                 (endpointAddedExpress)="onEndpointAdded($event, true)"
                 (endpointEditedExpress)="onEndpointEdited($event, true)"

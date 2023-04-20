@@ -183,6 +183,14 @@ export class FlaskTemplateEditComponent {
           } else {
             this.flaskWebAppData = data.data.template_args;
             this.flaskServicesData = null;
+            this.blueprintList = data.data.template_args.bp_list.list.map(
+              (bp: any) => {
+                return {
+                  name: Object.keys(bp)[0],
+                  endpoints: bp[Object.keys(bp)[0]],
+                };
+              }
+            );
           }
           this.endpointList = data.data.template_args.endpoints;
 
@@ -563,15 +571,22 @@ export class FlaskTemplateEditComponent {
         table_name: this.apiConfigFormGroup.get('db')?.get('table_name')?.value,
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')
-            ?.value['name'],
-          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
-            'name'
-          ],
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+                'name'
+              ]
+            : this.certFileName,
+
+          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+                'name'
+              ]
+            : this.keyFileName,
         },
         endpoints: [...this.endpointList],
       };
 
+      console.log(this.flaskServicesData);
       this.flaskService
         .createTemplateServices(
           this.technology,
@@ -616,11 +631,17 @@ export class FlaskTemplateEditComponent {
         table_name: this.apiConfigFormGroup.get('db')?.get('table_name')?.value,
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')
-            ?.value['name'],
-          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
-            'name'
-          ],
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+                'name'
+              ]
+            : this.certFileName,
+
+          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+                'name'
+              ]
+            : this.keyFileName,
         },
         endpoints: [...this.endpointList],
 
@@ -632,6 +653,7 @@ export class FlaskTemplateEditComponent {
         },
       };
 
+      console.log(this.flaskWebAppData);
       this.flaskService
         .createTemplateAppWeb(
           this.technology,
