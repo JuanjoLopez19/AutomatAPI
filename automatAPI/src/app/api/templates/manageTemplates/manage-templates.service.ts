@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/env';
+import { techType } from 'src/app/common/enums/enums';
+import { techUse } from 'src/app/common/enums/enums';
 
 @Injectable({
   providedIn: 'root',
@@ -67,12 +69,14 @@ export class ManageTemplatesService {
   editTemplate(
     template_id: string,
     template_data: any,
+    tech_type: techUse,
     certFile: File | null,
     keyFile: File | null
   ) {
     const formData: FormData = new FormData();
     formData.append('template_id', template_id);
     formData.append('template_data', JSON.stringify(template_data));
+    formData.append('tech_type', tech_type);
 
     if (certFile) {
       formData.append('cert', certFile, certFile.name);
