@@ -96,6 +96,7 @@ export const encryptData = (data: string) => {
 };
 
 export const decryptData = (data: string) => {
+	console.log("Dentro" + data);
 	const decipher = crypto.createDecipheriv(config.cypher.algorithm, key, iv);
 
 	let decrypted = decipher.update(data, "hex", "utf8");
