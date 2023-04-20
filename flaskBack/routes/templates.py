@@ -322,10 +322,16 @@ def update_template(template_id):
         )
 
     user_id = body.get("user_id")
-    create_temp = body.get("create_temp")
+
     if not user_id:
         return make_response(
             jsonify({"status": "error", "message": "The user_id is required"}), 400
+        )
+
+    tech_type = body.get("tech_type")
+    if not tech_type:
+        return make_response(
+            jsonify({"status": "error", "message": "The tech_type is required"}), 400
         )
 
     try:
@@ -364,12 +370,11 @@ def update_template(template_id):
 
         print(template_data)
         if temp.acknowledged:
-            
             setattr(template, "last_updated", db.func.current_timestamp())
             setattr(template, "app_name", template_data["app_name"])
             setattr(template, "description", template_data["app_description"])
-            setattr(template, "tech_type", "services")
-            
+            setattr(template, "tech_type", tech_type)
+
             db.session.add(template)
             db.session.commit()
 
@@ -378,7 +383,9 @@ def update_template(template_id):
             try:
                 cert_key = body.get("aws_key_cert", None)
                 private_key = body.get("aws_key_key", None)
-                path = temp_creator(data, template.technology, template.tech_type, cert_key, private_key)
+                path = temp_creator(
+                    data, template.technology, template.tech_type, cert_key, private_key
+                )
                 close_connection(mongo_client)
                 return make_response(
                     jsonify(
