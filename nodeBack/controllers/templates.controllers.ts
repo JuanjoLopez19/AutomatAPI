@@ -676,12 +676,12 @@ export const getTemplateConfig = async (req: Request, res: Response) => {
 export const editTemplate = async (req: any, res: Response) => {
 	if (
 		req.body.template_id != undefined &&
-		req.body.create_temp != undefined &&
+		req.body.tech_type != undefined &&
 		req.body.template_data != undefined
 	) {
 		//@ts-ignore
 		const user_id = await jwt.decode(req.cookies["jwt"]).id;
-		const { template_id, create_temp, template_data } = req.body;
+		const { template_id, tech_type, template_data } = req.body;
 		const aws_key_cert = req.aws_key_cert ? req.aws_key_cert : null;
 		const aws_key_key = req.aws_key_key ? req.aws_key_key : null;
 
@@ -692,9 +692,9 @@ export const editTemplate = async (req: any, res: Response) => {
 					template_data: template_data,
 					template_id: template_id,
 					user_id: user_id,
-					create_temp: create_temp,
 					aws_key_cert: aws_key_cert,
 					aws_key_key: aws_key_key,
+					tech_type: tech_type,
 				}
 			);
 			const token = response.data.data;
