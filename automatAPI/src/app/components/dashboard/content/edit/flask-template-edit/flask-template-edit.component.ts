@@ -194,19 +194,27 @@ export class FlaskTemplateEditComponent {
           }
           this.endpointList = data.data.template_args.endpoints;
 
-          this.certFileName = data.data.template_args.certs.cert_name
-            ? data.data.template_args.certs.cert_name
-            : 'T_CHOSE_CERT_FILE';
-          this.iconCertFile = data.data.template_args.certs.cert_name
-            ? 'pi pi-check'
-            : 'pi pi-upload';
+          this.certFileName =
+            data.data.template_args.certs.cert_name &&
+            data.data.template_args.certs.cert_name !== 'None'
+              ? data.data.template_args.certs.cert_name
+              : 'T_CHOSE_CERT_FILE';
+          this.iconCertFile =
+            data.data.template_args.certs.cert_name &&
+            data.data.template_args.certs.cert_name !== 'None'
+              ? 'pi pi-check'
+              : 'pi pi-upload';
 
-          this.keyFileName = data.data.template_args.certs.key_name
-            ? data.data.template_args.certs.key_name
-            : 'T_CHOSE_KEY_FILE';
-          this.iconKeyFile = data.data.template_args.certs.key_name
-            ? 'pi pi-check'
-            : 'pi pi-upload';
+          this.keyFileName =
+            data.data.template_args.certs.key_name &&
+            data.data.template_args.certs.key_name !== 'None'
+              ? data.data.template_args.certs.key_name
+              : 'T_CHOSE_KEY_FILE';
+          this.iconKeyFile =
+            data.data.template_args.certs.key_name &&
+            data.data.template_args.certs.key_name !== 'None'
+              ? 'pi pi-check'
+              : 'pi pi-upload';
         },
         error: (error) => {
           if (error.status === 401) this.router.navigate(['/']);
@@ -287,6 +295,7 @@ export class FlaskTemplateEditComponent {
               updateOn: 'change',
             }
           ),
+          delete_certs: new FormControl('no'),
           ssl_files: new FormGroup({
             cert: new FormControl(''),
             key: new FormControl(''),
@@ -575,13 +584,19 @@ export class FlaskTemplateEditComponent {
             ? this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
                 'name'
               ]
-            : this.certFileName,
+            : this.certFileName !== 'T_CHOSE_CERT_FILE' &&
+              this.apiConfigFormGroup.get('delete_certs').value === 'no'
+            ? this.certFileName
+            : 'None',
 
           key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key').value
             ? this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
                 'name'
               ]
-            : this.keyFileName,
+            : this.keyFileName !== 'T_CHOSE_KEY_FILE' &&
+              this.apiConfigFormGroup.get('delete_certs').value === 'no'
+            ? this.keyFileName
+            : 'None',
         },
         endpoints: [...this.endpointList],
       };
@@ -593,7 +608,8 @@ export class FlaskTemplateEditComponent {
           this.flaskServicesData,
           techUse.services,
           this.apiConfigFormGroup.get('ssl_files').get('cert').value,
-          this.apiConfigFormGroup.get('ssl_files').get('key').value
+          this.apiConfigFormGroup.get('ssl_files').get('key').value,
+          this.apiConfigFormGroup.get('delete_certs').value
         )
         .subscribe({
           next: (data: any) => {
@@ -639,13 +655,19 @@ export class FlaskTemplateEditComponent {
             ? this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
                 'name'
               ]
-            : this.certFileName,
+            : this.certFileName !== 'T_CHOSE_CERT_FILE' &&
+              this.apiConfigFormGroup.get('delete_certs').value === 'no'
+            ? this.certFileName
+            : 'None',
 
           key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key').value
             ? this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
                 'name'
               ]
-            : this.keyFileName,
+            : this.keyFileName !== 'T_CHOSE_KEY_FILE' &&
+              this.apiConfigFormGroup.get('delete_certs').value === 'no'
+            ? this.keyFileName
+            : 'None',
         },
         endpoints: [...this.endpointList],
 
@@ -664,7 +686,8 @@ export class FlaskTemplateEditComponent {
           this.flaskWebAppData,
           techUse.webApp,
           this.apiConfigFormGroup.get('ssl_files').get('cert').value,
-          this.apiConfigFormGroup.get('ssl_files').get('key').value
+          this.apiConfigFormGroup.get('ssl_files').get('key').value,
+          this.apiConfigFormGroup.get('delete_certs').value
         )
         .subscribe({
           next: (data: any) => {

@@ -445,14 +445,20 @@ export class FlaskTemplatesComponent implements OnInit {
         table_name: this.apiConfigFormGroup.get('db')?.get('table_name')?.value,
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')
-            ?.value['name'],
-          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
-            'name'
-          ],
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+                'name'
+              ]
+            : 'None',
+          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+                'name'
+              ]
+            : 'None',
         },
         endpoints: [...this.endpointList],
       };
+      console.log(this.flaskServicesData);
 
       this.flaskService
         .createTemplateServices(
@@ -498,11 +504,16 @@ export class FlaskTemplatesComponent implements OnInit {
         table_name: this.apiConfigFormGroup.get('db')?.get('table_name')?.value,
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')
-            ?.value['name'],
-          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
-            'name'
-          ],
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+                'name'
+              ]
+            : 'None',
+          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+                'name'
+              ]
+            : 'None',
         },
         endpoints: [...this.endpointList],
 
