@@ -96,7 +96,6 @@ export const encryptData = (data: string) => {
 };
 
 export const decryptData = (data: string) => {
-	console.log("Dentro" + data);
 	const decipher = crypto.createDecipheriv(config.cypher.algorithm, key, iv);
 
 	let decrypted = decipher.update(data, "hex", "utf8");
@@ -139,7 +138,7 @@ export const deleteItemsAWS = (certs: string[], template: string) => {
 	});
 };
 
-export const deleteItem = (key: string, type: string) => {
+export const deleteItem = (key: string, type: string | null = null) => {
 AWS.config.update({
 		accessKeyId: config.aws.accessKey,
 		secretAccessKey: config.aws.secretKey,
@@ -147,13 +146,22 @@ AWS.config.update({
 	});
 
 	const s3 = new AWS.S3();
-	const params = {
-		Bucket: config.aws.bucket,
-		Key: `${type}/${decryptData(key)}`,
-	};
+	let params: AWS.S3.DeleteObjectRequest;
+	if(type){
+		params = {
+			Bucket: config.aws.bucket,
+			Key: `${type}/${decryptData(key)}`,
+		};
+	}else{
+		params = {
+			Bucket: config.aws.bucket,
+			Key: decryptData(key),
+		};
+	}
+	
 	s3.deleteObject(params, function (err, data) {
-		if (err) console.log(err, err.stack);
+		if (err) console.log("Error", err, err.stack);
 		// an error occurred
-		else console.log(data); // successful response
+		else console.log("Success", data); // successful response
 	});
 }

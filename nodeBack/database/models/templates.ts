@@ -27,8 +27,8 @@ export interface TemplateAttributes {
 export interface ReferenceAttributes {
 	id: number;
 	template_id: number;
-	cert_key?: string;
-	private_key?: string;
+	cert_key?: string | null;
+	private_key?: string | null;
 	template_token: string;
 }
 
