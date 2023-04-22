@@ -364,6 +364,7 @@ export class ExpressTemplateEditComponent {
             cert: new FormControl(''),
             key: new FormControl(''),
           }),
+          delete_certs: new FormControl('no'),
           db: new FormGroup({
             db_name: new FormControl(
               this.expressServiceData
@@ -633,11 +634,21 @@ export class ExpressTemplateEditComponent {
         body_parser: this.apiConfigFormGroup.get('body_parser')?.value,
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')
-            ?.value['name'],
-          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
-            'name'
-          ],
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+                'name'
+              ]
+            : this.certFileName !== 'T_CHOSE_CERT_FILE'
+            ? this.certFileName
+            : 'None',
+
+          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+                'name'
+              ]
+            : this.keyFileName !== 'T_CHOSE_KEY_FILE'
+            ? this.keyFileName
+            : 'None',
         },
         use_controllers: this.apiConfigFormGroup.get('use_controllers')?.value,
         connect_DB: this.apiConfigFormGroup.get('connect_DB')?.value,
@@ -666,7 +677,8 @@ export class ExpressTemplateEditComponent {
           this.expressServiceData,
           techUse.webApp,
           this.apiConfigFormGroup.get('ssl_files').get('cert').value,
-          this.apiConfigFormGroup.get('ssl_files').get('key').value
+          this.apiConfigFormGroup.get('ssl_files').get('key').value,
+          this.apiConfigFormGroup.get('delete_certs').value
         )
         .subscribe({
           next: (data: any) => {
@@ -697,9 +709,21 @@ export class ExpressTemplateEditComponent {
         body_parser: this.apiConfigFormGroup.get('body_parser')?.value,
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')
-            ?.value,
-          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value,
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+                'name'
+              ]
+            : this.certFileName !== 'T_CHOSE_CERT_FILE'
+            ? this.certFileName
+            : 'None',
+
+          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+                'name'
+              ]
+            : this.keyFileName !== 'T_CHOSE_KEY_FILE'
+            ? this.keyFileName
+            : 'None',
         },
         use_controllers: this.apiConfigFormGroup.get('use_controllers')?.value,
         connect_DB: this.apiConfigFormGroup.get('connect_DB')?.value,
@@ -730,7 +754,8 @@ export class ExpressTemplateEditComponent {
           this.expressWebAppData,
           techUse.webApp,
           this.apiConfigFormGroup.get('ssl_files').get('cert').value,
-          this.apiConfigFormGroup.get('ssl_files').get('key').value
+          this.apiConfigFormGroup.get('ssl_files').get('key').value,
+          this.apiConfigFormGroup.get('delete_certs').value
         )
         .subscribe({
           next: (data: any) => {

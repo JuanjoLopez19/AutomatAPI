@@ -343,6 +343,7 @@ export class DjangoTemplateEditComponent {
             cert: new FormControl(''),
             key: new FormControl(''),
           }),
+          delete_certs: new FormControl('no'),
         });
 
         this.subAppsFormGroup = new FormGroup({
@@ -594,11 +595,21 @@ export class DjangoTemplateEditComponent {
         },
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')
-            ?.value['name'],
-          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
-            'name'
-          ],
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+                'name'
+              ]
+            : this.certFileName !== 'T_CHOSE_CERT_FILE'
+            ? this.certFileName
+            : 'None',
+
+          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+                'name'
+              ]
+            : this.keyFileName !== 'T_CHOSE_KEY_FILE'
+            ? this.keyFileName
+            : 'None',
         },
         endpoints: [...this.endpointList],
         sub_apps: {
@@ -613,7 +624,8 @@ export class DjangoTemplateEditComponent {
           this.djangoServiceData,
           techUse.services,
           this.apiConfigFormGroup.get('ssl_files').get('cert').value,
-          this.apiConfigFormGroup.get('ssl_files').get('key').value
+          this.apiConfigFormGroup.get('ssl_files').get('key').value,
+          this.apiConfigFormGroup.get('delete_certs').value
         )
         .subscribe({
           next: (data: any) => {
@@ -654,11 +666,21 @@ export class DjangoTemplateEditComponent {
         },
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')
-            ?.value['name'],
-          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
-            'name'
-          ],
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+                'name'
+              ]
+            : this.certFileName !== 'T_CHOSE_CERT_FILE'
+            ? this.certFileName
+            : 'None',
+
+          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+                'name'
+              ]
+            : this.keyFileName !== 'T_CHOSE_KEY_FILE'
+            ? this.keyFileName
+            : 'None',
         },
         endpoints: [...this.endpointList],
         sub_apps: {
@@ -674,7 +696,8 @@ export class DjangoTemplateEditComponent {
           this.djangoWebAppData,
           techUse.webApp,
           this.apiConfigFormGroup.get('ssl_files').get('cert').value,
-          this.apiConfigFormGroup.get('ssl_files').get('key').value
+          this.apiConfigFormGroup.get('ssl_files').get('key').value,
+          this.apiConfigFormGroup.get('delete_certs').value
         )
         .subscribe({
           next: (data: any) => {

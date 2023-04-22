@@ -487,11 +487,16 @@ export class ExpressTemplatesComponent {
         body_parser: this.apiConfigFormGroup.get('body_parser')?.value,
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
-          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')
-            ?.value['name'],
-          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
-            'name'
-          ],
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+                'name'
+              ]
+            : 'None',
+          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+                'name'
+              ]
+            : 'None',
         },
         use_controllers: this.apiConfigFormGroup.get('use_controllers')?.value,
         connect_DB: this.apiConfigFormGroup.get('connect_DB')?.value,
@@ -546,10 +551,17 @@ export class ExpressTemplatesComponent {
         cors: this.apiConfigFormGroup.get('cors')?.value,
         body_parser: this.apiConfigFormGroup.get('body_parser')?.value,
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
-        certs: {
-          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert')
-            ?.value,
-          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value,
+       certs: {
+          cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('cert')?.value[
+                'name'
+              ]
+            : 'None',
+          key_name: this.apiConfigFormGroup.get('ssl_files')?.get('key').value
+            ? this.apiConfigFormGroup.get('ssl_files')?.get('key')?.value[
+                'name'
+              ]
+            : 'None',
         },
         use_controllers: this.apiConfigFormGroup.get('use_controllers')?.value,
         connect_DB: this.apiConfigFormGroup.get('connect_DB')?.value,

@@ -71,12 +71,14 @@ export class ManageTemplatesService {
     template_data: any,
     tech_type: techUse,
     certFile: File | null,
-    keyFile: File | null
+    keyFile: File | null,
+    deleteCerts: string
   ) {
     const formData: FormData = new FormData();
     formData.append('template_id', template_id);
     formData.append('template_data', JSON.stringify(template_data));
     formData.append('tech_type', tech_type);
+    formData.append('delete_certs', deleteCerts);
 
     if (certFile) {
       formData.append('cert', certFile, certFile.name);
