@@ -67,14 +67,6 @@
                 </div>
               </div>
             </div>
-            <div class="col-2">
-              <div class="p-float-label">
-                <input pInputText />
-                <label for="in">{{
-                  "dashboard.T_GENERAL_FILTER" | translate
-                }}</label>
-              </div>
-            </div>
           </form>
         </div>
       </div>
@@ -87,6 +79,7 @@
             [users]="userData"
             (refreshTable)="onTemplateChanged()"
             (unauthorized)="unauth()"
+            (closeSidenav)="closeSidenav()"
           ></app-users-table>
         </div>
       </div>

@@ -18,7 +18,7 @@ import { httpResponse, userParams } from 'src/app/common/interfaces/interfaces';
 })
 export class EditUserModalComponent {
   @Input() show: boolean = false;
-
+  @Input() adminMode: boolean = false;
   @Input() userData: userParams = null;
 
   @Output() Hide: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -63,6 +63,7 @@ export class EditUserModalComponent {
   ) {}
 
   ngOnInit(): void {
+
     this.userFormGroup = new FormGroup({
       lastName: new FormControl(this.userData.lastName, [
         Validators.pattern(nameRegEx),

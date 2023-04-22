@@ -19,20 +19,33 @@ export class UsersTableComponent {
   @Input() users: userParams[] = null;
   @Output() refreshTable: EventEmitter<void> = new EventEmitter();
   @Output() unauthorized: EventEmitter<void> = new EventEmitter();
+  @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private userService: ManageUsersService) {}
+  showDialog: boolean = false;
+  user: userParams = null;
 
-  editUser(user: userParams) {}
+  editUser(user: userParams) {
+    this.user = user;
+    this.openModal();
+  }
 
   deleteUser(user: userParams) {
     this.userService.deleteUser(Number(user.id)).subscribe({
       next: (data: httpResponse) => {
-        console.log(data);
         if (data.status == 200) this.refreshTable.emit();
       },
       error: (err) => {
         if (err.status == 401) this.unauthorized.emit();
       },
     });
+  }
+  openModal() {
+    this.closeSidenav.emit();
+    this.showDialog = true;
+  }
+
+  onHide() {
+    this.showDialog = false;
   }
 }
