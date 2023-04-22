@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -21,6 +21,7 @@ import { DatePipe } from '@angular/common';
 export class ManageUsersComponent {
   @Input() isAdmin: boolean = false;
   @Input() userId: string = null;
+  @Output() closeSideNav: EventEmitter<void> = new EventEmitter<void>();
   readonly userField: any = UserField;
 
   userData!: userParams[];
@@ -72,7 +73,6 @@ export class ManageUsersComponent {
   }
 
   filterTable(event: SubmitEvent) {
-    console.log(this.filterForm.value);
     if (this.filterForm.invalid) return;
     const auxData: userParams[] = [];
     if (
@@ -149,7 +149,6 @@ export class ManageUsersComponent {
         if (res.status === 200) {
           this.userData = res.data as userParams[];
           this.backUpData = res.data as userParams[];
-          console.log(this.userData);
         }
       },
       error: (err: HttpErrorResponse) => {
@@ -168,5 +167,9 @@ export class ManageUsersComponent {
 
   unauth() {
     this.router.navigate(['/']);
+  }
+
+  closeSidenav() {
+    this.closeSideNav.emit();
   }
 }

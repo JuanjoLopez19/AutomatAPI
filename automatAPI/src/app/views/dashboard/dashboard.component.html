@@ -46,37 +46,46 @@
     </mat-sidenav>
     <mat-sidenav-content class="page-wrapper">
       <div class="page-content h-100">
+
         <app-home
           *ngIf="activeView === 'home' && user.role !== 'admin'"
           [username]="user.username"
           (changeViewEvent)="changeView($event)"
         ></app-home>
+
         <app-home-admin
           *ngIf="activeView === 'home' && user.role === 'admin'"
           [username]="user.username"
           (changeViewEvent)="changeView($event)"
         ></app-home-admin>
+
         <app-flask-templates
           *ngIf="activeView === 'flask'"
           (closeSidenav)="snav.close()"
         ></app-flask-templates>
+
         <app-django-templates
           *ngIf="activeView === 'django'"
         ></app-django-templates>
+
         <app-express-templates
           *ngIf="activeView === 'express'"
         ></app-express-templates>
+
         <app-manage-users
           *ngIf="activeView === 'manage_users' && user.role === 'admin'"
           [isAdmin]="user.role === 'admin'"
           [userId]="user.id"
+          (closeSideNav)="snav.close()"
         ></app-manage-users>
+
         <app-manage-templates
           [isAdmin]="user.role === 'admin'"
           [userId]="user.id"
           *ngIf="activeView === 'manage_templates'"
           (editTemplate)="onEditTemplate($event)"
         ></app-manage-templates>
+
         <app-profile
           *ngIf="activeView === 'profile'"
           [user]="user"
@@ -89,12 +98,14 @@
           [templateId]="templateId"
           (closeSidenav)="snav.close()"
         ></app-flask-template-edit>
+
         <app-django-template-edit
           *ngIf="activeView === 'editDjango'"
           [userId]="userId"
           [templateId]="templateId"
           (closeSidenav)="snav.close()"
         ></app-django-template-edit>
+
         <app-express-template-edit
           *ngIf="activeView === 'editExpress'"
           [userId]="userId"

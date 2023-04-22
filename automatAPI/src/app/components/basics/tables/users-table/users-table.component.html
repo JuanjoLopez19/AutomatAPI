@@ -67,7 +67,6 @@
                 icon="pi pi-pencil"
                 class="p-button-rounded p-button-warning p-mr-2"
                 (click)="editUser(user)"
-                [disabled]="true"
               ></button>
             </div>
             <div class="col-6 button">
@@ -94,4 +93,11 @@
       </tr>
     </ng-template>
   </p-table>
+  <app-edit-user-modal
+    [adminMode]="true"
+    *ngIf="user"
+    [show]="showDialog"
+    [userData]="user"
+    (Hide)="onHide()"
+  ></app-edit-user-modal>
 </div>
