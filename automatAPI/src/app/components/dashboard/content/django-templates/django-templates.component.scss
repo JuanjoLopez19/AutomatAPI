@@ -1,7 +1,7 @@
 @import "src/shared/variables";
 
 :host {
-  .container{
+  .container {
     max-height: fit-content;
   }
   .main-container {
@@ -27,14 +27,25 @@
     overflow: unset;
   }
 
-  label{
+  label {
     margin-left: 10px;
   }
-  .method{
+  .method {
     width: 10%;
   }
-  .firstStep{
+  .firstStep {
     padding-left: 0;
   }
 
+  .pi-check {
+    color: green;
+  }
+
+  .pi-times {
+    color: #ff0000;
+  }
+  mat-spinner {
+    position: absolute;
+    top: 30%;
+  }
 }

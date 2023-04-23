@@ -1011,41 +1011,242 @@
             "dashboard.T_SUMMARY" | translate
           }}</ng-template>
           <div class="row">
-            <div class="row py-2">
-              <div class="col-2">
-                <div class="row">
-                  {{ "dashboard.T_CREATE_TEMPLATE" | translate }}
-                </div>
-              </div>
-              <div class="col-8">
-                <div class="row">
-                  <div class="col-6 d-flex justify-content-center">
-                    <p-radioButton
-                      inputId="create_yes"
-                      value="yes"
-                      [(ngModel)]="createTemp"
-                    ></p-radioButton>
-                    <label for="create_yes" class="ml-2">{{
-                      "T_YES" | translate
-                    }}</label>
+            <div class="col-12">
+              <div class="row">
+                <div
+                  class="row w-100 justify-content-center"
+                  *ngIf="loadingSpinner"
+                >
+                  <div class="col-1">
+                    <mat-spinner></mat-spinner>
                   </div>
-                  <div class="col-6">
-                    <p-radioButton
-                      inputId="create_no"
-                      value="no"
-                      [(ngModel)]="createTemp"
-                    ></p-radioButton>
-                    <label for="create_no" class="ml-2">{{
-                      "T_NO" | translate
-                    }}</label>
+                </div>
+                <div class="col-4">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        <h3>{{ "dashboard.T_SUMMARY_BASIC" | translate }}</h3>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "flask.T_APP_NAME" | translate }}:
+                        </h5>
+                        <p class="col">
+                          {{ basicFormGroup.get("app_name").value }}
+                        </p>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "flask.T_APP_DESC" | translate }}:
+                        </h5>
+                        <p class="col">
+                          {{
+                            basicFormGroup.get("app_description")?.value
+                              ? basicFormGroup.get("app_description")?.value
+                              : ("dashboard.T_NO_DESC" | translate)
+                          }}
+                        </p>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "flask.T_HOST" | translate }}:
+                        </h5>
+                        <p class="col">
+                          {{ basicFormGroup.get("host").value }}
+                        </p>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "flask.T_PORT" | translate }}:
+                        </h5>
+                        <p class="col">
+                          {{ basicFormGroup.get("port").value }}
+                        </p>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "django.T_LANGUAGE" | translate }}:
+                        </h5>
+                        <p class="col">
+                          {{
+                            getLanguageName(
+                              basicFormGroup.get("language_code").value
+                            )
+                          }}
+                        </p>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "flask.T_TECH_TYPE" | translate }}:
+                        </h5>
+                        <p class="col">
+                          <mat-icon
+                            svgIcon="service_app"
+                            *ngIf="
+                              basicFormGroup.get('tech_type').value ===
+                              'services'
+                            "
+                          ></mat-icon>
+                          <mat-icon
+                            svgIcon="webapp"
+                            *ngIf="
+                              basicFormGroup.get('tech_type').value ===
+                              'app_web'
+                            "
+                          ></mat-icon>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        <h3>{{ "dashboard.T_SUMMARY_CONFIG" | translate }}</h3>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "django.T_ADMIN_URL" | translate }}:
+                        </h5>
+                        <p class="col">
+                          <i
+                            class="pi pi-check"
+                            *ngIf="
+                              apiConfigFormGroup.get('admin_url').value ===
+                              'yes'
+                            "
+                          ></i>
+                          <i
+                            class="pi pi-times"
+                            *ngIf="
+                              apiConfigFormGroup.get('admin_url').value === 'no'
+                            "
+                          ></i>
+                        </p>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "django.T_WEB_BROWSER" | translate }}:
+                        </h5>
+                        <p class="col">
+                          <i
+                            class="pi pi-check"
+                            *ngIf="
+                              apiConfigFormGroup.get('web_browser').value ===
+                              'yes'
+                            "
+                          ></i>
+                          <i
+                            class="pi pi-times"
+                            *ngIf="
+                              apiConfigFormGroup.get('web_browser').value ===
+                              'no'
+                            "
+                          ></i>
+                        </p>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "flask.T_USE_SSL" | translate }}:
+                        </h5>
+                        <p class="col">
+                          <i
+                            class="pi pi-check"
+                            *ngIf="
+                              apiConfigFormGroup.get('use_ssl').value === 'yes'
+                            "
+                          ></i>
+                          <i
+                            class="pi pi-times"
+                            *ngIf="
+                              apiConfigFormGroup.get('use_ssl').value === 'no'
+                            "
+                          ></i>
+                        </p>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "flask.T_USE_DB" | translate }}:
+                        </h5>
+                        <p class="col">
+                          <i
+                            class="pi pi-check"
+                            *ngIf="
+                              apiConfigFormGroup.get('connect_DB').value ===
+                              'yes'
+                            "
+                          ></i>
+                          <i
+                            class="pi pi-times"
+                            *ngIf="
+                              apiConfigFormGroup.get('connect_DB').value ===
+                              'no'
+                            "
+                          ></i>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        <h3>{{ "dashboard.T_SUMMARY_ITEMS" | translate }}</h3>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "dashboard.T_ENDPOINTS" | translate }}:
+                        </h5>
+                        <p class="col">
+                          {{
+                            endpointsFormGroup.get("endpoints")?.value.length
+                          }}
+                          {{ "T_ENDPS" | translate }}
+                        </p>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "django.T_SUB_APPS" | translate }}:
+                        </h5>
+                        <p class="col">
+                          {{
+                            this.subAppsFormGroup.get("sub_apps")?.get("apps")
+                              ?.value.length
+                          }}
+                          {{ "django.T_SUB_APPS" | translate }}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <p-button
-              [label]="'T_EDIT_TEMPLATE' | translate"
-              (onClick)="createTemplate()"
-            ></p-button>
+          </div>
+          <div class="row pt-3">
+            <div class="col-2 pl-0">
+              <button pButton matStepperPrevious>
+                {{ "T_BACK" | translate }}
+              </button>
+            </div>
+            <div class="col-2">
+              <button pButton (click)="createTemplate()">
+                {{ "T_CREATE_TEMPLATE" | translate }}
+              </button>
+            </div>
+            <div class="col-2">
+              <div class="row">
+                {{ "dashboard.T_CREATE_TEMPLATE" | translate }}
+              </div>
+            </div>
+            <div class="col-2">
+              <p-inputSwitch
+                [(ngModel)]="createTemp"
+                [trueValue]="'yes'"
+                [falseValue]="'no'"
+              ></p-inputSwitch>
+            </div>
           </div>
         </mat-step>
       </mat-horizontal-stepper>

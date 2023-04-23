@@ -37,4 +37,15 @@
     padding-left: 0;
   }
 
+  .pi-check {
+    color: green;
+  }
+
+  .pi-times {
+    color: #ff0000;
+  }
+  mat-spinner {
+    position: absolute;
+    top: 30%;
+  }
 }

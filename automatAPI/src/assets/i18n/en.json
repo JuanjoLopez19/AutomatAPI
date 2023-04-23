@@ -198,7 +198,8 @@
     "T_CREATE_TEMPLATE": "Do you want to download the updated template?",
     "T_SUMMARY_BASIC": "Basic configuration summary",
     "T_SUMMARY_CONFIG": "API configuration summary",
-    "T_SUMMARY_ITEMS": "Endpoints summary"
+    "T_SUMMARY_ITEMS": "Endpoints summary",
+    "T_REMOVE_CERTS": "Remove old certificates?"
   },
   "error": {
     "T_EMAIL_REQ": "The email is required",

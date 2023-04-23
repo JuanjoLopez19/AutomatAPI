@@ -249,19 +249,27 @@ export class ExpressTemplateEditComponent {
 
           this.endpointList = data.data.template_args.endpoints;
 
-          this.certFileName = data.data.template_args.certs.cert_name
-            ? data.data.template_args.certs.cert_name
-            : 'T_CHOSE_CERT_FILE';
-          this.iconCertFile = data.data.template_args.certs.cert_name
-            ? 'pi pi-check'
-            : 'pi pi-upload';
+          this.certFileName =
+            data.data.template_args.certs.cert_name &&
+            data.data.template_args.certs.cert_name !== 'None'
+              ? data.data.template_args.certs.cert_name
+              : 'T_CHOSE_CERT_FILE';
+          this.iconCertFile =
+            data.data.template_args.certs.cert_name &&
+            data.data.template_args.certs.cert_name !== 'None'
+              ? 'pi pi-check'
+              : 'pi pi-upload';
 
-          this.keyFileName = data.data.template_args.certs.key_name
-            ? data.data.template_args.certs.key_name
-            : 'T_CHOSE_KEY_FILE';
-          this.iconKeyFile = data.data.template_args.certs.key_name
-            ? 'pi pi-check'
-            : 'pi pi-upload';
+          this.keyFileName =
+            data.data.template_args.certs.key_name &&
+            data.data.template_args.certs.key_name !== 'None'
+              ? data.data.template_args.certs.key_name
+              : 'T_CHOSE_KEY_FILE';
+          this.iconKeyFile =
+            data.data.template_args.certs.key_name &&
+            data.data.template_args.certs.key_name !== 'None'
+              ? 'pi pi-check'
+              : 'pi pi-upload';
         },
         error: (error) => {
           if (error.status === 401) this.router.navigate(['/']);
