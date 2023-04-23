@@ -198,7 +198,8 @@
     "T_CREATE_TEMPLATE": "¿Quieres descargar la plantilla?",
     "T_SUMMARY_BASIC": "Resumen de la configuración básica",
     "T_SUMMARY_CONFIG": "Resumen de la configuración de la API",
-    "T_SUMMARY_ITEMS": "Resumen de los endpoints"
+    "T_SUMMARY_ITEMS": "Resumen de los endpoints",
+    "T_REMOVE_CERTS": "¿Eliminar certificados antigüos?"
   },
   "error": {
     "T_EMAIL_REQ": "El correo electrónico es obligatorio",

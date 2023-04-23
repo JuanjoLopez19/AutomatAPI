@@ -29,6 +29,8 @@ import { Router } from '@angular/router';
 })
 export class DjangoTemplatesComponent implements OnInit {
   @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
+  @Output() changeView: EventEmitter<string> = new EventEmitter<string>();
+
   readonly techUse: typeof techUse = techUse;
   readonly technology: techType = techType.django;
   techType: techUse = techUse.services;
@@ -56,6 +58,7 @@ export class DjangoTemplatesComponent implements OnInit {
 
   showDialog: boolean = false;
   editMode: boolean = false;
+  loading: boolean = false;
 
   firstStepErrors: any = {
     app_name: {
@@ -259,6 +262,14 @@ export class DjangoTemplatesComponent implements OnInit {
     }
   }
 
+  getLanguageName(code: string) {
+    if (window.navigator.language === 'en') {
+      return LanguageNames[code as keyof typeof LanguageNames];
+    } else {
+      return LanguageNamesSpanish[code as keyof typeof LanguageNames];
+    }
+  }
+
   onFileChange(event: any, type: string) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
@@ -439,6 +450,7 @@ export class DjangoTemplatesComponent implements OnInit {
   }
 
   createTemplate() {
+    this.loading = true;
     if (this.techType === this.techUse.services) {
       this.djangoServiceData = {
         app_name: this.basicFormGroup.get('app_name')?.value,
@@ -494,6 +506,10 @@ export class DjangoTemplatesComponent implements OnInit {
               data.data,
               this.djangoServiceData.app_name
             );
+            setTimeout(() => {
+              this.loading = false;
+              this.changeView.emit('home');
+            }, 1500);
           },
           error: (error) => {
             if (error.status === 401) {
@@ -556,6 +572,10 @@ export class DjangoTemplatesComponent implements OnInit {
               data.data,
               this.djangoWebAppData.app_name
             );
+            setTimeout(() => {
+              this.loading = false;
+              this.changeView.emit('home');
+            }, 1500);
           },
           error: (error) => {
             if (error.status === 401) {

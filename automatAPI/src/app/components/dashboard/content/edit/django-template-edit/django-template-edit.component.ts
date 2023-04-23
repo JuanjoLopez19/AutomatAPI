@@ -34,7 +34,9 @@ import { ManageTemplatesService } from 'src/app/api/templates/manageTemplates/ma
 export class DjangoTemplateEditComponent {
   @Input() templateId: string = null;
   @Input() userId: string = null;
+
   @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
+  @Output() changeView: EventEmitter<string> = new EventEmitter<string>();
 
   readonly techUse: typeof techUse = techUse;
   readonly technology: techType = techType.django;
@@ -68,6 +70,7 @@ export class DjangoTemplateEditComponent {
 
   showDialog: boolean = false;
   editMode: boolean = false;
+  loadingSpinner: boolean = false;
 
   firstStepErrors: any = {
     app_name: {
@@ -194,19 +197,27 @@ export class DjangoTemplateEditComponent {
 
           this.endpointList = data.data.template_args.endpoints;
 
-          this.certFileName = data.data.template_args.certs.cert_name
-            ? data.data.template_args.certs.cert_name
-            : 'T_CHOSE_CERT_FILE';
-          this.iconCertFile = data.data.template_args.certs.cert_name
-            ? 'pi pi-check'
-            : 'pi pi-upload';
+          this.certFileName =
+            data.data.template_args.certs.cert_name &&
+            data.data.template_args.certs.cert_name !== 'None'
+              ? data.data.template_args.certs.cert_name
+              : 'T_CHOSE_CERT_FILE';
+          this.iconCertFile =
+            data.data.template_args.certs.cert_name &&
+            data.data.template_args.certs.cert_name !== 'None'
+              ? 'pi pi-check'
+              : 'pi pi-upload';
 
-          this.keyFileName = data.data.template_args.certs.key_name
-            ? data.data.template_args.certs.key_name
-            : 'T_CHOSE_KEY_FILE';
-          this.iconKeyFile = data.data.template_args.certs.key_name
-            ? 'pi pi-check'
-            : 'pi pi-upload';
+          this.keyFileName =
+            data.data.template_args.certs.key_name &&
+            data.data.template_args.certs.key_name !== 'None'
+              ? data.data.template_args.certs.key_name
+              : 'T_CHOSE_KEY_FILE';
+          this.iconKeyFile =
+            data.data.template_args.certs.key_name &&
+            data.data.template_args.certs.key_name !== 'None'
+              ? 'pi pi-check'
+              : 'pi pi-upload';
         },
         error: (error) => {
           if (error.status === 401) this.router.navigate(['/']);
@@ -393,6 +404,14 @@ export class DjangoTemplateEditComponent {
     }
   }
 
+  getLanguageName(code: string) {
+    if (window.navigator.language === 'en') {
+      return LanguageNames[code as keyof typeof LanguageNames];
+    } else {
+      return LanguageNamesSpanish[code as keyof typeof LanguageNames];
+    }
+  }
+
   onFileChange(event: any, type: string) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
@@ -573,6 +592,7 @@ export class DjangoTemplateEditComponent {
   }
 
   createTemplate() {
+    this.loadingSpinner = true;
     if (this.techType === this.techUse.services) {
       this.djangoServiceData = {
         app_name: this.basicFormGroup.get('app_name')?.value,
@@ -634,8 +654,16 @@ export class DjangoTemplateEditComponent {
                 data.data,
                 this.djangoServiceData.app_name
               );
+              setTimeout(() => {
+                this.loadingSpinner = false;
+                this.changeView.emit('home');
+              }, 1500);
             } else {
               alert('updated');
+              setTimeout(() => {
+                this.loadingSpinner = false;
+                this.changeView.emit('home');
+              }, 1500);
             }
           },
           error: (error) => {
@@ -706,8 +734,16 @@ export class DjangoTemplateEditComponent {
                 data.data,
                 this.djangoWebAppData.app_name
               );
+              setTimeout(() => {
+                this.loadingSpinner = false;
+                this.changeView.emit('home');
+              }, 1500);
             } else {
               alert('updated');
+              setTimeout(() => {
+                this.loadingSpinner = false;
+                this.changeView.emit('home');
+              }, 1500);
             }
           },
           error: (error) => {
