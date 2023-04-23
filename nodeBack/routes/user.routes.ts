@@ -1,16 +1,35 @@
 import { Router } from "express";
 import passport from "../passport";
-import { getUsers, deleteUser, deleteAccount, editAccount, editPassword } from "../controllers/user.controller";
-import { isAdmin } from "../middleware/auth.middelware";
+import {
+	getUsers,
+	deleteUser,
+	deleteAccount,
+	editAccount,
+	editPassword,
+    editAccountAdmin,
+    editPasswordAdmin
+} from "../controllers/user.controller";
+import { isAdmin, verifyEdit } from "../middleware/auth.middelware";
 
 const routerUser = Router();
 
-routerUser.get("/", [passport.authorize("jwt"), isAdmin], getUsers)
-routerUser.delete("/delete", [passport.authorize("jwt"), isAdmin], deleteUser)
+routerUser.get("/", [passport.authorize("jwt"), isAdmin], getUsers);
+routerUser.delete("/delete", [passport.authorize("jwt"), isAdmin], deleteUser);
 
-routerUser.delete("/deleteAccount", [passport.authorize("jwt")], deleteAccount)
+routerUser.delete("/deleteAccount", [passport.authorize("jwt")], deleteAccount);
 
-routerUser.put("/editAccount", [passport.authorize("jwt")], editAccount)
-routerUser.put("/editPassword", [passport.authorize("jwt")], editPassword)
+routerUser.put(
+	"/editAccount",
+	[passport.authorize("jwt"), verifyEdit],
+	editAccount
+);
+routerUser.put("/editPassword", [passport.authorize("jwt")], editPassword);
+
+routerUser.put(
+	"/editAccountAdmin",
+	[passport.authorize("jwt"), verifyEdit, isAdmin],
+	editAccountAdmin
+);
+routerUser.put("/editPasswordAdmin", [passport.authorize("jwt"), isAdmin], editPasswordAdmin);
 
 export default routerUser;

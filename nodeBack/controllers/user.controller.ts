@@ -11,6 +11,7 @@ import bcrypt from "bcrypt";
 export const getUsers = async (req: Request, res: Response) => {
 	if (req.user) {
 		const users = await User.findAll({
+			order: [['id', 'ASC']],
 			attributes: { exclude: ["password", "password_token"] },
 		});
 		res.status(200).json({ data: users, message: "Users found", status: 200 });
@@ -146,7 +147,11 @@ export const deleteAccount = async (req: Request, res: Response) => {
 };
 
 export const editAccount = async (req: Request, res: Response) => {
-	if (req.body.firstName !== undefined) {
+	if (
+		req.body.firstName !== undefined &&
+		req.body.email !== undefined &&
+		req.body.username !== undefined
+	) {
 		//@ts-ignore
 		const user_id = await jwt.decode(req.cookies["jwt"]).id;
 		User.findByPk(user_id)
@@ -157,9 +162,11 @@ export const editAccount = async (req: Request, res: Response) => {
 				}
 				user
 					.update({
-						firstName: req.body.firstName,
-						lastName: req.body.lastName,
-						birthDate: req.body.birthDate,
+						firstName: req.body.firstName ? req.body.firstName : user.firstName,
+						lastName: req.body.lastName ? req.body.lastName : user.lastName,
+						birthDate: req.body.birthDate ? req.body.birthDate : user.birthDate,
+						email: req.body.email ? req.body.email : user.email,
+						username: req.body.username ? req.body.username : user.username,
 					})
 					.then(() => {
 						res.status(200).json({ message: "T_USER_UPDATE", status: 200 });
@@ -254,6 +261,108 @@ export const editPassword = async (req: Request, res: Response) => {
 					}
 				}
 			);
+		});
+	} else {
+		res.status(400).json({ message: "T_BAD_REQ", status: 400 });
+		return;
+	}
+};
+
+export const editAccountAdmin = async (req: Request, res: Response) => {
+	if (
+		req.body.firstName !== undefined &&
+		req.body.email !== undefined &&
+		req.body.username !== undefined &&
+		req.body.user_id !== undefined
+	) {
+		//@ts-ignore
+		const user_id = req.body.user_id;
+		User.findByPk(user_id)
+			.then((user: User | null) => {
+				if (user == null) {
+					res.status(404).json({ message: "T_NOT_FOUND", status: 404 });
+					return;
+				}
+				user
+					.update({
+						firstName: req.body.firstName ? req.body.firstName : user.firstName,
+						lastName: req.body.lastName ? req.body.lastName : user.lastName,
+						birthDate: req.body.birthDate ? req.body.birthDate : user.birthDate,
+						email: req.body.email ? req.body.email : user.email,
+						username: req.body.username ? req.body.username : user.username,
+						role: req.body.role ? req.body.role : user.role,
+					})
+					.then(() => {
+						res.status(200).json({ message: "T_USER_UPDATE", status: 200 });
+						return;
+					})
+					.catch((err) => {
+						console.log(err);
+						res
+							.status(500)
+							.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
+						return;
+					});
+			})
+			.catch((err) => {
+				console.log(err);
+				res
+					.status(500)
+					.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
+				return;
+			});
+	} else {
+		res.status(400).json({ message: "T_BAD_REQ", status: 400 });
+	}
+};
+
+export const editPasswordAdmin = async (req: Request, res: Response) => {
+	if (req.body.newPassword !== undefined && req.body.user_id !== undefined) {
+		const { newPassword, user_id } = req.body;
+		User.findByPk(user_id).then((user: User | null) => {
+			if (user == null) {
+				res.status(404).json({ message: "T_NOT_FOUND", status: 404 });
+				return;
+			}
+			bcrypt.genSalt(config.saltRounds, (err, salt) => {
+				if (!err) {
+					bcrypt.hash(req.body.newPassword, salt, (err, hash) => {
+						if (!err) {
+							user
+								.update({ password: hash })
+								.then(() => {
+									res.status(200).json({
+										message: "T_USER_UPDATE",
+										status: 200,
+									});
+									return;
+								})
+								.catch((err) => {
+									console.log(err);
+									res.status(500).json({
+										message: "T_INTERNAL_SERVER_ERROR",
+										status: 500,
+									});
+									return;
+								});
+						} else {
+							console.log(err);
+							res.status(500).json({
+								message: "T_INTERNAL_SERVER_ERROR",
+								status: 500,
+							});
+							return;
+						}
+					});
+				} else {
+					console.log(err);
+					res.status(500).json({
+						message: "T_INTERNAL_SERVER_ERROR",
+						status: 500,
+					});
+					return;
+				}
+			});
 		});
 	} else {
 		res.status(400).json({ message: "T_BAD_REQ", status: 400 });
