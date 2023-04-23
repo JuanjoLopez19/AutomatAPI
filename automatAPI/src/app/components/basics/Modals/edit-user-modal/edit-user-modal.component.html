@@ -3,7 +3,7 @@
   [modal]="true"
   [(visible)]="show"
   [position]="'top'"
-  [style]="{ width: '650px', height: '320px' }"
+  [style]="{ width: 'calc(50vw)', height: '320px' }"
   [draggable]="false"
   [resizable]="false"
   [closable]="true"
@@ -22,134 +22,147 @@
     <div class="row h-100">
       <div class="col-12">
         <div class="row p-4">
-          <div class="col-5">
-            <form class="row" [formGroup]="userFormGroup">
+          <div class="col-7">
+            <form
+              class="d-grid justify-content-center"
+              [formGroup]="userFormGroup"
+            >
               <div class="row">
-                <span class="p-float-label">
-                  <input
-                    pInputText
-                    id="endpoint_name"
-                    formControlName="username"
-                  />
-                  <label htmlFor="endpoint_name">{{
-                    "edit.T_USERNAME" | translate
-                  }}</label>
-                </span>
-                <div class="row">
-                  <small
-                    id="endp-name-help"
-                    class="p-error block"
-                    *ngIf="userFormGroup.get('username').errors?.[ 'required' ] && userFormGroup.get('username').touched"
-                    >{{ "error.T_USERNAME_REQ" | translate }}</small
-                  >
-                  <small
-                    id="endp-name-help"
-                    class="p-error block"
-                    *ngIf="userFormGroup.get('username').errors?.[ 'pattern' ] && userFormGroup.get('username').touched"
-                    >{{ "error.T_USERNAME_INVALID" | translate }}</small
-                  >
+                <div class="col-6 justify-content-center">
+                  <span class="p-float-label">
+                    <input
+                      pInputText
+                      id="endpoint_name"
+                      formControlName="username"
+                    />
+                    <label htmlFor="endpoint_name">{{
+                      "edit.T_USERNAME" | translate
+                    }}</label>
+                  </span>
+                  <div class="row">
+                    <small
+                      id="endp-name-help"
+                      class="p-error block"
+                      *ngIf="userFormGroup.get('username').errors?.[ 'required' ] && userFormGroup.get('username').touched"
+                      >{{ "error.T_USERNAME_REQ" | translate }}</small
+                    >
+                    <small
+                      id="endp-name-help"
+                      class="p-error block"
+                      *ngIf="userFormGroup.get('username').errors?.[ 'pattern' ] && userFormGroup.get('username').touched"
+                      >{{ "error.T_USERNAME_INVALID" | translate }}</small
+                    >
+                  </div>
+                </div>
+                <div class="col-6 justify-content-center">
+                  <span class="p-float-label">
+                    <input
+                      pInputText
+                      id="endpoint_name"
+                      formControlName="email"
+                    />
+                    <label htmlFor="endpoint_name">{{
+                      "edit.T_EMAIL" | translate
+                    }}</label>
+                  </span>
+                  <div class="row">
+                    <small
+                      id="endp-name-help"
+                      class="p-error block"
+                      *ngIf="userFormGroup.get('email').errors?.[ 'required' ] && userFormGroup.get('email').touched"
+                      >{{ "error.T_EMAIL_REQ" | translate }}</small
+                    >
+                    <small
+                      id="endp-name-help"
+                      class="p-error block"
+                      *ngIf="userFormGroup.get('email').errors?.['email' ] && userFormGroup.get('email').touched"
+                      >{{ "error.T_EMAIL_INVALID" | translate }}</small
+                    >
+                  </div>
                 </div>
               </div>
               <div class="row pt-4">
-                <span class="p-float-label">
-                  <input
-                    pInputText
-                    id="endpoint_name"
-                    formControlName="email"
-                  />
-                  <label htmlFor="endpoint_name">{{
-                    "edit.T_EMAIL" | translate
-                  }}</label>
-                </span>
-                <div class="row">
-                  <small
-                    id="endp-name-help"
-                    class="p-error block"
-                    *ngIf="userFormGroup.get('email').errors?.[ 'required' ] && userFormGroup.get('email').touched"
-                    >{{ "error.T_EMAIL_REQ" | translate }}</small
-                  >
-                  <small
-                    id="endp-name-help"
-                    class="p-error block"
-                    *ngIf="userFormGroup.get('email').errors?.['email' ] && userFormGroup.get('email').touched"
-                    >{{ "error.T_EMAIL_INVALID" | translate }}</small
-                  >
+                <div class="col-6 justify-content-center">
+                  <span class="p-float-label">
+                    <input
+                      pInputText
+                      id="endpoint_name"
+                      formControlName="firstName"
+                    />
+                    <label htmlFor="endpoint_name">{{
+                      "edit.T_FIRST_NAME" | translate
+                    }}</label>
+                  </span>
+                  <div class="row">
+                    <small
+                      id="endp-name-help"
+                      class="p-error block"
+                      *ngIf="userFormGroup.get('firstName').errors?.[ 'required' ] && userFormGroup.get('firstName').touched"
+                      >{{ "error.T_FIRST_NAME_REQ" | translate }}</small
+                    >
+                    <small
+                      id="endp-name-help"
+                      class="p-error block"
+                      *ngIf="userFormGroup.get('firstName').errors?.[ 'pattern' ] && userFormGroup.get('firstName').touched"
+                      >{{ "error.T_FIRST_NAME_INVALID" | translate }}</small
+                    >
+                  </div>
+                </div>
+                <div class="col-6 justify-content-center">
+                  <span class="p-float-label">
+                    <input
+                      pInputText
+                      id="endpoint_name"
+                      formControlName="lastName"
+                    />
+                    <label htmlFor="endpoint_name">{{
+                      "edit.T_LAST_NAME" | translate
+                    }}</label>
+                  </span>
+                  <div class="row">
+                    <small
+                      id="endp-name-help"
+                      class="p-error block"
+                      *ngIf="userFormGroup.get('lastName').errors?.[ 'pattern' ] && userFormGroup.get('lastName').touched"
+                      >{{ "error.T_LAST_NAME_INVALID" | translate }}</small
+                    >
+                  </div>
                 </div>
               </div>
-              <div class="row pt-4">
-                <span class="p-float-label">
-                  <input
-                    pInputText
-                    id="endpoint_name"
-                    formControlName="firstName"
-                  />
-                  <label htmlFor="endpoint_name">{{
-                    "edit.T_FIRST_NAME" | translate
-                  }}</label>
-                </span>
-                <div class="row">
-                  <small
-                    id="endp-name-help"
-                    class="p-error block"
-                    *ngIf="userFormGroup.get('firstName').errors?.[ 'required' ] && userFormGroup.get('firstName').touched"
-                    >{{ "error.T_FIRST_NAME_REQ" | translate }}</small
-                  >
-                  <small
-                    id="endp-name-help"
-                    class="p-error block"
-                    *ngIf="userFormGroup.get('firstName').errors?.[ 'pattern' ] && userFormGroup.get('firstName').touched"
-                    >{{ "error.T_FIRST_NAME_INVALID" | translate }}</small
-                  >
-                </div>
-              </div>
-              <div class="row pt-4">
-                <span class="p-float-label">
-                  <input
-                    pInputText
-                    id="endpoint_name"
-                    formControlName="lastName"
-                  />
-                  <label htmlFor="endpoint_name">{{
-                    "edit.T_LAST_NAME" | translate
-                  }}</label>
-                </span>
-                <small
-                  id="endp-name-help"
-                  class="p-error block"
-                  *ngIf="userFormGroup.get('lastName').errors?.[ 'pattern' ] && userFormGroup.get('lastName').touched"
-                  >{{ "error.T_LAST_NAME_INVALID" | translate }}</small
-                >
-              </div>
-              <div class="row pt-2">
-                <div class="row">
-                  <span>
-                    {{ "T_BIRTHDATE" | translate }}
+              <div class="row pt-1">
+                <div class="col-6">
+                  <div class="row">
+                    <span>
+                      {{ "T_BIRTHDATE" | translate }}
+                    </span>
+                  </div>
+                  <span class="justify-content-center">
+                    <p-calendar
+                      formControlName="birthDate"
+                      [showIcon]="true"
+                      placeholder="{{ 'T_DATE_PLACEHOLDER' | translate }}"
+                      dateFormat="{{ 'T_DATE_PLACEHOLDER' | translate }}"
+                      [readonlyInput]="true"
+                      [maxDate]="maxDate"
+                    ></p-calendar>
                   </span>
                 </div>
-                <span>
-                  <p-calendar
-                    formControlName="birthDate"
-                    [showIcon]="true"
-                    placeholder="{{ 'T_DATE_PLACEHOLDER' | translate }}"
-                    dateFormat="{{ 'T_DATE_PLACEHOLDER' | translate }}"
-                    [readonlyInput]="true"
-                    [maxDate]="maxDate"
-                  ></p-calendar>
-                </span>
-              </div>
-              <div class="row pt-4" *ngIf="adminMode">
-                <span class="p-float-label">
-                  <p-dropdown
-                    formControlName="role"
-                    [options]="dropdownItems"
-                    optionLabel="name"
-                    optionValue="value"
-                    class="p-0"
-                  ></p-dropdown>
-                  <label htmlFor="endpoint_name">{{
-                    "edit.T_ROLE" | translate
-                  }}</label>
-                </span>
+                <div class="col-6" *ngIf="adminMode">
+                  <div class="row">
+                    <span>
+                      {{ "dashboard.T_USER_ROLE" | translate }}
+                    </span>
+                  </div>
+                  <span>
+                    <p-dropdown
+                      formControlName="role"
+                      [options]="dropdownItems"
+                      optionLabel="name"
+                      optionValue="value"
+                      class="p-0"
+                    ></p-dropdown>
+                  </span>
+                </div>
               </div>
               <div class="row py-3">
                 <small
@@ -167,15 +180,19 @@
               </div>
             </form>
           </div>
-          <div class="col-2">
+          <div class="col-1">
             <p-divider layout="vertical">
               <b>{{ "T_OR" | translate }}</b>
             </p-divider>
           </div>
-          <div class="col-5">
-            <form class="row" [formGroup]="passwordFormGroup" #passwordForm>
+          <div class="col-4">
+            <form
+              class="d-grid justify-content-center"
+              [formGroup]="passwordFormGroup"
+              #passwordForm
+            >
               <div class="col-12">
-                <div class="row py-2">
+                <div class="row py-2 text-center">
                   <span>
                     <h4>{{ "edit.T_CHANGE_PWD" | translate }}</h4>
                   </span>
