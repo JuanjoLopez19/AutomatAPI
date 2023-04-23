@@ -125,6 +125,8 @@
   "T_BAD_REQUEST": "Bad request",
   "T_USER_UPDATE": "User updated successfully",
   "T_EDIT_TEMPLATE": "Edit template",
+  "T_ADMIN": "Admin",
+  "T_USER": "User",
   "db": {
     "T_DB_TYPE": "Database type",
     "T_DB_NAME": "Database name",
@@ -228,7 +230,11 @@
     "T_SURNAME_INVALID": "The surname is invalid",
     "T_APP_NAME_INVALID": "The app's name is invalid",
     "T_FILE_INVALID": "The file is invalid",
-    "T_ENDP_URL_DUPL": "Endpoint path already exists"
+    "T_ENDP_URL_DUPL": "Endpoint path already exists",
+     "T_FIRST_NAME_REQ": "The name is required",
+    "T_LAST_NAME_REQ": "The surname is required",
+    "T_FIRST_NAME_INVALID": "The name is invalid",
+    "T_LAST_NAME_INVALID": "The surname is invalid"
   },
   "flask": {
     "T_APP_NAME": "Application name",
@@ -310,6 +316,9 @@
     "T_LAST_NAME": "Last name",
     "T_CURRENT_PWD": "Current password",
     "T_NEW_PWD": "New password",
-    "T_REPEAT_PWD": "Confirm password"
+    "T_REPEAT_PWD": "Confirm password",
+    "T_USERNAME": "Username",
+    "T_EMAIL": "Email",
+    "T_ROLE": "Role"
   }
 }

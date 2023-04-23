@@ -8,8 +8,16 @@ import {
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ManageUsersService } from 'src/app/api/users/manageUsers/manage-users.service';
-import { nameRegEx, passwordRegex } from 'src/app/common/constants';
-import { httpResponse, userParams } from 'src/app/common/interfaces/interfaces';
+import {
+  nameRegEx,
+  passwordRegex,
+  usernameRegex,
+} from 'src/app/common/constants';
+import {
+  dropdownParams,
+  httpResponse,
+  userParams,
+} from 'src/app/common/interfaces/interfaces';
 
 @Component({
   selector: 'app-edit-user-modal',
@@ -57,35 +65,86 @@ export class EditUserModalComponent {
 
   maxDate: Date = new Date();
 
+  dropdownItems: dropdownParams[];
+
   constructor(
     private userService: ManageUsersService,
     private translate: TranslateService
-  ) {}
+  ) {
+    this.translate
+      .get(['T_ADMIN', 'T_USER'])
+      .subscribe((res) => {
+        this.dropdownItems = [
+          { name: res.T_ADMIN, value: 'admin' },
+          { name: res.T_USER, value: 'client' },
+        ];
+      });
+  }
 
   ngOnInit(): void {
+    if (!this.adminMode) {
+      this.userFormGroup = new FormGroup({
+        lastName: new FormControl(this.userData.lastName, [
+          Validators.pattern(nameRegEx),
+        ]),
+        firstName: new FormControl(this.userData.firstName, [
+          Validators.required,
+          Validators.pattern(nameRegEx),
+        ]),
+        birthDate: new FormControl(this.userData.birthDate),
+        username: new FormControl(this.userData.username, [
+          Validators.required,
+          Validators.pattern(usernameRegex),
+        ]),
+        email: new FormControl(this.userData.email, [
+          Validators.required,
+          Validators.email,
+        ]),
+      });
 
-    this.userFormGroup = new FormGroup({
-      lastName: new FormControl(this.userData.lastName, [
-        Validators.pattern(nameRegEx),
-      ]),
-      firstName: new FormControl(this.userData.firstName, [
-        Validators.required,
-        Validators.pattern(nameRegEx),
-      ]),
-      birthDate: new FormControl(this.userData.birthDate),
-    });
+      this.passwordFormGroup = new FormGroup({
+        password: new FormControl('', [
+          Validators.required,
+          Validators.pattern(passwordRegex),
+        ]),
+        confirmPassword: new FormControl('', [
+          Validators.required,
+          Validators.pattern(passwordRegex),
+        ]),
+        currentPassword: new FormControl('', [Validators.required]),
+      });
+    } else {
+      this.userFormGroup = new FormGroup({
+        lastName: new FormControl(this.userData.lastName, [
+          Validators.pattern(nameRegEx),
+        ]),
+        firstName: new FormControl(this.userData.firstName, [
+          Validators.required,
+          Validators.pattern(nameRegEx),
+        ]),
+        birthDate: new FormControl(this.userData.birthDate),
+        username: new FormControl(this.userData.username, [
+          Validators.required,
+          Validators.pattern(usernameRegex),
+        ]),
+        email: new FormControl(this.userData.email, [
+          Validators.required,
+          Validators.email,
+        ]),
+        role: new FormControl(this.userData.role, [Validators.required]),
+      });
 
-    this.passwordFormGroup = new FormGroup({
-      password: new FormControl('', [
-        Validators.required,
-        Validators.pattern(passwordRegex),
-      ]),
-      confirmPassword: new FormControl('', [
-        Validators.required,
-        Validators.pattern(passwordRegex),
-      ]),
-      currentPassword: new FormControl('', [Validators.required]),
-    });
+      this.passwordFormGroup = new FormGroup({
+        password: new FormControl('', [
+          Validators.required,
+          Validators.pattern(passwordRegex),
+        ]),
+        confirmPassword: new FormControl('', [
+          Validators.required,
+          Validators.pattern(passwordRegex),
+        ]),
+      });
+    }
   }
 
   onShow() {
@@ -99,16 +158,69 @@ export class EditUserModalComponent {
     this.successPassword = false;
     this.successPasswordMsg = '';
 
-    this.userFormGroup = new FormGroup({
-      lastName: new FormControl(this.userData.lastName, [
-        Validators.pattern(nameRegEx),
-      ]),
-      firstName: new FormControl(this.userData.firstName, [
-        Validators.required,
-        Validators.pattern(nameRegEx),
-      ]),
-      birthDate: new FormControl(this.userData.birthDate),
-    });
+    if (!this.adminMode) {
+      this.userFormGroup = new FormGroup({
+        lastName: new FormControl(this.userData.lastName, [
+          Validators.pattern(nameRegEx),
+        ]),
+        firstName: new FormControl(this.userData.firstName, [
+          Validators.required,
+          Validators.pattern(nameRegEx),
+        ]),
+        birthDate: new FormControl(this.userData.birthDate),
+        username: new FormControl(this.userData.username, [
+          Validators.required,
+          Validators.pattern(usernameRegex),
+        ]),
+        email: new FormControl(this.userData.email, [
+          Validators.required,
+          Validators.email,
+        ]),
+      });
+
+      this.passwordFormGroup = new FormGroup({
+        password: new FormControl('', [
+          Validators.required,
+          Validators.pattern(passwordRegex),
+        ]),
+        confirmPassword: new FormControl('', [
+          Validators.required,
+          Validators.pattern(passwordRegex),
+        ]),
+        currentPassword: new FormControl('', [Validators.required]),
+      });
+    } else {
+      this.userFormGroup = new FormGroup({
+        lastName: new FormControl(this.userData.lastName, [
+          Validators.pattern(nameRegEx),
+        ]),
+        firstName: new FormControl(this.userData.firstName, [
+          Validators.required,
+          Validators.pattern(nameRegEx),
+        ]),
+        birthDate: new FormControl(this.userData.birthDate),
+        username: new FormControl(this.userData.username, [
+          Validators.required,
+          Validators.pattern(usernameRegex),
+        ]),
+        email: new FormControl(this.userData.email, [
+          Validators.required,
+          Validators.email,
+        ]),
+        role: new FormControl(this.userData.role, [Validators.required]),
+      });
+
+      this.passwordFormGroup = new FormGroup({
+        password: new FormControl('', [
+          Validators.required,
+          Validators.pattern(passwordRegex),
+        ]),
+        confirmPassword: new FormControl('', [
+          Validators.required,
+          Validators.pattern(passwordRegex),
+        ]),
+      });
+    }
   }
 
   manageHide() {

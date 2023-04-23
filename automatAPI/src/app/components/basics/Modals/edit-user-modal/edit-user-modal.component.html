@@ -29,6 +29,58 @@
                   <input
                     pInputText
                     id="endpoint_name"
+                    formControlName="username"
+                  />
+                  <label htmlFor="endpoint_name">{{
+                    "edit.T_USERNAME" | translate
+                  }}</label>
+                </span>
+                <div class="row">
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="userFormGroup.get('username').errors?.[ 'required' ] && userFormGroup.get('username').touched"
+                    >{{ "error.T_USERNAME_REQ" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="userFormGroup.get('username').errors?.[ 'pattern' ] && userFormGroup.get('username').touched"
+                    >{{ "error.T_USERNAME_INVALID" | translate }}</small
+                  >
+                </div>
+              </div>
+              <div class="row pt-4">
+                <span class="p-float-label">
+                  <input
+                    pInputText
+                    id="endpoint_name"
+                    formControlName="email"
+                  />
+                  <label htmlFor="endpoint_name">{{
+                    "edit.T_EMAIL" | translate
+                  }}</label>
+                </span>
+                <div class="row">
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="userFormGroup.get('email').errors?.[ 'required' ] && userFormGroup.get('email').touched"
+                    >{{ "error.T_EMAIL_REQ" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="userFormGroup.get('email').errors?.['email' ] && userFormGroup.get('email').touched"
+                    >{{ "error.T_EMAIL_INVALID" | translate }}</small
+                  >
+                </div>
+              </div>
+              <div class="row pt-4">
+                <span class="p-float-label">
+                  <input
+                    pInputText
+                    id="endpoint_name"
                     formControlName="firstName"
                   />
                   <label htmlFor="endpoint_name">{{
@@ -65,7 +117,7 @@
                   id="endp-name-help"
                   class="p-error block"
                   *ngIf="userFormGroup.get('lastName').errors?.[ 'pattern' ] && userFormGroup.get('lastName').touched"
-                  >{{ "error.T_FIRST_NAME_INVALID" | translate }}</small
+                  >{{ "error.T_LAST_NAME_INVALID" | translate }}</small
                 >
               </div>
               <div class="row pt-2">
@@ -83,6 +135,20 @@
                     [readonlyInput]="true"
                     [maxDate]="maxDate"
                   ></p-calendar>
+                </span>
+              </div>
+              <div class="row pt-4" *ngIf="adminMode">
+                <span class="p-float-label">
+                  <p-dropdown
+                    formControlName="role"
+                    [options]="dropdownItems"
+                    optionLabel="name"
+                    optionValue="value"
+                    class="p-0"
+                  ></p-dropdown>
+                  <label htmlFor="endpoint_name">{{
+                    "edit.T_ROLE" | translate
+                  }}</label>
                 </span>
               </div>
               <div class="row py-3">
@@ -109,7 +175,12 @@
           <div class="col-5">
             <form class="row" [formGroup]="passwordFormGroup" #passwordForm>
               <div class="col-12">
-                <div class="row">
+                <div class="row py-2">
+                  <span>
+                    <h4>{{ "edit.T_CHANGE_PWD" | translate }}</h4>
+                  </span>
+                </div>
+                <div class="row" *ngIf="!adminMode">
                   <span class="p-float-label">
                     <p-password
                       [feedback]="false"
