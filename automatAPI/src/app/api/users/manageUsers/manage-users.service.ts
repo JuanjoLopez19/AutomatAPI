@@ -29,7 +29,13 @@ export class ManageUsersService {
     );
   }
 
-  editAccount(data: { firstName: string; lastName: string; birthDate: Date }) {
+  editAccount(data: {
+    firstName: string;
+    lastName: string;
+    birthDate: Date;
+    email: string;
+    username: string;
+  }) {
     return this.http.put(
       `${environment.apiHost}${environment.apiPort}/api/users/editAccount`,
       data,
@@ -40,6 +46,30 @@ export class ManageUsersService {
   editPassword(data: { newPassword: string; currentPassword: string }) {
     return this.http.put(
       `${environment.apiHost}${environment.apiPort}/api/users/editPassword`,
+      data,
+      { withCredentials: true }
+    );
+  }
+
+  editAccountAdmin(data: {
+    firstName: string;
+    lastName: string;
+    birthDate: Date;
+    email: string;
+    username: string;
+    role: string;
+    user_id: string;
+  }) {
+    return this.http.put(
+      `${environment.apiHost}${environment.apiPort}/api/users/editAccountAdmin`,
+      data,
+      { withCredentials: true }
+    );
+  }
+
+  editPasswordAdmin(data: { newPassword: string; user_id: string }) {
+    return this.http.put(
+      `${environment.apiHost}${environment.apiPort}/api/users/editPasswordAdmin`,
       data,
       { withCredentials: true }
     );

@@ -71,14 +71,12 @@ export class EditUserModalComponent {
     private userService: ManageUsersService,
     private translate: TranslateService
   ) {
-    this.translate
-      .get(['T_ADMIN', 'T_USER'])
-      .subscribe((res) => {
-        this.dropdownItems = [
-          { name: res.T_ADMIN, value: 'admin' },
-          { name: res.T_USER, value: 'client' },
-        ];
-      });
+    this.translate.get(['T_ADMIN', 'T_USER']).subscribe((res) => {
+      this.dropdownItems = [
+        { name: res.T_ADMIN, value: 'admin' },
+        { name: res.T_USER, value: 'client' },
+      ];
+    });
   }
 
   ngOnInit(): void {
@@ -243,68 +241,135 @@ export class EditUserModalComponent {
   submitForm(type: boolean = false) {
     if (type) {
       if (this.userFormGroup.valid) {
-        this.userService
-          .editAccount(
-            this.userFormGroup.value as {
-              firstName: string;
-              lastName: string;
-              birthDate: Date;
-            }
-          )
-          .subscribe({
-            next: (data: httpResponse) => {
-              this.translate
-                .get(data.message)
-                .subscribe((res: string) => {
-                  this.successAccount = true;
-                  this.successAccountMsg = res;
-                })
-                .add(() => {
-                  setTimeout(() => {
-                    this.manageHide();
-                  }, 1500);
-                });
-            },
-            error: (error) => {
-              this.translate
-                .get(error.error.message)
-                .subscribe((res: string) => {
-                  this.accountError = true;
-                  this.accountErrorMsg = res;
-                });
-            },
-          });
+        if (!this.adminMode) {
+          this.userService
+            .editAccount({
+              firstName: this.userFormGroup.value.firstName,
+              lastName: this.userFormGroup.value.lastName,
+              birthDate: this.userFormGroup.value.birthDate,
+              email: this.userFormGroup.value.email,
+              username: this.userFormGroup.value.username,
+            })
+            .subscribe({
+              next: (data: httpResponse) => {
+                this.translate
+                  .get(data.message)
+                  .subscribe((res: string) => {
+                    this.successAccount = true;
+                    this.successAccountMsg = res;
+                  })
+                  .add(() => {
+                    setTimeout(() => {
+                      this.manageHide();
+                    }, 1500);
+                  });
+              },
+              error: (error) => {
+                this.translate
+                  .get(error.error.message)
+                  .subscribe((res: string) => {
+                    this.accountError = true;
+                    this.accountErrorMsg = res;
+                  });
+              },
+            });
+        } else {
+          this.userService
+            .editAccountAdmin({
+              firstName: this.userFormGroup.value.firstName,
+              lastName: this.userFormGroup.value.lastName,
+              birthDate: this.userFormGroup.value.birthDate,
+              email: this.userFormGroup.value.email,
+              username: this.userFormGroup.value.username,
+              role: this.userFormGroup.value.role,
+              user_id: this.userData.id,
+            })
+            .subscribe({
+              next: (data: httpResponse) => {
+                this.translate
+                  .get(data.message)
+                  .subscribe((res: string) => {
+                    this.successAccount = true;
+                    this.successAccountMsg = res;
+                  })
+                  .add(() => {
+                    setTimeout(() => {
+                      this.manageHide();
+                    }, 1500);
+                  });
+              },
+              error: (error) => {
+                this.translate
+                  .get(error.error.message)
+                  .subscribe((res: string) => {
+                    this.accountError = true;
+                    this.accountErrorMsg = res;
+                  });
+              },
+            });
+        }
       }
     } else {
       if (this.passwordFormGroup.valid && this.checkPasswords()) {
-        this.userService
-          .editPassword({
-            currentPassword: this.passwordFormGroup.value.currentPassword,
-            newPassword: this.passwordFormGroup.value.password,
-          })
-          .subscribe({
-            next: (data: httpResponse) => {
-              this.translate
-                .get(data.message)
-                .subscribe((res: string) => {
-                  this.successPassword = true;
-                  this.successPasswordMsg = res;
-                })
-                .add(() => {
-                  setTimeout(() => {
-                    this.manageHide();
-                  }, 1500);
-                });
-            },
-            error: (error) => {
-              this.translate
-                .get(error.error.message)
-                .subscribe((res: string) => {
-                  this.passwordError = true;
-                  this.passwordErrorMsg = res;
-                });
-            },
-          });
+        if (!this.adminMode) {
+          this.userService
+            .editPassword({
+              currentPassword: this.passwordFormGroup.value.currentPassword,
+              newPassword: this.passwordFormGroup.value.password,
+            })
+            .subscribe({
+              next: (data: httpResponse) => {
+                this.translate
+                  .get(data.message)
+                  .subscribe((res: string) => {
+                    this.successPassword = true;
+                    this.successPasswordMsg = res;
+                  })
+                  .add(() => {
+                    setTimeout(() => {
+                      this.manageHide();
+                    }, 1500);
+                  });
+              },
+              error: (error) => {
+                this.translate
+                  .get(error.error.message)
+                  .subscribe((res: string) => {
+                    this.passwordError = true;
+                    this.passwordErrorMsg = res;
+                  });
+              },
+            });
+        } else {
+          this.userService
+            .editPasswordAdmin({
+              newPassword: this.passwordFormGroup.value.password,
+              user_id: this.userData.id,
+            })
+            .subscribe({
+              next: (data: httpResponse) => {
+                this.translate
+                  .get(data.message)
+                  .subscribe((res: string) => {
+                    this.successPassword = true;
+                    this.successPasswordMsg = res;
+                  })
+                  .add(() => {
+                    setTimeout(() => {
+                      this.manageHide();
+                    }, 1500);
+                  });
+              },
+              error: (error) => {
+                this.translate
+                  .get(error.error.message)
+                  .subscribe((res: string) => {
+                    this.passwordError = true;
+                    this.passwordErrorMsg = res;
+                  });
+              },
+            });
+        }
       }
     }
   }
