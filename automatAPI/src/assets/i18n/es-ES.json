@@ -125,6 +125,8 @@
   "T_BAD_REQUEST": "¡Petición incorrecta!",
   "T_USER_UPDATED": "Usuario actualizado correctamente",
   "T_EDIT_TEMPLATE": "Editar plantilla",
+  "T_ADMIN": "Administrador",
+  "T_USER": "Usuario",
   "db": {
     "T_DB_TYPE": "Tipo de Base de datos",
     "T_DB_NAME": "Nombre de la base de datos",
@@ -227,7 +229,11 @@
     "T_SURNAME_INVALID": "Los apellidos son inválidos",
     "T_APP_NAME_INVALID": "El nombre de la aplicación no es válido",
     "T_FILE_INVALID": "El archivo no es válido",
-    "T_ENDP_URL_DUPL": "La URL del endpoint ya existe"
+    "T_ENDP_URL_DUPL": "La URL del endpoint ya existe",
+    "T_FIRST_NAME_REQ": "El nombre es obligatorio",
+    "T_LAST_NAME_REQ": "Los apellidos son obligatorios",
+    "T_FIRST_NAME_INVALID": "El nombre es inválido",
+    "T_LAST_NAME_INVALID": "Los apellidos son inválidos"
   },
   "flask": {
     "T_APP_NAME": "Nombre de la Aplicación",
@@ -309,6 +315,9 @@
     "T_LAST_NAME": "Apellidos",
     "T_CURRENT_PWD": "Contraseña actual",
     "T_NEW_PWD": "Nueva contraseña",
-    "T_REPEAT_PWD": "Repetir contraseña"
+    "T_REPEAT_PWD": "Repetir contraseña",
+    "T_USERNAME":"Nombre de usuario",
+    "T_EMAIL": "Email",
+    "T_ROLE": "Rol"
   }
 }
