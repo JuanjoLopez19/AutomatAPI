@@ -36,6 +36,10 @@ import { UsersTableComponent } from './components/basics/tables/users-table/user
 import { TemplateCardComponent } from './components/basics/cards/template-card/template-card.component';
 import { SummaryCardComponent } from './components/basics/cards/summary-card/summary-card.component';
 import { ChartsComponent } from './components/basics/charts/charts.component';
+import { EditUserModalComponent } from './components/basics/Modals/edit-user-modal/edit-user-modal.component';
+import { FlaskTemplateEditComponent } from './components/dashboard/content/edit/flask-template-edit/flask-template-edit.component';
+import { ExpressTemplateEditComponent } from './components/dashboard/content/edit/express-template-edit/express-template-edit.component';
+import { DjangoTemplateEditComponent } from './components/dashboard/content/edit/django-template-edit/django-template-edit.component';
 
 // NG Prime components
 import { InputTextModule } from 'primeng/inputtext';
@@ -59,6 +63,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { ImageModule } from 'primeng/image';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 // Material components
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -72,10 +77,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { EditUserModalComponent } from './components/basics/Modals/edit-user-modal/edit-user-modal.component';
-import { FlaskTemplateEditComponent } from './components/dashboard/content/edit/flask-template-edit/flask-template-edit.component';
-import { ExpressTemplateEditComponent } from './components/dashboard/content/edit/express-template-edit/express-template-edit.component';
-import { DjangoTemplateEditComponent } from './components/dashboard/content/edit/django-template-edit/django-template-edit.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -162,7 +164,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     CarouselModule,
     ImageModule,
     ProgressSpinnerModule,
-    ConfirmPopupModule
+    ConfirmPopupModule,
+    MatProgressSpinnerModule,
+    InputSwitchModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

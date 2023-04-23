@@ -32,6 +32,7 @@ export interface flaskWebApp {
   table_name: string;
   config_file: string;
   type_config_file: string;
+  handle_404: string;
 
   use_bp: string;
   bp_list: flaskBlueprintAux;
