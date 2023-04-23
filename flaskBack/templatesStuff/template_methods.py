@@ -219,8 +219,14 @@ def temp_creator(
                 f.write(f2.read())
     if (
         template_args.get("use_ssl") == "yes"
-        and template_args.get("certs").get("cert_name", None) != None
-        and template_args.get("certs").get("key_name", None) != None
+        and (
+            template_args.get("certs").get("cert_name", None) != None
+            and template_args.get("certs").get("cert_name", None) != "None"
+        )
+        and (
+            template_args.get("certs").get("key_name", None) != None
+            and template_args.get("certs").get("key_name", None) != "None"
+        )
     ):
         if not setCertFiles(
             template_path,
