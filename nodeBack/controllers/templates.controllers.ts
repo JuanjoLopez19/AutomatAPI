@@ -208,7 +208,7 @@ export const getTemplates = async (req: Request, res: Response) => {
 				res.status(404).json({ message: "User not found", status: 404 });
 			} else {
 				if (user.role == "admin") {
-					Templates.findAll()
+					Templates.findAll({ order: [["id", "ASC"]] })
 						.then((templates: Templates[]) => {
 							if (templates == null)
 								res
@@ -227,6 +227,7 @@ export const getTemplates = async (req: Request, res: Response) => {
 						});
 				} else {
 					Templates.findAll({
+						order: [["id", "ASC"]],
 						where: {
 							user_id: user_id,
 						},
