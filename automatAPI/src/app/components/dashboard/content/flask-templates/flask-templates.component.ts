@@ -39,9 +39,11 @@ export class FlaskTemplatesComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
 
   @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
+  @Output() changeView: EventEmitter<string> = new EventEmitter<string>();
 
   showDialog: boolean = false;
   editMode: boolean = false;
+  loading: boolean = false;
 
   flaskServicesData!: flaskServices;
   flaskWebAppData!: flaskWebApp;
@@ -224,6 +226,10 @@ export class FlaskTemplatesComponent implements OnInit {
         updateOn: 'blur',
       }),
       use_bp: new FormControl('no', {
+        validators: [Validators.required],
+        updateOn: 'blur',
+      }),
+      handle_404: new FormControl('no', {
         validators: [Validators.required],
         updateOn: 'blur',
       }),
@@ -422,6 +428,7 @@ export class FlaskTemplatesComponent implements OnInit {
   }
 
   createTemplate() {
+    this.loading = true;
     if (this.basicFormGroup.get('tech_type').value === 'services') {
       this.flaskServicesData = {
         app_name: this.basicFormGroup.get('app_name')?.value,
@@ -474,6 +481,10 @@ export class FlaskTemplatesComponent implements OnInit {
               data.data,
               this.flaskServicesData.app_name
             );
+            setTimeout(() => {
+              this.loading = false;
+              this.changeView.emit('home');
+            }, 1500);
           },
           error: (error) => {
             if (error.status === 401) {
@@ -502,6 +513,7 @@ export class FlaskTemplatesComponent implements OnInit {
           db_type: this.apiConfigFormGroup.get('db')?.get('db_type')?.value,
         },
         table_name: this.apiConfigFormGroup.get('db')?.get('table_name')?.value,
+        handle_404: this.apiConfigFormGroup.get('handle_404')?.value,
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
           cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert').value
@@ -539,6 +551,10 @@ export class FlaskTemplatesComponent implements OnInit {
               data.data,
               this.flaskWebAppData.app_name
             );
+            setTimeout(() => {
+              this.loading = false;
+              this.changeView.emit('home');
+            }, 1500);
           },
           error: (error) => {
             if (error.status === 401) {

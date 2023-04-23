@@ -195,7 +195,10 @@
     "T_EDIT_FLASK_TEMPLATE": "Edit Flask template",
     "T_EDIT_EXPRESS_TEMPLATE": "Edit Express template",
     "T_EDIT_DJANGO_TEMPLATE": "Edit Django template",
-    "T_CREATE_TEMPLATE": "Do you want to download the updated template?"
+    "T_CREATE_TEMPLATE": "Do you want to download the updated template?",
+    "T_SUMMARY_BASIC": "Basic configuration summary",
+    "T_SUMMARY_CONFIG": "API configuration summary",
+    "T_SUMMARY_ITEMS": "Endpoints summary"
   },
   "error": {
     "T_EMAIL_REQ": "The email is required",
@@ -261,7 +264,8 @@
     "T_ENDP_PUT": "PUT",
     "T_ENDP_DEL": "DELETE",
     "T_SAVE_BP": "Save blueprint",
-    "T_MANAGE_ENDP": "Manage endpoints"
+    "T_MANAGE_ENDP": "Manage endpoints",
+    "T_HANDLE_404": "Handle 404 errors?"
   },
   "express": {
     "T_CONTROLLERS": "Controllers",

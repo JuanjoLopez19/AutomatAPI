@@ -195,7 +195,10 @@
     "T_EDIT_FLASK_TEMPLATE": "Editar plantilla de Flask",
     "T_EDIT_EXPRESS_TEMPLATE": "Editar plantilla de Express",
     "T_EDIT_DJANGO_TEMPLATE": "Editar plantilla de Django",
-    "T_CREATE_TEMPLATE": "¿Quieres descargar la plantilla?"
+    "T_CREATE_TEMPLATE": "¿Quieres descargar la plantilla?",
+    "T_SUMMARY_BASIC": "Resumen de la configuración básica",
+    "T_SUMMARY_CONFIG": "Resumen de la configuración de la API",
+    "T_SUMMARY_ITEMS": "Resumen de los endpoints"
   },
   "error": {
     "T_EMAIL_REQ": "El correo electrónico es obligatorio",
@@ -260,7 +263,8 @@
     "T_ENDP_PUT": "PUT",
     "T_ENDP_DEL": "DELETE",
     "T_SAVE_BP": "Guardar blueprint",
-    "T_MANAGE_ENDP": "Gestionar endpoints"
+    "T_MANAGE_ENDP": "Gestionar endpoints",
+    "T_HANDLE_404": "¿Manejar errores 404?"
   },
   "express": {
     "T_CONTROLLERS": "Controladores",

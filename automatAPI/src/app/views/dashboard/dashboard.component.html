@@ -46,7 +46,6 @@
     </mat-sidenav>
     <mat-sidenav-content class="page-wrapper">
       <div class="page-content h-100">
-
         <app-home
           *ngIf="activeView === 'home' && user.role !== 'admin'"
           [username]="user.username"
@@ -62,6 +61,7 @@
         <app-flask-templates
           *ngIf="activeView === 'flask'"
           (closeSidenav)="snav.close()"
+          (changeView)="activeView = $event"
         ></app-flask-templates>
 
         <app-django-templates
@@ -70,6 +70,8 @@
 
         <app-express-templates
           *ngIf="activeView === 'express'"
+          (closeSidenav)="snav.close()"
+          (changeView)="activeView = $event"
         ></app-express-templates>
 
         <app-manage-users
@@ -97,6 +99,7 @@
           [userId]="userId"
           [templateId]="templateId"
           (closeSidenav)="snav.close()"
+          (changeView)="activeView = $event"
         ></app-flask-template-edit>
 
         <app-django-template-edit
@@ -111,6 +114,7 @@
           [userId]="userId"
           [templateId]="templateId"
           (closeSidenav)="snav.close()"
+          (changeView)="activeView = $event"
         ></app-express-template-edit>
       </div>
     </mat-sidenav-content>

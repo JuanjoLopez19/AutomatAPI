@@ -8,7 +8,6 @@ import {
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { TranslateService } from '@ngx-translate/core';
-import { ExpressTemplatesService } from 'src/app/api/templates/express/express-templates.service';
 import { FileDownloaderService } from 'src/app/api/templates/fileDownloader/file-downloader.service';
 import {
   functionNamePythonRegex,
@@ -47,9 +46,11 @@ export class ExpressTemplateEditComponent {
   @Input() userId: string = null;
 
   @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
+  @Output() changeView: EventEmitter<string> = new EventEmitter<string>();
 
   showDialog: boolean = false;
   editMode: boolean = false;
+  loadingSpinner: boolean = false;
 
   expressServiceData: expressServices = null;
   expressWebAppData: expressWebApp = null;
@@ -109,7 +110,6 @@ export class ExpressTemplateEditComponent {
 
   constructor(
     private translate: TranslateService,
-    private expressService: ExpressTemplatesService,
     private fileDownloaderService: FileDownloaderService,
     private manageTemplates: ManageTemplatesService,
     private router: Router
@@ -622,6 +622,7 @@ export class ExpressTemplateEditComponent {
   }
 
   createTemplate() {
+    this.loadingSpinner = true;
     if (this.basicFormGroup.get('tech_type')?.value === 'services') {
       this.expressServiceData = {
         app_name: this.basicFormGroup.get('app_name')?.value,
@@ -687,8 +688,16 @@ export class ExpressTemplateEditComponent {
                 data.data,
                 this.expressServiceData.app_name
               );
+              setTimeout(() => {
+                this.loadingSpinner = false;
+                this.changeView.emit('home');
+              }, 1500);
             } else {
               alert('updated');
+              setTimeout(() => {
+                this.loadingSpinner = false;
+                this.changeView.emit('home');
+              }, 1500);
             }
           },
           error: (error) => {
@@ -764,8 +773,16 @@ export class ExpressTemplateEditComponent {
                 data.data,
                 this.expressWebAppData.app_name
               );
+              setTimeout(() => {
+                this.loadingSpinner = false;
+                this.changeView.emit('home');
+              }, 1500);
             } else {
               alert('updated');
+              setTimeout(() => {
+                this.loadingSpinner = false;
+                this.changeView.emit('home');
+              }, 1500);
             }
           },
           error: (error) => {

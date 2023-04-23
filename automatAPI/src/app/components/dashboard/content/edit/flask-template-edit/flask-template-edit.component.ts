@@ -44,9 +44,11 @@ export class FlaskTemplateEditComponent {
   @Input() templateId: string = null;
   @Input() userId: string = null;
   @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
+  @Output() changeView: EventEmitter<string> = new EventEmitter<string>();
 
   showDialog: boolean = false;
   editMode: boolean = false;
+  loadingSpinner: boolean = false;
 
   flaskServicesData: flaskServices = null;
   flaskWebAppData: flaskWebApp = null;
@@ -361,6 +363,13 @@ export class FlaskTemplateEditComponent {
               updateOn: 'blur',
             }
           ),
+          handle_404: new FormControl(
+            this.flaskServicesData ? 'no' : this.flaskWebAppData.handle_404,
+            {
+              validators: [Validators.required],
+              updateOn: 'blur',
+            }
+          ),
         });
 
         this.blueprintsFormGroup = new FormGroup({
@@ -557,6 +566,7 @@ export class FlaskTemplateEditComponent {
   }
 
   createTemplate() {
+    this.loadingSpinner = true;
     if (this.basicFormGroup.get('tech_type').value === 'services') {
       this.flaskServicesData = {
         app_name: this.basicFormGroup.get('app_name')?.value,
@@ -618,8 +628,16 @@ export class FlaskTemplateEditComponent {
                 data.data,
                 this.flaskServicesData.app_name
               );
+              setTimeout(() => {
+                this.loadingSpinner = false;
+                this.changeView.emit('home');
+              }, 1500);
             } else {
               alert('updated');
+              setTimeout(() => {
+                this.loadingSpinner = false;
+                this.changeView.emit('home');
+              }, 1500);
             }
           },
           error: (error) => {
@@ -649,6 +667,7 @@ export class FlaskTemplateEditComponent {
           db_type: this.apiConfigFormGroup.get('db')?.get('db_type')?.value,
         },
         table_name: this.apiConfigFormGroup.get('db')?.get('table_name')?.value,
+        handle_404: this.apiConfigFormGroup.get('handle_404')?.value,
         use_ssl: this.apiConfigFormGroup.get('use_ssl')?.value,
         certs: {
           cert_name: this.apiConfigFormGroup.get('ssl_files')?.get('cert').value
@@ -696,8 +715,16 @@ export class FlaskTemplateEditComponent {
                 data.data,
                 this.flaskWebAppData.app_name
               );
+              setTimeout(() => {
+                this.loadingSpinner = false;
+                this.changeView.emit('home');
+              }, 1500);
             } else {
               alert('updated');
+              setTimeout(() => {
+                this.loadingSpinner = false;
+                this.changeView.emit('home');
+              }, 1500);
             }
           },
           error: (error) => {
