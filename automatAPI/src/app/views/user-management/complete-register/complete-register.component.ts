@@ -39,9 +39,7 @@ export class CompleteRegisterComponent {
     private translate: TranslateService,
     private authService: AuthService
   ) {
-    translate.addLangs(['en', 'es-ES']);
-    translate.setDefaultLang('es-ES');
-    translate.use('es-ES');
+    this.translate.addLangs(['en', 'es-ES']);
 
     this.completeRegisterForm = new FormGroup({
       email: new FormControl('', {

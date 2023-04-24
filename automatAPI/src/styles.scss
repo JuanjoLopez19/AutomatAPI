@@ -1,5 +1,54 @@
 /* You can add global styles to this file, and also import other style files */
+@import "src/shared/variables";
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow-y: hidden;
+}
 
+.p-inputtext {
+  border-radius: 10px;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow-y: hidden;}
+.p-dropdown-panel {
+  border-radius: 10px;
+}
+
+.p-dropdown {
+  border-radius: 10px;
+}
+.p-button {
+  border-radius: 2rem;
+}
+.p-datatable-wrapper {
+  border-radius: 10px;
+}
+
+.p-dropdown-header {
+  border-top-right-radius: 10px !important;
+  border-top-left-radius: 10px !important;
+}
+.p-dropdown-items-wrapper {
+  border-bottom-right-radius: 10px !important;
+  border-bottom-left-radius: 10px !important;
+}
+
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background-color: $light-blue;
+  &:hover {
+    background-color: $blue-transparent;
+    border-color: $blue-transparent;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0.2rem $blue-transparent;
+  }
+}
+.p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover
+  .p-inputswitch-slider {
+  background-color: $blue-transparent;
+  border-color: $blue-transparent;
+}

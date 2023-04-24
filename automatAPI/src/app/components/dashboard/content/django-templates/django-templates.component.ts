@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { DjangoTemplatesService } from 'src/app/api/templates/django/django-templates.service';
@@ -21,6 +27,7 @@ import {
 } from 'src/app/common/interfaces/djangoTemplates';
 import { dropdownParams } from 'src/app/common/interfaces/interfaces';
 import { Router } from '@angular/router';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-django-templates',
@@ -28,6 +35,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./django-templates.component.scss'],
 })
 export class DjangoTemplatesComponent implements OnInit {
+  @ViewChild('stepper') stepper: MatStepper;
+
   @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
   @Output() changeView: EventEmitter<string> = new EventEmitter<string>();
 
@@ -49,6 +58,8 @@ export class DjangoTemplatesComponent implements OnInit {
 
   certFileName: string = 'T_CHOSE_CERT_FILE';
   keyFileName: string = 'T_CHOSE_KEY_FILE';
+  iconCertFile: string = 'pi pi-upload';
+  iconKeyFile: string = 'pi pi-upload';
 
   showModelModal: boolean = false;
   editModeModel: boolean = false;
@@ -230,15 +241,23 @@ export class DjangoTemplatesComponent implements OnInit {
   manageFirstStep() {
     const basicForm = this.basicFormGroup.controls;
     const keys = Object.keys(basicForm);
-
+    let pass = true;
     keys.forEach((key) => {
       if (basicForm[key]?.errors?.['required']) {
         this.firstStepErrors[key]['required'] = true;
+        pass = false;
       } else this.firstStepErrors[key]['required'] = false;
       if (basicForm![key]?.errors?.['pattern']) {
         this.firstStepErrors[key]['pattern'] = true;
+        pass = false;
       } else this.firstStepErrors[key]['pattern'] = false;
     });
+    if (pass) this.stepper.next();
+  }
+
+  nextStep(){
+    this.techType = this.basicFormGroup.get('tech_type').value;
+    this.stepper.next();
   }
 
   mapLanguageOptions(lang: string) {
@@ -273,15 +292,32 @@ export class DjangoTemplatesComponent implements OnInit {
   onFileChange(event: any, type: string) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.apiConfigFormGroup.get('ssl_files')?.get(type)?.setValue(file);
-      if (type === 'cert') {
-        this.certFileName = file.name;
-        if (this.certFileName.length > 20)
-          this.certFileName = this.certFileName.substring(0, 15) + '...';
+      const splitFileName = file.name.split('.');
+      if (
+        splitFileName[splitFileName.length - 1] !== 'pem' &&
+        splitFileName[splitFileName.length - 1] !== 'crt'
+      ) {
+        this.apiConfigFormGroup.get('ssl_files')?.get(type)?.setValue('');
+        if (type === 'cert') {
+          this.certFileName = 'error.T_FILE_INVALID';
+          this.iconCertFile = 'pi pi-times';
+        } else {
+          this.keyFileName = 'error.T_FILE_INVALID';
+          this.iconKeyFile = 'pi pi-times';
+        }
       } else {
-        this.keyFileName = file.name;
-        if (this.keyFileName.length > 20)
-          this.keyFileName = this.keyFileName.substring(0, 15) + '...';
+        this.apiConfigFormGroup.get('ssl_files')?.get(type)?.setValue(file);
+        if (type === 'cert') {
+          this.certFileName = file.name;
+          if (this.certFileName.length > 20)
+            this.certFileName = this.certFileName.substring(0, 15) + '...';
+          this.iconCertFile = 'pi pi-check';
+        } else {
+          this.keyFileName = file.name;
+          if (this.keyFileName.length > 20)
+            this.keyFileName = this.keyFileName.substring(0, 15) + '...';
+          this.iconKeyFile = 'pi pi-check';
+        }
       }
     }
   }
@@ -405,6 +441,8 @@ export class DjangoTemplatesComponent implements OnInit {
         .get('sub_apps')
         ?.get('apps')
         ?.setValue(this.subAppsListWebApp);
+
+    this.stepper.next();
   }
 
   deleteEndpoint() {
@@ -447,6 +485,7 @@ export class DjangoTemplatesComponent implements OnInit {
   addEndpoints() {
     // Here is where the object will be created
     this.endpointsFormGroup.get('endpoints')?.setValue(this.endpointList);
+    this.stepper.next();
   }
 
   createTemplate() {

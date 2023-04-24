@@ -138,9 +138,13 @@
             </div>
             <div class="row mt-3 mx-0">
               <div class="col-2 px-0">
-                <button pButton matStepperNext (click)="manageFirstStep()">
-                  {{ "T_NEXT" | translate }}
-                </button>
+                <p-button
+                  styleClass="p-button-info"
+                  [label]="'T_NEXT' | translate"
+                  (onClick)="manageFirstStep()"
+                  [icon]="'pi pi-arrow-right'"
+                  iconPos="right"
+                ></p-button>
               </div>
             </div>
           </form>
@@ -367,17 +371,18 @@
                                 >
                                   <div class="row">
                                     <div class="col-6">
-                                      <button
+                                      <p-button
+                                        styleClass="p-button-info"
                                         type="button"
-                                        pButton
                                         [icon]="iconCertFile"
                                         iconPos="right"
                                         [pTooltip]="
                                           'T_ONLY_CRT_PEM' | translate
                                         "
-                                        (click)="certInput.click()"
                                         [label]="certFileName | translate"
-                                      ></button>
+                                        (click)="certInput.click()"
+                                      >
+                                      </p-button>
                                       <input
                                         hidden
                                         #certInput
@@ -387,17 +392,19 @@
                                       />
                                     </div>
                                     <div class="col-6">
-                                      <button
+                                      <p-button
+                                        styleClass="p-button-info"
                                         type="button"
-                                        pButton
                                         [icon]="iconKeyFile"
                                         iconPos="right"
                                         [pTooltip]="
                                           'T_ONLY_CRT_PEM' | translate
                                         "
-                                        (click)="keyInput.click()"
                                         [label]="keyFileName | translate"
-                                      ></button>
+                                        (click)="keyInput.click()"
+                                      >
+                                      </p-button>
+
                                       <input
                                         (change)="onFileChange($event, 'key')"
                                         hidden
@@ -603,14 +610,22 @@
             </div>
             <div class="row pt-3">
               <div class="col-2 pl-0">
-                <button pButton matStepperPrevious>
-                  {{ "T_BACK" | translate }}
-                </button>
+                <p-button
+                  styleClass="p-button-info"
+                  [label]="'T_BACK' | translate"
+                  (onClick)="stepper.previous()"
+                  [icon]="'pi pi-arrow-left'"
+                  iconPos="left"
+                ></p-button>
               </div>
               <div class="col-2">
-                <button pButton (click)="nextStep()">
-                  {{ "T_NEXT" | translate }}
-                </button>
+                <p-button
+                  styleClass="p-button-info"
+                  [label]="'T_NEXT' | translate"
+                  (onClick)="nextStep()"
+                  [icon]="'pi pi-arrow-right'"
+                  iconPos="right"
+                ></p-button>
               </div>
             </div>
           </form>
@@ -634,12 +649,14 @@
                     <div class="col-1"></div>
                     <div class="col-4">
                       <div class="row">
-                        <div class="col-6">
+                        <div class="col-9">
                           <p-button
                             styleClass="p-button-danger"
                             [label]="'T_DELETE' | translate"
                             [disabled]="bpSelection === null"
                             (click)="deleteBlueprint()"
+                            [icon]="'pi pi-trash'"
+                            iconPos="right"
                           ></p-button>
                         </div>
                       </div>
@@ -683,8 +700,11 @@
                     <div class="col-1"></div>
                     <div class="col-4">
                       <div class="row justify-content-end">
-                        <div class="col-7 d-flex justify-content-end">
+                        <div class="col-9 d-flex justify-content-end">
                           <p-button
+                            styleClass="p-button-info"
+                            icon="pi pi-save"
+                            iconPos="right"
                             [label]="'flask.T_SAVE_BP' | translate"
                             (onClick)="saveBluePrint()"
                           ></p-button>
@@ -720,18 +740,22 @@
                     </div>
                     <div class="col-8">
                       <div class="row">
-                        <div class="col-5">
+                        <div class="col-4">
                           <p-button
-                            styleClass="p-button-sm"
+                            styleClass="p-button-sm p-button-info"
+                            icon="pi pi-plus"
+                            iconPos="right"
                             [label]="'T_ADD_ENDP' | translate"
                             (onClick)="openDialog(false)"
                           ></p-button>
                         </div>
-                        <div class="col-7">
+                        <div class="col-8">
                           <div class="row">
                             <div class="col-6 d-flex justify-content-end">
                               <p-button
                                 styleClass="p-button-sm p-button-warning"
+                                icon="pi pi-pencil"
+                                iconPos="right"
                                 [label]="'T_EDIT_ENDP' | translate"
                                 [disabled]="endpointSelection === null"
                                 (onClick)="openDialog(true)"
@@ -740,6 +764,8 @@
                             <div class="col-6 d-flex justify-content-end">
                               <p-button
                                 styleClass="p-button-sm p-button-danger"
+                                icon="pi pi-trash"
+                                iconPos="right"
                                 [label]="'T_DEL_ENDP' | translate"
                                 [disabled]="endpointSelection === null"
                                 (onClick)="deleteEndpoint(true)"
@@ -805,14 +831,22 @@
               ></app-endpoint-modal>
               <div class="row pt-3">
                 <div class="col-2 pl-0">
-                  <button pButton matStepperPrevious>
-                    {{ "T_BACK" | translate }}
-                  </button>
+                  <p-button
+                    styleClass="p-button-info"
+                    [label]="'T_BACK' | translate"
+                    (onClick)="stepper.previous()"
+                    [icon]="'pi pi-arrow-left'"
+                    iconPos="left"
+                  ></p-button>
                 </div>
                 <div class="col-2">
-                  <button pButton matStepperNext (click)="addBlueprints()">
-                    {{ "T_NEXT" | translate }}
-                  </button>
+                  <p-button
+                    styleClass="p-button-info"
+                    [label]="'T_NEXT' | translate"
+                    (onClick)="addBlueprints()"
+                    [icon]="'pi pi-arrow-right'"
+                    iconPos="right"
+                  ></p-button>
                 </div>
               </div>
             </div>
@@ -837,24 +871,30 @@
                       <div class="row">
                         <div class="col-5">
                           <p-button
-                            styleClass="p-button-sm"
+                            styleClass="p-button-sm p-button-info"
+                            icon="pi pi-plus"
+                            iconPos="right"
                             [label]="'T_ADD_ENDP' | translate"
                             (onClick)="openDialog(false)"
                           ></p-button>
                         </div>
                         <div class="col-7">
-                          <div class="row">
-                            <div class="col-6 d-flex justify-content-end">
+                          <div class="row justify-content-end">
+                            <div class="col-3 d-flex justify-content-end">
                               <p-button
                                 styleClass="p-button-sm p-button-warning"
+                                icon="pi pi-pencil"
+                                iconPos="right"
                                 [label]="'T_EDIT_ENDP' | translate"
                                 [disabled]="endpointSelection === null"
                                 (onClick)="openDialog(true)"
                               ></p-button>
                             </div>
-                            <div class="col-6 d-flex justify-content-end">
+                            <div class="col-3 d-flex justify-content-end">
                               <p-button
                                 styleClass="p-button-sm p-button-danger"
+                                icon="pi pi-trash"
+                                iconPos="right"
                                 [label]="'T_DEL_ENDP' | translate"
                                 [disabled]="endpointSelection === null"
                                 (onClick)="deleteEndpoint(true)"
@@ -926,14 +966,22 @@
               ></app-endpoint-modal>
               <div class="row pt-3">
                 <div class="col-2 pl-0">
-                  <button pButton matStepperPrevious>
-                    {{ "T_BACK" | translate }}
-                  </button>
+                  <p-button
+                    styleClass="p-button-info"
+                    [label]="'T_BACK' | translate"
+                    (onClick)="stepper.previous()"
+                    [icon]="'pi pi-arrow-left'"
+                    iconPos="left"
+                  ></p-button>
                 </div>
                 <div class="col-2">
-                  <button pButton matStepperNext (click)="addEndpoints()">
-                    {{ "T_NEXT" | translate }}
-                  </button>
+                  <p-button
+                    styleClass="p-button-info"
+                    [label]="'T_NEXT' | translate"
+                    (onClick)="addEndpoints()"
+                    [icon]="'pi pi-arrow-right'"
+                    iconPos="right"
+                  ></p-button>
                 </div>
               </div>
             </div>
@@ -1198,14 +1246,22 @@
           </div>
           <div class="row pt-3">
             <div class="col-2 pl-0">
-              <button pButton matStepperPrevious>
-                {{ "T_BACK" | translate }}
-              </button>
+              <p-button
+                styleClass="p-button-info"
+                [label]="'T_BACK' | translate"
+                (onClick)="stepper.previous()"
+                [icon]="'pi pi-arrow-left'"
+                iconPos="left"
+              ></p-button>
             </div>
             <div class="col-2">
-              <button pButton (click)="createTemplate()">
-                {{ "T_CREATE_TEMPLATE" | translate }}
-              </button>
+              <p-button
+                styleClass="p-button-info"
+                [label]="'T_CREATE_TEMPLATE' | translate"
+                (onClick)="createTemplate()"
+                [icon]="'pi pi-wrench'"
+                iconPos="right"
+              ></p-button>
             </div>
           </div>
         </mat-step>

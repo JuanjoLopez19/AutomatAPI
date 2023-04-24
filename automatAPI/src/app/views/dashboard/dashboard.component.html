@@ -66,6 +66,8 @@
 
         <app-django-templates
           *ngIf="activeView === 'django'"
+          (closeSidenav)="snav.close()"
+          (changeView)="activeView = $event"
         ></app-django-templates>
 
         <app-express-templates
@@ -107,6 +109,7 @@
           [userId]="userId"
           [templateId]="templateId"
           (closeSidenav)="snav.close()"
+          (changeView)="activeView = $event"
         ></app-django-template-edit>
 
         <app-express-template-edit
