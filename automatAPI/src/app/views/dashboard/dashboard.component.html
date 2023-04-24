@@ -4,7 +4,7 @@
       <span class="navbar-brand d-flex h-100">
         <b>
           <img
-            src="assets/icons/logo.svg"
+            src="assets/icons/orangeLogo.svg"
             alt="homepage"
             [ngStyle]="{ width: '50px' }"
           />
@@ -126,18 +126,22 @@
   <mat-toolbar color="primary" class="bottombar telative">
     <div class="row w-100">
       <div class="col-1">
-        <small> {{ "dashboard.T_VERSION" | translate }} 0.1.0 </small>
+        <small [ngStyle]="{ color: 'white' }">
+          {{ "dashboard.T_VERSION" | translate }} 0.1.0
+        </small>
       </div>
       <div class="col-10"></div>
       <div class="col-1">
         <div class="row">
           <div class="col-9 d-flex justify-content-end px-0">
-            <small>
+            <small [ngStyle]="{ color: 'white' }">
               {{ "T_AUTOMATAPI" | translate }}
             </small>
           </div>
           <div class="col-1">
-            <mat-icon class="mt-1" [ngStyle]="{ fontSize: '15px' }"
+            <mat-icon
+              class="mt-1"
+              [ngStyle]="{ fontSize: '15px', color: 'white' }"
               >copyright</mat-icon
             >
           </div>

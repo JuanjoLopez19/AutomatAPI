@@ -50,12 +50,6 @@ export class ChartsComponent implements OnInit {
           },
           tooltip: {
             trigger: 'axis',
-            axisPointer: {
-              type: 'cross',
-              label: {
-                backgroundColor: '#6a7985',
-              },
-            },
             formatter: (params: any) => {
               return (
                 params[0].name +
@@ -79,7 +73,9 @@ export class ChartsComponent implements OnInit {
           yAxis: {
             type: 'value',
             name: res['T_NUM_TEMPLATES'],
-            nameLocation: 'middle',
+            nameTextStyle:{
+              align: 'left'
+            },
             axisLabel: {
               formatter: '{value}',
             },

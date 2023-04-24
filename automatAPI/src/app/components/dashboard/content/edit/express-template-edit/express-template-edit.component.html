@@ -430,7 +430,8 @@
                       <div
                         class="row py-2"
                         *ngIf="
-                          apiConfigFormGroup.get('use_ssl').value === 'yes'
+                          apiConfigFormGroup.get('use_ssl').value === 'yes' &&
+                          oldCerts
                         "
                       >
                         <div class="col-4">
@@ -749,6 +750,20 @@
                           </td>
                         </tr>
                       </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                        <tr>
+                          <td colspan="2">
+                            <div
+                              class="d-flex align-items-center justify-content-center"
+                            >
+                              <span class="p-3">{{
+                                "dashboard.T_TEMPLATE_EMPTY" | translate
+                              }}</span>
+                              <i class="pi pi-spin pi-spinner"></i>
+                            </div>
+                          </td>
+                        </tr>
+                      </ng-template>
                     </p-table>
                   </div>
                 </div>
@@ -869,6 +884,20 @@
                           <td>{{ endpoint.endpoint_comment }}</td>
                           <td>{{ endpoint.endpoint_url }}</td>
                           <td>{{ endpoint.method }}</td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                        <tr>
+                          <td colspan="4">
+                            <div
+                              class="d-flex align-items-center justify-content-center"
+                            >
+                              <span class="p-3">{{
+                                "dashboard.T_TEMPLATE_EMPTY" | translate
+                              }}</span>
+                              <i class="pi pi-spin pi-spinner"></i>
+                            </div>
+                          </td>
                         </tr>
                       </ng-template>
                     </p-table>
@@ -992,6 +1021,20 @@
                           </td>
                           <td>{{ endpoint.endpoint_url }}</td>
                           <td>{{ endpoint.method }}</td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                        <tr>
+                          <td colspan="4">
+                            <div
+                              class="d-flex align-items-center justify-content-center"
+                            >
+                              <span class="p-3">{{
+                                "dashboard.T_TEMPLATE_EMPTY" | translate
+                              }}</span>
+                              <i class="pi pi-spin pi-spinner"></i>
+                            </div>
+                          </td>
                         </tr>
                       </ng-template>
                     </p-table>

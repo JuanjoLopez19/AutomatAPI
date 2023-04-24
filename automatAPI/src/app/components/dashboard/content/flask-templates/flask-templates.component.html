@@ -689,6 +689,20 @@
                           </td>
                         </tr>
                       </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                        <tr>
+                          <td colspan="2">
+                            <div
+                              class="d-flex align-items-center justify-content-center"
+                            >
+                              <span class="p-3">{{
+                                "dashboard.T_TEMPLATE_EMPTY" | translate
+                              }}</span>
+                              <i class="pi pi-spin pi-spinner"></i>
+                            </div>
+                          </td>
+                        </tr>
+                      </ng-template>
                     </p-table>
                   </div>
                 </div>
@@ -813,6 +827,20 @@
                           <td>{{ endpoint.methods.post }}</td>
                           <td>{{ endpoint.methods.put }}</td>
                           <td>{{ endpoint.methods.delete }}</td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                        <tr>
+                          <td colspan="7">
+                            <div
+                              class="d-flex align-items-center justify-content-center"
+                            >
+                              <span class="p-3">{{
+                                "dashboard.T_TEMPLATE_EMPTY" | translate
+                              }}</span>
+                              <i class="pi pi-spin pi-spinner"></i>
+                            </div>
+                          </td>
                         </tr>
                       </ng-template>
                     </p-table>
@@ -948,6 +976,20 @@
                           <td>{{ endpoint.methods.post }}</td>
                           <td>{{ endpoint.methods.put }}</td>
                           <td>{{ endpoint.methods.delete }}</td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                        <tr>
+                          <td colspan="7">
+                            <div
+                              class="d-flex align-items-center justify-content-center"
+                            >
+                              <span class="p-3">{{
+                                "dashboard.T_TEMPLATE_EMPTY" | translate
+                              }}</span>
+                              <i class="pi pi-spin pi-spinner"></i>
+                            </div>
+                          </td>
                         </tr>
                       </ng-template>
                     </p-table>

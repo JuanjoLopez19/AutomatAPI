@@ -51,6 +51,7 @@ export class ExpressTemplateEditComponent {
   showDialog: boolean = false;
   editMode: boolean = false;
   loadingSpinner: boolean = false;
+  oldCerts: boolean = false;
 
   expressServiceData: expressServices = null;
   expressWebAppData: expressWebApp = null;
@@ -248,7 +249,13 @@ export class ExpressTemplateEditComponent {
             );
 
           this.endpointList = data.data.template_args.endpoints;
-
+          if (
+            (data.data.template_args.certs.cert_name &&
+              data.data.template_args.certs.cert_name !== 'None') ||
+            (data.data.template_args.certs.key_name &&
+              data.data.template_args.certs.key_name !== 'None')
+          )
+            this.oldCerts = true;
           this.certFileName =
             data.data.template_args.certs.cert_name &&
             data.data.template_args.certs.cert_name !== 'None'
