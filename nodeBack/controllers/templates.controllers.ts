@@ -54,7 +54,7 @@ export const makeFlaskTemplate = async (req: any, res: Response) => {
 					if (!token) {
 						if (req.aws_key_cert) deleteItem(req.aws_key_cert, "certs");
 						if (req.aws_key_key) deleteItem(req.aws_key_key, "certs");
-						res.status(500).json({ message: "Internal Server Error" });
+						res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR" });
 					}
 					res.status(response.status).json(response.data);
 				})
@@ -62,18 +62,18 @@ export const makeFlaskTemplate = async (req: any, res: Response) => {
 					console.log(err);
 					if (req.aws_key_cert) deleteItem(req.aws_key_cert, "certs");
 					if (req.aws_key_key) deleteItem(req.aws_key_key, "certs");
-					res.status(500).json({ message: "Internal Server Error" });
+					res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR" });
 				});
 		} catch (err) {
 			console.log(err);
 			if (req.aws_key_cert) deleteItem(req.aws_key_cert, "certs");
 			if (req.aws_key_key) deleteItem(req.aws_key_key, "certs");
-			res.status(500).json({ message: "Internal Server Error" });
+			res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 		}
 	} else {
 		if (req.aws_key_cert) deleteItem(req.aws_key_cert, "certs");
 		if (req.aws_key_key) deleteItem(req.aws_key_key, "certs");
-		res.status(400).json({ message: "Bad Request" });
+		res.status(400).json({ message: "T_BAD_REQUEST", status: 400 });
 	}
 };
 
@@ -115,7 +115,7 @@ export const makeExpressTemplate = async (req: any, res: Response) => {
 					if (!token) {
 						if (req.aws_key_cert) deleteItem(req.aws_key_cert, "certs");
 						if (req.aws_key_key) deleteItem(req.aws_key_key, "certs");
-						res.status(500).json({ message: "Internal Server Error" });
+						res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR" });
 					}
 					res.status(response.status).json(response.data);
 				})
@@ -123,18 +123,18 @@ export const makeExpressTemplate = async (req: any, res: Response) => {
 					console.log(err);
 					if (req.aws_key_cert) deleteItem(req.aws_key_cert, "certs");
 					if (req.aws_key_key) deleteItem(req.aws_key_key, "certs");
-					res.status(500).json({ message: "Internal Server Error" });
+					res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR" });
 				});
 		} catch (err) {
 			console.log(err);
 			if (req.aws_key_cert) deleteItem(req.aws_key_cert, "certs");
 			if (req.aws_key_key) deleteItem(req.aws_key_key, "certs");
-			res.status(500).json({ message: "Internal Server Error" });
+			res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 		}
 	} else {
 		if (req.aws_key_cert) deleteItem(req.aws_key_cert, "certs");
 		if (req.aws_key_key) deleteItem(req.aws_key_key, "certs");
-		res.status(400).json({ message: "Bad Request" });
+		res.status(400).json({ message: "T_BAD_REQUEST", status: 400 });
 	}
 };
 
@@ -176,7 +176,7 @@ export const makeDjangoTemplate = async (req: any, res: Response) => {
 					if (!token) {
 						if (req.aws_key_cert) deleteItem(req.aws_key_cert, "certs");
 						if (req.aws_key_key) deleteItem(req.aws_key_key, "certs");
-						res.status(500).json({ message: "Internal Server Error" });
+						res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR" });
 					}
 					res.status(response.status).json(response.data);
 				})
@@ -184,18 +184,18 @@ export const makeDjangoTemplate = async (req: any, res: Response) => {
 					console.log(err);
 					if (req.aws_key_cert) deleteItem(req.aws_key_cert, "certs");
 					if (req.aws_key_key) deleteItem(req.aws_key_key, "certs");
-					res.status(500).json({ message: "Internal Server Error" });
+					res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR" });
 				});
 		} catch (err) {
 			console.log(err);
 			if (req.aws_key_cert) deleteItem(req.aws_key_cert, "certs");
 			if (req.aws_key_key) deleteItem(req.aws_key_key, "certs");
-			res.status(500).json({ message: "Internal Server Error", status: 500 });
+			res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 		}
 	} else {
 		if (req.aws_key_cert) deleteItem(req.aws_key_cert, "certs");
 		if (req.aws_key_key) deleteItem(req.aws_key_key, "certs");
-		res.status(400).json({ message: "Bad Request", status: 400 });
+		res.status(400).json({ message: "T_BAD_REQUEST", status: 400 });
 	}
 };
 
@@ -205,7 +205,7 @@ export const getTemplates = async (req: Request, res: Response) => {
 	User.findByPk(user_id)
 		.then((user: User | null) => {
 			if (user == null) {
-				res.status(404).json({ message: "User not found", status: 404 });
+				res.status(404).json({ message: "T_USER_NOT_FOUND", status: 404 });
 			} else {
 				if (user.role == "admin") {
 					Templates.findAll({ order: [["id", "ASC"]] })
@@ -213,17 +213,17 @@ export const getTemplates = async (req: Request, res: Response) => {
 							if (templates == null)
 								res
 									.status(404)
-									.json({ message: "No templates found", status: 404 });
+									.json({ message: "T_NO_TEMPLATES", status: 404 });
 							else
 								res
 									.status(200)
-									.json({ data: templates, status: 200, message: "Success" });
+									.json({ data: templates, status: 200, message: "T_SUCCESS" });
 						})
 						.catch((err) => {
 							console.log(err);
 							res
 								.status(500)
-								.json({ message: "Internal Server Error", status: 500 });
+								.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 						});
 				} else {
 					Templates.findAll({
@@ -236,24 +236,24 @@ export const getTemplates = async (req: Request, res: Response) => {
 							if (templates == null)
 								res
 									.status(404)
-									.json({ message: "No templates found", status: 404 });
+									.json({ message: "T_NO_TEMPLATES", status: 404 });
 							else
 								res
 									.status(200)
-									.json({ data: templates, status: 200, message: "Success" });
+									.json({ data: templates, status: 200, message: "T_SUCCESS" });
 						})
 						.catch((err) => {
 							console.log(err);
 							res
 								.status(500)
-								.json({ message: "Internal Server Error", status: 500 });
+								.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 						});
 				}
 			}
 		})
 		.catch((err) => {
 			console.log(err);
-			res.status(500).json({ message: "Internal Server Error", status: 500 });
+			res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 		});
 };
 
@@ -272,7 +272,7 @@ export const deleteTemplate = async (req: Request, res: Response) => {
 					if (template == null) {
 						res
 							.status(404)
-							.json({ message: "Template not found", status: 404 });
+							.json({ message: "T_TEMPLATE_NOT_FOUND", status: 404 });
 					} else {
 						Tokens.findOne({
 							where: {
@@ -283,7 +283,7 @@ export const deleteTemplate = async (req: Request, res: Response) => {
 								if (token == null) {
 									res
 										.status(404)
-										.json({ message: "Token not found", status: 404 });
+										.json({ message: "T_TOKEN_NOT_FOUND", status: 404 });
 								} else {
 									{
 										deleteItemsAWS(
@@ -309,7 +309,7 @@ export const deleteTemplate = async (req: Request, res: Response) => {
 											.catch((err) => {
 												console.log(err);
 												res.status(500).json({
-													message: "Internal Server Error",
+													message: "T_INTERNAL_SERVER_ERROR",
 													status: 500,
 												});
 											});
@@ -320,7 +320,7 @@ export const deleteTemplate = async (req: Request, res: Response) => {
 								console.log(err);
 								res
 									.status(500)
-									.json({ message: "Internal Server Error", status: 500 });
+									.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 							});
 					}
 				})
@@ -328,14 +328,14 @@ export const deleteTemplate = async (req: Request, res: Response) => {
 					console.log(err);
 					res
 						.status(500)
-						.json({ message: "Internal Server Error", status: 500 });
+						.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 				});
 		} catch (err) {
 			console.log(err);
-			res.status(500).json({ message: "Internal Server Error", status: 500 });
+			res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 		}
 	} else {
-		res.status(400).json({ message: "Bad Request", status: 400 });
+		res.status(400).json({ message: "T_BAD_REQUEST", status: 400 });
 	}
 };
 
@@ -356,7 +356,7 @@ export const deleteTemplateAdmin = async (req: Request, res: Response) => {
 					if (template == null) {
 						res
 							.status(404)
-							.json({ message: "Template not found", status: 404 });
+							.json({ message: "T_TEMPLATE_NOT_FOUND", status: 404 });
 					} else {
 						Tokens.findOne({
 							where: {
@@ -367,7 +367,7 @@ export const deleteTemplateAdmin = async (req: Request, res: Response) => {
 								if (token == null) {
 									res
 										.status(404)
-										.json({ message: "Token not found", status: 404 });
+										.json({ message: "T_TOKEN_NOT_FOUND", status: 404 });
 								} else {
 									{
 										deleteItemsAWS(
@@ -393,7 +393,7 @@ export const deleteTemplateAdmin = async (req: Request, res: Response) => {
 											.catch((err) => {
 												console.log(err);
 												res.status(500).json({
-													message: "Internal Server Error",
+													message: "T_INTERNAL_SERVER_ERROR",
 													status: 500,
 												});
 											});
@@ -404,7 +404,7 @@ export const deleteTemplateAdmin = async (req: Request, res: Response) => {
 								console.log(err);
 								res
 									.status(500)
-									.json({ message: "Internal Server Error", status: 500 });
+									.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 							});
 					}
 				})
@@ -412,16 +412,17 @@ export const deleteTemplateAdmin = async (req: Request, res: Response) => {
 					console.log(err);
 					res
 						.status(500)
-						.json({ message: "Internal Server Error", status: 500 });
+						.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 				});
 		} catch (err) {
 			console.log(err);
-			res.status(500).json({ message: "Internal Server Error", status: 500 });
+			res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 		}
 	} else {
-		res.status(400).json({ message: "Bad Request", status: 400 });
+		res.status(400).json({ message: "T_BAD_REQUEST", status: 400 });
 	}
 };
+
 export const updateTemplate = async (req: Request, res: Response) => {
 	if (
 		req.body.template_id !== undefined &&
@@ -443,10 +444,10 @@ export const updateTemplate = async (req: Request, res: Response) => {
 			res.status(response.status).json(response.data);
 		} catch (err) {
 			console.log(err);
-			res.status(500).json({ message: "Internal Server Error", status: 500 });
+			res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 		}
 	} else {
-		res.status(400).json({ message: "Bad Request", status: 400 });
+		res.status(400).json({ message: "T_BAD_REQUEST", status: 400 });
 	}
 };
 
@@ -462,7 +463,9 @@ export const getToken = async (req: Request, res: Response) => {
 		})
 			.then((template: Templates | null) => {
 				if (template == null) {
-					res.status(404).json({ message: "Template not found", status: 404 });
+					res
+						.status(404)
+						.json({ message: "T_TEMPLATE_NOT_FOUND", status: 404 });
 				} else {
 					Tokens.findOne({
 						where: {
@@ -473,14 +476,14 @@ export const getToken = async (req: Request, res: Response) => {
 							if (token == null) {
 								res
 									.status(404)
-									.json({ message: "Token not found", status: 404 });
+									.json({ message: "T_TOKEN_NOT_FOUND", status: 404 });
 							} else {
 								const tokenDecrypt = decryptData(token.template_token);
 
 								res.status(200).json({
 									data: tokenDecrypt,
 									status: 200,
-									message: "Success",
+									message: "T_SUCCESS",
 								});
 							}
 						})
@@ -488,16 +491,18 @@ export const getToken = async (req: Request, res: Response) => {
 							console.log(err);
 							res
 								.status(500)
-								.json({ message: "Internal Server Error", status: 500 });
+								.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 						});
 				}
 			})
 			.catch((err) => {
 				console.log(err);
-				res.status(500).json({ message: "Internal Server Error", status: 500 });
+				res
+					.status(500)
+					.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 			});
 	} else {
-		res.status(400).json({ message: "Bad Request", status: 400 });
+		res.status(400).json({ message: "T_BAD_REQUEST", status: 400 });
 	}
 };
 
@@ -562,14 +567,14 @@ export const getTemplatesStats = async (req: Request, res: Response) => {
 								res.status(200).json({
 									data: temp,
 									status: 200,
-									message: "Success",
+									message: "T_TEMPLATE_STATS_SUCCESS",
 								});
 							});
 					});
 			});
 	} catch (err) {
 		console.log(err);
-		res.status(500).json({ message: "Internal Server Error", status: 500 });
+		res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 	}
 };
 
@@ -646,7 +651,7 @@ export const getUserTemplatesStats = async (req: Request, res: Response) => {
 			});
 	} catch (err) {
 		console.log(err);
-		res.status(500).json({ message: "Internal Server Error", status: 500 });
+		res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 	}
 };
 

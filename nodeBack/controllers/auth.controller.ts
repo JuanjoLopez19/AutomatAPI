@@ -4,6 +4,7 @@ import config from "../config/config";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import {
+	formatSessionObject,
 	generateToken,
 	sendActivationEmail,
 	sendPasswordResetEmail,
@@ -57,7 +58,7 @@ export const Signup = async (req: Request, res: Response) => {
 											).then((response) => {
 												if (response === 200) {
 													res.status(200).send({
-														message: "User created successfully",
+														message: "T_USER_CREATED",
 														status: 200,
 													});
 												} else {
@@ -65,16 +66,13 @@ export const Signup = async (req: Request, res: Response) => {
 														.destroy()
 														.then(() => {
 															res.status(500).send({
-																message:
-																	"Some error occurred while creating the User.",
+																message: "T_INTERNAL_SERVER_ERROR",
 																status: 500,
 															});
 														})
 														.catch((err) => {
 															res.status(500).send({
-																message:
-																	err.message ||
-																	"Some error occurred while creating the User.",
+																message: "T_INTERNAL_SERVER_ERROR",
 																status: 500,
 															});
 														});
@@ -84,17 +82,13 @@ export const Signup = async (req: Request, res: Response) => {
 									})
 									.catch((err) => {
 										res.status(500).send({
-											message:
-												err.message ||
-												"Some error occurred while creating the User.",
+											message: "T_INTERNAL_SERVER_ERROR",
 											status: 500,
 										});
 									});
 							} else {
 								res.status(500).send({
-									message:
-										err.message ||
-										"Some error occurred while creating the User.",
+									message: "T_INTERNAL_SERVER_ERROR",
 									status: 500,
 								});
 							}
@@ -102,15 +96,14 @@ export const Signup = async (req: Request, res: Response) => {
 					);
 				} else {
 					res.status(500).send({
-						message:
-							err.message || "Some error occurred while creating the User.",
+						message: "T_INTERNAL_SERVER_ERROR",
 						status: 500,
 					});
 				}
 			}
 		);
 	} else {
-		res.status(400).send({ message: "Content can not be empty!", status: 400 });
+		res.status(400).send({ message: "T_BAD_REQUEST", status: 400 });
 	}
 };
 
@@ -118,7 +111,7 @@ export const Signin = async (req: Request, res: Response) => {
 	let user: User;
 	if (!res.locals.user) {
 		res.status(404).json({
-			message: "user not found",
+			message: "T_USER_NOT_FOUND",
 			status: 404,
 		});
 	}
@@ -126,13 +119,13 @@ export const Signin = async (req: Request, res: Response) => {
 
 	if (!user.activeUser) {
 		return res.status(401).send({
-			message: "User not activated",
+			message: "T_USER_NOT_ACTIVE",
 			status: 401,
 		});
 	}
 
-	let sessionObject = formatSessionObject(user);
-	let token = jwt.sign(
+	const sessionObject = formatSessionObject(user);
+	const token = jwt.sign(
 		{
 			id: user.id,
 		},
@@ -149,11 +142,11 @@ export const Signin = async (req: Request, res: Response) => {
 		return res
 			.cookie("jwt", token, { httpOnly: true, secure: false })
 			.status(200)
-			.send({ data: sessionObject, status: 200, message: "User logged in" });
+			.send({ data: sessionObject, status: 200, message: "T_USER_LOGIN" });
 	} else {
 		return res
 			.status(500)
-			.send({ message: "Internal server error", status: 500 });
+			.send({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 	}
 };
 
@@ -162,9 +155,9 @@ export const Signout = (req: Request, res: Response) => {
 		res
 			.clearCookie("jwt")
 			.status(200)
-			.send({ message: "User logged out", status: 200 });
+			.send({ message: "T_USER_LOGOUT", status: 200 });
 	} else {
-		res.status(400).send({ message: "Invalid JWT", status: 400 });
+		res.status(400).send({ message: "T_INVALID_TOKEN", status: 400 });
 	}
 };
 
@@ -174,28 +167,35 @@ export const activateAccount = async (req: Request, res: Response) => {
 			.then((user: User | null) => {
 				if (!user) {
 					return res.status(404).send({
-						message: "User not found",
+						message: "T_USER_NOT_FOUND",
 						status: 404,
 					});
 				} else if (user.activeUser) {
 					return res.status(401).send({
-						message: "User already activated",
+						message: "T_USER_ALREADY_ACTIVATED",
 						status: 401,
 					});
 				} else {
 					user
 						.update({ activeUser: true, access_token: "" })
 						.then(() => {
-							return res.status(200).send({
-								message: "User activated successfully",
-								status: 200,
+							const token = jwt.sign({ id: user.id }, config.secretKey, {
+								expiresIn: `${config.expiration}s`,
 							});
+							return res
+								.status(200)
+								.cookie("jwt", token, {
+									httpOnly: true,
+									secure: false,
+								})
+								.send({
+									message: "T_USER_ACTIVATED",
+									status: 200,
+								});
 						})
 						.catch((err) => {
 							return res.status(500).send({
-								message:
-									err.message ||
-									"Some error occurred while activating the User.",
+								message: "T_INTERNAL_SERVER_ERROR",
 								status: 500,
 							});
 						});
@@ -203,18 +203,18 @@ export const activateAccount = async (req: Request, res: Response) => {
 			})
 			.catch((err) => {
 				return res.status(500).send({
-					message:
-						err.message || "Some error occurred while activating the User.",
+					message: "T_INTERNAL_SERVER_ERROR",
 					status: 500,
 				});
 			});
 	} else {
 		return res.status(400).send({
-			message: "Bad request",
+			message: "T_BAD_REQUEST",
 			status: 400,
 		});
 	}
 };
+
 export const rememberPassword = async (req: Request, res: Response) => {
 	if (req.query.username != undefined && req.query.email != undefined) {
 		User.findOne({
@@ -228,7 +228,7 @@ export const rememberPassword = async (req: Request, res: Response) => {
 			.then((user: User | null) => {
 				if (!user) {
 					return res.status(404).send({
-						message: "User not found",
+						message: "T_USER_NOT_FOUND",
 						status: 404,
 					});
 				}
@@ -239,12 +239,12 @@ export const rememberPassword = async (req: Request, res: Response) => {
 				).then((response) => {
 					if (response === 200) {
 						return res.status(200).send({
-							message: "Email sent successfully",
+							message: "T_EMAIL_SENT_SUCCESSFULLY",
 							status: 200,
 						});
 					} else {
 						return res.status(500).send({
-							message: "Internal server error",
+							message: "T_INTERNAL_SERVER_ERROR",
 							status: 500,
 						});
 					}
@@ -252,24 +252,25 @@ export const rememberPassword = async (req: Request, res: Response) => {
 			})
 			.catch((err) => {
 				return res.status(500).send({
-					message: err.message || "Some error occurred.",
+					message: "T_INTERNAL_SERVER_ERROR",
 					status: 500,
 				});
 			});
 	} else {
 		return res.status(400).send({
-			message: "Bad request",
+			message: "T_BAD_REQUEST",
 			status: 400,
 		});
 	}
 };
+
 export const resetPassword = async (req: Request, res: Response) => {
 	if (req.body.token != undefined && req.body.password != undefined) {
 		User.findOne({ where: { password_token: req.body.token } })
 			.then((user: User | null) => {
 				if (!user) {
 					return res.status(404).send({
-						message: "User not found",
+						message: "T_USER_NOT_FOUND",
 						status: 404,
 					});
 				} else {
@@ -288,21 +289,19 @@ export const resetPassword = async (req: Request, res: Response) => {
 												})
 												.then(() => {
 													return res.status(200).send({
-														message: "Password changed successfully",
+														message: "T_PASSWORD_RESET_SUCCESS",
 														status: 200,
 													});
 												})
 												.catch((err) => {
 													return res.status(500).send({
-														message:
-															err.message ||
-															"Some error occurred while changing the password.",
+														message: "T_INTERNAL_SERVER_ERROR",
 														status: 500,
 													});
 												});
 										} else {
 											return res.status(500).send({
-												message: "Internal server error",
+												message: "T_INTERNAL_SERVER_ERROR",
 												status: 500,
 											});
 										}
@@ -311,7 +310,7 @@ export const resetPassword = async (req: Request, res: Response) => {
 							} else {
 								return res
 									.status(500)
-									.send({ message: "Internal server error", status: 500 });
+									.send({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 							}
 						}
 					);
@@ -319,39 +318,16 @@ export const resetPassword = async (req: Request, res: Response) => {
 			})
 			.catch((err) => {
 				return res.status(500).send({
-					message: err.message || "Some error occurred.",
+					message: "T_INTERNAL_SERVER_ERROR",
 					status: 500,
 				});
 			});
 	} else {
 		return res.status(400).send({
-			message: "Bad request",
+			message: "T_BAD_REQUEST",
 			status: 400,
 		});
 	}
-};
-
-export const formatSessionObject = (user: User | null) => {
-	let sessionObject = {};
-	if (user) {
-		try {
-			sessionObject = {
-				id: user.id,
-				username: user.username,
-				firstName: user.firstName,
-				lastName: user.lastName,
-				email: user.email,
-				role: user.role,
-				date: user.create_date,
-				birthdate: user.birthDate,
-				image: user.image,
-				template_count: user.template_count,
-			};
-		} catch (err) {
-			console.log("Error on formatting the session Object", err);
-		}
-	}
-	return sessionObject;
 };
 
 export const CompleteRegistration = async (req: Request, res: Response) => {
@@ -383,19 +359,30 @@ export const CompleteRegistration = async (req: Request, res: Response) => {
 														activeUser: true,
 													})
 													.then(() => {
+														const token = jwt.sign(
+															{
+																id: user.id,
+															},
+															config.secretKey,
+															{
+																expiresIn: `${config.expiration}s`,
+															}
+														);
 														return res
 															.status(200)
 															.clearCookie("socialAuth")
+															.cookie("jwt", token, {
+																httpOnly: true,
+																secure: false,
+															})
 															.send({
-																message: "Password changed successfully",
+																message: "T_REGISTER_SUCCESS",
 																status: 200,
 															});
 													})
 													.catch((err) => {
 														return res.status(500).send({
-															message:
-																err.message ||
-																"Some error occurred while changing the password.",
+															message: "T_INTERNAL_SERVER_ERROR",
 															status: 500,
 														});
 													});
@@ -409,26 +396,37 @@ export const CompleteRegistration = async (req: Request, res: Response) => {
 														activeUser: true,
 													})
 													.then(() => {
+														const token = jwt.sign(
+															{
+																id: user.id,
+															},
+															config.secretKey,
+															{
+																expiresIn: `${config.expiration}s`,
+															}
+														);
 														return res
 															.status(200)
 															.clearCookie("socialAuth")
+															.cookie("jwt", token, {
+																httpOnly: true,
+																secure: false,
+															})
 															.send({
-																message: "Password changed successfully",
+																message: "T_REGISTER_SUCCESS",
 																status: 200,
 															});
 													})
 													.catch((err) => {
 														return res.status(500).send({
-															message:
-																err.message ||
-																"Some error occurred while changing the password.",
+															message: "T_INTERNAL_SERVER_ERROR",
 															status: 500,
 														});
 													});
 											}
 										} else {
 											return res.status(500).send({
-												message: "Internal server error",
+												message: "T_INTERNAL_SERVER_ERROR",
 												status: 500,
 											});
 										}
@@ -437,7 +435,7 @@ export const CompleteRegistration = async (req: Request, res: Response) => {
 							} else {
 								return res
 									.status(500)
-									.send({ message: "Internal server error", status: 500 });
+									.send({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 							}
 						}
 					);
@@ -445,13 +443,13 @@ export const CompleteRegistration = async (req: Request, res: Response) => {
 			})
 			.catch((err) => {
 				return res.status(500).send({
-					message: err.message || "Some error occurred.",
+					message: "T_INTERNAL_SERVER_ERROR",
 					status: 500,
 				});
 			});
 	} else {
 		return res.status(400).send({
-			message: "Bad request",
+			message: "T_BAD_REQUEST",
 			status: 400,
 		});
 	}
@@ -468,18 +466,18 @@ export const genSession = async (req: Request, res: Response) => {
 				res.status(200).send({
 					data: sessionObject,
 					status: 200,
-					message: "User logged in",
+					message: "T_SESSION_GENERATED",
 				});
 			} else {
 				return res.status(404).send({
-					message: "User not found",
+					message: "T_USER_NOT_FOUND",
 					status: 404,
 				});
 			}
 		})
 		.catch((err) => {
 			return res.status(500).send({
-				message: err.message || "Some error occurred.",
+				message: "T_INTERNAL_SERVER_ERROR",
 				status: 500,
 			});
 		});

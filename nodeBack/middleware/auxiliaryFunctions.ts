@@ -2,6 +2,7 @@ import { mailOptions, sendMail } from "./smtp";
 import AWS from "aws-sdk";
 import config from "../config/config";
 import * as crypto from "crypto";
+import User from "../database/models/user";
 
 // Access and password token generator
 export const generateToken = (length: number) => {
@@ -165,3 +166,26 @@ AWS.config.update({
 		else console.log("Success", data); // successful response
 	});
 }
+
+export const formatSessionObject = (user: User | null) => {
+	let sessionObject = {};
+	if (user) {
+		try {
+			sessionObject = {
+				id: user.id,
+				username: user.username,
+				firstName: user.firstName,
+				lastName: user.lastName,
+				email: user.email,
+				role: user.role,
+				date: user.create_date,
+				birthdate: user.birthDate,
+				image: user.image,
+				template_count: user.template_count,
+			};
+		} catch (err) {
+			console.log("Error on formatting the session Object", err);
+		}
+	}
+	return sessionObject;
+};
