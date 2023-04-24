@@ -52,6 +52,7 @@ export class DjangoTemplateEditComponent {
   techUseVar: techUse = techUse.services;
 
   createTemp: string = 'no';
+  oldCerts: boolean = false;
 
   djangoServiceData!: djangoServices;
   djangoWebAppData!: djangoWebApp;
@@ -205,6 +206,13 @@ export class DjangoTemplateEditComponent {
 
           this.endpointList = data.data.template_args.endpoints;
 
+          if (
+            (data.data.template_args.certs.cert_name &&
+              data.data.template_args.certs.cert_name !== 'None') ||
+            (data.data.template_args.certs.key_name &&
+              data.data.template_args.certs.key_name !== 'None')
+          )
+            this.oldCerts = true;
           this.certFileName =
             data.data.template_args.certs.cert_name &&
             data.data.template_args.certs.cert_name !== 'None'
@@ -394,7 +402,7 @@ export class DjangoTemplateEditComponent {
     if (pass) this.stepper.next();
   }
 
-  nextStep(){
+  nextStep() {
     this.techType = this.basicFormGroup.get('tech_type').value;
     this.stepper.next();
   }

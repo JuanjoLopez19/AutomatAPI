@@ -52,3 +52,31 @@ body {
   background-color: $blue-transparent;
   border-color: $blue-transparent;
 }
+
+.p-radiobutton .p-radiobutton-box.p-highlight {
+  background-color: $light-blue;
+  border-color: $light-blue;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight {
+  background-color: $light-blue;
+  border-color: $light-blue;
+  &:hover {
+    background-color: $blue-transparent !important;
+    border-color: $blue-transparent !important;
+  }
+}
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
+  box-shadow: 0 0 0 0.2rem $blue-transparent;
+  border-color: $blue-transparent;
+}
+
+.mat-step-header {
+  .mat-step-icon-state-edit {
+    background-color:  $light-blue;
+  }
+  .mat-step-icon-selected{
+    background-color: $primary-color;
+    color: $black-not-black
+  }
+}
