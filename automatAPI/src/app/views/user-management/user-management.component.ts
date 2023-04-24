@@ -21,7 +21,6 @@ export class UserManagementComponent implements OnInit {
   ) {
     this.translate.addLangs(['en', 'es-ES']);
 
-    this.checkSession();
     const currentNavigation: Navigation = this.router.getCurrentNavigation();
     if (currentNavigation && currentNavigation.extras.state) {
       const active: string = currentNavigation.extras.state['active'];
@@ -34,6 +33,7 @@ export class UserManagementComponent implements OnInit {
   ngOnInit() {
     this.chooseSize(window.innerWidth);
     this.chooseLanguage(navigator.language);
+    this.checkSession();
   }
 
   // Resize Methods

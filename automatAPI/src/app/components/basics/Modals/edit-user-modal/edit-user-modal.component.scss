@@ -5,6 +5,19 @@
     margin-right: 15px;
   }
 
+  ::ng-deep p-calendar .p-button {
+    background-color: $light-blue;
+    border-radius: 0px 10px 10px 0px;
+
+    &:hover {
+      background-color: $blue-transparent;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem $blue-transparent;
+    }
+  }
+
   ::ng-deep p-dialog {
     .p-dialog {
       border-radius: 20px;

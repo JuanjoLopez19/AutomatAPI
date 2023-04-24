@@ -301,11 +301,13 @@ export class ExpressTemplatesComponent {
       .get('controllers_list')
       ?.get('list')
       .setValue(this.controllerList);
+    this.stepper.next();
   }
 
   addEndpoints() {
     // Here is where the object will be created
     this.endpointsFormGroup.get('endpoints')?.setValue(this.endpointList);
+    this.stepper.next();
   }
 
   nextStep() {
@@ -624,14 +626,18 @@ export class ExpressTemplatesComponent {
   manageFirstStep() {
     const basicForm = this.basicFormGroup.controls;
     const keys = Object.keys(basicForm);
+    let pass = true;
     keys.forEach((key) => {
       if (basicForm[key]?.errors?.['required']) {
         this.firstStepErrors[key]['required'] = true;
+        pass = false;
       } else this.firstStepErrors[key]['required'] = false;
       if (basicForm[key]?.errors?.['pattern']) {
         this.firstStepErrors[key]['pattern'] = true;
+        pass = false;
       } else this.firstStepErrors[key]['pattern'] = false;
     });
+    if (pass) this.stepper.next();
   }
 
   mapControllers(controllers: expressController[]) {

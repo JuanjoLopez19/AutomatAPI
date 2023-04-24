@@ -23,9 +23,7 @@ export class ActivateUserComponent implements OnInit {
     private translate: TranslateService,
     private authService: AuthService
   ) {
-    translate.addLangs(['en', 'es-ES']);
-    translate.setDefaultLang('es-ES');
-    translate.use('es-ES');
+    this.translate.addLangs(['en', 'es-ES']);
   }
 
   ngOnInit(): void {
