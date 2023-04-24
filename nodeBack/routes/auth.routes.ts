@@ -3,7 +3,6 @@ import { Request, Response } from "express";
 import {
 	activateAccount,
 	CompleteRegistration,
-	formatSessionObject,
 	genSession,
 	rememberPassword,
 	resetPassword,

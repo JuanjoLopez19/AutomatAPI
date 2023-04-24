@@ -17,7 +17,7 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 					res
 						.status(400)
 						.contentType("application/json")
-						.json({ message: "Username already in use", status: 400 })
+						.json({ message: "T_USERNAME_USED", status: 400 })
 						.send();
 					return;
 				}
@@ -34,7 +34,7 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 								.status(400)
 								.contentType("application/json")
 								.json({
-									message: "email already in use",
+									message: "T_EMAIL_USED",
 									status: 400,
 								})
 								.send();
@@ -47,7 +47,7 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 						res
 							.status(500)
 							.contentType("application/json")
-							.json({ message: err.message, status: 500 })
+							.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 })
 							.send();
 					});
 			})
@@ -55,7 +55,7 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 				res
 					.status(500)
 					.contentType("application/json")
-					.json({ message: err.message, status: 500 })
+					.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 })
 					.send();
 				return;
 			});
@@ -63,7 +63,7 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
 		res
 			.status(400)
 			.contentType("application/json")
-			.json({ message: "Username or email not provided", status: 400 })
+			.json({ message: "T_BAD_REQUEST", status: 400 })
 			.send();
 	return;
 };
@@ -86,7 +86,7 @@ export const verifySignIn = (req: Request, res: Response, next: any) => {
 
 						if (!passwordIsValid) {
 							return res.status(401).send({
-								message: "Invalid Password!",
+								message: "T_PASSWORD_INVALID",
 								status: 401,
 							});
 						}
@@ -97,7 +97,7 @@ export const verifySignIn = (req: Request, res: Response, next: any) => {
 						res
 							.status(404)
 							.contentType("application/json")
-							.json({ message: "User not found", status: 404 })
+							.json({ message: "T_USER_NOT_FOUND", status: 404 })
 							.send();
 						return;
 					}
@@ -106,7 +106,7 @@ export const verifySignIn = (req: Request, res: Response, next: any) => {
 					res
 						.status(404)
 						.contentType("application/json")
-						.json({ message: err.message, status: 404 })
+						.json({ message: "T_INTERNAL_SERVER_ERROR", status: 404 })
 						.send();
 					return;
 				});
@@ -114,7 +114,7 @@ export const verifySignIn = (req: Request, res: Response, next: any) => {
 			res
 				.status(500)
 				.contentType("application/json")
-				.json({ message: err.message, status: 500 })
+				.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 })
 				.send();
 			return;
 		}
@@ -122,7 +122,7 @@ export const verifySignIn = (req: Request, res: Response, next: any) => {
 		res
 			.status(400)
 			.contentType("application/json")
-			.json({ message: "Bad Request", status: 400 })
+			.json({ message: "T_BAD_REQUEST", status: 400 })
 			.send();
 		return;
 	}
@@ -137,7 +137,7 @@ export const isAdmin = async (req: Request, res: Response, next: any) => {
 				res
 					.status(404)
 					.contentType("application/json")
-					.json({ message: "User not found", status: 404 })
+					.json({ message: "T_USER_NOT_FOUND", status: 404 })
 					.send();
 				return;
 			} else {
@@ -148,7 +148,7 @@ export const isAdmin = async (req: Request, res: Response, next: any) => {
 					res
 						.status(403)
 						.contentType("application/json")
-						.json({ message: "Forbidden", status: 403 })
+						.json({ message: "T_FORBIDDEN", status: 403 })
 						.send();
 					return;
 				}
@@ -158,7 +158,7 @@ export const isAdmin = async (req: Request, res: Response, next: any) => {
 			res
 				.status(500)
 				.contentType("application/json")
-				.json({ message: err.message, status: 500 })
+				.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 })
 				.send();
 			return;
 		});
@@ -223,7 +223,7 @@ export const verifyEdit = async (req: Request, res: Response, next: any) => {
 						res
 							.status(500)
 							.contentType("application/json")
-							.json({ message: err.message, status: 500 })
+							.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 })
 							.send();
 					});
 			})
@@ -231,7 +231,7 @@ export const verifyEdit = async (req: Request, res: Response, next: any) => {
 				res
 					.status(500)
 					.contentType("application/json")
-					.json({ message: err.message, status: 500 })
+					.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 })
 					.send();
 				return;
 			});

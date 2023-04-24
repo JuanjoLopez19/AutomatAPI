@@ -33,7 +33,7 @@ export const sendMail = function (mailOptions: mailOptions) {
 							console.log("Error while sending email: ", error);
 							reject({ status: 500, message: error });
 						} else {
-							resolve({ status: 200, message: "Email succesfully sended!" });
+							resolve({ status: 200, message: "T_EMAIL_SENT" });
 						}
 					});
 				}
@@ -42,7 +42,7 @@ export const sendMail = function (mailOptions: mailOptions) {
 			console.log("Email ERROR : " + err.code);
 			reject({
 				status: 500,
-				message: "There was an error while sending email!",
+				message: "T_ERROR_SENDING_EMAIL",
 			});
 		}
 	});

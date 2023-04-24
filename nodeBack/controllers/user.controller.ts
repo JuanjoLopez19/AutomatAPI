@@ -11,12 +11,14 @@ import bcrypt from "bcrypt";
 export const getUsers = async (req: Request, res: Response) => {
 	if (req.user) {
 		const users = await User.findAll({
-			order: [['id', 'ASC']],
+			order: [["id", "ASC"]],
 			attributes: { exclude: ["password", "password_token"] },
 		});
-		res.status(200).json({ data: users, message: "Users found", status: 200 });
+		res
+			.status(200)
+			.json({ data: users, message: "T_USERS_FOUND", status: 200 });
 	} else {
-		res.status(401).json({ message: "Unauthorized" });
+		res.status(401).json({ message: "T_UNAUTHORIZED" });
 	}
 };
 
@@ -35,12 +37,14 @@ export const deleteUser = async (req: Request, res: Response) => {
 						user
 							.destroy()
 							.then(() => {
-								res.status(200).json({ message: "User deleted", status: 200 });
+								res
+									.status(200)
+									.json({ message: "T_USER_DELETED", status: 200 });
 								return;
 							})
 							.catch((err) => {
 								console.log(err);
-								res.status(500).json({ message: "Internal Server Error" });
+								res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR" });
 								return;
 							});
 					} else {
@@ -69,18 +73,18 @@ export const deleteUser = async (req: Request, res: Response) => {
 							});
 						} catch (err) {
 							console.log(err);
-							res.status(500).json({ message: "Internal Server Error" });
+							res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR" });
 						}
 					}
 				})
 				.catch((err) => {
 					console.log(err);
-					res.status(500).json({ message: "Internal Server Error" });
+					res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR" });
 					return;
 				});
 		});
 	} else {
-		res.status(400).json({ message: "Bad Request", status: 400 });
+		res.status(400).json({ message: "T_BAD_REQUEST", status: 400 });
 	}
 };
 
@@ -89,7 +93,7 @@ export const deleteAccount = async (req: Request, res: Response) => {
 	const user_id = await jwt.decode(req.cookies["jwt"]).id;
 	User.findByPk(user_id).then((user) => {
 		if (user == null) {
-			res.status(404).json({ message: "User not found", status: 404 });
+			res.status(404).json({ message: "T_USER_NOT_FOUND", status: 404 });
 			return;
 		}
 		Templates.findAll({
@@ -100,12 +104,12 @@ export const deleteAccount = async (req: Request, res: Response) => {
 					user
 						.destroy()
 						.then(() => {
-							res.status(200).json({ message: "User deleted", status: 200 });
+							res.status(200).json({ message: "T_USER_DELETE", status: 200 });
 							return;
 						})
 						.catch((err) => {
 							console.log(err);
-							res.status(500).json({ message: "Internal Server Error" });
+							res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR" });
 							return;
 						});
 				} else {
@@ -134,13 +138,13 @@ export const deleteAccount = async (req: Request, res: Response) => {
 						});
 					} catch (err) {
 						console.log(err);
-						res.status(500).json({ message: "Internal Server Error" });
+						res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR" });
 					}
 				}
 			})
 			.catch((err) => {
 				console.log(err);
-				res.status(500).json({ message: "Internal Server Error" });
+				res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR" });
 				return;
 			});
 	});
@@ -326,7 +330,7 @@ export const editPasswordAdmin = async (req: Request, res: Response) => {
 			}
 			bcrypt.genSalt(config.saltRounds, (err, salt) => {
 				if (!err) {
-					bcrypt.hash(req.body.newPassword, salt, (err, hash) => {
+					bcrypt.hash(newPassword, salt, (err, hash) => {
 						if (!err) {
 							user
 								.update({ password: hash })
