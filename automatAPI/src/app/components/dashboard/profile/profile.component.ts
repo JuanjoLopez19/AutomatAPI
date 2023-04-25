@@ -19,6 +19,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class ProfileComponent {
   @Input() user: userParams;
   @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
+  @Output() userEdited: EventEmitter<userParams> =
+    new EventEmitter<userParams>();
 
   showDialog: boolean = false;
   letter: string;
@@ -34,16 +36,21 @@ export class ProfileComponent {
 
   ngOnInit(): void {
     this.letter = this.user.username.charAt(0).toLocaleUpperCase();
-    this.manageTemplatesService.getUserTemplateStats().subscribe({
-      next: (data: httpResponse) => {
-        this.templates = data.data as templatesStats;
-      },
-      error: (err: httpResponse) => {
-        if (err.status == 401) {
-          this.router.navigate(['/']);
-        }
-      },
-    });
+    this.manageTemplatesService
+      .getUserTemplateStats()
+      .subscribe({
+        next: (data: httpResponse) => {
+          this.templates = data.data as templatesStats;
+        },
+        error: (err: httpResponse) => {
+          if (err.status == 401) {
+            this.router.navigate(['/']);
+          }
+        },
+      })
+      .add(() => {
+        this.onUserEdited();
+      });
   }
 
   deleteAccount(event: Event) {
@@ -76,5 +83,23 @@ export class ProfileComponent {
 
   onHide() {
     this.showDialog = false;
+  }
+
+  onUserEdited() {
+    this.userService
+      .getUserInfo()
+      .subscribe({
+        next: (data: httpResponse) => {
+          this.user = data.data as userParams;
+        },
+        error: (err) => {
+          if (err.status == 401) {
+            this.router.navigate(['/']);
+          }
+        },
+      })
+      .add(() => {
+        this.userEdited.emit(this.user);
+      });
   }
 }

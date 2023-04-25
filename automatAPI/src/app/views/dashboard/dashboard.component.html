@@ -94,6 +94,7 @@
           *ngIf="activeView === 'profile'"
           [user]="user"
           (closeSidenav)="snav.close()"
+          (userEdited)="onUserEdited($event)"
         ></app-profile>
 
         <app-flask-template-edit

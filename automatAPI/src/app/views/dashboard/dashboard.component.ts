@@ -53,4 +53,8 @@ export class DashboardComponent implements OnInit {
     this.templateId = '' + event.id;
     this.userId = '' + event.userId;
   }
+
+  onUserEdited(event: userParams) {
+    this.user = event;
+  }
 }

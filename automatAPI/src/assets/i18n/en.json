@@ -266,7 +266,8 @@
     "T_ENDP_DEL": "DELETE",
     "T_SAVE_BP": "Save blueprint",
     "T_MANAGE_ENDP": "Manage endpoints",
-    "T_HANDLE_404": "Handle 404 errors?"
+    "T_HANDLE_404": "Handle 404 errors?",
+    "T_BP_EMPTY": "No blueprints created"
   },
   "express": {
     "T_CONTROLLERS": "Controllers",
@@ -283,7 +284,8 @@
     "T_ENDP_URL": "Endpoint URL",
     "T_ENDP_METHOD": "Endpoint method",
     "T_USE_STRICT": "Use strict mode?",
-    "T_USE_BODY_PARSER": "Use body parser?"
+    "T_USE_BODY_PARSER": "Use body parser?",
+    "T_CONTROLLERS_EMPTY": "No controllers"
   },
   "django": {
     "T_LANGUAGE": "Language",
@@ -305,7 +307,10 @@
     "T_ACCESS_ROUTE": "Sub-app URL",
     "T_REQ_AUTH": "Require authentication?",
     "T_MODEL_NAME": "Model name",
-    "T_MODEL_EDITABLE": "Model Editable?"
+    "T_MODEL_EDITABLE": "Model Editable?",
+    "T_SUB_APPS_EMPTY": "There are no sub-apps",
+    "T_NO_FIELDS": "There are no fields for the model",
+    "T_ENDP_EMPTY": "There are no endpoints"
   },
   "model": {
     "T_FIELD_NAME": "Field name",

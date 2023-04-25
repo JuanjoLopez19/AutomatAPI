@@ -169,13 +169,13 @@
                   id="endp-name-help"
                   class="p-error block"
                   *ngIf="accountError"
-                  >{{ accountErrorMsg }}</small
+                  ><h3>{{ accountErrorMsg }}</h3></small
                 >
                 <small
                   id="endp-name-help"
                   class="block"
                   *ngIf="successAccount"
-                  >{{ successAccountMsg }}</small
+                  ><h3>{{ successAccountMsg }}</h3></small
                 >
               </div>
             </form>
@@ -314,13 +314,13 @@
                     id="endp-name-help"
                     class="p-error block"
                     *ngIf="passwordError"
-                    >{{ passwordErrorMsg }}</small
+                    ><h3>{{ passwordErrorMsg }}</h3></small
                   >
                   <small
                     id="endp-name-help"
                     class="block"
                     *ngIf="successPassword"
-                    >{{ successPasswordMsg }}</small
+                    ><h3>{{ successPasswordMsg }}</h3></small
                   >
                 </div>
               </div>
@@ -334,12 +334,13 @@
     <div class="row w-100 justify-content-end">
       <div class="col-6">
         <div class="row justify-content-center">
-          <div class="col-10 d-flex">
+          <div class="col-9 d-flex">
             <p-button
               [label]="'edit.T_EDIT_ACCOUNT' | translate"
               icon="pi pi-times"
               iconPos="right"
               (onClick)="submitForm(true)"
+              styleClass="p-button-info"
             ></p-button>
           </div>
         </div>
@@ -352,6 +353,7 @@
               icon="pi pi-check"
               iconPos="right"
               (onClick)="submitForm()"
+              styleClass="p-button-info"
             ></p-button>
           </div>
         </div>
