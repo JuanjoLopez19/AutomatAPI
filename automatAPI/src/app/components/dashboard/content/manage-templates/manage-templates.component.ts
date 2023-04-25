@@ -35,6 +35,9 @@ export class ManageTemplatesComponent implements OnInit {
 
   filterOptions: dropdownParams[] = [];
   fieldOptions: dropdownParams[] = [];
+
+  backUp: dropdownParams;
+
   constructor(
     private manageTemplatesServices: ManageTemplatesService,
     private translate: TranslateService,
@@ -45,6 +48,7 @@ export class ManageTemplatesComponent implements OnInit {
   ngOnInit(): void {
     this.translate
       .get([
+        'T_SELECT_ONE',
         'T_TEMPLATE_ID',
         'T_TEMPLATE_USER',
         'T_TEMPLATE_NAME',
@@ -52,10 +56,13 @@ export class ManageTemplatesComponent implements OnInit {
         'T_TEMPLATE_TECH',
         'T_TEMPLATE_TECH_TYPE',
         'T_TEMPLATE_DATE',
+        'T_TEMPLATE_LAST_UPDATE',
       ])
       .subscribe((res: any) => {
+        this.filterOptions.push({ name: res.T_SELECT_ONE, value: undefined });
+        this.backUp = { name: res.T_SELECT_ONE, value: undefined };
         const keys = Object.keys(res);
-        for (let i = 0; i < keys.length; i++) {
+        for (let i = 1; i < keys.length; i++) {
           if (
             !this.isAdmin &&
             (keys[i] === 'T_TEMPLATE_ID' || keys[i] === 'T_TEMPLATE_USER')
@@ -69,6 +76,7 @@ export class ManageTemplatesComponent implements OnInit {
           }
         }
       });
+
     this.filterForm = new FormGroup({
       field: new FormControl(undefined, {
         validators: [Validators.required],
@@ -79,6 +87,8 @@ export class ManageTemplatesComponent implements OnInit {
         updateOn: 'submit',
       }),
     });
+
+    this.fieldOptions = [this.backUp];
     this.getTemplateData();
   }
 
@@ -100,18 +110,18 @@ export class ManageTemplatesComponent implements OnInit {
     this.templateData = this.backUpData;
     this.filterForm.get('field')?.setValue(undefined);
     this.filterForm.get('value')?.reset();
-    this.fieldOptions = [];
+    this.fieldOptions = [this.backUp];
   }
 
   mapFields(value: string) {
     const auxParams: dropdownParams[] = [];
     this.backUpData.forEach((template) => {
-      if (value === 'date_created') {
+      if (value === 'date_created' || value === 'last_updated') {
         auxParams.push({
-          name: this.datePipe.transform(template[value]),
+          name: this.datePipe.transform(template[value], 'medium'),
           value: template[value],
         } as dropdownParams);
-      } else {
+      } else if (template[value]) {
         auxParams.push({
           name: template[value],
           value: template[value],

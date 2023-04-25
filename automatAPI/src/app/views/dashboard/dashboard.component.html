@@ -83,7 +83,7 @@
           *ngIf="activeView === 'manage_users' && user.role === 'admin'"
           [isAdmin]="user.role === 'admin'"
           [userId]="user.id"
-          (openSidenav)="snav.open()"
+          (openSideNav)="snav.open()"
           (closeSideNav)="snav.close()"
         ></app-manage-users>
 

@@ -411,6 +411,7 @@ export enum TemplateField {
   'T_TEMPLATE_TECH' = 'technology',
   'T_TEMPLATE_TECH_TYPE' = 'tech_type',
   'T_TEMPLATE_DATE' = 'date_created',
+  'T_TEMPLATE_LAST_UPDATE' = 'last_updated',
 }
 
 export enum UserField {

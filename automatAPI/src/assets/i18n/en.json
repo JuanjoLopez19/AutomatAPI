@@ -103,6 +103,7 @@
   "T_TEMPLATE_TECH": "Technology",
   "T_TEMPLATE_TECH_TYPE": "Type of use",
   "T_TEMPLATE_DATE": "Creation date",
+  "T_TEMPLATE_LAST_UPDATE": "Last updated",
   "T_USER_ID": "ID",
   "T_USER_USERNAME": "Username",
   "T_USER_EMAIL": "Email",
@@ -199,7 +200,8 @@
     "T_SUMMARY_BASIC": "Basic configuration summary",
     "T_SUMMARY_CONFIG": "API configuration summary",
     "T_SUMMARY_ITEMS": "Endpoints summary",
-    "T_REMOVE_CERTS": "Remove old certificates?"
+    "T_REMOVE_CERTS": "Remove old certificates?",
+    "T_SELECT_VALUE": "Select a value"
   },
   "error": {
     "T_EMAIL_REQ": "The email is required",
