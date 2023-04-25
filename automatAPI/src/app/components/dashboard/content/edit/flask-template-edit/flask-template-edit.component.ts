@@ -43,8 +43,10 @@ export class FlaskTemplateEditComponent {
 
   @Input() templateId: string = null;
   @Input() userId: string = null;
+
   @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
   @Output() changeView: EventEmitter<string> = new EventEmitter<string>();
+  @Output() openSidenav: EventEmitter<void> = new EventEmitter<void>();
 
   showDialog: boolean = false;
   editMode: boolean = false;
@@ -449,6 +451,8 @@ export class FlaskTemplateEditComponent {
 
   onHide() {
     this.showDialog = false;
+
+    this.openSidenav.emit();
   }
 
   onEndpointAdded(event: flaskEndpointTemplate, type: boolean = false) {

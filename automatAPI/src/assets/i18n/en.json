@@ -329,6 +329,7 @@
     "T_REPEAT_PWD": "Confirm password",
     "T_USERNAME": "Username",
     "T_EMAIL": "Email",
-    "T_ROLE": "Role"
+    "T_ROLE": "Role",
+    "T_MANAGE_ACCOUNT": "Manage account"
   }
 }

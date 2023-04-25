@@ -35,6 +35,7 @@ export class ExpressTemplatesComponent {
 
   @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
   @Output() changeView: EventEmitter<string> = new EventEmitter<string>();
+  @Output() openSidenav: EventEmitter<void> = new EventEmitter<void>();
 
   showDialog: boolean = false;
   editMode: boolean = false;
@@ -353,6 +354,8 @@ export class ExpressTemplatesComponent {
 
   onHide() {
     this.showDialog = false;
+
+    this.openSidenav.emit();
   }
 
   onEndpointAdded(event: expressEndpointTemplate, type: boolean = false) {

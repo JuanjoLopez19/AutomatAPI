@@ -45,6 +45,7 @@ export class DjangoTemplateEditComponent {
 
   @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
   @Output() changeView: EventEmitter<string> = new EventEmitter<string>();
+  @Output() openSidenav: EventEmitter<void> = new EventEmitter<void>();
 
   readonly techUse: typeof techUse = techUse;
   readonly technology: techType = techType.django;
@@ -476,6 +477,8 @@ export class DjangoTemplateEditComponent {
   onHide(type: boolean) {
     if (type) this.showModelModal = false;
     else this.showSubAppModal = false;
+
+    this.openSidenav.emit();
   }
 
   openModelModal(editMode: boolean) {
@@ -602,6 +605,8 @@ export class DjangoTemplateEditComponent {
 
   onHideEndp() {
     this.showDialog = false;
+
+    this.openSidenav.emit();
   }
 
   getEndpointNameList() {

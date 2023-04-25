@@ -328,6 +328,7 @@
     "T_REPEAT_PWD": "Repetir contraseña",
     "T_USERNAME":"Nombre de usuario",
     "T_EMAIL": "Email",
-    "T_ROLE": "Rol"
+    "T_ROLE": "Rol",
+    "T_MANAGE_ACCOUNT": "Administrar cuenta"
   }
 }

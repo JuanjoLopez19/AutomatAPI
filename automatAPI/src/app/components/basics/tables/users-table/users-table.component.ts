@@ -17,9 +17,12 @@ export class UsersTableComponent {
   @Input() isAdmin = false;
   @Input() userId: number = null;
   @Input() users: userParams[] = null;
+
   @Output() refreshTable: EventEmitter<void> = new EventEmitter();
   @Output() unauthorized: EventEmitter<void> = new EventEmitter();
+
   @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
+  @Output() openSidenav: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private userService: ManageUsersService) {}
   showDialog: boolean = false;
@@ -47,5 +50,6 @@ export class UsersTableComponent {
 
   onHide() {
     this.showDialog = false;
+    this.openSidenav.emit();
   }
 }
