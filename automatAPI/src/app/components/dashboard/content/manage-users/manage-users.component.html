@@ -14,56 +14,65 @@
             [formGroup]="filterForm"
             (ngSubmit)="filterTable($event)"
           >
-            <div class="col-3">
-              <span class="p-float-label w-100">
-                <p-dropdown
-                  id="selectField"
-                  formControlName="field"
-                  [options]="filterOptions"
-                  optionLabel="name"
-                  optionValue="value"
-                  (onChange)="filterChanged($event)"
-                ></p-dropdown>
+            <div class="row">
+              <div class="col-3">
                 <label htmlFor="selectField">{{
                   "dashboard.T_SELECT_FIELD" | translate
                 }}</label>
-              </span>
-            </div>
-            <div class="col-3">
-              <div class="p-float-label">
-                <p-dropdown
-                  Id="ina"
-                  formControlName="value"
-                  [options]="fieldOptions"
-                  optionLabel="name"
-                  optionValue="value"
-                ></p-dropdown>
-                <label for="ina">{{
+              </div>
+              <div class="col-3">
+                <label htmlFor="selectField">{{
                   "dashboard.T_SELECT_AN_OPTION" | translate
                 }}</label>
               </div>
+              <div class="col-4"></div>
             </div>
-            <div class="col-4">
-              <div class="row">
-                <div class="col-4">
-                  <p-button
-                    [label]="'dashboard.T_FILTER' | translate"
-                    icon="pi pi-filter-fill"
-                    type="submit"
-                    iconPos="right"
-                    styleClass="p-button-info"
-                  ></p-button>
+            <div class="row">
+              <div class="col-3">
+                <span class="w-100">
+                  <p-dropdown
+                    id="selectField"
+                    formControlName="field"
+                    [options]="filterOptions"
+                    optionLabel="name"
+                    optionValue="value"
+                    (onChange)="filterChanged($event)"
+                  ></p-dropdown>
+                </span>
+              </div>
+              <div class="col-3">
+                <div>
+                  <p-dropdown
+                    Id="ina"
+                    formControlName="value"
+                    [options]="fieldOptions"
+                    optionLabel="name"
+                    optionValue="value"
+                  ></p-dropdown>
                 </div>
+              </div>
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-4">
+                    <p-button
+                      [label]="'dashboard.T_FILTER' | translate"
+                      icon="pi pi-filter-fill"
+                      type="submit"
+                      iconPos="right"
+                      styleClass="p-button-info"
+                    ></p-button>
+                  </div>
 
-                <div class="col-6">
-                  <p-button
-                    [label]="'dashboard.T_RESET' | translate"
-                    icon="pi pi-refresh"
-                    type="button"
-                    iconPos="right"
-                    (onClick)="resetTable()"
-                    styleClass="p-button-info"
-                  ></p-button>
+                  <div class="col-6">
+                    <p-button
+                      [label]="'dashboard.T_RESET' | translate"
+                      icon="pi pi-refresh"
+                      type="button"
+                      iconPos="right"
+                      (onClick)="resetTable()"
+                      styleClass="p-button-info"
+                    ></p-button>
+                  </div>
                 </div>
               </div>
             </div>

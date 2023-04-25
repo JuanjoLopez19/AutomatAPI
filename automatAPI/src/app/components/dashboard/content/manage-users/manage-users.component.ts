@@ -33,6 +33,9 @@ export class ManageUsersComponent {
 
   filterOptions: dropdownParams[] = [];
   fieldOptions: dropdownParams[] = [];
+
+  backUp: dropdownParams;
+
   constructor(
     private manageUserServices: ManageUsersService,
     private translate: TranslateService,
@@ -43,6 +46,7 @@ export class ManageUsersComponent {
   ngOnInit(): void {
     this.translate
       .get([
+        'T_SELECT_ONE',
         'T_USER_ID',
         'T_USER_USERNAME',
         'T_USER_EMAIL',
@@ -54,8 +58,10 @@ export class ManageUsersComponent {
         'T_USER_ROLE',
       ])
       .subscribe((res: any) => {
+        this.filterOptions.push({ name: res.T_SELECT_ONE, value: undefined });
+        this.backUp = { name: res.T_SELECT_ONE, value: undefined };
         const keys = Object.keys(res);
-        for (let i = 0; i < keys.length; i++) {
+        for (let i = 1; i < keys.length; i++) {
           this.filterOptions.push({
             name: res[keys[i]],
             value: this.userField[keys[i]],
@@ -72,6 +78,8 @@ export class ManageUsersComponent {
         updateOn: 'submit',
       }),
     });
+
+    this.fieldOptions = [this.backUp];
     this.getUserData();
   }
 
@@ -111,7 +119,7 @@ export class ManageUsersComponent {
     this.userData = this.backUpData;
     this.filterForm.get('field')?.setValue(undefined);
     this.filterForm.get('value')?.reset();
-    this.fieldOptions = [];
+    this.fieldOptions = [this.backUp];
   }
 
   mapFields(value: string) {

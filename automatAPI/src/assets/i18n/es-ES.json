@@ -103,6 +103,7 @@
   "T_TEMPLATE_TECH": "Tecnología",
   "T_TEMPLATE_TECH_TYPE": "Tipo de tecnología",
   "T_TEMPLATE_DATE": "Fecha de creación",
+  "T_TEMPLATE_LAST_UPDATE": "Última actualización",
   "T_USER_ID": "ID",
   "T_USER_USERNAME": "Nombre de usuario",
   "T_USER_EMAIL": "Correo electrónico",
@@ -199,7 +200,8 @@
     "T_SUMMARY_BASIC": "Resumen de la configuración básica",
     "T_SUMMARY_CONFIG": "Resumen de la configuración de la API",
     "T_SUMMARY_ITEMS": "Resumen de los endpoints",
-    "T_REMOVE_CERTS": "¿Eliminar certificados antigüos?"
+    "T_REMOVE_CERTS": "¿Eliminar certificados antigüos?",
+    "T_SELECT_VALUE": "Selecciona un valor"
   },
   "error": {
     "T_EMAIL_REQ": "El correo electrónico es obligatorio",
