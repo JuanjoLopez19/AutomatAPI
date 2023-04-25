@@ -14,7 +14,7 @@
   <ng-template pTemplate="header">
     <div class="container">
       <div class="row w-100 border-bottom">
-        <h1>{{ "edit.T_EDIT_ACCOUNT" | translate }}</h1>
+        <h1>{{ "edit.T_MANAGE_ACCOUNT" | translate }}</h1>
       </div>
     </div>
   </ng-template>
@@ -27,6 +27,11 @@
               class="d-grid justify-content-center"
               [formGroup]="userFormGroup"
             >
+              <div class="row py-2 text-center mb-2">
+                  <span>
+                    <h4>{{ "edit.T_EDIT_ACCOUNT" | translate }}</h4>
+                  </span>
+                </div>
               <div class="row">
                 <div class="col-6 justify-content-center">
                   <span class="p-float-label">
@@ -171,10 +176,7 @@
                   *ngIf="accountError"
                   ><h3>{{ accountErrorMsg }}</h3></small
                 >
-                <small
-                  id="endp-name-help"
-                  class="block"
-                  *ngIf="successAccount"
+                <small id="endp-name-help" class="block" *ngIf="successAccount"
                   ><h3>{{ successAccountMsg }}</h3></small
                 >
               </div>
@@ -192,7 +194,7 @@
               #passwordForm
             >
               <div class="col-12">
-                <div class="row py-2 text-center">
+                <div class="row py-2 text-center mb-2">
                   <span>
                     <h4>{{ "edit.T_CHANGE_PWD" | translate }}</h4>
                   </span>

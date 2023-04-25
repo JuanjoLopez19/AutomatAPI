@@ -38,6 +38,7 @@ export class DjangoTemplatesComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
 
   @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
+  @Output() openSidenav: EventEmitter<void> = new EventEmitter<void>();
   @Output() changeView: EventEmitter<string> = new EventEmitter<string>();
 
   readonly techUse: typeof techUse = techUse;
@@ -329,6 +330,7 @@ export class DjangoTemplatesComponent implements OnInit {
   onHide(type: boolean) {
     if (type) this.showModelModal = false;
     else this.showSubAppModal = false;
+    this.openSidenav.emit();
   }
 
   openModelModal(editMode: boolean) {
@@ -455,6 +457,7 @@ export class DjangoTemplatesComponent implements OnInit {
 
   onHideEndp() {
     this.showDialog = false;
+    this.openSidenav.emit();
   }
 
   getEndpointNameList() {

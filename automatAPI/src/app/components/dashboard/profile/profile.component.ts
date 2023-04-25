@@ -19,6 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class ProfileComponent {
   @Input() user: userParams;
   @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
+  @Output() openSidenav: EventEmitter<void> = new EventEmitter<void>();
   @Output() userEdited: EventEmitter<userParams> =
     new EventEmitter<userParams>();
 
@@ -83,6 +84,7 @@ export class ProfileComponent {
 
   onHide() {
     this.showDialog = false;
+    this.openSidenav.emit();
   }
 
   onUserEdited() {

@@ -61,18 +61,21 @@
         <app-flask-templates
           *ngIf="activeView === 'flask'"
           (closeSidenav)="snav.close()"
+          (openSidenav)="snav.open()"
           (changeView)="activeView = $event"
         ></app-flask-templates>
 
         <app-django-templates
           *ngIf="activeView === 'django'"
           (closeSidenav)="snav.close()"
+          (openSidenav)="snav.open()"
           (changeView)="activeView = $event"
         ></app-django-templates>
 
         <app-express-templates
           *ngIf="activeView === 'express'"
           (closeSidenav)="snav.close()"
+          (openSidenav)="snav.open()"
           (changeView)="activeView = $event"
         ></app-express-templates>
 
@@ -80,6 +83,7 @@
           *ngIf="activeView === 'manage_users' && user.role === 'admin'"
           [isAdmin]="user.role === 'admin'"
           [userId]="user.id"
+          (openSidenav)="snav.open()"
           (closeSideNav)="snav.close()"
         ></app-manage-users>
 
@@ -94,6 +98,7 @@
           *ngIf="activeView === 'profile'"
           [user]="user"
           (closeSidenav)="snav.close()"
+          (openSidenav)="snav.open()"
           (userEdited)="onUserEdited($event)"
         ></app-profile>
 
@@ -102,6 +107,7 @@
           [userId]="userId"
           [templateId]="templateId"
           (closeSidenav)="snav.close()"
+          (openSidenav)="snav.open()"
           (changeView)="activeView = $event"
         ></app-flask-template-edit>
 
@@ -110,6 +116,7 @@
           [userId]="userId"
           [templateId]="templateId"
           (closeSidenav)="snav.close()"
+          (openSidenav)="snav.open()"
           (changeView)="activeView = $event"
         ></app-django-template-edit>
 
@@ -118,6 +125,7 @@
           [userId]="userId"
           [templateId]="templateId"
           (closeSidenav)="snav.close()"
+          (openSidenav)="snav.open()"
           (changeView)="activeView = $event"
         ></app-express-template-edit>
       </div>
@@ -127,22 +135,18 @@
   <mat-toolbar color="primary" class="bottombar telative">
     <div class="row w-100">
       <div class="col-1">
-        <small [ngStyle]="{ color: 'white' }">
-          {{ "dashboard.T_VERSION" | translate }} 0.1.0
-        </small>
+        <small> {{ "dashboard.T_VERSION" | translate }} 0.5.0 </small>
       </div>
       <div class="col-10"></div>
       <div class="col-1">
         <div class="row">
           <div class="col-9 d-flex justify-content-end px-0">
-            <small [ngStyle]="{ color: 'white' }">
+            <small>
               {{ "T_AUTOMATAPI" | translate }}
             </small>
           </div>
           <div class="col-1">
-            <mat-icon
-              class="mt-1"
-              [ngStyle]="{ fontSize: '15px', color: 'white' }"
+            <mat-icon class="mt-1" [ngStyle]="{ fontSize: '15px' }"
               >copyright</mat-icon
             >
           </div>

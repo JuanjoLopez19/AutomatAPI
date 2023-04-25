@@ -21,7 +21,10 @@ import { DatePipe } from '@angular/common';
 export class ManageUsersComponent {
   @Input() isAdmin: boolean = false;
   @Input() userId: string = null;
+
   @Output() closeSideNav: EventEmitter<void> = new EventEmitter<void>();
+  @Output() openSideNav: EventEmitter<void> = new EventEmitter<void>();
+
   readonly userField: any = UserField;
 
   userData!: userParams[];
@@ -171,5 +174,9 @@ export class ManageUsersComponent {
 
   closeSidenav() {
     this.closeSideNav.emit();
+  }
+
+  openSidenav() {
+    this.openSideNav.emit();
   }
 }
