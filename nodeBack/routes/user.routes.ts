@@ -7,7 +7,8 @@ import {
 	editAccount,
 	editPassword,
     editAccountAdmin,
-    editPasswordAdmin
+    editPasswordAdmin,
+	getUserInfo
 } from "../controllers/user.controller";
 import { isAdmin, verifyEdit } from "../middleware/auth.middelware";
 
@@ -31,5 +32,7 @@ routerUser.put(
 	editAccountAdmin
 );
 routerUser.put("/editPasswordAdmin", [passport.authorize("jwt"), isAdmin], editPasswordAdmin);
+
+routerUser.get("/getUserInfo", passport.authorize("jwt"), getUserInfo);
 
 export default routerUser;

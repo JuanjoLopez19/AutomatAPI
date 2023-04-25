@@ -4,7 +4,10 @@ import config from "../config/config";
 import axios from "axios";
 import Templates, { Tokens } from "../database/models/templates";
 import { WhereOptions } from "sequelize";
-import { deleteItemsAWS } from "../middleware/auxiliaryFunctions";
+import {
+	deleteItemsAWS,
+	formatSessionObject,
+} from "../middleware/auxiliaryFunctions";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
@@ -372,4 +375,36 @@ export const editPasswordAdmin = async (req: Request, res: Response) => {
 		res.status(400).json({ message: "T_BAD_REQ", status: 400 });
 		return;
 	}
+};
+
+export const getUserInfo = async (req: Request, res: Response) => {
+	//@ts-ignore
+	const user_id = await jwt.decode(req.cookies["jwt"]).id;
+	User.findByPk(user_id)
+		.then((user: User | null) => {
+			if (user == null) {
+				res.status(404).json({ message: "T_NOT_FOUND", status: 404 });
+				return;
+			} else {
+				const sessionObject = formatSessionObject(user);
+				if (
+					sessionObject &&
+					Object.keys(sessionObject).length !== 0 &&
+					Object.getPrototypeOf(sessionObject) === Object.prototype
+				) {
+					return res
+						.status(200)
+						.json({ message: "T_USER_INFO", status: 200, data: sessionObject });
+				} else {
+					return res
+						.status(500)
+						.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
+				}
+			}
+		})
+		.catch((err) => {
+			console.log(err);
+			res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
+			return;
+		});
 };
