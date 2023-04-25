@@ -74,4 +74,11 @@ export class ManageUsersService {
       { withCredentials: true }
     );
   }
+
+  getUserInfo(){
+    return this.http.get(
+      `${environment.apiHost}${environment.apiPort}/api/users/getUserInfo`,
+      { withCredentials: true }
+    );
+  }
 }

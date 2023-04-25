@@ -30,21 +30,7 @@ export class EditUserModalComponent {
   @Input() userData: userParams = null;
 
   @Output() Hide: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  @Output() editAccount: EventEmitter<{
-    firstName: string;
-    lastName: string;
-    birthDate: Date;
-  }> = new EventEmitter<{
-    firstName: string;
-    lastName: string;
-    birthDate: Date;
-  }>();
-
-  @Output() editPassword: EventEmitter<{
-    newPassword: string;
-    currentPassword: string;
-  }> = new EventEmitter<{ newPassword: string; currentPassword: string }>();
+  @Output() userEdited: EventEmitter<void> = new EventEmitter<void>();
 
   userFormGroup: FormGroup;
   passwordFormGroup: FormGroup;
@@ -259,6 +245,7 @@ export class EditUserModalComponent {
                     this.successAccountMsg = res;
                   })
                   .add(() => {
+                    this.userEdited.emit();
                     setTimeout(() => {
                       this.manageHide();
                     }, 1500);
@@ -289,6 +276,7 @@ export class EditUserModalComponent {
                 this.translate
                   .get(data.message)
                   .subscribe((res: string) => {
+                    this.accountError = false;
                     this.successAccount = true;
                     this.successAccountMsg = res;
                   })
@@ -322,6 +310,7 @@ export class EditUserModalComponent {
                 this.translate
                   .get(data.message)
                   .subscribe((res: string) => {
+                    this.accountError = false;
                     this.successPassword = true;
                     this.successPasswordMsg = res;
                   })

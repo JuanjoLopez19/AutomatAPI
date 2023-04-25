@@ -745,7 +745,7 @@
                               class="d-flex align-items-center justify-content-center"
                             >
                               <span class="p-3">{{
-                                "dashboard.T_TEMPLATE_EMPTY" | translate
+                                "flask.T_BP_EMPTY" | translate
                               }}</span>
                               <i class="pi pi-spin pi-spinner"></i>
                             </div>
@@ -878,10 +878,51 @@
                             }}
                           </td>
                           <td>{{ endpoint.endpoint_url }}</td>
-                          <td>{{ endpoint.methods.get_m }}</td>
-                          <td>{{ endpoint.methods.post }}</td>
-                          <td>{{ endpoint.methods.put }}</td>
-                          <td>{{ endpoint.methods.delete }}</td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="
+                                endpoint.methods.get_m === 'yes';
+                                else noget
+                              "
+                            ></i>
+                            <ng-template #noget>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="
+                                endpoint.methods.post === 'yes';
+                                else nopost
+                              "
+                            ></i>
+                            <ng-template #nopost>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="endpoint.methods.put === 'yes'; else noput"
+                            ></i>
+                            <ng-template #noput>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="
+                                endpoint.methods.delete === 'yes';
+                                else nodelete
+                              "
+                            ></i>
+                            <ng-template #nodelete>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
                         </tr>
                       </ng-template>
                       <ng-template pTemplate="emptymessage">
@@ -891,7 +932,7 @@
                               class="d-flex align-items-center justify-content-center"
                             >
                               <span class="p-3">{{
-                                "dashboard.T_TEMPLATE_EMPTY" | translate
+                                "django.T_ENDP_EMPTY" | translate
                               }}</span>
                               <i class="pi pi-spin pi-spinner"></i>
                             </div>
@@ -1019,12 +1060,59 @@
                       <ng-template pTemplate="body" let-endpoint>
                         <tr [pSelectableRow]="endpoint">
                           <td>{{ endpoint.endpoint_name }}</td>
-                          <td>{{ endpoint.endpoint_comment }}</td>
+                          <td>
+                            {{
+                              endpoint.endpoint_comment
+                                ? endpoint.endpoint_comment
+                                : ("dashboard.T_NO_DESC" | translate)
+                            }}
+                          </td>
                           <td>{{ endpoint.endpoint_url }}</td>
-                          <td>{{ endpoint.methods.get_m }}</td>
-                          <td>{{ endpoint.methods.post }}</td>
-                          <td>{{ endpoint.methods.put }}</td>
-                          <td>{{ endpoint.methods.delete }}</td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="
+                                endpoint.methods.get_m === 'yes';
+                                else noget
+                              "
+                            ></i>
+                            <ng-template #noget>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="
+                                endpoint.methods.post === 'yes';
+                                else nopost
+                              "
+                            ></i>
+                            <ng-template #nopost>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="endpoint.methods.put === 'yes'; else noput"
+                            ></i>
+                            <ng-template #noput>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="
+                                endpoint.methods.delete === 'yes';
+                                else nodelete
+                              "
+                            ></i>
+                            <ng-template #nodelete>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
                         </tr>
                       </ng-template>
                       <ng-template pTemplate="emptymessage">
@@ -1034,7 +1122,7 @@
                               class="d-flex align-items-center justify-content-center"
                             >
                               <span class="p-3">{{
-                                "dashboard.T_TEMPLATE_EMPTY" | translate
+                                "django.T_ENDP_EMPTY" | translate
                               }}</span>
                               <i class="pi pi-spin pi-spinner"></i>
                             </div>

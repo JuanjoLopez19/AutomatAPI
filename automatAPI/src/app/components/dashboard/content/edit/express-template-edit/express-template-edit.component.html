@@ -757,7 +757,7 @@
                               class="d-flex align-items-center justify-content-center"
                             >
                               <span class="p-3">{{
-                                "dashboard.T_TEMPLATE_EMPTY" | translate
+                                "express.T_CONTROLLERS_EMPTY" | translate
                               }}</span>
                               <i class="pi pi-spin pi-spinner"></i>
                             </div>
@@ -881,7 +881,13 @@
                       <ng-template pTemplate="body" let-endpoint>
                         <tr [pSelectableRow]="endpoint">
                           <td>{{ endpoint.endpoint_name }}</td>
-                          <td>{{ endpoint.endpoint_comment }}</td>
+                          <td>
+                            {{
+                              endpoint.endpoint_comment
+                                ? endpoint.endpoint_comment
+                                : ("dashboard.T_NO_DESC" | translate)
+                            }}
+                          </td>
                           <td>{{ endpoint.endpoint_url }}</td>
                           <td>{{ endpoint.method }}</td>
                         </tr>
@@ -893,7 +899,7 @@
                               class="d-flex align-items-center justify-content-center"
                             >
                               <span class="p-3">{{
-                                "dashboard.T_TEMPLATE_EMPTY" | translate
+                                "django.T_ENDP_EMPTY" | translate
                               }}</span>
                               <i class="pi pi-spin pi-spinner"></i>
                             </div>
@@ -1030,7 +1036,7 @@
                               class="d-flex align-items-center justify-content-center"
                             >
                               <span class="p-3">{{
-                                "dashboard.T_TEMPLATE_EMPTY" | translate
+                                "django.T_ENDP_EMPTY" | translate
                               }}</span>
                               <i class="pi pi-spin pi-spinner"></i>
                             </div>
