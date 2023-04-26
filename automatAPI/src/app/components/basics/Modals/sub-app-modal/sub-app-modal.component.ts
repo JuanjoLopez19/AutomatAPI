@@ -152,7 +152,7 @@ export class SubAppModalComponent implements OnInit {
         endpoint_name: new FormControl('', [Validators.required]),
         model_editable: new FormControl('no', [Validators.required]),
         methods: new FormGroup({
-          get_m: new FormControl(false, [Validators.required]),
+          get_m: new FormControl(true, [Validators.required]),
           post: new FormControl(false, [Validators.required]),
           put: new FormControl(false, [Validators.required]),
           del: new FormControl(false, [Validators.required]),

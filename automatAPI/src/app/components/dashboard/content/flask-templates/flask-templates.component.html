@@ -372,7 +372,11 @@
                                   <div class="row">
                                     <div class="col-6">
                                       <p-button
-                                        styleClass="p-button-info"
+                                        [styleClass]="
+                                          errorFileCert
+                                            ? 'p-button-danger'
+                                            : 'p-button-info'
+                                        "
                                         type="button"
                                         [icon]="iconCertFile"
                                         iconPos="right"
@@ -393,7 +397,11 @@
                                     </div>
                                     <div class="col-6">
                                       <p-button
-                                        styleClass="p-button-info"
+                                        [styleClass]="
+                                          errorFileKey
+                                            ? 'p-button-danger'
+                                            : 'p-button-info'
+                                        "
                                         type="button"
                                         [icon]="iconKeyFile"
                                         iconPos="right"
@@ -822,10 +830,10 @@
                         <tr [pSelectableRow]="endpoint">
                           <td>{{ endpoint.endpoint_name }}</td>
                           {{
-                              endpoint.endpoint_comment
-                                ? endpoint.endpoint_comment
-                                : ("dashboard.T_NO_DESC" | translate)
-                            }}
+                            endpoint.endpoint_comment
+                              ? endpoint.endpoint_comment
+                              : ("dashboard.T_NO_DESC" | translate)
+                          }}
                           <td>{{ endpoint.endpoint_url }}</td>
                           <td>
                             <i

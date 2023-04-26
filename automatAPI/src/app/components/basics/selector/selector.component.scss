@@ -1,13 +1,13 @@
 @import "src/shared/variables";
 :host {
   .main {
-    border-radius: 40px;
+    border-radius: 15px;
     background-color: $white;
   }
 
   button {
     width: 90%;
-    border-radius: 30px;
+    border-radius: 10px;
     padding: 1rem;
   }
 

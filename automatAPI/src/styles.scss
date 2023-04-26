@@ -23,7 +23,7 @@ body {
   border-radius: 10px;
 }
 .p-button {
-  border-radius: 2rem;
+  border-radius: 15px;
 }
 .p-datatable-wrapper {
   border-radius: 10px;
@@ -84,7 +84,6 @@ body {
     background-color: $primary-color;
     color: $black-not-black;
   }
-
 }
 
 ::-webkit-scrollbar {
@@ -118,4 +117,10 @@ body {
 .custom-scroll-vertical-hover::-webkit-scrollbar-track:vertical {
   background: rgba(255, 255, 255, 0.2);
   border: none;
+}
+
+.main-container {
+  -webkit-box-shadow: 10px 14px 6px 0px rgba(0, 0, 0, 0.21);
+  -moz-box-shadow: 10px 14px 6px 0px rgba(0, 0, 0, 0.21);
+  box-shadow: 10px 14px 6px 0px rgba(0, 0, 0, 0.21);
 }

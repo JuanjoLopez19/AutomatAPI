@@ -20,6 +20,7 @@ export class HomeAdminComponent {
   @Output() changeViewEvent: EventEmitter<string> = new EventEmitter<string>();
   templates: templatesStats = null;
 
+  maxValue: number = 0;
   constructor(
     private manageTemplatesServices: ManageTemplatesService,
     private router: Router
@@ -33,6 +34,13 @@ export class HomeAdminComponent {
     this.manageTemplatesServices.getTemplateStats().subscribe({
       next: (data: httpResponse) => {
         this.templates = data.data as templatesStats;
+        const keys = Object.keys(this.templates);
+        keys.forEach((key) => {
+          this.maxValue =
+            Number(this.templates[key]['services']) +
+            Number(this.templates[key]['app_web']) +
+            this.maxValue;
+        });
       },
       error: (err: HttpErrorResponse) => {
         if (err.status == 401) {

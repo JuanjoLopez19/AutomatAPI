@@ -57,18 +57,12 @@ export class EndpointModalComponent implements OnInit {
   urlBackUp: string = '';
 
   constructor(private translate: TranslateService) {
-    this.translate.get('T_SELECT_ONE').subscribe((res: string) => {
-      this.httpMethodSelector = [
-        {
-          name: res,
-          value: '',
-        },
-        { name: httpMethods.get, value: httpMethods.get },
-        { name: httpMethods.post, value: httpMethods.post },
-        { name: httpMethods.put, value: httpMethods.put },
-        { name: httpMethods.delete, value: httpMethods.delete },
-      ];
-    });
+    this.httpMethodSelector = [
+      { name: httpMethods.get, value: httpMethods.get },
+      { name: httpMethods.post, value: httpMethods.post },
+      { name: httpMethods.put, value: httpMethods.put },
+      { name: httpMethods.delete, value: httpMethods.delete },
+    ];
   }
   ngOnInit(): void {
     if (!this.editMode) {

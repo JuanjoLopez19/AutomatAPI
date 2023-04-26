@@ -19,6 +19,7 @@ import { NGX_ECHARTS_CONFIG } from 'ngx-echarts';
 export class ChartsComponent implements OnInit {
   @Input() chartType: string = null;
   @Input() chartData: string[] = null;
+  @Input() maxValue: number = null;
   echartsInstance: ECharts;
   chartOptions: EChartsOption;
 
@@ -73,16 +74,13 @@ export class ChartsComponent implements OnInit {
           yAxis: {
             type: 'value',
             name: res['T_NUM_TEMPLATES'],
-            nameTextStyle:{
-              align: 'left'
+            nameTextStyle: {
+              align: 'left',
             },
             axisLabel: {
               formatter: '{value}',
             },
-            max:
-              Number(this.chartData[0]) > Number(this.chartData[1])
-                ? Number(this.chartData[0])
-                : Number(this.chartData[1]),
+            max: this.maxValue,
           },
           series: [
             {

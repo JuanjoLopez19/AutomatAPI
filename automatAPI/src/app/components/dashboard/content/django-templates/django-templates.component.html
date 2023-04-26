@@ -342,7 +342,11 @@
                             <div class="row">
                               <div class="col-6">
                                 <p-button
-                                  styleClass="p-button-info"
+                                  [styleClass]="
+                                    errorFileCert
+                                      ? 'p-button-danger'
+                                      : 'p-button-info'
+                                  "
                                   type="button"
                                   [icon]="iconCertFile"
                                   iconPos="right"
@@ -361,7 +365,11 @@
                               </div>
                               <div class="col-6">
                                 <p-button
-                                  styleClass="p-button-info"
+                                  [styleClass]="
+                                    errorFileKey
+                                      ? 'p-button-danger'
+                                      : 'p-button-info'
+                                  "
                                   type="button"
                                   [icon]="iconKeyFile"
                                   iconPos="right"
@@ -671,13 +679,56 @@
                       <ng-template pTemplate="body" let-subApp>
                         <tr [pSelectableRow]="subApp">
                           <td>{{ subApp.subapp_name }}</td>
-                          <td>{{ subApp.middleware_name }}</td>
-                          <td>{{ subApp.logged_in }}</td>
+                          <td>{{ subApp.middleware }}</td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="subApp.logged_in === 'yes'; else nolog"
+                            ></i>
+                            <ng-template #nolog>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
                           <td>{{ subApp.endpoint_name }}</td>
-                          <td>{{ subApp.methods.get_m }}</td>
-                          <td>{{ subApp.methods.post }}</td>
-                          <td>{{ subApp.methods.put }}</td>
-                          <td>{{ subApp.methods.delete }}</td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="subApp.methods.get_m === true; else noget"
+                            ></i>
+                            <ng-template #noget>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="subApp.methods.post === true; else nopost"
+                            ></i>
+                            <ng-template #nopost>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="subApp.methods.put === true; else noput"
+                            ></i>
+                            <ng-template #noput>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="
+                                subApp.methods.delete === true;
+                                else nodelete
+                              "
+                            ></i>
+                            <ng-template #nodelete>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
                         </tr>
                       </ng-template>
                       <ng-template pTemplate="emptymessage">
@@ -687,7 +738,7 @@
                               class="d-flex align-items-center justify-content-center"
                             >
                               <span class="p-3">{{
-                                "django-T_SUB_APPS_EMPTY" | translate
+                                "django.T_SUB_APPS_EMPTY" | translate
                               }}</span>
                               <i class="pi pi-spin pi-spinner"></i>
                             </div>
@@ -733,16 +784,68 @@
                       <ng-template pTemplate="body" let-subApp>
                         <tr [pSelectableRow]="subApp">
                           <td>{{ subApp.subapp_name }}</td>
-                          <td>{{ subApp.middleware_name }}</td>
-                          <td>{{ subApp.logged_in }}</td>
+                          <td>{{ subApp.middleware }}</td>
                           <td>
-                            {{ subApp.model_editable }}
+                            <i
+                              class="pi pi-check"
+                              *ngIf="subApp.logged_in === 'yes'; else nolog"
+                            ></i>
+                            <ng-template #nolog>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="
+                                subApp.model_editable === 'yes';
+                                else nolog
+                              "
+                            ></i>
+                            <ng-template #nolog>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
                           </td>
                           <td>{{ subApp.endpoint_name }}</td>
-                          <td>{{ subApp.methods.get_m }}</td>
-                          <td>{{ subApp.methods.post }}</td>
-                          <td>{{ subApp.methods.put }}</td>
-                          <td>{{ subApp.methods.delete }}</td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="subApp.methods.get_m === true; else noget"
+                            ></i>
+                            <ng-template #noget>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="subApp.methods.post === true; else nopost"
+                            ></i>
+                            <ng-template #nopost>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="subApp.methods.put === true; else noput"
+                            ></i>
+                            <ng-template #noput>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="
+                                subApp.methods.delete === true;
+                                else nodelete
+                              "
+                            ></i>
+                            <ng-template #nodelete>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
                         </tr>
                       </ng-template>
                       <ng-template pTemplate="emptymessage">
@@ -852,8 +955,24 @@
                         <tr [pSelectableRow]="field">
                           <td>{{ field.name }}</td>
                           <td>{{ field.type }}</td>
-                          <td>{{ field.null }}</td>
-                          <td>{{ field.blank }}</td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="field.null === 'True'; else notnull"
+                            ></i>
+                            <ng-template #notnull>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="field.blank === 'True'; else notBlank"
+                            ></i>
+                            <ng-template #notBlank>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
                           <td>{{ field.default }}</td>
                         </tr>
                       </ng-template>
@@ -1014,7 +1133,15 @@
                                 : ("dashboard.T_NO_DESC" | translate)
                             }}
                           </td>
-                          <td>{{ endpoint.logged_in }}</td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="endpoint.logged_in === 'yes'; else nolog"
+                            ></i>
+                            <ng-template #nolog>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
                           <td>
                             <i
                               class="pi pi-check"

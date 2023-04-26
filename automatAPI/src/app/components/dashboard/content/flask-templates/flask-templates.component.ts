@@ -65,6 +65,8 @@ export class FlaskTemplatesComponent implements OnInit {
   keyFileName: string = 'T_CHOSE_KEY_FILE';
   iconCertFile: string = 'pi pi-upload';
   iconKeyFile: string = 'pi pi-upload';
+  errorFileCert: boolean = false;
+  errorFileKey: boolean = false;
 
   endpointBPList: flaskEndpointTemplate[] = [];
 
@@ -263,10 +265,13 @@ export class FlaskTemplatesComponent implements OnInit {
   }
 
   nextStep() {
-    this.useBlueprints = this.apiConfigFormGroup.get('use_bp')?.value === 'yes';
-    setTimeout(() => {
-      this.stepper.next();
-    }, 500);
+    if (!this.errorFileCert && !this.errorFileKey) {
+      this.useBlueprints =
+        this.apiConfigFormGroup.get('use_bp')?.value === 'yes';
+      setTimeout(() => {
+        this.stepper.next();
+      }, 500);
+    }
   }
 
   onFileChange(event: any, type: string) {
@@ -281,9 +286,11 @@ export class FlaskTemplatesComponent implements OnInit {
         if (type === 'cert') {
           this.certFileName = 'error.T_FILE_INVALID';
           this.iconCertFile = 'pi pi-times';
+          this.errorFileCert = true;
         } else {
           this.keyFileName = 'error.T_FILE_INVALID';
           this.iconKeyFile = 'pi pi-times';
+          this.errorFileKey = true;
         }
       } else {
         this.apiConfigFormGroup.get('ssl_files')?.get(type)?.setValue(file);
@@ -292,11 +299,13 @@ export class FlaskTemplatesComponent implements OnInit {
           if (this.certFileName.length > 20)
             this.certFileName = this.certFileName.substring(0, 15) + '...';
           this.iconCertFile = 'pi pi-check';
+          this.errorFileCert = false;
         } else {
           this.keyFileName = file.name;
           if (this.keyFileName.length > 20)
             this.keyFileName = this.keyFileName.substring(0, 15) + '...';
           this.iconKeyFile = 'pi pi-check';
+          this.errorFileKey = false;
         }
       }
     }

@@ -47,18 +47,18 @@
   }
 
   .error {
-    background-color: #e9967a !important;
+    background-color: $error-color !important;
     color: $black-not-black !important;
-    border-color: #e9967a !important;
+    border-color: $error-color !important;
   }
 
   .error:focus {
-    box-shadow: 0 0 0 0.2rem #b36b53;
+    box-shadow: 0 0 0 0.2rem $error-color-effects;
   }
 
   .error:hover {
-    background-color: #b36b53 !important;
+    background-color: $error-color-effects !important;
     color: $black-not-black !important;
-    border-color: #b36b53 !important;
+    border-color: $error-color-effects !important;
   }
 }

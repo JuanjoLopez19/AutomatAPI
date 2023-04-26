@@ -23,9 +23,9 @@
         <form [formGroup]="addEndpointFormControl">
           <div class="row">
             <div class="col-6">
-              <div class="row justify-content-end">
-                <div class="row pt-4">
-                  <span class="p-float-label">
+              <div class="row">
+                <div class="row pt-4 justify-content-end">
+                  <span class="p-float-label col-10">
                     <input
                       pInputText
                       id="endpoint_name"
@@ -37,28 +37,28 @@
                     }}</label>
                   </span>
                 </div>
-                <div class="pb-2 row">
+                <div class="pb-2 row justify-content-end">
                   <small
                     id="endp-name-help"
-                    class="p-error block"
+                    class="p-error block col-10"
                     *ngIf="addEndpointFormControl.get('endpoint_name').errors?.[ 'required' ] && addEndpointFormControl.get('endpoint_name').touched"
                     >{{ "error.T_ENDP_NAME_REQ" | translate }}</small
                   >
                   <small
                     id="endp-name-help"
-                    class="p-error block"
+                    class="p-error block col-10"
                     *ngIf="validName"
                     >{{ "error.T_ENDP_NAME_INVALID" | translate }}</small
                   >
                   <small
                     id="endp-name-help"
-                    class="p-error block"
+                    class="p-error block col-10"
                     *ngIf="duplicatedName"
                     >{{ "error.T_ENDP_NAME_DUPL" | translate }}</small
                   >
                 </div>
-                <div class="row pt-3">
-                  <span class="p-float-label">
+                <div class="row pt-3 justify-content-end">
+                  <span class="p-float-label col-10">
                     <input
                       pInputText
                       id="endpoint_url"
@@ -69,71 +69,43 @@
                     }}</label>
                   </span>
                 </div>
-                <div class="pb-3 row">
+                <div class="pb-4 row justify-content-end">
                   <small
                     id="endp-name-help"
-                    class="p-error block"
+                    class="p-error block col-10"
                     *ngIf="addEndpointFormControl.get('endpoint_url').errors?.[ 'required' ] && addEndpointFormControl.get('endpoint_url').touched"
                     >{{ "error.T_ENDP_URL_REQ" | translate }}</small
                   >
                   <small
                     id="endp-name-help"
-                    class="p-error block"
+                    class="p-error block col-10"
                     *ngIf="validUrl"
                     >{{ "error.T_ENDP_URL_INVALID" | translate }}</small
                   >
                   <small
                     id="endp-name-help"
-                    class="p-error block"
+                    class="p-error block col-10"
                     *ngIf="duplicatedUrl"
                     >{{ "error.T_ENDP_URL_DUPL" | translate }}</small
                   >
                 </div>
-                <div class="row justify-content-center" *ngIf="type === 'django'">
-                  <div class="row mx-0">
-                    {{ "django.T_REQ_AUTH" | translate }}
-                  </div>
-
-                  <div class="row pt-2 mx-0 px-0" *ngIf="type === 'django'">
-                    <div class="col-6">
-                      <p-radioButton
-                        inputId="admin_yes"
-                        value="yes"
-                        formControlName="logged_in"
-                      ></p-radioButton>
-                      <label for="admin_yes" class="ml-2">{{
-                        "T_YES" | translate
-                      }}</label>
-                    </div>
-                    <div class="col-6">
-                      <p-radioButton
-                        inputId="admin_no"
-                        value="no"
-                        formControlName="logged_in"
-                      ></p-radioButton>
-                      <label for="admin_no" class="ml-2">{{
-                        "T_NO" | translate
-                      }}</label>
-                    </div>
-                  </div>
+                <div class="row justify-content-end">
+                  <span class="p-float-label col-10">
+                    <textarea
+                      pInputTextarea
+                      id="endpoint_desc"
+                      formControlName="endpoint_comment"
+                    ></textarea>
+                    <label htmlFor="endpoint_desc">{{
+                      "T_ENDP_DESC" | translate
+                    }}</label>
+                  </span>
                 </div>
               </div>
             </div>
             <div class="col-6">
-              <div class="row pt-4">
-                <span class="p-float-label">
-                  <textarea
-                    pInputTextarea
-                    id="endpoint_desc"
-                    formControlName="endpoint_comment"
-                  ></textarea>
-                  <label htmlFor="endpoint_desc">{{
-                    "T_ENDP_DESC" | translate
-                  }}</label>
-                </span>
-              </div>
               <div class="row" *ngIf="type === 'flask' || type === 'django'">
-                <div class="py-3" formGroupName="methods">
+                <div class="py-4" formGroupName="methods">
                   <div class="row">
                     <div class="mb-3">
                       <p-checkbox
@@ -183,6 +155,45 @@
                         >
                       </div>
                     </div>
+                    <div class="row">
+                      <small
+                        id="endp-name-help"
+                        class="p-error block"
+                        *ngIf="noMethodChecked"
+                        >{{ "error.T_ENDP_METHOD_REQ" | translate }}</small
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="row justify-content-center"
+                  *ngIf="type === 'django'"
+                >
+                  <div class="row mx-0">
+                    {{ "django.T_REQ_AUTH" | translate }}
+                  </div>
+
+                  <div class="row pt-2 mx-0 px-0" *ngIf="type === 'django'">
+                    <div class="col-4">
+                      <p-radioButton
+                        inputId="admin_yes"
+                        value="yes"
+                        formControlName="logged_in"
+                      ></p-radioButton>
+                      <label for="admin_yes" class="ml-2">{{
+                        "T_YES" | translate
+                      }}</label>
+                    </div>
+                    <div class="col-4">
+                      <p-radioButton
+                        inputId="admin_no"
+                        value="no"
+                        formControlName="logged_in"
+                      ></p-radioButton>
+                      <label for="admin_no" class="ml-2">{{
+                        "T_NO" | translate
+                      }}</label>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -211,23 +222,17 @@
   <ng-template pTemplate="footer">
     <div class="row w-100 justify-content-end">
       <div class="col-4">
-        <small
-          id="endp-name-help"
-          class="p-error block"
-          *ngIf="noMethodChecked"
-          >{{ "error.T_ENDP_METHOD_REQ" | translate }}</small
-        >
-      </div>
-      <div class="col-4">
         <p-button
+          styleClass="p-button-danger"
           [label]="'T_DISCARD' | translate"
           icon="pi pi-times"
           iconPos="right"
           (onClick)="manageHide()"
         ></p-button>
       </div>
-      <div class="col-4">
+      <div class="col-2">
         <p-button
+          styleClass="p-button-info"
           [label]="'T_ADD' | translate"
           icon="pi pi-check"
           iconPos="right"

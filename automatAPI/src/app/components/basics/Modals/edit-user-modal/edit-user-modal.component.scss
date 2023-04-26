@@ -25,18 +25,21 @@
     }
     .p-dialog-content {
       overflow: unset;
+      background-color: $back-modals;
     }
     .p-dialog-header {
       border-radius: 20px 20px 0px 0px;
       -moz-border-radius: 20px 20px 0px 0px;
       -webkit-border-radius: 20px 20px 0px 0px;
       padding-bottom: 0;
+      background-color: $back-modals;
     }
 
     .p-dialog-footer {
       border-radius: 0px 0px 20px 20px;
       -moz-border-radius: 0px 0px 20px 20px;
       -webkit-border-radius: 0px 0px 20px 20px;
+      background-color: $back-modals;
     }
   }
 

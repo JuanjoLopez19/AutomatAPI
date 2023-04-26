@@ -71,6 +71,8 @@ export class DjangoTemplateEditComponent {
   keyFileName: string = 'T_CHOSE_KEY_FILE';
   iconCertFile: string = 'pi pi-upload';
   iconKeyFile: string = 'pi pi-upload';
+  errorFileCert: boolean = false;
+  errorFileKey: boolean = false;
 
   showModelModal: boolean = false;
   editModeModel: boolean = false;
@@ -404,8 +406,10 @@ export class DjangoTemplateEditComponent {
   }
 
   nextStep() {
-    this.techType = this.basicFormGroup.get('tech_type').value;
-    this.stepper.next();
+    if (!this.errorFileCert && !this.errorFileKey) {
+      this.techType = this.basicFormGroup.get('tech_type').value;
+      this.stepper.next();
+    }
   }
 
   mapLanguageOptions(lang: string) {
@@ -449,9 +453,11 @@ export class DjangoTemplateEditComponent {
         if (type === 'cert') {
           this.certFileName = 'error.T_FILE_INVALID';
           this.iconCertFile = 'pi pi-times';
+          this.errorFileCert = true;
         } else {
           this.keyFileName = 'error.T_FILE_INVALID';
           this.iconKeyFile = 'pi pi-times';
+          this.errorFileKey = true;
         }
       } else {
         this.apiConfigFormGroup.get('ssl_files')?.get(type)?.setValue(file);
@@ -460,11 +466,13 @@ export class DjangoTemplateEditComponent {
           if (this.certFileName.length > 20)
             this.certFileName = this.certFileName.substring(0, 15) + '...';
           this.iconCertFile = 'pi pi-check';
+          this.errorFileCert = false;
         } else {
           this.keyFileName = file.name;
           if (this.keyFileName.length > 20)
             this.keyFileName = this.keyFileName.substring(0, 15) + '...';
           this.iconKeyFile = 'pi pi-check';
+          this.errorFileKey = false;
         }
       }
     }

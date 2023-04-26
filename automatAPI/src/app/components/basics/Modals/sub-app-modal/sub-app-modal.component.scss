@@ -12,18 +12,21 @@
     }
     .p-dialog-content {
       overflow: unset;
+      background-color: $back-modals;
     }
     .p-dialog-header {
       border-radius: 20px 20px 0px 0px;
       -moz-border-radius: 20px 20px 0px 0px;
       -webkit-border-radius: 20px 20px 0px 0px;
       padding-bottom: 0;
+      background-color: $back-modals;
     }
 
     .p-dialog-footer {
       border-radius: 0px 0px 20px 20px;
       -moz-border-radius: 0px 0px 20px 20px;
       -webkit-border-radius: 0px 0px 20px 20px;
+      background-color: $back-modals;
     }
   }
 
@@ -46,6 +49,22 @@
 
     .p-button.p-button-info:focus {
       box-shadow: 0 0 0 0.2rem $blue-transparent;
+    }
+
+    .p-button-danger {
+      background-color: $error-color-dash;
+      color: $black-not-black;
+      border-color: $error-color-dash;
+    }
+
+    .p-button.p-button-danger:hover {
+      background-color: $error-color-effects-dash;
+      color: $black-not-black;
+      border-color: $error-color-effects-dash;
+    }
+
+    .p-button.p-button-danger:focus {
+      box-shadow: 0 0 0 0.2rem $error-color-effects-dash;
     }
   }
 }
