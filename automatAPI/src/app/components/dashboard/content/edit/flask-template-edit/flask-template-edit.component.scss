@@ -12,7 +12,7 @@
 
   mat-horizontal-stepper {
     width: 100%;
-    background-color: $white-not-white;
+    background-color: $transparent;
   }
 
   .grid {
@@ -62,6 +62,22 @@
 
     .p-button.p-button-info:focus {
       box-shadow: 0 0 0 0.2rem $blue-transparent;
+    }
+
+    .p-button-danger {
+      background-color: $error-color-dash;
+      color: $black-not-black !important;
+      border-color: $error-color-dash;
+    }
+
+    .p-button.p-button-danger:hover {
+      background-color: $error-color-effects-dash;
+      color: $black-not-black !important;
+      border-color: $error-color-effects-dash;
+    }
+
+    .p-button.p-button-danger:focus {
+      box-shadow: 0 0 0 0.2rem $error-color-effects-dash;
     }
   }
 }

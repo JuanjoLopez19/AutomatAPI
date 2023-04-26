@@ -240,7 +240,10 @@
      "T_FIRST_NAME_REQ": "The name is required",
     "T_LAST_NAME_REQ": "The surname is required",
     "T_FIRST_NAME_INVALID": "The name is invalid",
-    "T_LAST_NAME_INVALID": "The surname is invalid"
+    "T_LAST_NAME_INVALID": "The surname is invalid",
+    "T_MODEL_NAME_REQ": "The model name is required",
+    "T_FIELD_DEFAULT_REQ": "The default value is required",
+    "T_MODEL_NAME_DUPL": "The model name already exists"
   },
   "flask": {
     "T_APP_NAME": "Application name",

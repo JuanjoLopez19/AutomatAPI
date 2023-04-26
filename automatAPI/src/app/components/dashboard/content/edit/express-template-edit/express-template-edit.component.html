@@ -383,47 +383,59 @@
                               apiConfigFormGroup.get('use_ssl').value === 'yes'
                             "
                           >
-                            <div class="row">
-                              <div class="col-6">
-                                <p-button
-                                  styleClass="p-button-info"
-                                  type="button"
-                                  [icon]="iconCertFile"
-                                  iconPos="right"
-                                  [pTooltip]="'T_ONLY_CRT_PEM' | translate"
-                                  [label]="certFileName | translate"
-                                  (click)="certInput.click()"
-                                >
-                                </p-button>
-                                <input
-                                  hidden
-                                  #certInput
-                                  type="file"
-                                  accept=".crt, .pem"
-                                  (change)="onFileChange($event, 'cert')"
-                                />
-                              </div>
-                              <div class="col-6">
-                                <p-button
-                                  styleClass="p-button-info"
-                                  type="button"
-                                  [icon]="iconKeyFile"
-                                  iconPos="right"
-                                  [pTooltip]="'T_ONLY_CRT_PEM' | translate"
-                                  [label]="keyFileName | translate"
-                                  (click)="keyInput.click()"
-                                >
-                                </p-button>
+                           <div class="row">
+                                    <div class="col-6">
+                                      <p-button
+                                        [styleClass]="
+                                          errorFileCert
+                                            ? 'p-button-danger'
+                                            : 'p-button-info'
+                                        "
+                                        type="button"
+                                        [icon]="iconCertFile"
+                                        iconPos="right"
+                                        [pTooltip]="
+                                          'T_ONLY_CRT_PEM' | translate
+                                        "
+                                        [label]="certFileName | translate"
+                                        (click)="certInput.click()"
+                                      >
+                                      </p-button>
+                                      <input
+                                        hidden
+                                        #certInput
+                                        type="file"
+                                        accept=".crt, .pem"
+                                        (change)="onFileChange($event, 'cert')"
+                                      />
+                                    </div>
+                                    <div class="col-6">
+                                      <p-button
+                                        [styleClass]="
+                                          errorFileKey
+                                            ? 'p-button-danger'
+                                            : 'p-button-info'
+                                        "
+                                        type="button"
+                                        [icon]="iconKeyFile"
+                                        iconPos="right"
+                                        [pTooltip]="
+                                          'T_ONLY_CRT_PEM' | translate
+                                        "
+                                        [label]="keyFileName | translate"
+                                        (click)="keyInput.click()"
+                                      >
+                                      </p-button>
 
-                                <input
-                                  (change)="onFileChange($event, 'key')"
-                                  hidden
-                                  #keyInput
-                                  accept=".crt, .pem"
-                                  type="file"
-                                />
-                              </div>
-                            </div>
+                                      <input
+                                        (change)="onFileChange($event, 'key')"
+                                        hidden
+                                        #keyInput
+                                        accept=".crt, .pem"
+                                        type="file"
+                                      />
+                                    </div>
+                                  </div>
                           </div>
                         </div>
                       </div>

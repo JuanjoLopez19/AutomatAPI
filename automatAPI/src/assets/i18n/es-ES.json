@@ -239,7 +239,10 @@
     "T_FIRST_NAME_REQ": "El nombre es obligatorio",
     "T_LAST_NAME_REQ": "Los apellidos son obligatorios",
     "T_FIRST_NAME_INVALID": "El nombre es inválido",
-    "T_LAST_NAME_INVALID": "Los apellidos son inválidos"
+    "T_LAST_NAME_INVALID": "Los apellidos son inválidos",
+    "T_MODEL_NAME_REQ": "El nombre del modelo es obligatorio",
+    "T_FIELD_DEFAULT_REQ": "El valor por defecto es obligatorio",
+    "T_MODEL_NAME_DUPL": "El modelo ya existe"
   },
   "flask": {
     "T_APP_NAME": "Nombre de la Aplicación",
