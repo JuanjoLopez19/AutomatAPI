@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { techUse } from 'src/app/common/enums/enums';
+import { techType, techUse } from 'src/app/common/enums/enums';
 import { templates } from 'src/app/common/interfaces/interfaces';
 
 @Component({
@@ -22,5 +22,19 @@ export class SummaryCardComponent {
 
   getCardWidth(): string {
     return '85%';
+  }
+
+  getClass(): string {
+    switch (this.technologyName.toLowerCase()) {
+      case techType.flask:
+        return 'flask';
+      case techType.express:
+        return 'express';
+      case techType.django:
+        return 'django';
+
+      default:
+        return 'flask services';
+    }
   }
 }

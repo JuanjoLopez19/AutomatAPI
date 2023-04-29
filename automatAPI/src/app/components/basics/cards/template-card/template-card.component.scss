@@ -2,12 +2,101 @@
 :host {
   p-card {
     ::ng-deep .p-card {
-      border-radius: 30px;
+      border-radius: 15px;
+      min-height: 244px;
+      &.flask {
+        &.services {
+          background-color: #204fa1;
+          color: $white;
+        }
+        &.app_web {
+          background-color: rgba(40, 108, 225, 0.65);
+          color: $white;
+        }
+        .p-card-subtitle {
+          color: $white;
+        }
+      }
+
+      &.express {
+        &.services {
+          background-color: #f9a826;
+          color: $black-not-black;
+        }
+        &.app_web {
+          background-color: #fab464;
+          color: $black-not-black;
+        }
+        .p-card-subtitle {
+          color: $black-not-black;
+        }
+      }
+
+      &.django {
+        &.services {
+          background-color: #1c633a;
+          color: $white;
+          .p-card-subtitle {
+            color: $white;
+          }
+        }
+        &.app_web {
+          background-color: rgba(0, 200, 83, 0.65);
+          color: $black-not-black;
+        }
+        .p-card-subtitle {
+          color: $black-not-black;
+        }
+      }
     }
   }
 
-  .icon {
-    height: fit-content;
-    width: fit-content;
+  .icon-3 {
+    height: max-content;
+    width: 35px;
+  }
+
+  .title-3 {
+    font-weight: 700;
+    font-size: 2.5rem;
+    padding-left: 0.5rem;
+  }
+
+  .date-3 {
+    padding-left: 0.5rem;
+  }
+
+  .icon-2 {
+    height: max-content;
+    width: 50px;
+  }
+
+  .title-2 {
+    font-weight: 700;
+    font-size: 2.5rem;
+    padding-left: 1.5rem;
+  }
+
+  .date-2 {
+    padding-left: 1.5rem;
+  }
+
+  .icon-1 {
+    height: max-content;
+    width: 80px;
+  }
+
+  .title-1 {
+    font-weight: 700;
+    font-size: 3rem;
+    padding-left: 2rem;
+  }
+
+  .date-1 {
+    padding-left: 2rem;
+  }
+
+  h2 {
+    overflow-y: hidden;
   }
 }

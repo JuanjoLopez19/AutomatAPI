@@ -10,7 +10,7 @@ import { userParams } from 'src/app/common/interfaces/interfaces';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  activeView: string = 'home';
+  activeView: string = 'profile';
   user: userParams;
   templateId: string = null;
   userId: string = null;

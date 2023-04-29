@@ -1,15 +1,34 @@
-<p-card [style]="{ width: getCardWidth()}">
+<p-card [style]="{ width: getCardWidth() }" [styleClass]="getClass()">
   <ng-template pTemplate="title">
     <div class="row w-100">
       <div class="col-8">
-        <h3>{{ template["app_name"] }}</h3>
+        <h2
+          [ngClass]="{
+            'title-1': numTemplates === 1,
+            'title-2': numTemplates === 2,
+            'title-3': numTemplates > 2
+          }"
+        >
+          {{ template["app_name"] }}
+        </h2>
       </div>
-      <div class="col-2">
-        <mat-icon class="icon" [svgIcon]="template['technology']"></mat-icon>
+      <div class="col-2 p-0">
+        <mat-icon
+          [ngClass]="{
+            'icon-1': numTemplates === 1,
+            'icon-2': numTemplates === 2,
+            'icon-3': numTemplates > 2
+          }"
+          [svgIcon]="template['technology']"
+        ></mat-icon>
       </div>
       <div class="col-2">
         <mat-icon
-          class="icon"
+          [ngClass]="{
+            'icon-1': numTemplates === 1,
+            'icon-2': numTemplates === 2,
+            'icon-3': numTemplates > 2
+          }"
           [svgIcon]="
             template['tech_type'] === techUse.services
               ? 'service_app'
@@ -20,7 +39,15 @@
     </div>
   </ng-template>
   <ng-template pTemplate="subtitle">
-    <h3>{{ template["date_created"] | date }}</h3>
+    <h4
+      [ngClass]="{
+        'date-1': numTemplates === 1,
+        'date-2': numTemplates === 2,
+        'date-3': numTemplates > 2
+      }"
+    >
+      {{ template["date_created"] | date : "medium" }}
+    </h4>
   </ng-template>
   <ng-template pTemplate="content">
     <p class="text-center" *ngIf="template['description'] !== ''">
