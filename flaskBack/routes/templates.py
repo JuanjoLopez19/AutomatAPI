@@ -30,13 +30,13 @@ def get_templates():
             body = dict(request.get_json(force=True))
         except Exception:
             return make_response(
-                jsonify({"status": "error", "message": "No body provided"}), 400
+                jsonify({"status": "error", "message": "T_BAD_REQ"}), 400
             )
 
         if not body:
             return make_response(
                 jsonify(
-                    {"status": "error", "message": "The body of the request is empty"},
+                    {"status": "error", "message": "T_BODY_EMPTY"},
                     400,
                 )
             )
@@ -44,7 +44,7 @@ def get_templates():
         user_id = body.get("user_id")
         if not user_id:
             return make_response(
-                jsonify({"status": "error", "message": "The user_id is required"}), 400
+                jsonify({"status": "error", "message": "T_USER_ID_REQ"}), 400
             )
 
         try:
@@ -56,7 +56,8 @@ def get_templates():
 
             if not templates_list:
                 return make_response(
-                    jsonify({"status": "error", "message": "No templates found"}), 204
+                    jsonify({"status": "error", "message": "T_TEMPLATES_NOT_FOUND"}),
+                    204,
                 )
 
             mongo_client = get_client()
@@ -78,6 +79,7 @@ def get_templates():
                 jsonify(
                     {
                         "status": "ok",
+                        "message": "T_TEMPLATES_FOUND",
                         "templates": aux,
                     }
                 ),
@@ -90,7 +92,7 @@ def get_templates():
                 jsonify(
                     {
                         "status": "error",
-                        "message": "The user does not exist",
+                        "message": "T_USER_NOT_FOUND",
                     }
                 ),
                 404,
@@ -101,13 +103,13 @@ def get_templates():
             body = dict(request.get_json(force=True))
         except Exception:
             return make_response(
-                jsonify({"status": "error", "message": "No body provided"}), 400
+                jsonify({"status": "error", "message": "T_BAD_REQ"}), 400
             )
 
         if not body:
             return make_response(
                 jsonify(
-                    {"status": "error", "message": "The body of the request is empty"},
+                    {"status": "error", "message": "T_BODY_EMPTY"},
                     400,
                 )
             )
@@ -115,7 +117,7 @@ def get_templates():
         user_id = body.get("user_id")
         if not user_id:
             return make_response(
-                jsonify({"status": "error", "message": "The user_id is required"}), 400
+                jsonify({"status": "error", "message": "T_USER_ID_REQ"}), 400
             )
 
         try:
@@ -126,7 +128,7 @@ def get_templates():
                     jsonify(
                         {
                             "status": "error",
-                            "message": "The template_data is required",
+                            "message": "T_TEMPLATE_DATA_REQ",
                         },
                         400,
                     )
@@ -137,7 +139,7 @@ def get_templates():
             tech = body.get("tech")
             if not tech:
                 return make_response(
-                    jsonify({"status": "error", "message": "The tech is required"}), 400
+                    jsonify({"status": "error", "message": "T_TECH_REQ"}), 400
                 )
 
             tech = Tech[tech]
@@ -146,7 +148,7 @@ def get_templates():
             if not tech_type:
                 return make_response(
                     jsonify(
-                        {"status": "error", "message": "The tech_type is required"}
+                        {"status": "error", "message": "T_TECH_TYPE_REQ"},
                     ),
                     400,
                 )
@@ -164,7 +166,7 @@ def get_templates():
                     jsonify(
                         {
                             "status": "error",
-                            "message": "The template could not be created",
+                            "message": "T_TEMPLATE_CREATION_ERROR",
                         }
                     ),
                     500,
@@ -182,7 +184,7 @@ def get_templates():
                     jsonify(
                         {
                             "status": "error",
-                            "message": "The template could not be stored in the non relational Database",
+                            "message": "T_TEMPLATE_STORE_ERROR",
                         }
                     ),
                     500,
@@ -204,7 +206,7 @@ def get_templates():
                     jsonify(
                         {
                             "status": "ok",
-                            "message": "The template was created successfully",
+                            "message": "T_TEMPLATE_CREATED",
                             "data": template_path,
                             "template_id": template.id,
                         }
@@ -219,7 +221,7 @@ def get_templates():
                     jsonify(
                         {
                             "status": "error",
-                            "message": "The template could not be stored in the relational Database",
+                            "message": "T_TEMPLATE_STORE_ERROR",
                         }
                     ),
                     500,
@@ -231,7 +233,7 @@ def get_templates():
                 jsonify(
                     {
                         "status": "error",
-                        "message": "The user does not exist",
+                        "message": "T_USER_NOT_FOUND",
                     }
                 ),
                 404,
@@ -248,20 +250,20 @@ def get_template(template_id):
         body = dict(request.get_json(force=True))
     except Exception:
         return make_response(
-            jsonify({"status": "error", "message": "No body provided"}), 400
+            jsonify({"status": "error", "message": "T_BAD_REQ"}), 400
         )
 
     if not body:
         return make_response(
             jsonify(
-                {"status": "error", "message": "The body of the request is empty"}, 400
+                {"status": "error", "message": "T_BODY_EMPTY"}, 400
             )
         )
 
     user_id = body.get("user_id")
     if not user_id:
         return make_response(
-            jsonify({"status": "error", "message": "The user_id is required"}), 400
+            jsonify({"status": "error", "message": "T_USER_ID_REQ"}), 400
         )
 
     try:
@@ -272,7 +274,7 @@ def get_template(template_id):
                 jsonify(
                     {
                         "status": "error",
-                        "message": "The user does not have access to the template",
+                        "message": "T_UNAUTHORIZED",
                     }
                 ),
                 403,
@@ -287,7 +289,7 @@ def get_template(template_id):
         if temp:
             temp.pop("_id")
         close_connection(mongo_client)
-        return make_response(jsonify({"status": "ok", "template": temp}), 200)
+        return make_response(jsonify({"status": "ok", "template": temp, "messages": "T_TEMPLATE_FOUND"}), 200)
 
     except Exception as e:
         print(e)
@@ -295,7 +297,7 @@ def get_template(template_id):
             jsonify(
                 {
                     "status": "error",
-                    "message": "The user or the template does not exist",
+                    "message": "T_NOT_FOUND",
                 }
             ),
             404,
@@ -312,12 +314,12 @@ def update_template(template_id):
         body = dict(request.get_json(force=True))
     except Exception:
         return make_response(
-            jsonify({"status": "error", "message": "No body provided"}), 400
+            jsonify({"status": "error", "message": "T_BAD_REQ"}), 400
         )
 
     if not body:
         return make_response(
-            jsonify({"status": "error", "message": "The body of the request is empty"}),
+            jsonify({"status": "error", "message": "T_BODY_EMPTY"}),
             400,
         )
 
@@ -325,13 +327,13 @@ def update_template(template_id):
 
     if not user_id:
         return make_response(
-            jsonify({"status": "error", "message": "The user_id is required"}), 400
+            jsonify({"status": "error", "message": "T_USER_ID_REQ"}), 400
         )
 
     tech_type = body.get("tech_type")
     if not tech_type:
         return make_response(
-            jsonify({"status": "error", "message": "The tech_type is required"}), 400
+            jsonify({"status": "error", "message": "T_TECH_TYPE_REQ"}), 400
         )
 
     try:
@@ -341,7 +343,7 @@ def update_template(template_id):
         if not template_data:
             return make_response(
                 jsonify(
-                    {"status": "error", "message": "The template_data is required"}
+                    {"status": "error", "message": "T_TEMPLATE_DATA_REQ"}
                 ),
                 400,
             )
@@ -352,7 +354,7 @@ def update_template(template_id):
                 jsonify(
                     {
                         "status": "error",
-                        "message": "The user does not have access to the template",
+                        "message": "T_UNAUTHORIZED",
                     }
                 ),
                 403,
@@ -391,7 +393,7 @@ def update_template(template_id):
                     jsonify(
                         {
                             "status": "ok",
-                            "message": "The template was updated successfully",
+                            "message": "T_TEMPLATE_CREATED",
                             "data": path,
                         }
                     ),
@@ -404,7 +406,7 @@ def update_template(template_id):
                     jsonify(
                         {
                             "status": "error",
-                            "message": "The template could not be created",
+                            "message": "T_TEMPLATE_NOT_CREATED",
                         }
                     ),
                     500,
@@ -416,7 +418,7 @@ def update_template(template_id):
                 jsonify(
                     {
                         "status": "error",
-                        "message": "The template could not be updated",
+                        "message": "T_TEMPLATE_NOT_UPDATED",
                     }
                 ),
                 500,
@@ -428,7 +430,7 @@ def update_template(template_id):
             jsonify(
                 {
                     "status": "error",
-                    "message": "The user or the template does not exist",
+                    "message": "T_NOT_FOUND",
                 }
             ),
             404,
@@ -446,7 +448,7 @@ def delete_template(template_id):
         body = dict(request.get_json(force=True))
     except Exception:
         return make_response(
-            jsonify({"status": "error", "message": "No body provided", "code": 400}),
+            jsonify({"status": "error", "message": "T_BAD_REQ", "code": 400}),
             400,
         )
 
@@ -455,7 +457,7 @@ def delete_template(template_id):
             jsonify(
                 {
                     "status": "error",
-                    "message": "The body of the request is empty",
+                    "message": "T_BODY_EMPTY",
                     "code": 400,
                 }
             ),
@@ -468,7 +470,7 @@ def delete_template(template_id):
             jsonify(
                 {
                     "status": "error",
-                    "message": "The user_id is required",
+                    "message": "T_USER_ID_REQ",
                     "code": 400,
                 }
             ),
@@ -483,7 +485,7 @@ def delete_template(template_id):
                 jsonify(
                     {
                         "status": "error",
-                        "message": "The user does not have access to the template",
+                        "message": "T_UNAUTHORIZED",
                     }
                 ),
                 403,
@@ -505,7 +507,7 @@ def delete_template(template_id):
                 jsonify(
                     {
                         "status": "ok",
-                        "message": "The template was deleted successfully",
+                        "message": "T_TEMPLATE_DELETED",
                     }
                 ),
                 200,
@@ -517,7 +519,7 @@ def delete_template(template_id):
                 jsonify(
                     {
                         "status": "error",
-                        "message": "The template could not be deleted",
+                        "message": "T_TEMPLATE_NOT_DELETED",
                     }
                 ),
                 500,
@@ -528,7 +530,7 @@ def delete_template(template_id):
             jsonify(
                 {
                     "status": "error",
-                    "message": "The user or the template does not exist",
+                    "message": "T_NOT_FOUND",
                 }
             ),
             404,
@@ -650,7 +652,7 @@ def get_config():
         body = dict(request.get_json(force=True))
     except Exception:
         return make_response(
-            jsonify({"status": "error", "message": "No body provided"}),
+            jsonify({"status": "error", "message": "T_BAD_REQ"}),
             400,
         )
 
@@ -659,7 +661,7 @@ def get_config():
             jsonify(
                 {
                     "status": "error",
-                    "message": "The body of the request is empty",
+                    "message": "T_BODY_REQ",
                 }
             ),
             400,
@@ -671,7 +673,7 @@ def get_config():
             jsonify(
                 {
                     "status": "error",
-                    "message": "The user_id is required",
+                    "message": "T_USER_ID_REQ",
                 }
             ),
             400,
@@ -682,7 +684,7 @@ def get_config():
             jsonify(
                 {
                     "status": "error",
-                    "message": "The template_id is required",
+                    "message": "T_TEMPLATE_ID_REQ",
                 }
             ),
             400,
@@ -695,7 +697,7 @@ def get_config():
                 jsonify(
                     {
                         "status": "error",
-                        "message": "T_NOT_AUTHORIZED",
+                        "message": "T_UNAUTHORIZED",
                     }
                 ),
                 403,
