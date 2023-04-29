@@ -31,16 +31,16 @@ def get_templates(user_id):
         temp = delete_many(mongo_collection, {"_id": {"$in": aux}})
         if not temp.acknowledged:
             return make_response(
-                jsonify({"message": "Error deleting templates", "status": "error"}), 500
+                jsonify({"message": "T_INTERNAL_SERVER_ERROR", "status": "error"}), 500
             )
 
         db.session.delete(user)
         db.session.commit()
         return make_response(
-            jsonify({"message": "User deleted", "status": "success"}), 200
+            jsonify({"message": "T_USER_DELETED", "status": "success"}), 200
         )
     except Exception as e:
         print(e.with_traceback("User not found"))
         return make_response(
-            jsonify({"message": "User not found", "status": "error"}), 404
+            jsonify({"message": "T_USER_FOUND", "status": "error"}), 404
         )
