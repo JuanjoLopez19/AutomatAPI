@@ -39,23 +39,8 @@
   </ng-template>
   <ng-template pTemplate="content">
     <div class="container">
-      <p class="text-xl font-bold" *ngIf="status === 200">
-        {{ "T_SUCCESS_RES" | translate }}
-      </p>
-      <p class="text-xl font-bold" *ngIf="status === 201">
-        {{ "T_CREATED_RES" | translate }}
-      </p>
-      <p class="text-xl font-bold" *ngIf="status === 500">
-        {{ "T_INTER_ERROR_RES" | translate }}
-      </p>
-      <p class="text-xl font-bold" *ngIf="status === 400">
-        {{ "T_BAD_REQ_RES" | translate }}
-      </p>
-      <p class="text-xl font-bold" *ngIf="status === 401">
-        {{ "T_UNAUTH_RES" | translate }}
-      </p>
-      <p class="text-xl font-bold" *ngIf="status === 404">
-        {{ "T_NOT_FOUND_RES" | translate }}
+      <p class="text-xl font-bold">
+        {{ translatedMessage }}
       </p>
     </div>
   </ng-template>
@@ -63,8 +48,6 @@
     <button
       pButton
       pRipple
-      icon="pi pi-check"
-      iconPos="right"
       (click)="show = false"
       [label]="'T_OK' | translate"
     ></button>

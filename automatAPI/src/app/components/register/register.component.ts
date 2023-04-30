@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegisterService } from 'src/app/api/auth/register/register.service';
-import { registerParams } from 'src/app/common/interfaces/interfaces';
+import { httpResponse, registerParams } from 'src/app/common/interfaces/interfaces';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import {
   nameRegEx,
@@ -17,12 +17,18 @@ import {
 })
 export class RegisterComponent {
   @Output() goToLogin: EventEmitter<string> = new EventEmitter<string>();
+
   registerForm: FormGroup;
+
   waitingState: boolean = false;
   invalidPasswords: boolean = false;
+
   params: registerParams;
+
   showDialog: boolean = false;
   statusCode: number;
+  message: string;
+
   maxDate: Date = new Date();
 
   constructor(
@@ -84,10 +90,12 @@ export class RegisterComponent {
         };
 
         this.registerService.register(this.params).subscribe({
-          next: (response: HttpResponse<any>) => {
+          next: (response: httpResponse) => {
+            console.log(response);
             setTimeout(() => {
               this.waitingState = false;
               this.statusCode = response.status;
+              this.message = response.message;
               this.showDialog = true;
             }, 1000);
 
@@ -96,9 +104,11 @@ export class RegisterComponent {
             }, 3000);
           },
           error: (error: HttpErrorResponse) => {
+            console.log(error);
             setTimeout(() => {
               this.waitingState = false;
               this.statusCode = error.status;
+              this.message = error.error.message;
               this.showDialog = true;
             }, 1500);
           },

@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/api/auth/auth/auth.service';
 import { passwordRegex, databaseRegEx } from 'src/app/common/constants';
 import { Sizes } from 'src/app/common/enums/enums';
-import { completeRegisterParams } from 'src/app/common/interfaces/interfaces';
+import { completeRegisterParams, httpResponse } from 'src/app/common/interfaces/interfaces';
 
 @Component({
   selector: 'app-complete-register',
@@ -27,6 +27,7 @@ export class CompleteRegisterComponent {
 
   showDialog: boolean = false;
   statusCode: number;
+  message: string;
 
   validUsername: boolean = false;
   pwdValid: boolean = false;
@@ -134,10 +135,11 @@ export class CompleteRegisterComponent {
       };
 
       this.authService.completeRegister(this.params).subscribe({
-        next: (response: HttpResponse<any>) => {
+        next: (response: httpResponse) => {
           setTimeout(() => {
             this.waitingState = false;
             this.statusCode = response.status;
+            this.message = response.message;
             this.showDialog = true;
           }, 1500);
         },
@@ -145,6 +147,7 @@ export class CompleteRegisterComponent {
           setTimeout(() => {
             this.waitingState = false;
             this.statusCode = error.status;
+            this.message = error.error.message;
             this.showDialog = true;
           }, 1500);
         },

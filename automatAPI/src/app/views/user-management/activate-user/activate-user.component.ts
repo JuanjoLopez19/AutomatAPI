@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/api/auth/auth/auth.service';
 import { Sizes } from 'src/app/common/enums/enums';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { httpResponse } from 'src/app/common/interfaces/interfaces';
 
 @Component({
   selector: 'app-activate-user',
@@ -12,11 +13,14 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 })
 export class ActivateUserComponent implements OnInit {
   private token: string = undefined;
-  waitingState: boolean = false;
   readonly sizes: typeof Sizes = Sizes;
+
+  waitingState: boolean = false;
   currentSize!: string;
+
   showDialog: boolean = false;
   statusCode: number;
+  message: string;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -71,10 +75,11 @@ export class ActivateUserComponent implements OnInit {
   activateAccount() {
     this.waitingState = true;
     this.authService.activateAccount(this.token).subscribe({
-      next: (response: HttpResponse<any>) => {
+      next: (response: httpResponse) => {
         setTimeout(() => {
           this.waitingState = false;
           this.statusCode = response.status;
+          this.message = response.message;
           this.showDialog = true;
         }, 1500);
       },
@@ -82,6 +87,7 @@ export class ActivateUserComponent implements OnInit {
         setTimeout(() => {
           this.waitingState = false;
           this.statusCode = error.status;
+          this.message = error.error.message;
           this.showDialog = true;
         }, 1500);
       },

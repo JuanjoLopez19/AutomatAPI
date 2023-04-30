@@ -4,7 +4,10 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/api/auth/auth/auth.service';
 import { Sizes } from 'src/app/common/enums/enums';
-import { rememberPasswordParams } from 'src/app/common/interfaces/interfaces';
+import {
+  httpResponse,
+  rememberPasswordParams,
+} from 'src/app/common/interfaces/interfaces';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 @Component({
@@ -20,6 +23,7 @@ export class RememberPasswordComponent {
   waitingState: boolean = false;
   showDialog: boolean = false;
   statusCode: number;
+  message: string;
 
   constructor(
     private router: Router,
@@ -97,10 +101,11 @@ export class RememberPasswordComponent {
         username: this.remPasswordForm.value.username,
       };
       this.authService.rememberPassword(this.params).subscribe({
-        next: (response: HttpResponse<any>) => {
+        next: (response: httpResponse) => {
           setTimeout(() => {
             this.waitingState = false;
             this.statusCode = response.status;
+            this.message = response.message;
             this.showDialog = true;
           }, 1500);
         },
@@ -108,6 +113,7 @@ export class RememberPasswordComponent {
           setTimeout(() => {
             this.waitingState = false;
             this.statusCode = error.status;
+            this.message = error.error.message;
             this.showDialog = true;
           }, 1500);
         },
