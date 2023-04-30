@@ -58,7 +58,7 @@ export const Signup = async (req: Request, res: Response) => {
 											).then((response) => {
 												if (response === 200) {
 													res.status(200).send({
-														message: "T_USER_CREATED",
+														message: "T_EMAIL_SENT_SUCCESFULLY",
 														status: 200,
 													});
 												} else {
@@ -239,7 +239,7 @@ export const rememberPassword = async (req: Request, res: Response) => {
 				).then((response) => {
 					if (response === 200) {
 						return res.status(200).send({
-							message: "T_EMAIL_SENT_SUCCESSFULLY",
+							message: "T_EMAIL_SENT_SUCCESFULLY",
 							status: 200,
 						});
 					} else {

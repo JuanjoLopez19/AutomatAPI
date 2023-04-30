@@ -11,7 +11,7 @@ const github = new githubStrategy(
 	{
 		clientID: config.github.clientID,
 		clientSecret: config.github.clientSecret,
-		callbackURL: `http://localhost:${config.port}${config.github.callbackURL}`,
+		callbackURL: `${config.host}:${config.port}${config.github.callbackURL}`,
 	},
 	async (
 		accessToken: string,
