@@ -1,0 +1,36 @@
+<div class="row w-100">
+  <div class="row w-100">
+    <div class="main">
+      <div class="row">
+        <div class="col-6 p-3 d-flex justify-content-center">
+          <button
+            pButton
+            type="button"
+            class="btn"
+            id="sign_in"
+            [ngClass]="{
+              'p-button-raised p-button-info': active === 'sign_in',
+              'p-button-text': active !== 'sign_in'
+            }"
+            (click)="manageClick($event, 0)"
+            label="{{ 'T_SIGN_IN' | translate }}"
+          ></button>
+        </div>
+        <div class="col-6 p-3 d-flex justify-content-center">
+          <button
+            pButton
+            type="button"
+            class="btn"
+            id="sign_up"
+            [ngClass]="{
+              'p-button-raised p-button-info': active === 'sign_up',
+              'p-button-text': active !== 'sign_up'
+            }"
+            (click)="manageClick($event, 1)"
+            label="{{ 'T_SIGN_UP' | translate }}"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

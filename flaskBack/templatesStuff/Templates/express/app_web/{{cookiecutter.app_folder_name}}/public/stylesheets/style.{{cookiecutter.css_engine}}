@@ -1,0 +1,20 @@
+{%- if cookiecutter.css_engine == 'scss' %}
+@import "compass/css3";
+{%- endif %}
+{%- if cookiecutter.css_engine == 'less' or cookiecutter.css_engine == 'scss' or cookiecutter.css_engine == 'css' %}
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+{%- endif %}
+{%- if cookiecutter.css_engine == 'styl' or cookiecutter.css_engine == 'sass' %}
+body
+  padding: 50px
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
+a
+  color: #00B7FF
+{%- endif %}

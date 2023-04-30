@@ -1,0 +1,64 @@
+@import "src/shared/variables";
+
+:host {
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  ::ng-deep p-divider {
+    .p-divider-content {
+      background-color: $orange;
+    }
+  }
+
+  ::ng-deep .p-button.p-button-info {
+    background-color: $light-blue;
+    border-color: $light-blue;
+    color: $white;
+
+    &:hover {
+      background-color: $blue-transparent;
+      border-color: $blue-transparent;
+      color: $white;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem $blue-transparent;
+    }
+  }
+
+  ::ng-deep p-button {
+    .p-button-rounded.p-button-info {
+      background-color: $light-blue;
+      border-color: $light-blue;
+      color: $white;
+    }
+
+    .p-button.p-button-rounded.p-button-info:hover {
+      background-color: $blue-transparent;
+      border-color: $blue-transparent;
+      color: $white;
+    }
+
+    .p-button.p-button-info:focus {
+      box-shadow: 0 0 0 0.2rem $blue-transparent;
+    }
+  }
+
+  .error {
+    background-color: $error-color !important;
+    color: $black-not-black !important;
+    border-color: $error-color !important;
+  }
+
+  .error:focus {
+    box-shadow: 0 0 0 0.2rem $error-color-effects;
+  }
+
+  .error:hover {
+    background-color: $error-color-effects !important;
+    color: $black-not-black !important;
+    border-color: $error-color-effects !important;
+  }
+}

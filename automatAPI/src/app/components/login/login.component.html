@@ -1,0 +1,148 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="row">
+        <span class="text-center">
+          <h3>{{ "T_SIGN_IN_NOW" | translate }}</h3>
+        </span>
+      </div>
+      <form
+        class="row px-0"
+        (ngSubmit)="onLoginSubmit()"
+        [formGroup]="loginForm"
+      >
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-6">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row justify-content-end">
+                      <span class="col-10">
+                        <h3>{{ "T_EMAIL" | translate }}</h3>
+                      </span>
+                    </div>
+                    <div class="row justify-content-end">
+                      <div class="col-10">
+                        <span class="p-input-icon-right field">
+                          <i class="pi pi-user"></i>
+                          <input
+                            formControlName="email"
+                            type="email"
+                            id="email"
+                            placeholder="{{
+                              'T_EMAIL_PLACEHOLDER' | translate
+                            }}"
+                            pInputText
+                          />
+                        </span>
+
+                        <div class="row">
+                          <small
+                            id="email-help"
+                            class="p-error block mt-2"
+                            *ngIf="loginForm.get('email').errors?.[ 'required' ] && loginForm.get('email').touched"
+                            >{{ "error.T_EMAIL_REQ" | translate }}
+                          </small>
+                          <small
+                            id="email-help"
+                            class="p-error block"
+                            *ngIf="loginForm.get('email').errors?.[ 'email' ]"
+                          >
+                            {{ "error.T_EMAIL_INVALID" | translate }}
+                          </small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-12">
+                    <div class="row justify-content-end">
+                      <span class="col-10">
+                        <h3>{{ "T_PWD" | translate }}</h3>
+                      </span>
+                    </div>
+                    <div class="row justify-content-end">
+                      <div class="col-10 field">
+                        <p-password
+                          formControlName="password"
+                          placeholder="{{ 'T_PWD_PLACEHOLDER' | translate }}"
+                          id="password"
+                          [toggleMask]="true"
+                          [feedback]="false"
+                        ></p-password>
+                        <small
+                          id="password-help"
+                          class="p-error block mt-2"
+                          *ngIf="loginForm.get('password').errors?.[ 'required' ] && loginForm.get('password').touched"
+                          >{{ "error.T_PWD_REQ" | translate }}
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-12">
+                    <div class="row justify-content-end">
+                      <div class="col-10">
+                        <button
+                          [ngClass]="{
+                            error: icon === 'pi pi-exclamation-triangle'
+                          }"
+                          pButton
+                          pRipple
+                          [icon]="icon"
+                          iconPos="right"
+                          [label]="'T_SIGN_IN' | translate"
+                          type="submit"
+                          [loading]="waitingState"
+                          class="p-button-info"
+                        ></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-1">
+                <p-divider layout="vertical">
+                  <b>{{ "T_OR" | translate }}</b>
+                </p-divider>
+              </div>
+              <div class="col-5">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row justify-content-center">
+                      <span class="col-8">
+                        <h3>{{ "T_LOGIN_WITH" | translate }}</h3>
+                      </span>
+                    </div>
+                    <div class="row justify-content-center py-3">
+                      <span class="col-4">
+                        <p-button
+                          icon="pi pi-google"
+                          styleClass="p-button-rounded p-button-info p-button-text p-button-raised"
+                          (onClick)="loginWithGoogle()"
+                        ></p-button>
+                      </span>
+                    </div>
+
+                    <div class="row justify-content-center py-3">
+                      <span class="col-4">
+                        <p-button
+                          icon="pi pi-github"
+                          styleClass="p-button-rounded p-button-info p-button-text p-button-raised"
+                          (onClick)="loginWithGithub()"
+                        ></p-button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

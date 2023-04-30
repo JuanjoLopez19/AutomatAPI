@@ -1,0 +1,40 @@
+@import "src/shared/variables";
+:host {
+  p-card {
+    ::ng-deep .p-card {
+      border-radius: 15px;
+
+      &.flask {
+        background-color: rgba(40, 108, 225, 0.65);
+        color: $black-not-black;
+
+        .p-card-subtitle {
+          color: $black-not-black;
+        }
+      }
+
+      &.express {
+        background-color: #fab464;
+        color: $black-not-black;
+
+        .p-card-subtitle {
+          color: $black-not-black;
+        }
+      }
+
+      &.django {
+        background-color: rgba(0, 200, 83, 0.65);
+        color: $black-not-black;
+
+        .p-card-subtitle {
+          color: $black-not-black;
+        }
+      }
+    }
+  }
+
+  .icon {
+    height: fit-content;
+    width: 50px;
+  }
+}

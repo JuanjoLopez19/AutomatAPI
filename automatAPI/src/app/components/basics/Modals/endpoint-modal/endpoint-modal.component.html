@@ -1,0 +1,244 @@
+<p-dialog
+  header="{{ 'T_MESSAGE' | translate }}"
+  [modal]="true"
+  [(visible)]="show"
+  [position]="'top'"
+  [style]="{ width: '650px', height: '320px' }"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="false"
+  class="dialog"
+  (onShow)="onShow()"
+>
+  <ng-template pTemplate="header">
+    <div class="container">
+      <div class="row w-100 border-bottom">
+        <h1>{{ "T_ADD_ENDPOINT" | translate }}</h1>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div class="row h-100">
+      <div class="col-12">
+        <form [formGroup]="addEndpointFormControl">
+          <div class="row">
+            <div class="col-6">
+              <div class="row">
+                <div class="row pt-4 justify-content-end">
+                  <span class="p-float-label col-10">
+                    <input
+                      pInputText
+                      id="endpoint_name"
+                      formControlName="endpoint_name"
+                      [readOnly]="editMode"
+                    />
+                    <label htmlFor="endpoint_name">{{
+                      "T_ENDP_NAME" | translate
+                    }}</label>
+                  </span>
+                </div>
+                <div class="pb-2 row justify-content-end">
+                  <small
+                    id="endp-name-help"
+                    class="p-error block col-10"
+                    *ngIf="addEndpointFormControl.get('endpoint_name').errors?.[ 'required' ] && addEndpointFormControl.get('endpoint_name').touched"
+                    >{{ "error.T_ENDP_NAME_REQ" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block col-10"
+                    *ngIf="validName"
+                    >{{ "error.T_ENDP_NAME_INVALID" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block col-10"
+                    *ngIf="duplicatedName"
+                    >{{ "error.T_ENDP_NAME_DUPL" | translate }}</small
+                  >
+                </div>
+                <div class="row pt-3 justify-content-end">
+                  <span class="p-float-label col-10">
+                    <input
+                      pInputText
+                      id="endpoint_url"
+                      formControlName="endpoint_url"
+                    />
+                    <label htmlFor="endpoint_url">{{
+                      "T_ENDP_URL" | translate
+                    }}</label>
+                  </span>
+                </div>
+                <div class="pb-4 row justify-content-end">
+                  <small
+                    id="endp-name-help"
+                    class="p-error block col-10"
+                    *ngIf="addEndpointFormControl.get('endpoint_url').errors?.[ 'required' ] && addEndpointFormControl.get('endpoint_url').touched"
+                    >{{ "error.T_ENDP_URL_REQ" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block col-10"
+                    *ngIf="validUrl"
+                    >{{ "error.T_ENDP_URL_INVALID" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block col-10"
+                    *ngIf="duplicatedUrl"
+                    >{{ "error.T_ENDP_URL_DUPL" | translate }}</small
+                  >
+                </div>
+                <div class="row justify-content-end">
+                  <span class="p-float-label col-10">
+                    <textarea
+                      pInputTextarea
+                      id="endpoint_desc"
+                      formControlName="endpoint_comment"
+                    ></textarea>
+                    <label htmlFor="endpoint_desc">{{
+                      "T_ENDP_DESC" | translate
+                    }}</label>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="row" *ngIf="type === 'flask' || type === 'django'">
+                <div class="py-4" formGroupName="methods">
+                  <div class="row">
+                    <div class="mb-3">
+                      <p-checkbox
+                        name="group"
+                        [binary]="true"
+                        formControlName="get_m"
+                        inputId="get_m"
+                        ngDefaultControl
+                      ></p-checkbox>
+                      <label for="get_m">
+                        {{ "T_GET_METHOD" | translate }}</label
+                      >
+
+                      <p-checkbox
+                        name="group"
+                        [binary]="true"
+                        formControlName="post"
+                        inputId="post"
+                        ngDefaultControl
+                      ></p-checkbox>
+                      <label for="post">
+                        {{ "T_POST_METHOD" | translate }}</label
+                      >
+                    </div>
+                    <div class="row">
+                      <div class="mb-1">
+                        <p-checkbox
+                          name="group"
+                          [binary]="true"
+                          formControlName="put"
+                          inputId="put"
+                          ngDefaultControl
+                        ></p-checkbox>
+                        <label for="put">
+                          {{ "T_PUT_METHOD" | translate }}</label
+                        >
+
+                        <p-checkbox
+                          name="group"
+                          [binary]="true"
+                          formControlName="del"
+                          inputId="del"
+                          ngDefaultControl
+                        ></p-checkbox>
+                        <label for="del">
+                          {{ "T_DEL_METHOD" | translate }}</label
+                        >
+                      </div>
+                    </div>
+                    <div class="row">
+                      <small
+                        id="endp-name-help"
+                        class="p-error block"
+                        *ngIf="noMethodChecked"
+                        >{{ "error.T_ENDP_METHOD_REQ" | translate }}</small
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="row justify-content-center"
+                  *ngIf="type === 'django'"
+                >
+                  <div class="row mx-0">
+                    {{ "django.T_REQ_AUTH" | translate }}
+                  </div>
+
+                  <div class="row pt-2 mx-0 px-0" *ngIf="type === 'django'">
+                    <div class="col-4">
+                      <p-radioButton
+                        inputId="admin_yes"
+                        value="yes"
+                        formControlName="logged_in"
+                      ></p-radioButton>
+                      <label for="admin_yes" class="ml-2">{{
+                        "T_YES" | translate
+                      }}</label>
+                    </div>
+                    <div class="col-4">
+                      <p-radioButton
+                        inputId="admin_no"
+                        value="no"
+                        formControlName="logged_in"
+                      ></p-radioButton>
+                      <label for="admin_no" class="ml-2">{{
+                        "T_NO" | translate
+                      }}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="type === 'express'">
+                <div class="py-3 px-4">
+                  <div class="row">
+                    {{ "T_METHOD" | translate }}
+                  </div>
+                  <div class="row">
+                    <p-dropdown
+                      [options]="httpMethodSelector"
+                      optionLabel="name"
+                      optionValue="value"
+                      class="p-0"
+                      formControlName="method"
+                    ></p-dropdown>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="row w-100 justify-content-end">
+      <div class="col-4">
+        <p-button
+          styleClass="p-button-danger"
+          [label]="'T_DISCARD' | translate"
+          icon="pi pi-times"
+          iconPos="right"
+          (onClick)="manageHide()"
+        ></p-button>
+      </div>
+      <div class="col-2">
+        <p-button
+          styleClass="p-button-info"
+          [label]="'T_ADD' | translate"
+          icon="pi pi-check"
+          iconPos="right"
+          (onClick)="closeModal()"
+        ></p-button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

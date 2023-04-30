@@ -1,0 +1,49 @@
+{%- if cookiecutter.view_engine == "hbs" %}
+<h1>{{"title"}}</h1>
+<p>Welcome to {{"title"}}</p>
+{%- elif cookiecutter.view_engine == "ejs" %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.{{cookiecutter.css_engine}}' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+  </body>
+</html>
+{%- elif cookiecutter.view_engine == "hjs" %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ "title" }}</title>
+    <link rel='stylesheet' href='/stylesheets/style.{{cookiecutter.css_engine}}' />
+  </head>
+  <body>
+    <h1>{{ "title" }}</h1>
+    <p>Welcome to {{ "title" }}</p>
+  </body>
+</html>
+{%- elif cookiecutter.view_engine == "pug" or cookiecutter.view_engine == "jade" %}
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+{%- elif cookiecutter.view_engine == "twig" %}
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <h1>{{"title"}}</h1>
+  <p>Welcome to {{"title"}}</p>
+{% endblock %}
+{%- elif cookiecutter.view_engine == "vash" %}
+@html.extend('layout', function(model) {
+  @html.block('content', function(model) {
+    <h1>@model.title</h1>
+    <p>Welcome to @model.title</p>
+  })
+})
+{% endif %}

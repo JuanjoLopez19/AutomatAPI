@@ -1,0 +1,35 @@
+@import "src/shared/variables";
+
+:host {
+  .container {
+    max-height: fit-content;
+  }
+  .main-container {
+    background-color: $white-not-white;
+    border-radius: 24px;
+    padding: 1rem;
+  }
+
+  p-dropdown {
+    ::ng-deep .p-dropdown {
+      width: 75%;
+    }
+  }
+  ::ng-deep p-button {
+    .p-button-info {
+      background-color: $light-blue;
+      border-color: $light-blue;
+      color: $white;
+    }
+
+    .p-button.p-button-info:hover {
+      background-color: $blue-transparent;
+      border-color: $blue-transparent;
+      color: $white;
+    }
+
+    .p-button.p-button-info:focus {
+      box-shadow: 0 0 0 0.2rem $blue-transparent;
+    }
+  }
+}

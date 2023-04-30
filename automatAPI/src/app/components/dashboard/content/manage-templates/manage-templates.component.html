@@ -1,0 +1,97 @@
+<div class="container h-100">
+  <div class="row flex-grow">
+    <div class="col-12 mt-5 mb-2 main-container">
+      <h1>{{ "dashboard.T_MANAGE_TEMPLATES" | translate }}</h1>
+      <div class="row w-100 justify-content-center">
+        <div class="col-11">
+          <h3>{{ "dashboard.T_MANAGE_TEMPLATES_SUBTITLE" | translate }}</h3>
+        </div>
+      </div>
+      <div class="row w-100 justify-content-center mt-4">
+        <div class="col-11">
+          <form
+            class="row"
+            [formGroup]="filterForm"
+            (ngSubmit)="filterTable($event)"
+          >
+            <div class="row">
+              <div class="col-3">
+                <label htmlFor="selectField">{{
+                  "dashboard.T_SELECT_FIELD" | translate
+                }}</label>
+              </div>
+              <div class="col-3">
+                <label htmlFor="selectField">{{
+                  "dashboard.T_SELECT_AN_OPTION" | translate
+                }}</label>
+              </div>
+              <div class="col-4"></div>
+            </div>
+            <div class="row">
+              <div class="col-3">
+                <span class="w-100">
+                  <p-dropdown
+                    id="selectField"
+                    formControlName="field"
+                    [options]="filterOptions"
+                    optionLabel="name"
+                    optionValue="value"
+                    (onChange)="filterChanged($event)"
+                  ></p-dropdown>
+                </span>
+              </div>
+              <div class="col-3">
+                <div>
+                  <p-dropdown
+                    Id="ina"
+                    formControlName="value"
+                    [options]="fieldOptions"
+                    optionLabel="name"
+                    optionValue="value"
+                  ></p-dropdown>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-4">
+                    <p-button
+                      [label]="'dashboard.T_FILTER' | translate"
+                      icon="pi pi-filter-fill"
+                      type="submit"
+                      iconPos="right"
+                      styleClass="p-button-info"
+                    ></p-button>
+                  </div>
+
+                  <div class="col-6">
+                    <p-button
+                      [label]="'dashboard.T_RESET' | translate"
+                      icon="pi pi-refresh"
+                      type="button"
+                      iconPos="right"
+                      (onClick)="resetTable()"
+                      styleClass="p-button-info"
+                    ></p-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="row justify-content-center mt-4">
+        <div class="col-12">
+          <app-template-table
+            [isAdmin]="isAdmin"
+            [userId]="parseInt(userId)"
+            [templates]="templateData"
+            (refreshTable)="onTemplateChanged()"
+            (onEditTemplate)="onEditTemplate($event)"
+            (unauthorized)="unauth()"
+          ></app-template-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

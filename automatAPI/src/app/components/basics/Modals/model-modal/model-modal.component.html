@@ -1,0 +1,162 @@
+<p-dialog
+  header="{{ 'T_MESSAGE' | translate }}"
+  [modal]="true"
+  [(visible)]="show"
+  [position]="'top'"
+  [style]="{ width: '650px', height: '320px' }"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="false"
+  class="dialog"
+  (onShow)="onShow()"
+>
+  <ng-template pTemplate="header">
+    <div class="container">
+      <div class="row w-100 border-bottom">
+        <h1>{{ "django.T_ADD_FIELD" | translate }}</h1>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div class="row h-100">
+      <div class="col-12">
+        <form [formGroup]="addFieldFormGroup">
+          <div class="row">
+            <div class="col-6">
+              <div class="row justify-content-end">
+                <div class="row pt-4">
+                  <span class="p-float-label">
+                    <input
+                      pInputText
+                      id="endpoint_name"
+                      formControlName="name"
+                      [readOnly]="editMode"
+                    />
+                    <label htmlFor="endpoint_name">{{
+                      "model.T_FIELD_NAME" | translate
+                    }}</label>
+                  </span>
+                </div>
+                <div class="pb-2 row">
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="addFieldFormGroup.get('name').errors?.[ 'required' ] && addFieldFormGroup.get('name').touched"
+                    >{{ "error.T_FIELD_NAME_REQ" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="validName"
+                    >{{ "error.T_FIELD_NAME_INVALID" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="duplicatedName"
+                    >{{ "error.T_FIELD_NAME_DUPL" | translate }}</small
+                  >
+                </div>
+                <div class="row px-4">
+                  <div class="row">
+                    {{ "model.T_FIELD_TYPE" | translate }}
+                  </div>
+                  <div class="row">
+                    <p-dropdown
+                      [options]="djangoFieldTypesSelector"
+                      optionLabel="name"
+                      optionValue="value"
+                      class="p-0"
+                      formControlName="type"
+                    ></p-dropdown>
+                  </div>
+                </div>
+                <div class="pb-3 row">
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="addFieldFormGroup.get('type').errors?.[ 'required' ] && addFieldFormGroup.get('type').touched"
+                    >{{ "error.T_FIELD_TYPE_REQ" | translate }}</small
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="row pt-4 pb-4">
+                <div class="mb-3">
+                  <p-checkbox
+                    name="group"
+                    [binary]="true"
+                    formControlName="null"
+                    inputId="null"
+                    ngDefaultControl
+                  ></p-checkbox>
+                  <label for="null">
+                    {{ "model.T_FIELD_NULL" | translate }}</label
+                  >
+                  <p-checkbox
+                    name="group"
+                    [binary]="true"
+                    formControlName="blank"
+                    inputId="blank"
+                    ngDefaultControl
+                  ></p-checkbox>
+                  <label for="blank">
+                    {{ "model.T_FIELD_BLANK" | translate }}</label
+                  >
+                </div>
+              </div>
+              <div class="row">
+                <span class="p-float-label">
+                  <input
+                    pInputText
+                    id="endpoint_name"
+                    formControlName="default"
+                  />
+                  <label htmlFor="endpoint_name">{{
+                    "model.T_FIELD_DEFAULT" | translate
+                  }}</label>
+                </span>
+                <div class="pb-3 row">
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="addFieldFormGroup.get('default').errors?.[ 'required' ] && addFieldFormGroup.get('default').touched"
+                    >{{ "error.T_FIELD_DEFAULT_REQ" | translate }}</small
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="row w-100 justify-content-end">
+      <div class="col-4">
+        <small id="endp-name-help" class="p-error block" *ngIf="false">{{
+          "error.T_ENDP_METHOD_REQ" | translate
+        }}</small>
+      </div>
+      <div class="col-4">
+        <p-button
+          styleClass="p-button-danger"
+          [label]="'T_DISCARD' | translate"
+          icon="pi pi-times"
+          iconPos="right"
+          (onClick)="manageHide()"
+        ></p-button>
+      </div>
+      <div class="col-2">
+        <p-button
+          styleClass="p-button-info"
+          [label]="'T_ADD' | translate"
+          icon="pi pi-check"
+          iconPos="right"
+          (onClick)="closeModal()"
+        ></p-button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

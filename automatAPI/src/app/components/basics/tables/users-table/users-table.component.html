@@ -1,0 +1,103 @@
+<div class="container-fluid">
+  <p-table [value]="users" [scrollable]="true" scrollHeight="500px">
+    ><ng-template pTemplate="header">
+      <tr>
+        <th>{{ "dashboard.T_USER_ID" | translate }}</th>
+        <th>{{ "dashboard.T_USER_USERNAME" | translate }}</th>
+        <th>{{ "dashboard.T_USER_EMAIL" | translate }}</th>
+        <th>{{ "dashboard.T_USER_FIRSTNAME" | translate }}</th>
+        <th>{{ "dashboard.T_USER_LASTNAME" | translate }}</th>
+        <th>{{ "dashboard.T_USER_DATE" | translate }}</th>
+        <th>{{ "dashboard.T_USER_BIRTHDATE" | translate }}</th>
+        <th>{{ "dashboard.T_USER_GOOGLE" | translate }}</th>
+        <th>{{ "dashboard.T_USER_GITHUB" | translate }}</th>
+        <th>{{ "dashboard.T_USER_ROLE" | translate }}</th>
+        <th>{{ "dashboard.T_USER_ACTIVE" | translate }}</th>
+        <th style="width: 10rem">
+          {{ "dashboard.T_TEMPLATE_OPTIONS" | translate }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr [pSelectableRow]="user">
+        <td>{{ user.id }}</td>
+        <td>
+          {{
+            user.username ? user.username : ("dashboard.T_NO_DATA" | translate)
+          }}
+        </td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>
+          {{
+            user.lastName ? user.lastName : ("dashboard.T_NO_DATA" | translate)
+          }}
+        </td>
+        <td>{{ user.create_date | date }}</td>
+        <td>
+          {{
+            user.birthDate
+              ? (user.birthDate | date)
+              : ("dashboard.T_NO_DATA" | translate)
+          }}
+        </td>
+        <td>
+          <i class="pi pi-google" *ngIf="user.google_id !== null"></i>
+          <i class="pi pi-times" *ngIf="user.google_id === null"></i>
+        </td>
+        <td>
+          <i class="pi pi-github" *ngIf="user.github_id !== null"></i>
+          <i class="pi pi-times" *ngIf="user.github_id === null"></i>
+        </td>
+        <td>
+          <i class="pi pi-user" *ngIf="user.role === 'client'"></i>
+          <mat-icon *ngIf="user.role === 'admin'"
+            >supervised_user_circle</mat-icon
+          >
+        </td>
+        <td>
+          <i class="pi pi-check-circle" *ngIf="user.activeUser"></i>
+          <i class="pi pi-times" *ngIf="!user.activeUser"></i>
+        </td>
+        <td>
+          <div class="row">
+            <div class="col-6 button">
+              <button
+                pButton
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-warning p-mr-2"
+                (click)="editUser(user)"
+              ></button>
+            </div>
+            <div class="col-6 button">
+              <button
+                pButton
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-danger"
+                (click)="deleteUser(user)"
+                [disabled]="user.id === userId"
+              ></button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="12">
+          <div class="d-flex align-items-center justify-content-center">
+            <span class="p-3">{{ "dashboard.T_USERS_EMPTY" | translate }}</span>
+            <i class="pi pi-spin pi-spinner"></i>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <app-edit-user-modal
+    [adminMode]="true"
+    *ngIf="user"
+    [show]="showDialog"
+    [userData]="user"
+    (Hide)="onHide()"
+  ></app-edit-user-modal>
+</div>

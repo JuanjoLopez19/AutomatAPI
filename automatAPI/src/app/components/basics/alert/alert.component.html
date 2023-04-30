@@ -1,0 +1,55 @@
+<p-dialog
+  header="{{ 'T_MESSAGE' | translate }}"
+  [(visible)]="show"
+  [style]="{ width: '350px' }"
+  [position]="'top'"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="manageHide()"
+  [closable]="false"
+  class="dialog"
+>
+  <ng-template pTemplate="header">
+    <div class="container">
+      <div class="row">
+        <span class="title" *ngIf="status === 200">{{
+          "T_SUCCESS" | translate
+        }}</span>
+        <span class="title" *ngIf="status === 201">{{
+          "T_CREATED" | translate
+        }}</span>
+        <span class="title" *ngIf="status === 500">{{
+          "T_INTER_ERROR" | translate
+        }}</span>
+        <span class="title" *ngIf="status === 400">{{
+          "T_BAD_REQ" | translate
+        }}</span>
+        <span class="title" *ngIf="status === 401">{{
+          "T_UNAUTH" | translate
+        }}</span>
+        <span class="title" *ngIf="status === 404">{{
+          "T_NOT_FOUND" | translate
+        }}</span>
+      </div>
+
+      <div class="row w-100">
+        <p-divider></p-divider>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div class="container">
+      <p class="text-xl font-bold">
+        {{ translatedMessage }}
+      </p>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      (click)="show = false"
+      [label]="'T_OK' | translate"
+    ></button>
+  </ng-template>
+</p-dialog>

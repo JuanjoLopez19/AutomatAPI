@@ -1,0 +1,365 @@
+<p-dialog
+  header="{{ 'T_MESSAGE' | translate }}"
+  [modal]="true"
+  [(visible)]="show"
+  [position]="'top'"
+  [style]="{ width: 'calc(50vw)', height: '320px' }"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="true"
+  class="dialog"
+  (onHide)="manageHide()"
+  (onShow)="onShow()"
+>
+  <ng-template pTemplate="header">
+    <div class="container">
+      <div class="row w-100 border-bottom">
+        <h1>{{ "edit.T_MANAGE_ACCOUNT" | translate }}</h1>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div class="row h-100">
+      <div class="col-12">
+        <div class="row p-4">
+          <div class="col-7">
+            <form
+              class="d-grid justify-content-center"
+              [formGroup]="userFormGroup"
+            >
+              <div class="row py-2 text-center mb-2">
+                  <span>
+                    <h4>{{ "edit.T_EDIT_ACCOUNT" | translate }}</h4>
+                  </span>
+                </div>
+              <div class="row">
+                <div class="col-6 justify-content-center">
+                  <span class="p-float-label">
+                    <input
+                      pInputText
+                      id="endpoint_name"
+                      formControlName="username"
+                    />
+                    <label htmlFor="endpoint_name">{{
+                      "edit.T_USERNAME" | translate
+                    }}</label>
+                  </span>
+                  <div class="row">
+                    <small
+                      id="endp-name-help"
+                      class="p-error block"
+                      *ngIf="userFormGroup.get('username').errors?.[ 'required' ] && userFormGroup.get('username').touched"
+                      >{{ "error.T_USERNAME_REQ" | translate }}</small
+                    >
+                    <small
+                      id="endp-name-help"
+                      class="p-error block"
+                      *ngIf="userFormGroup.get('username').errors?.[ 'pattern' ] && userFormGroup.get('username').touched"
+                      >{{ "error.T_USERNAME_INVALID" | translate }}</small
+                    >
+                  </div>
+                </div>
+                <div class="col-6 justify-content-center">
+                  <span class="p-float-label">
+                    <input
+                      pInputText
+                      id="endpoint_name"
+                      formControlName="email"
+                    />
+                    <label htmlFor="endpoint_name">{{
+                      "edit.T_EMAIL" | translate
+                    }}</label>
+                  </span>
+                  <div class="row">
+                    <small
+                      id="endp-name-help"
+                      class="p-error block"
+                      *ngIf="userFormGroup.get('email').errors?.[ 'required' ] && userFormGroup.get('email').touched"
+                      >{{ "error.T_EMAIL_REQ" | translate }}</small
+                    >
+                    <small
+                      id="endp-name-help"
+                      class="p-error block"
+                      *ngIf="userFormGroup.get('email').errors?.['email' ] && userFormGroup.get('email').touched"
+                      >{{ "error.T_EMAIL_INVALID" | translate }}</small
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-4">
+                <div class="col-6 justify-content-center">
+                  <span class="p-float-label">
+                    <input
+                      pInputText
+                      id="endpoint_name"
+                      formControlName="firstName"
+                    />
+                    <label htmlFor="endpoint_name">{{
+                      "edit.T_FIRST_NAME" | translate
+                    }}</label>
+                  </span>
+                  <div class="row">
+                    <small
+                      id="endp-name-help"
+                      class="p-error block"
+                      *ngIf="userFormGroup.get('firstName').errors?.[ 'required' ] && userFormGroup.get('firstName').touched"
+                      >{{ "error.T_FIRST_NAME_REQ" | translate }}</small
+                    >
+                    <small
+                      id="endp-name-help"
+                      class="p-error block"
+                      *ngIf="userFormGroup.get('firstName').errors?.[ 'pattern' ] && userFormGroup.get('firstName').touched"
+                      >{{ "error.T_FIRST_NAME_INVALID" | translate }}</small
+                    >
+                  </div>
+                </div>
+                <div class="col-6 justify-content-center">
+                  <span class="p-float-label">
+                    <input
+                      pInputText
+                      id="endpoint_name"
+                      formControlName="lastName"
+                    />
+                    <label htmlFor="endpoint_name">{{
+                      "edit.T_LAST_NAME" | translate
+                    }}</label>
+                  </span>
+                  <div class="row">
+                    <small
+                      id="endp-name-help"
+                      class="p-error block"
+                      *ngIf="userFormGroup.get('lastName').errors?.[ 'pattern' ] && userFormGroup.get('lastName').touched"
+                      >{{ "error.T_LAST_NAME_INVALID" | translate }}</small
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-1">
+                <div class="col-6">
+                  <div class="row">
+                    <span>
+                      {{ "T_BIRTHDATE" | translate }}
+                    </span>
+                  </div>
+                  <span class="justify-content-center">
+                    <p-calendar
+                      formControlName="birthDate"
+                      [showIcon]="true"
+                      placeholder="{{ 'T_DATE_PLACEHOLDER' | translate }}"
+                      dateFormat="{{ 'T_DATE_PLACEHOLDER' | translate }}"
+                      [readonlyInput]="true"
+                      [maxDate]="maxDate"
+                    ></p-calendar>
+                  </span>
+                </div>
+                <div class="col-6" *ngIf="adminMode">
+                  <div class="row">
+                    <span>
+                      {{ "dashboard.T_USER_ROLE" | translate }}
+                    </span>
+                  </div>
+                  <span>
+                    <p-dropdown
+                      formControlName="role"
+                      [options]="dropdownItems"
+                      optionLabel="name"
+                      optionValue="value"
+                      class="p-0"
+                    ></p-dropdown>
+                  </span>
+                </div>
+              </div>
+              <div class="row py-3">
+                <small
+                  id="endp-name-help"
+                  class="p-error block"
+                  *ngIf="accountError"
+                  ><h3>{{ accountErrorMsg }}</h3></small
+                >
+                <small id="endp-name-help" class="block" *ngIf="successAccount"
+                  ><h3>{{ successAccountMsg }}</h3></small
+                >
+              </div>
+            </form>
+          </div>
+          <div class="col-1">
+            <p-divider layout="vertical">
+              <b>{{ "T_OR" | translate }}</b>
+            </p-divider>
+          </div>
+          <div class="col-4">
+            <form
+              class="d-grid justify-content-center"
+              [formGroup]="passwordFormGroup"
+              #passwordForm
+            >
+              <div class="col-12">
+                <div class="row py-2 text-center mb-2">
+                  <span>
+                    <h4>{{ "edit.T_CHANGE_PWD" | translate }}</h4>
+                  </span>
+                </div>
+                <div class="row" *ngIf="!adminMode">
+                  <span class="p-float-label">
+                    <p-password
+                      [feedback]="false"
+                      formControlName="currentPassword"
+                      [toggleMask]="true"
+                    ></p-password>
+                    <label for="password">{{
+                      "edit.T_CURRENT_PWD" | translate
+                    }}</label>
+                  </span>
+                  <div class="row">
+                    <small
+                      id="endp-name-help"
+                      class="p-error block"
+                      *ngIf="passwordFormGroup.get('currentPassword').errors?.[ 'required' ] && passwordFormGroup.get('currentPassword').touched"
+                      >{{ "error.T_PWD_REQ" | translate }}</small
+                    >
+                  </div>
+                </div>
+                <div class="row pt-4">
+                  <span class="p-float-label">
+                    <p-password
+                      formControlName="password"
+                      [toggleMask]="true"
+                      [weakLabel]="'T_WEAK_PWD' | translate"
+                      [mediumLabel]="'T_MEDIUM_PWD' | translate"
+                      [strongLabel]="'T_STRONG_PWD' | translate"
+                      [promptLabel]="'T_PICK_PWD' | translate"
+                      ><ng-template pTemplate="header">
+                        <h6>{{ "T_PICK_PWD" | translate }}</h6>
+                      </ng-template>
+                      <ng-template pTemplate="footer">
+                        <p-divider></p-divider>
+                        <p class="mt-2">{{ "T_REQ" | translate }}</p>
+                        <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                          <li>{{ "T_LOWER" | translate }}</li>
+                          <li>{{ "T_UPPER" | translate }}</li>
+                          <li>{{ "T_NUMBER" | translate }}</li>
+                          <li>{{ "T_SYMBOL" | translate }}</li>
+                          <li>{{ "T_8_CHAR" | translate }}</li>
+                        </ul>
+                      </ng-template></p-password
+                    >
+                    <label for="password">{{
+                      "edit.T_NEW_PWD" | translate
+                    }}</label>
+                  </span>
+                </div>
+                <div class="row">
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="passwordFormGroup.get('password').errors?.[ 'required' ] && passwordFormGroup.get('password').touched"
+                    >{{ "error.T_PWD_REQ" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="passwordFormGroup.get('password').errors?.[ 'pattern' ] && passwordFormGroup.get('password').touched"
+                    >{{ "error.T_PWD_INVALID" | translate }}</small
+                  >
+                </div>
+                <div class="row pt-4">
+                  <span class="p-float-label">
+                    <p-password
+                      formControlName="confirmPassword"
+                      [toggleMask]="true"
+                      [weakLabel]="'T_WEAK_PWD' | translate"
+                      [mediumLabel]="'T_MEDIUM_PWD' | translate"
+                      [strongLabel]="'T_STRONG_PWD' | translate"
+                      [promptLabel]="'T_PICK_PWD' | translate"
+                      ><ng-template pTemplate="header">
+                        <h6>{{ "T_PICK_PWD" | translate }}</h6>
+                      </ng-template>
+                      <ng-template pTemplate="footer">
+                        <p-divider></p-divider>
+                        <p class="mt-2">{{ "T_REQ" | translate }}</p>
+                        <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                          <li>{{ "T_LOWER" | translate }}</li>
+                          <li>{{ "T_UPPER" | translate }}</li>
+                          <li>{{ "T_NUMBER" | translate }}</li>
+                          <li>{{ "T_SYMBOL" | translate }}</li>
+                          <li>{{ "T_8_CHAR" | translate }}</li>
+                        </ul>
+                      </ng-template></p-password
+                    >
+                    <label for="password">{{
+                      "edit.T_REPEAT_PWD" | translate
+                    }}</label>
+                  </span>
+                </div>
+                <div class="row">
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="passwordFormGroup.get('confirmPassword').errors?.[ 'required' ] && passwordFormGroup.get('confirmPassword').touched"
+                    >{{ "error.T_PWD_REQ" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="passwordFormGroup.get('confirmPassword').errors?.[ 'pattern' ] && passwordFormGroup.get('confirmPassword').touched"
+                    >{{ "error.T_PWD_INVALID" | translate }}</small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="passwordInvalid"
+                    >{{ "error.T_PWDS_NOT_MATCH" | translate }}</small
+                  >
+                </div>
+                <div class="row py-3">
+                  <small
+                    id="endp-name-help"
+                    class="p-error block"
+                    *ngIf="passwordError"
+                    ><h3>{{ passwordErrorMsg }}</h3></small
+                  >
+                  <small
+                    id="endp-name-help"
+                    class="block"
+                    *ngIf="successPassword"
+                    ><h3>{{ successPasswordMsg }}</h3></small
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="row w-100 justify-content-end">
+      <div class="col-6">
+        <div class="row justify-content-center">
+          <div class="col-9 d-flex">
+            <p-button
+              [label]="'edit.T_EDIT_ACCOUNT' | translate"
+              icon="pi pi-check"
+              iconPos="right"
+              (onClick)="submitForm(true)"
+              styleClass="p-button-info"
+            ></p-button>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="row justify-content-center">
+          <div class="col-10">
+            <p-button
+              [label]="'edit.T_CHANGE_PWD' | translate"
+              icon="pi pi-check"
+              iconPos="right"
+              (onClick)="submitForm()"
+              styleClass="p-button-info"
+            ></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

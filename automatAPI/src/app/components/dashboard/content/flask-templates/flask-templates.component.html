@@ -1,0 +1,1407 @@
+<div class="container h-100">
+  <div class="row flex-grow">
+    <div class="col-12 mt-5 mb-2 main-container">
+      <h1>{{ "dashboard.T_CREATE_FLASK" | translate }}</h1>
+      <mat-horizontal-stepper [linear]="true" #stepper>
+        <mat-step [stepControl]="basicFormGroup">
+          <form [formGroup]="basicFormGroup">
+            <ng-template matStepLabel>{{
+              "dashboard.T_BASICS" | translate
+            }}</ng-template>
+            <div class="row mx-0">
+              <div class="d-grid grid">
+                <div class="pb-3">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        {{ "flask.T_APP_NAME" | translate }}
+                      </div>
+                      <div class="row w-50">
+                        <input
+                          type="text"
+                          pInputText
+                          formControlName="app_name"
+                        />
+                      </div>
+                      <div class="row">
+                        <small
+                          id="endp-name-help"
+                          class="p-error block firstStep"
+                          *ngIf="firstStepErrors.app_name['required']"
+                          >{{ "error.T_APP_NAME_REQ" | translate }}</small
+                        >
+                        <small
+                          id="endp-name-help"
+                          class="p-error block firstStep"
+                          *ngIf="firstStepErrors.app_name['pattern']"
+                          >{{ "error.T_APP_NAME_INVALID" | translate }}</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        {{ "flask.T_APP_DESC" | translate }}
+                      </div>
+                      <div class="row w-50">
+                        <textarea
+                          pInputTextarea
+                          formControlName="app_description"
+                          maxlength="200"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        {{ "flask.T_TECH_TYPE" | translate }}
+                      </div>
+                      <div class="row w-50">
+                        <p-dropdown
+                          formControlName="tech_type"
+                          [options]="dropdownItems"
+                          optionLabel="name"
+                          optionValue="value"
+                          class="p-0"
+                        ></p-dropdown>
+                      </div>
+                      <div class="row">
+                        <small
+                          id="endp-name-help"
+                          class="p-error block firstStep"
+                          *ngIf="firstStepErrors.tech_type['required']"
+                          >{{ "error.T_TECH_TYPE_REQ" | translate }}</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        {{ "flask.T_HOST" | translate }}
+                      </div>
+                      <div class="row w-50">
+                        <input type="text" pInputText formControlName="host" />
+                      </div>
+                      <div class="row">
+                        <small
+                          id="endp-name-help"
+                          class="p-error block firstStep"
+                          *ngIf="firstStepErrors.host['required']"
+                          >{{ "error.T_HOST_REQ" | translate }}</small
+                        >
+                        <small
+                          id="endp-name-help"
+                          class="p-error block firstStep"
+                          *ngIf="firstStepErrors.host['pattern']"
+                          >{{ "error.T_HOST_INVALID" | translate }}</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        {{ "flask.T_PORT" | translate }}
+                      </div>
+                      <div class="row">
+                        <p-inputNumber
+                          formControlName="port"
+                          [min]="0"
+                          [max]="65535"
+                          class="p-0"
+                        >
+                        </p-inputNumber>
+                      </div>
+                      <div class="row">
+                        <small
+                          id="endp-name-help"
+                          class="p-error block firstStep"
+                          *ngIf="firstStepErrors.port['required']"
+                          >{{ "error.T_PORT_REQ" | translate }}</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3 mx-0">
+              <div class="col-2 px-0">
+                <p-button
+                  styleClass="p-button-info"
+                  [label]="'T_NEXT' | translate"
+                  (onClick)="manageFirstStep()"
+                  [icon]="'pi pi-arrow-right'"
+                  iconPos="right"
+                ></p-button>
+              </div>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="apiConfigFormGroup">
+          <form [formGroup]="apiConfigFormGroup">
+            <ng-template matStepLabel>{{
+              "dashboard.T_API_CONFIG" | translate
+            }}</ng-template>
+            <div class="row w-100 h-100">
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-4 py-3">
+                    <div class="row justify-content-end">
+                      <div class="row py-2">
+                        <div class="col-2">
+                          <div class="row">
+                            {{ "flask.T_USE_CORS" | translate }}
+                          </div>
+                        </div>
+                        <div class="col-8">
+                          <div class="row">
+                            <div class="col-6 d-flex justify-content-center">
+                              <p-radioButton
+                                inputId="cors_yes"
+                                value="yes"
+                                formControlName="cors"
+                              ></p-radioButton>
+                              <label for="cors_yes" class="ml-2">{{
+                                "T_YES" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6">
+                              <p-radioButton
+                                inputId="cors_no"
+                                value="no"
+                                formControlName="cors"
+                              ></p-radioButton>
+                              <label for="cors_no" class="ml-2">{{
+                                "T_NO" | translate
+                              }}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row py-2">
+                        <div class="col-2">
+                          <div class="row">
+                            {{ "flask.T_USE_CONFIG_FILE" | translate }}
+                          </div>
+                        </div>
+                        <div class="col-8">
+                          <div class="row">
+                            <div class="col-6 d-flex justify-content-center">
+                              <p-radioButton
+                                inputId="config_yes"
+                                value="yes"
+                                formControlName="config_file"
+                              ></p-radioButton>
+                              <label for="config_yes" class="ml-2">{{
+                                "T_YES" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6">
+                              <p-radioButton
+                                inputId="config_no"
+                                value="no"
+                                formControlName="config_file"
+                              ></p-radioButton>
+                              <label for="config_no" class="ml-2">{{
+                                "T_NO" | translate
+                              }}</label>
+                            </div>
+                          </div>
+                          <div
+                            class="row py-3"
+                            *ngIf="
+                              apiConfigFormGroup.get('config_file').value ===
+                              'yes'
+                            "
+                          >
+                            <div class="row justify-content-center">
+                              <div class="col-9">
+                                <div class="row">
+                                  <div class="col-12">
+                                    {{ "flask.T_TECH_TYPE" | translate }}
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6">
+                                    <p-dropdown
+                                      formControlName="type_config_file"
+                                      [options]="dropdownItems2"
+                                      optionLabel="name"
+                                      optionValue="value"
+                                      class="p-0"
+                                    ></p-dropdown>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="row pb-2"
+                        *ngIf="
+                          basicFormGroup.get('tech_type').value === 'app_web'
+                        "
+                      >
+                        <div class="col-2">
+                          <div class="row">
+                            {{ "flask.T_HANDLE_404" | translate }}
+                          </div>
+                        </div>
+                        <div class="col-8">
+                          <div class="row">
+                            <div class="col-6 d-flex justify-content-center">
+                              <p-radioButton
+                                inputId="bp_yes"
+                                value="yes"
+                                formControlName="handle_404"
+                              ></p-radioButton>
+                              <label for="bp_yes" class="ml-2">{{
+                                "T_YES" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6">
+                              <p-radioButton
+                                inputId="bp_no"
+                                value="no"
+                                formControlName="handle_404"
+                              ></p-radioButton>
+                              <label for="bp_no" class="ml-2">{{
+                                "T_NO" | translate
+                              }}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="row pb-2"
+                        *ngIf="
+                          basicFormGroup.get('tech_type').value === 'app_web'
+                        "
+                      >
+                        <div class="col-2">
+                          <div class="row">
+                            {{ "flask.T_USE_BP" | translate }}
+                          </div>
+                        </div>
+                        <div class="col-8">
+                          <div class="row">
+                            <div class="col-6 d-flex justify-content-center">
+                              <p-radioButton
+                                inputId="bp_yes"
+                                value="yes"
+                                formControlName="use_bp"
+                              ></p-radioButton>
+                              <label for="bp_yes" class="ml-2">{{
+                                "T_YES" | translate
+                              }}</label>
+                            </div>
+                            <div class="col-6">
+                              <p-radioButton
+                                inputId="bp_no"
+                                value="no"
+                                formControlName="use_bp"
+                              ></p-radioButton>
+                              <label for="bp_no" class="ml-2">{{
+                                "T_NO" | translate
+                              }}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-8">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="row py-3">
+                          <div class="col-12">
+                            <div class="row mb-3">
+                              <div class="col-4">
+                                <div class="row justify-content-center">
+                                  <div class="col-3">
+                                    <div class="row">
+                                      {{ "flask.T_USE_SSL" | translate }}
+                                    </div>
+                                  </div>
+                                  <div class="col-8">
+                                    <div class="row">
+                                      <div class="col-6">
+                                        <p-radioButton
+                                          inputId="ssl_yes"
+                                          value="yes"
+                                          formControlName="use_ssl"
+                                        ></p-radioButton>
+                                        <label for="ssl_yes" class="ml-2">{{
+                                          "T_YES" | translate
+                                        }}</label>
+                                      </div>
+                                      <div class="col-6">
+                                        <p-radioButton
+                                          inputId="ssl_no"
+                                          value="no"
+                                          formControlName="use_ssl"
+                                        ></p-radioButton>
+                                        <label for="ssl_no" class="ml-2">{{
+                                          "T_NO" | translate
+                                        }}</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-8">
+                                <div
+                                  *ngIf="
+                                    apiConfigFormGroup.get('use_ssl').value ===
+                                    'yes'
+                                  "
+                                >
+                                  <div class="row">
+                                    <div class="col-6">
+                                      <p-button
+                                        [styleClass]="
+                                          errorFileCert
+                                            ? 'p-button-danger'
+                                            : 'p-button-info'
+                                        "
+                                        type="button"
+                                        [icon]="iconCertFile"
+                                        iconPos="right"
+                                        [pTooltip]="
+                                          'T_ONLY_CRT_PEM' | translate
+                                        "
+                                        [label]="certFileName | translate"
+                                        (click)="certInput.click()"
+                                      >
+                                      </p-button>
+                                      <input
+                                        hidden
+                                        #certInput
+                                        type="file"
+                                        accept=".crt, .pem"
+                                        (change)="onFileChange($event, 'cert')"
+                                      />
+                                    </div>
+                                    <div class="col-6">
+                                      <p-button
+                                        [styleClass]="
+                                          errorFileKey
+                                            ? 'p-button-danger'
+                                            : 'p-button-info'
+                                        "
+                                        type="button"
+                                        [icon]="iconKeyFile"
+                                        iconPos="right"
+                                        [pTooltip]="
+                                          'T_ONLY_CRT_PEM' | translate
+                                        "
+                                        [label]="keyFileName | translate"
+                                        (click)="keyInput.click()"
+                                      >
+                                      </p-button>
+
+                                      <input
+                                        (change)="onFileChange($event, 'key')"
+                                        hidden
+                                        #keyInput
+                                        accept=".crt, .pem"
+                                        type="file"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-4">
+                                <div class="row justify-content-center">
+                                  <div class="col-3">
+                                    <div class="row">
+                                      {{ "flask.T_USE_DB" | translate }}
+                                    </div>
+                                  </div>
+                                  <div class="col-8">
+                                    <div class="row">
+                                      <div class="col-6">
+                                        <p-radioButton
+                                          inputId="db_yes"
+                                          value="yes"
+                                          formControlName="connect_DB"
+                                        ></p-radioButton>
+                                        <label for="db_yes" class="ml-2">{{
+                                          "T_YES" | translate
+                                        }}</label>
+                                      </div>
+                                      <div class="col-6">
+                                        <p-radioButton
+                                          inputId="db_no"
+                                          value="no"
+                                          formControlName="connect_DB"
+                                        ></p-radioButton>
+                                        <label for="db_no" class="ml-2">{{
+                                          "T_NO" | translate
+                                        }}</label>
+                                      </div>
+                                    </div>
+                                    <div
+                                      class="row pt-3"
+                                      *ngIf="
+                                        apiConfigFormGroup.get('connect_DB')
+                                          .value === 'yes'
+                                      "
+                                    >
+                                      <div class="col" formGroupName="db">
+                                        <div class="row">
+                                          <div class="col-12">
+                                            <div class="row">
+                                              <div class="col">
+                                                {{ "db.T_DB_TYPE" | translate }}
+                                              </div>
+                                            </div>
+                                            <div class="row">
+                                              <div class="col-6">
+                                                <p-dropdown
+                                                  [options]="dropdownItems3"
+                                                  optionLabel="name"
+                                                  optionValue="value"
+                                                  class="p-0"
+                                                  formControlName="db_type"
+                                                ></p-dropdown>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-8">
+                                <div
+                                  *ngIf="
+                                    apiConfigFormGroup.get('db.db_type')
+                                      .value !== 'sqlite' &&
+                                    apiConfigFormGroup.get('connect_DB')
+                                      .value === 'yes'
+                                  "
+                                  formGroupName="db"
+                                >
+                                  <div class="row">
+                                    <div class="col-6">
+                                      <div class="row justify-content-start">
+                                        <div class="col">
+                                          {{ "db.T_DB_HOST" | translate }}
+                                        </div>
+                                      </div>
+                                      <div class="row justify-content-start">
+                                        <div class="col-4">
+                                          <input
+                                            type="text"
+                                            pInputText
+                                            formControlName="db_host"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-6">
+                                      <div class="row">
+                                        <div class="col-6">
+                                          {{ "db.T_DB_PORT" | translate }}
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-6">
+                                          <input
+                                            type="text"
+                                            pInputText
+                                            formControlName="db_port"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row my-3">
+                                    <div class="col-6">
+                                      <div class="row justify-content-start">
+                                        <div class="col">
+                                          {{ "db.T_DB_USERNAME" | translate }}
+                                        </div>
+                                      </div>
+                                      <div class="row justify-content-start">
+                                        <div class="col-4">
+                                          <input
+                                            type="text"
+                                            pInputText
+                                            formControlName="db_user"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-6">
+                                      <div class="row">
+                                        <div class="col">
+                                          {{ "db.T_DB_PWD" | translate }}
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-6 field">
+                                          <p-password
+                                            formControlName="db_pwd"
+                                            placeholder="{{
+                                              'T_PWD_PLACEHOLDER' | translate
+                                            }}"
+                                            id="password"
+                                            [toggleMask]="false"
+                                            [feedback]="false"
+                                          ></p-password>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-6">
+                                      <div class="row justify-content-start">
+                                        <div class="col">
+                                          {{ "db.T_DB_NAME" | translate }}
+                                        </div>
+                                      </div>
+                                      <div class="row justify-content-start">
+                                        <div class="col-4">
+                                          <input
+                                            type="text"
+                                            pInputText
+                                            formControlName="db_name"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-6">
+                                      <div class="row justify-content-start">
+                                        <div class="col-6">
+                                          {{ "db.T_TABLE_NAME" | translate }}
+                                        </div>
+                                      </div>
+                                      <div class="row justify-content-start">
+                                        <div class="col-6">
+                                          <input
+                                            type="text"
+                                            pInputText
+                                            formControlName="table_name"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row pt-3">
+              <div class="col-2 pl-0">
+                <p-button
+                  styleClass="p-button-info"
+                  [label]="'T_BACK' | translate"
+                  (onClick)="stepper.previous()"
+                  [icon]="'pi pi-arrow-left'"
+                  iconPos="left"
+                ></p-button>
+              </div>
+              <div class="col-2">
+                <p-button
+                  styleClass="p-button-info"
+                  [label]="'T_NEXT' | translate"
+                  (onClick)="nextStep()"
+                  [icon]="'pi pi-arrow-right'"
+                  iconPos="right"
+                ></p-button>
+              </div>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step
+          *ngIf="
+            useBlueprints && basicFormGroup.get('tech_type').value === 'app_web'
+          "
+        >
+          <ng-template matStepLabel>{{
+            "flask.T_BLUEPRINTS" | translate
+          }}</ng-template>
+          <div class="row">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-4">
+                  <div class="row">
+                    <div class="col-7">
+                      <h1>{{ "flask.T_LIST_BP" | translate }}</h1>
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col-4">
+                      <div class="row">
+                        <div class="col-9">
+                          <p-button
+                            styleClass="p-button-danger"
+                            [label]="'T_DELETE' | translate"
+                            [disabled]="bpSelection === null"
+                            (click)="deleteBlueprint()"
+                            [icon]="'pi pi-trash'"
+                            iconPos="right"
+                          ></p-button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <p-divider></p-divider>
+                  <div class="row">
+                    <p-table
+                      selectionMode="single"
+                      dataKey="name"
+                      [value]="blueprintList"
+                      [(selection)]="bpSelection"
+                      [scrollable]="true"
+                      scrollHeight="460px"
+                      (onRowSelect)="onBPSelected($event)"
+                      (onRowUnselect)="bpName = ''; endpointBPList = []"
+                    >
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th>{{ "flask.T_BP_NAME" | translate }}</th>
+                          <th>{{ "flask.T_ENDP_COUNT" | translate }}</th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-blueprint>
+                        <tr [pSelectableRow]="blueprint">
+                          <td>{{ blueprint.name }}</td>
+                          <td>
+                            {{ blueprint.endpoints.length }}
+                            {{ "T_ENDPS" | translate }}
+                          </td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                        <tr>
+                          <td colspan="2">
+                            <div
+                              class="d-flex align-items-center justify-content-center"
+                            >
+                              <span class="p-3">{{
+                                "flask.T_BP_EMPTY" | translate
+                              }}</span>
+                              <i class="pi pi-spin pi-spinner"></i>
+                            </div>
+                          </td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </div>
+                </div>
+                <div class="col-8">
+                  <div class="row">
+                    <div class="col-7">
+                      <h1>{{ "flask.T_MANAGE_BP" | translate }}</h1>
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col-4">
+                      <div class="row justify-content-end">
+                        <div class="col-9 d-flex justify-content-end">
+                          <p-button
+                            styleClass="p-button-info"
+                            icon="pi pi-save"
+                            iconPos="right"
+                            [label]="'flask.T_SAVE_BP' | translate"
+                            (onClick)="saveBluePrint()"
+                          ></p-button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <p-divider></p-divider>
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="row">
+                        <span class="p-float-label">
+                          <input pInputText id="bp_name" [(ngModel)]="bpName" />
+                          <label htmlFor="bp_name">{{
+                            "flask.T_BP_NAME" | translate
+                          }}</label>
+                        </span>
+                      </div>
+                      <div class="row">
+                        <small
+                          id="endp-name-help"
+                          class="p-error block"
+                          *ngIf="invalidBpName"
+                          >{{ "error.T_BP_NAME_INVALID" | translate }}</small
+                        >
+                        <small
+                          id="endp-name-help"
+                          class="p-error block"
+                          *ngIf="duplicatedBpName"
+                          >{{ "error.T_BP_NAME_DUPLC" | translate }}</small
+                        >
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <div class="row">
+                        <div class="col-4">
+                          <p-button
+                            styleClass="p-button-sm p-button-info"
+                            icon="pi pi-plus"
+                            iconPos="right"
+                            [label]="'T_ADD_ENDP' | translate"
+                            (onClick)="openDialog(false)"
+                          ></p-button>
+                        </div>
+                        <div class="col-8">
+                          <div class="row">
+                            <div class="col-6 d-flex justify-content-end">
+                              <p-button
+                                styleClass="p-button-sm p-button-warning"
+                                icon="pi pi-pencil"
+                                iconPos="right"
+                                [label]="'T_EDIT_ENDP' | translate"
+                                [disabled]="endpointSelection === null"
+                                (onClick)="openDialog(true)"
+                              ></p-button>
+                            </div>
+                            <div class="col-6 d-flex justify-content-end">
+                              <p-button
+                                styleClass="p-button-sm p-button-danger"
+                                icon="pi pi-trash"
+                                iconPos="right"
+                                [label]="'T_DEL_ENDP' | translate"
+                                [disabled]="endpointSelection === null"
+                                (onClick)="deleteEndpoint(true)"
+                              ></p-button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-2">
+                    <p-table
+                      selectionMode="single"
+                      dataKey="endpoint_name"
+                      [value]="endpointBPList"
+                      [(selection)]="endpointSelection"
+                      [scrollable]="true"
+                      scrollHeight="400px"
+                    >
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th>{{ "flask.T_ENDP_NAME" | translate }}</th>
+                          <th>{{ "flask.T_ENDP_DESC" | translate }}</th>
+                          <th>{{ "flask.T_ENDP_URL" | translate }}</th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_GET" | translate }}
+                          </th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_POST" | translate }}
+                          </th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_PUT" | translate }}
+                          </th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_DEL" | translate }}
+                          </th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-endpoint>
+                        <tr [pSelectableRow]="endpoint">
+                          <td>{{ endpoint.endpoint_name }}</td>
+                          {{
+                            endpoint.endpoint_comment
+                              ? endpoint.endpoint_comment
+                              : ("dashboard.T_NO_DESC" | translate)
+                          }}
+                          <td>{{ endpoint.endpoint_url }}</td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="
+                                endpoint.methods.get_m === 'yes';
+                                else noget
+                              "
+                            ></i>
+                            <ng-template #noget>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="
+                                endpoint.methods.post === 'yes';
+                                else nopost
+                              "
+                            ></i>
+                            <ng-template #nopost>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="endpoint.methods.put === 'yes'; else noput"
+                            ></i>
+                            <ng-template #noput>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="
+                                endpoint.methods.delete === 'yes';
+                                else nodelete
+                              "
+                            ></i>
+                            <ng-template #nodelete>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                        <tr>
+                          <td colspan="7">
+                            <div
+                              class="d-flex align-items-center justify-content-center"
+                            >
+                              <span class="p-3">{{
+                                "django.T_ENDP_EMPTY" | translate
+                              }}</span>
+                              <i class="pi pi-spin pi-spinner"></i>
+                            </div>
+                          </td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </div>
+                </div>
+              </div>
+              <app-endpoint-modal
+                [show]="showDialog"
+                [editMode]="editMode"
+                [endpointData]="endpointSelection"
+                [endpointNameList]="getEndpointNameList()"
+                [endpointUrlList]="getEndpointUrlList()"
+                (Hide)="onHide()"
+                (endpointAdded)="onEndpointAdded($event)"
+                (endpointEdited)="onEndpointEdited($event)"
+              ></app-endpoint-modal>
+              <div class="row pt-3">
+                <div class="col-2 pl-0">
+                  <p-button
+                    styleClass="p-button-info"
+                    [label]="'T_BACK' | translate"
+                    (onClick)="stepper.previous()"
+                    [icon]="'pi pi-arrow-left'"
+                    iconPos="left"
+                  ></p-button>
+                </div>
+                <div class="col-2">
+                  <p-button
+                    styleClass="p-button-info"
+                    [label]="'T_NEXT' | translate"
+                    (onClick)="addBlueprints()"
+                    [icon]="'pi pi-arrow-right'"
+                    iconPos="right"
+                  ></p-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>{{
+            "dashboard.T_ENDPOINTS" | translate
+          }}</ng-template>
+          <div class="row">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-7">
+                      <h1>{{ "flask.T_MANAGE_ENDP" | translate }}</h1>
+                    </div>
+                  </div>
+                  <p-divider></p-divider>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        <div class="col-5">
+                          <p-button
+                            styleClass="p-button-sm p-button-info"
+                            icon="pi pi-plus"
+                            iconPos="right"
+                            [label]="'T_ADD_ENDP' | translate"
+                            (onClick)="openDialog(false)"
+                          ></p-button>
+                        </div>
+                        <div class="col-7">
+                          <div class="row justify-content-end">
+                            <div class="col-3 d-flex justify-content-end">
+                              <p-button
+                                styleClass="p-button-sm p-button-warning"
+                                icon="pi pi-pencil"
+                                iconPos="right"
+                                [label]="'T_EDIT_ENDP' | translate"
+                                [disabled]="endpointSelection === null"
+                                (onClick)="openDialog(true)"
+                              ></p-button>
+                            </div>
+                            <div class="col-3 d-flex justify-content-end">
+                              <p-button
+                                styleClass="p-button-sm p-button-danger"
+                                icon="pi pi-trash"
+                                iconPos="right"
+                                [label]="'T_DEL_ENDP' | translate"
+                                [disabled]="endpointSelection === null"
+                                (onClick)="deleteEndpoint(true)"
+                              ></p-button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-2">
+                    <p-table
+                      selectionMode="single"
+                      dataKey="endpoint_name"
+                      [value]="endpointList"
+                      [(selection)]="endpointSelection"
+                      [scrollable]="true"
+                      scrollHeight="400px"
+                    >
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th>{{ "flask.T_ENDP_NAME" | translate }}</th>
+                          <th>{{ "flask.T_ENDP_DESC" | translate }}</th>
+                          <th>{{ "flask.T_ENDP_URL" | translate }}</th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_GET" | translate }}
+                          </th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_POST" | translate }}
+                          </th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_PUT" | translate }}
+                          </th>
+                          <th class="method">
+                            {{ "flask.T_ENDP_DEL" | translate }}
+                          </th>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-endpoint>
+                        <tr [pSelectableRow]="endpoint">
+                          <td>{{ endpoint.endpoint_name }}</td>
+                          <td>
+                            {{
+                              endpoint.endpoint_comment
+                                ? endpoint.endpoint_comment
+                                : ("dashboard.T_NO_DESC" | translate)
+                            }}
+                          </td>
+                          <td>{{ endpoint.endpoint_url }}</td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="
+                                endpoint.methods.get_m === 'yes';
+                                else noget
+                              "
+                            ></i>
+                            <ng-template #noget>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="
+                                endpoint.methods.post === 'yes';
+                                else nopost
+                              "
+                            ></i>
+                            <ng-template #nopost>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="endpoint.methods.put === 'yes'; else noput"
+                            ></i>
+                            <ng-template #noput>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                          <td>
+                            <i
+                              class="pi pi-check"
+                              *ngIf="
+                                endpoint.methods.delete === 'yes';
+                                else nodelete
+                              "
+                            ></i>
+                            <ng-template #nodelete>
+                              <i class="pi pi-times"></i>
+                            </ng-template>
+                          </td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                        <tr>
+                          <td colspan="7">
+                            <div
+                              class="d-flex align-items-center justify-content-center"
+                            >
+                              <span class="p-3">{{
+                                "django.T_ENDP_EMPTY" | translate
+                              }}</span>
+                              <i class="pi pi-spin pi-spinner"></i>
+                            </div>
+                          </td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </div>
+                </div>
+              </div>
+              <app-endpoint-modal
+                [show]="showDialog"
+                [editMode]="editMode"
+                [endpointData]="endpointSelection"
+                [endpointNameList]="getEndpointNameList(true)"
+                [endpointUrlList]="getEndpointUrlList(true)"
+                (Hide)="onHide()"
+                (endpointAdded)="onEndpointAdded($event, true)"
+                (endpointEdited)="onEndpointEdited($event, true)"
+              ></app-endpoint-modal>
+              <div class="row pt-3">
+                <div class="col-2 pl-0">
+                  <p-button
+                    styleClass="p-button-info"
+                    [label]="'T_BACK' | translate"
+                    (onClick)="stepper.previous()"
+                    [icon]="'pi pi-arrow-left'"
+                    iconPos="left"
+                  ></p-button>
+                </div>
+                <div class="col-2">
+                  <p-button
+                    styleClass="p-button-info"
+                    [label]="'T_NEXT' | translate"
+                    (onClick)="addEndpoints()"
+                    [icon]="'pi pi-arrow-right'"
+                    iconPos="right"
+                  ></p-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>{{
+            "dashboard.T_SUMMARY" | translate
+          }}</ng-template>
+          <div class="row">
+            <div class="col-12">
+              <div class="row">
+                <div class="row w-100 justify-content-center" *ngIf="loading">
+                  <div class="col-1">
+                    <mat-spinner></mat-spinner>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        <h3>{{ "dashboard.T_SUMMARY_BASIC" | translate }}</h3>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "flask.T_APP_NAME" | translate }}:
+                        </h5>
+                        <p class="col">
+                          {{ basicFormGroup.get("app_name").value }}
+                        </p>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "flask.T_APP_DESC" | translate }}:
+                        </h5>
+                        <p class="col">
+                          {{
+                            basicFormGroup.get("app_description")?.value
+                              ? basicFormGroup.get("app_description")?.value
+                              : ("dashboard.T_NO_DESC" | translate)
+                          }}
+                        </p>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "flask.T_HOST" | translate }}:
+                        </h5>
+                        <p class="col">
+                          {{ basicFormGroup.get("host").value }}
+                        </p>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "flask.T_PORT" | translate }}:
+                        </h5>
+                        <p class="col">
+                          {{ basicFormGroup.get("port").value }}
+                        </p>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "flask.T_TECH_TYPE" | translate }}:
+                        </h5>
+                        <p class="col">
+                          <mat-icon
+                            svgIcon="service_app"
+                            *ngIf="
+                              basicFormGroup.get('tech_type').value ===
+                              'services'
+                            "
+                          ></mat-icon>
+                          <mat-icon
+                            svgIcon="webapp"
+                            *ngIf="
+                              basicFormGroup.get('tech_type').value ===
+                              'app_web'
+                            "
+                          ></mat-icon>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        <h3>{{ "dashboard.T_SUMMARY_CONFIG" | translate }}</h3>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "flask.T_USE_CORS" | translate }}:
+                        </h5>
+                        <p class="col">
+                          <i
+                            class="pi pi-check"
+                            *ngIf="
+                              apiConfigFormGroup.get('cors').value === 'yes'
+                            "
+                          ></i>
+                          <i
+                            class="pi pi-times"
+                            *ngIf="
+                              apiConfigFormGroup.get('cors').value === 'no'
+                            "
+                          ></i>
+                        </p>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "flask.T_USE_CONFIG_FILE" | translate }}:
+                        </h5>
+                        <p class="col">
+                          <i
+                            class="pi pi-check"
+                            *ngIf="
+                              apiConfigFormGroup.get('config_file').value ===
+                              'yes'
+                            "
+                          ></i>
+                          <i
+                            class="pi pi-times"
+                            *ngIf="
+                              apiConfigFormGroup.get('config_file').value ===
+                              'no'
+                            "
+                          ></i>
+                        </p>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "flask.T_USE_SSL" | translate }}:
+                        </h5>
+                        <p class="col">
+                          <i
+                            class="pi pi-check"
+                            *ngIf="
+                              apiConfigFormGroup.get('use_ssl').value === 'yes'
+                            "
+                          ></i>
+                          <i
+                            class="pi pi-times"
+                            *ngIf="
+                              apiConfigFormGroup.get('use_ssl').value === 'no'
+                            "
+                          ></i>
+                        </p>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "flask.T_USE_DB" | translate }}:
+                        </h5>
+                        <p class="col">
+                          <i
+                            class="pi pi-check"
+                            *ngIf="
+                              apiConfigFormGroup.get('connect_DB').value ===
+                              'yes'
+                            "
+                          ></i>
+                          <i
+                            class="pi pi-times"
+                            *ngIf="
+                              apiConfigFormGroup.get('connect_DB').value ===
+                              'no'
+                            "
+                          ></i>
+                        </p>
+                      </div>
+                      <div
+                        class="row"
+                        *ngIf="
+                          basicFormGroup.get('tech_type').value === 'app_web'
+                        "
+                      >
+                        <h5 class="col-auto">
+                          {{ "flask.T_HANDLE_404" | translate }}:
+                        </h5>
+                        <p class="col">
+                          <i
+                            class="pi pi-check"
+                            *ngIf="
+                              apiConfigFormGroup.get('handle_404').value ===
+                              'yes'
+                            "
+                          ></i>
+                          <i
+                            class="pi pi-times"
+                            *ngIf="
+                              apiConfigFormGroup.get('handle_404').value ===
+                              'no'
+                            "
+                          ></i>
+                        </p>
+                      </div>
+                      <div
+                        class="row"
+                        *ngIf="
+                          basicFormGroup.get('tech_type').value === 'app_web'
+                        "
+                      >
+                        <h5 class="col-auto">
+                          {{ "flask.T_USE_BP" | translate }}:
+                        </h5>
+                        <p class="col">
+                          <i
+                            class="pi pi-check"
+                            *ngIf="
+                              apiConfigFormGroup.get('use_bp').value === 'yes'
+                            "
+                          ></i>
+                          <i
+                            class="pi pi-times"
+                            *ngIf="
+                              apiConfigFormGroup.get('use_bp').value === 'no'
+                            "
+                          ></i>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        <h3>{{ "dashboard.T_SUMMARY_ITEMS" | translate }}</h3>
+                      </div>
+                      <div class="row">
+                        <h5 class="col-auto">
+                          {{ "dashboard.T_ENDPOINTS" | translate }}:
+                        </h5>
+                        <p class="col">
+                          {{
+                            endpointsFormGroup.get("endpoints")?.value.length
+                          }}
+                          {{ "T_ENDPS" | translate }}
+                        </p>
+                      </div>
+                      <div
+                        class="row"
+                        *ngIf="
+                          basicFormGroup.get('tech_type').value === 'app_web'
+                        "
+                      >
+                        <h5 class="col-auto">
+                          {{ "flask.T_BLUEPRINTS" | translate }}:
+                        </h5>
+                        <p class="col">
+                          {{
+                            this.blueprintsFormGroup.get("bp_list")?.get("list")
+                              ?.value.length
+                          }}
+                          {{ "flask.T_BLUEPRINTS" | translate }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row pt-3">
+            <div class="col-2 pl-0">
+              <p-button
+                styleClass="p-button-info"
+                [label]="'T_BACK' | translate"
+                (onClick)="stepper.previous()"
+                [icon]="'pi pi-arrow-left'"
+                iconPos="left"
+              ></p-button>
+            </div>
+            <div class="col-2">
+              <p-button
+                styleClass="p-button-info"
+                [label]="'T_CREATE_TEMPLATE' | translate"
+                (onClick)="createTemplate()"
+                [icon]="'pi pi-wrench'"
+                iconPos="right"
+              ></p-button>
+            </div>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+  </div>
+</div>

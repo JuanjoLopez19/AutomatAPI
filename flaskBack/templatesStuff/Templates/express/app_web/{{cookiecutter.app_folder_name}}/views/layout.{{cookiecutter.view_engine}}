@@ -1,0 +1,54 @@
+{%- if cookiecutter.view_engine == "hbs" %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{"title"}}</title>
+    <link rel='stylesheet' href='/stylesheets/style.{{cookiecutter.css_engine}}' />
+  </head>
+  <body>
+    {{"body"}}
+  </body>
+</html>
+{%- elif cookiecutter.view_engine == "jade" %}
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.{{cookiecutter.css_engine}}')
+  body
+    block content
+
+{%- elif cookiecutter.view_engine == "pug" %}
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.{{cookiecutter.css_engine}}')
+  body
+    block content
+
+{%- elif cookiecutter.view_engine == "twig" %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <link rel='stylesheet' href='/stylesheets/style.{{cookiecutter.css_engine}}' />
+  </head>
+  <body>
+    {% block body %}{% endblock %}
+  </body>
+</html>
+
+{%- elif cookiecutter.view_engine == "vash" %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta>
+  <title>@model.title</title>
+  <link rel='stylesheet' href='/stylesheets/style.{{cookiecutter.css_engine}}' />
+</head>
+<body>
+  @html.block('content')
+</body>
+</html>
+{% endif %}

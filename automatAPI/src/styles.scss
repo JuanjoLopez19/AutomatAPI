@@ -1,0 +1,126 @@
+/* You can add global styles to this file, and also import other style files */
+@import "src/shared/variables";
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow-y: hidden;
+  background-color: $back-dashboard;
+}
+
+.p-inputtext {
+  border-radius: 10px;
+}
+
+.p-dropdown-panel {
+  border-radius: 10px;
+}
+
+.p-dropdown {
+  border-radius: 10px;
+}
+.p-button {
+  border-radius: 15px;
+}
+.p-datatable-wrapper {
+  border-radius: 10px;
+}
+
+.p-dropdown-header {
+  border-top-right-radius: 10px !important;
+  border-top-left-radius: 10px !important;
+}
+.p-dropdown-items-wrapper {
+  border-bottom-right-radius: 10px !important;
+  border-bottom-left-radius: 10px !important;
+  ::ng-deep ::-webkit-scrollbar {
+    width: 10px;
+    background-color: rgb(0, 0, 0);
+  }
+}
+
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background-color: $light-blue;
+  &:hover {
+    background-color: $blue-transparent;
+    border-color: $blue-transparent;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0.2rem $blue-transparent;
+  }
+}
+.p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover
+  .p-inputswitch-slider {
+  background-color: $blue-transparent;
+  border-color: $blue-transparent;
+}
+
+.p-radiobutton .p-radiobutton-box.p-highlight {
+  background-color: $light-blue;
+  border-color: $light-blue;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight {
+  background-color: $light-blue;
+  border-color: $light-blue;
+  &:hover {
+    background-color: $blue-transparent !important;
+    border-color: $blue-transparent !important;
+  }
+}
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
+  box-shadow: 0 0 0 0.2rem $blue-transparent;
+  border-color: $blue-transparent;
+}
+
+.mat-step-header {
+  .mat-step-icon-state-edit {
+    background-color: $light-blue;
+  }
+  .mat-step-icon-selected {
+    background-color: $primary-color;
+    color: $black-not-black;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-corner {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $transparent;
+  border: 2pt solid transparent;
+  border-radius: 3pt;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-track {
+  background: $transparent;
+  border: 3pt solid transparent;
+  background-clip: content-box;
+}
+
+.custom-scroll-vertical-hover::-webkit-scrollbar-thumb:vertical {
+  background: $transparent;
+  border: none;
+  border-radius: 0;
+}
+
+.custom-scroll-vertical-hover::-webkit-scrollbar-track:vertical {
+  background: $transparent;
+  border: none;
+}
+
+.main-container {
+  -webkit-box-shadow: 10px 14px 6px 0px rgba(0, 0, 0, 0.21);
+  -moz-box-shadow: 10px 14px 6px 0px rgba(0, 0, 0, 0.21);
+  box-shadow: 10px 14px 6px 0px rgba(0, 0, 0, 0.21);
+}

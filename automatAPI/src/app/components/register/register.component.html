@@ -1,0 +1,347 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 px-0">
+      <div class="row mx-0">
+        <span>
+          <h3 class="text-center">
+            {{ "T_SIGN_UP_NOW" | translate }}
+          </h3>
+        </span>
+      </div>
+      <form
+        id="form"
+        class="row py-3 px-0"
+        (ngSubmit)="OnRegisterSubmit($event)"
+        [formGroup]="registerForm"
+      >
+        <div class="col-12 d-grid justify-content-center">
+          <div class="row mb-2">
+            <div class="col-6">
+              <div class="row">
+                <span>
+                  <h3>{{ "T_EMAIL" | translate }}</h3>
+                </span>
+              </div>
+              <div class="row">
+                <div class="field col-12">
+                  <span class="p-input-icon-right">
+                    <i class="pi pi-envelope"></i>
+                    <input
+                      formControlName="email"
+                      type="email"
+                      id="email"
+                      placeholder="{{ 'T_EMAIL_PLACEHOLDER' | translate }}"
+                      pInputText
+                    />
+                  </span>
+                  <div class="row">
+                    <small
+                      id="email-help"
+                      class="p-error block"
+                      *ngIf="registerForm.get('email').errors?.[ 'required' ] && registerForm.get('email').touched"
+                      >{{ "error.T_EMAIL_REQ" | translate }}
+                    </small>
+                    <small
+                      id="email-help"
+                      class="p-error block"
+                      *ngIf="registerForm.get('email').errors?.[ 'email' ]"
+                    >
+                      {{ "error.T_EMAIL_INVALID" | translate }}
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="row">
+                <span>
+                  <h3>{{ "T_USERNAME" | translate }}</h3>
+                </span>
+              </div>
+              <div class="row">
+                <div class="field col-12">
+                  <span class="p-input-icon-right">
+                    <i class="pi pi-user"></i>
+                    <input
+                      formControlName="username"
+                      type="text"
+                      id="username"
+                      placeholder="{{ 'T_USERNAME_PLACEHOLDER' | translate }}"
+                      pInputText
+                    />
+                  </span>
+                  <div class="row">
+                    <small
+                      id="username-help"
+                      class="p-error block"
+                      *ngIf="registerForm.get('username').errors?.[ 'required' ] && registerForm.get('username').touched"
+                      >{{ "error.T_USERNAME_REQ" | translate }}
+                    </small>
+                    <small
+                      id="username-help"
+                      class="p-error block"
+                      *ngIf="registerForm.get('username').errors?.[ 'pattern' ] && registerForm.get('username').touched"
+                      >{{ "error.T_USERNAME_INVALID" | translate }}
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-6">
+                  <div class="row">
+                    <span>
+                      <h3>{{ "T_NAME" | translate }}</h3>
+                    </span>
+                  </div>
+                  <div class="row">
+                    <div class="field">
+                      <span class="p-input-icon-right">
+                        <i class="pi pi-user"></i>
+                        <input
+                          formControlName="name"
+                          type="text"
+                          id="name"
+                          placeholder="{{ 'T_NAME_PLACEHOLDER' | translate }}"
+                          pInputText
+                        />
+                      </span>
+                      <div class="row">
+                        <small
+                          id="name-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('name').errors?.[ 'required' ] && registerForm.get('name').touched"
+                          >{{ "error.T_NAME_REQ" | translate }}
+                        </small>
+                        <small
+                          id="name-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('name').errors?.[ 'pattern' ] && registerForm.get('name').touched"
+                          >{{ "error.T_NAME_INVALID" | translate }}
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="row">
+                    <span>
+                      <h3>{{ "T_LAST_NAME" | translate }}</h3>
+                    </span>
+                  </div>
+                  <div class="row">
+                    <div class="field">
+                      <span class="p-input-icon-right">
+                        <i class="pi pi-user"></i>
+                        <input
+                          formControlName="surname"
+                          type="text"
+                          id="lastName"
+                          placeholder="{{
+                            'T_LAST_NAME_PLACEHOLDER' | translate
+                          }}"
+                          pInputText
+                        />
+                      </span>
+                      <div class="row">
+                        <small
+                          id="surname-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('surname').errors?.[ 'required' ] && registerForm.get('surname').touched"
+                          >{{ "error.T_SURNAME_REQ" | translate }}
+                        </small>
+                        <small
+                          id="surname-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('surname').errors?.[ 'pattern' ] && registerForm.get('surname').touched"
+                          >{{ "error.T_SURNAME_INVALID" | translate }}
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-6">
+                  <div class="row">
+                    <span>
+                      <h3>{{ "T_PWD" | translate }}</h3>
+                    </span>
+                  </div>
+                  <div class="row">
+                    <div class="field">
+                      <p-password
+                        formControlName="password"
+                        placeholder="{{ 'T_PWD_PLACEHOLDER' | translate }}"
+                        [toggleMask]="true"
+                        [feedback]="true"
+                        [weakLabel]="'T_WEAK_PWD' | translate"
+                        [mediumLabel]="'T_MEDIUM_PWD' | translate"
+                        [strongLabel]="'T_STRONG_PWD' | translate"
+                        [promptLabel]="'T_PICK_PWD' | translate"
+                      >
+                        <ng-template pTemplate="header">
+                          <h6>{{ "T_PICK_PWD" | translate }}</h6>
+                        </ng-template>
+                        <ng-template pTemplate="footer">
+                          <p-divider></p-divider>
+                          <p class="mt-2">{{ "T_REQ" | translate }}</p>
+                          <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                            <li>{{ "T_LOWER" | translate }}</li>
+                            <li>{{ "T_UPPER" | translate }}</li>
+                            <li>{{ "T_NUMBER" | translate }}</li>
+                            <li>{{ "T_SYMBOL" | translate }}</li>
+                            <li>{{ "T_8_CHAR" | translate }}</li>
+                          </ul>
+                        </ng-template>
+                      </p-password>
+                      <div class="row">
+                        <small
+                          id="pwd-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('password').errors?.[ 'required' ] && registerForm.get('password').touched"
+                          >{{ "error.T_PWD_REQ" | translate }}
+                        </small>
+                        <small
+                          id="pwd-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('password').errors?.[ 'pattern' ] && registerForm.get('password').touched"
+                          >{{ "error.T_PWD_INVALID" | translate }}
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="row">
+                    <span>
+                      <h3>{{ "T_REPEAT_PWD" | translate }}</h3>
+                    </span>
+                  </div>
+                  <div class="row">
+                    <div class="field">
+                      <p-password
+                        class="myPass"
+                        formControlName="repeatPassword"
+                        placeholder="{{
+                          'T_REPEAT_PWD_PLACEHOLDER' | translate
+                        }}"
+                        [toggleMask]="true"
+                        [feedback]="true"
+                        [weakLabel]="'T_WEAK_PWD' | translate"
+                        [mediumLabel]="'T_MEDIUM_PWD' | translate"
+                        [strongLabel]="'T_STRONG_PWD' | translate"
+                        [promptLabel]="'T_PICK_PWD' | translate"
+                      >
+                        <ng-template pTemplate="header">
+                          <h6>{{ "T_PICK_PWD" | translate }}</h6>
+                        </ng-template>
+                        <ng-template pTemplate="footer">
+                          <p-divider></p-divider>
+                          <p class="mt-2">{{ "T_REQ" | translate }}</p>
+                          <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                            <li>{{ "T_LOWER" | translate }}</li>
+                            <li>{{ "T_UPPER" | translate }}</li>
+                            <li>{{ "T_NUMBER" | translate }}</li>
+                            <li>{{ "T_SYMBOL" | translate }}</li>
+                            <li>{{ "T_8_CHAR" | translate }}</li>
+                          </ul>
+                        </ng-template>
+                      </p-password>
+                      <div class="row">
+                        <small
+                          id="pwd2-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('repeatPassword').errors?.[ 'required' ] && registerForm.get('repeatPassword').touched"
+                          >{{ "error.T_PWD_REQ" | translate }}
+                        </small>
+                        <small
+                          id="pwd2-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('repeatPassword').errors?.[ 'pattern' ] && registerForm.get('repeatPassword').touched"
+                          >{{ "error.T_PWD_INVALID" | translate }}
+                        </small>
+                        <small
+                          id="pwd2-help"
+                          class="p-error block"
+                          *ngIf="invalidPasswords"
+                          >{{ "error.T_PWDS_NOT_MATCH" | translate }}
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-6">
+                  <div class="row">
+                    <span>
+                      <h3>{{ "T_BIRTHDATE" | translate }}</h3>
+                    </span>
+                  </div>
+                  <div class="row">
+                    <div class="field">
+                      <span>
+                        <p-calendar
+                          formControlName="birthdate"
+                          [showIcon]="true"
+                          placeholder="{{ 'T_DATE_PLACEHOLDER' | translate }}"
+                          dateFormat="{{ 'T_DATE_PLACEHOLDER' | translate }}"
+                          [maxDate]="maxDate"
+                          [readonlyInput]="true"
+                        ></p-calendar>
+                      </span>
+                      <div class="row">
+                        <small
+                          id="date-help"
+                          class="p-error block"
+                          *ngIf="registerForm.get('birthdate').errors?.[ 'required' ] && registerForm.get('birthdate').touched"
+                          >{{ "error.T_DATE_REQ" | translate }}
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="row mb-4"></div>
+                  <div class="row">
+                    <div class="field w-75">
+                      <button
+                        pButton
+                        pRipple
+                        icon="pi pi-send"
+                        iconPos="right"
+                        [label]="'T_SIGN_UP' | translate"
+                        type="submit"
+                        [loading]="waitingState"
+                        class=" p-button-info"
+                      ></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <app-alert
+      *ngIf="showDialog"
+      [show]="showDialog"
+      [status]="statusCode"
+      [message]="message"
+      (Hide)="manageHide($event)"
+    ></app-alert>
+  </div>
+</div>

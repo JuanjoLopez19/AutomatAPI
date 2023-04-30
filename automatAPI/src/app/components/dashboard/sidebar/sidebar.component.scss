@@ -1,0 +1,55 @@
+@import "src/shared/variables";
+
+:host {
+  color: $white;
+  .pointer {
+    cursor: pointer;
+    &:hover {
+      background-color: $blue-transparent;
+    }
+  }
+
+  mat-expansion-panel {
+    background-color: $light-blue;
+    box-shadow: none;
+    color: $white !important;
+
+    ::ng-deep .mat-expansion-panel-body {
+      padding: 0;
+    }
+  }
+  mat-expansion-panel-header {
+    &:hover {
+      background-color: $blue-transparent !important;
+    }
+    &:focus {
+      background-color: $blue-transparent !important;
+    }
+  }
+
+  ::ng-deep mat-expansion-panel-header.mat-expansion-panel-body {
+    padding: 0 !important;
+  }
+  .header {
+    flex-wrap: nowrap !important;
+    color: $white;
+  }
+
+  .selected {
+    border-right: 10px solid $primary-color;
+    color: $primary-color;
+    background: $blue-transparent;
+    font-size: 20px;
+    font-weight: bolder;
+  }
+
+  .selected-icon {
+    color: $primary-color;
+    font-size: 20px;
+    font-weight: bolder;
+  }
+
+  ::ng-deep .mdc-list {
+    padding-top: 0;
+  }
+}

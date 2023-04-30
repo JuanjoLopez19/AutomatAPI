@@ -41,22 +41,4 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
-.env
-
-# Virtual Env
-venv/
-__pycache__/
-temp_templates/
-
-# Frontend gitignore
-automatAPI/.angular
-automatAPI/node_modules
-
-# Backend gitignore
-dist/*
-nodeBack/node_modules
-nodeBack/.env
-nodeBack/dist
-
-# Backend gitignore
-flaskBack/
+.angular/

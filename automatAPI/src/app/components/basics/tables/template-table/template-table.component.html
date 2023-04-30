@@ -1,0 +1,101 @@
+<div class="container-fluid">
+  <p-table [value]="templates" [scrollable]="true" scrollHeight="500px">
+    ><ng-template pTemplate="header">
+      <tr>
+        <th *ngIf="isAdmin">{{ "dashboard.T_TEMPLATE_ID" | translate }}</th>
+        <th *ngIf="isAdmin">{{ "dashboard.T_TEMPLATE_USER" | translate }}</th>
+        <th>{{ "dashboard.T_TEMPLATE_NAME" | translate }}</th>
+        <th>{{ "dashboard.T_TEMPLATE_DESC" | translate }}</th>
+        <th>{{ "dashboard.T_TEMPLATE_TECH" | translate }}</th>
+        <th>{{ "dashboard.T_TEMPLATE_TECH_TYPE" | translate }}</th>
+        <th>{{ "dashboard.T_TEMPLATE_DATE" | translate }}</th>
+        <th>{{ "dashboard.T_TEMPLATE_LAST_UPDATED" | translate }}</th>
+        <th style="width: 10rem">
+          {{ "dashboard.T_TEMPLATE_OPTIONS" | translate }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-template *ngIf="true">
+      <tr [pSelectableRow]="template">
+        <td *ngIf="isAdmin">{{ template.id }}</td>
+        <td *ngIf="isAdmin">{{ template.user_id }}</td>
+        <td>{{ template.app_name }}</td>
+        <td>
+          {{
+            template.description !== ""
+              ? template.description
+              : ("dashboard.T_NO_DESC" | translate)
+          }}
+        </td>
+        <td>
+          <mat-icon
+            svgIcon="flask"
+            *ngIf="template.technology === 'flask'"
+          ></mat-icon>
+          <mat-icon
+            svgIcon="express"
+            *ngIf="template.technology === 'express'"
+          ></mat-icon
+          ><mat-icon
+            svgIcon="django"
+            *ngIf="template.technology === 'django'"
+          ></mat-icon>
+        </td>
+        <td>
+          <mat-icon
+            svgIcon="service_app"
+            *ngIf="template.tech_type === 'services'"
+          ></mat-icon>
+          <mat-icon
+            svgIcon="webapp"
+            *ngIf="template.tech_type === 'app_web'"
+          ></mat-icon>
+        </td>
+        <td>{{ template.date_created | date : 'medium' }}</td>
+        <td>{{ template.last_updated | date : 'medium' }}</td>
+        <td>
+          <div class="row">
+            <div class="col-4 button">
+              <button
+                pButton
+                icon="pi pi-download"
+                class="p-button-rounded p-button-success p-mr-2"
+                (click)="downloadTemplate(template)"
+                [disabled]="template.user_id !== userId"
+              ></button>
+            </div>
+            <div class="col-4 button">
+              <button
+                pButton
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-warning p-mr-2"
+                (click)="editTemplate(template)"
+                [disabled]="template.user_id !== userId"
+              ></button>
+            </div>
+            <div class="col-4 button">
+              <button
+                pButton
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-danger"
+                (click)="deleteTemplate(template)"
+              ></button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="9">
+          <div class="d-flex align-items-center justify-content-center">
+            <span class="p-3">{{
+              "dashboard.T_TEMPLATE_EMPTY" | translate
+            }}</span>
+            <i class="pi pi-spin pi-spinner"></i>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

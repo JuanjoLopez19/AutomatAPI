@@ -1,0 +1,157 @@
+<div class="main-container h-100">
+  <mat-toolbar color="primary" class="topbar telative">
+    <div class="navbar-header">
+      <span class="navbar-brand d-flex h-100">
+        <b>
+          <img
+            src="assets/icons/orangeLogo.svg"
+            alt="homepage"
+            [ngStyle]="{ width: '50px' }"
+          />
+        </b>
+        <span class="mx-3 pt-2">
+          <h1 class="d-inline title">{{ "T_AUTOMATAPI" | translate }}</h1>
+        </span>
+        <span class="pt-2">
+          <i class="pi pi-bars icon" (click)="snav.toggle()"></i>
+        </span>
+      </span>
+    </div>
+
+    <span class="w-100 d-flex justify-content-end">
+      <div class="col-8"></div>
+      <div class="col-4">
+        <app-header
+          [username]="user.username"
+          [userImg]="user.image"
+          (navigateToProfile)="activeView = $event"
+        ></app-header>
+      </div>
+    </span>
+  </mat-toolbar>
+
+  <mat-sidenav-container [ngStyle]="{ height: '876px' }">
+    <mat-sidenav
+      #snav
+      id="snav"
+      [mode]="'side'"
+      fixedTopGap="0"
+      [opened]="true"
+    >
+      <app-sidebar
+        (activeTabChange)="onActiveTabChange($event)"
+        [activeTab]="activeView"
+        [isAdmin]="user.role === 'admin'"
+      ></app-sidebar>
+    </mat-sidenav>
+    <mat-sidenav-content class="page-wrapper">
+      <div class="page-content h-100">
+        <app-home
+          *ngIf="activeView === 'home' && user.role !== 'admin'"
+          [username]="user.username"
+          (changeViewEvent)="changeView($event)"
+        ></app-home>
+
+        <app-home-admin
+          *ngIf="activeView === 'home' && user.role === 'admin'"
+          [username]="user.username"
+          (changeViewEvent)="changeView($event)"
+        ></app-home-admin>
+
+        <app-flask-templates
+          *ngIf="activeView === 'flask'"
+          (closeSidenav)="snav.close()"
+          (openSidenav)="snav.open()"
+          (changeView)="activeView = $event"
+        ></app-flask-templates>
+
+        <app-django-templates
+          *ngIf="activeView === 'django'"
+          (closeSidenav)="snav.close()"
+          (openSidenav)="snav.open()"
+          (changeView)="activeView = $event"
+        ></app-django-templates>
+
+        <app-express-templates
+          *ngIf="activeView === 'express'"
+          (closeSidenav)="snav.close()"
+          (openSidenav)="snav.open()"
+          (changeView)="activeView = $event"
+        ></app-express-templates>
+
+        <app-manage-users
+          *ngIf="activeView === 'manage_users' && user.role === 'admin'"
+          [isAdmin]="user.role === 'admin'"
+          [userId]="user.id"
+          (openSideNav)="snav.open()"
+          (closeSideNav)="snav.close()"
+        ></app-manage-users>
+
+        <app-manage-templates
+          [isAdmin]="user.role === 'admin'"
+          [userId]="user.id"
+          *ngIf="activeView === 'manage_templates'"
+          (editTemplate)="onEditTemplate($event)"
+        ></app-manage-templates>
+
+        <app-profile
+          *ngIf="activeView === 'profile'"
+          [user]="user"
+          (closeSidenav)="snav.close()"
+          (openSidenav)="snav.open()"
+          (userEdited)="onUserEdited($event)"
+        ></app-profile>
+
+        <app-flask-template-edit
+          *ngIf="activeView === 'editFlask'"
+          [userId]="userId"
+          [templateId]="templateId"
+          (closeSidenav)="snav.close()"
+          (openSidenav)="snav.open()"
+          (changeView)="activeView = $event"
+        ></app-flask-template-edit>
+
+        <app-django-template-edit
+          *ngIf="activeView === 'editDjango'"
+          [userId]="userId"
+          [templateId]="templateId"
+          (closeSidenav)="snav.close()"
+          (openSidenav)="snav.open()"
+          (changeView)="activeView = $event"
+        ></app-django-template-edit>
+
+        <app-express-template-edit
+          *ngIf="activeView === 'editExpress'"
+          [userId]="userId"
+          [templateId]="templateId"
+          (closeSidenav)="snav.close()"
+          (openSidenav)="snav.open()"
+          (changeView)="activeView = $event"
+        ></app-express-template-edit>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <mat-toolbar color="primary" class="bottombar telative">
+    <div class="row w-100">
+      <div class="col-1">
+        <small> {{ "dashboard.T_VERSION" | translate }} 0.5.0 </small>
+      </div>
+      <div class="col-10"></div>
+      <div class="col-1">
+        <div class="row">
+          <div class="col-9 d-flex justify-content-end px-0">
+            <small>
+              {{ "T_AUTOMATAPI" | translate }}
+            </small>
+          </div>
+          <div class="col-1">
+            <mat-icon class="mt-1" [ngStyle]="{ fontSize: '15px' }"
+              >copyright</mat-icon
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-toolbar>
+</div>

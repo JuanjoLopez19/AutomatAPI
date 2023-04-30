@@ -1,0 +1,155 @@
+<mat-nav-list>
+  <div
+    class="row w-100 mx-0 pb-2 pt-3 pointer"
+    name="home"
+    (click)="toggleActive('home')"
+    [ngClass]="{ selected: activeTab === 'home' }"
+  >
+    <div class="col-12">
+      <div class="row">
+        <div class="col-4 d-flex justify-content-end">
+          <mat-icon>home</mat-icon>
+        </div>
+        <div class="col-8 d-flex align-items-center">
+          <div class="text-center">{{ "dashboard.T_HOME" | translate }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row w-100 mx-0">
+    <div class="col-12 px-0">
+      <mat-accordion>
+        <mat-expansion-panel
+          hideToggle
+          [expanded]="state === 0 || selectedView()"
+          (opened)="setState(0)"
+          (closed)="setState(-1)"
+        >
+          <mat-expansion-panel-header
+            name="header"
+            (click)="toggleActiveHeader()"
+          >
+            <mat-panel-title>
+              <div class="row header">
+                <div
+                  class="col-4 d-flex justify-content-end align-items-center"
+                  name="text"
+                >
+                  <mat-icon>add</mat-icon>
+                </div>
+                <div class="col-8 d-flex align-items-center" name="text">
+                  <div class="text-start">
+                    {{ "dashboard.T_CREATE_TEMP" | translate }}
+                  </div>
+                </div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div
+            class="row pointer"
+            name="flask"
+            (click)="toggleActive('flask')"
+            [ngClass]="{ selected: activeTab === 'flask' }"
+          >
+            <div class="col-12">
+              <div class="row w-100 mx-0 mb-2">
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-4 justify-content-end d-flex">
+                      <mat-icon svgIcon="flask"></mat-icon>
+                    </div>
+                    <div class="col-8 d-flex align-items-center">
+                      <span class="ml-1">{{
+                        "dashboard.T_FLASK" | translate
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="row pointer"
+            name="express"
+            (click)="toggleActive('express')"
+            [ngClass]="{ selected: activeTab === 'express' }"
+          >
+            <div class="col-12">
+              <div class="row w-100 mx-0 mb-2">
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-4 justify-content-end d-flex">
+                      <mat-icon svgIcon="express"></mat-icon>
+                    </div>
+                    <div class="col-8 d-flex align-items-center">
+                      <span class="ml-1">{{
+                        "dashboard.T_EXPRESS" | translate
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="row pointer"
+            name="django"
+            (click)="toggleActive('django')"
+            [ngClass]="{ selected: activeTab === 'django' }"
+          >
+            <div class="col-12">
+              <div class="row w-100 mx-0">
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-4 justify-content-end d-flex">
+                      <mat-icon svgIcon="django"></mat-icon>
+                    </div>
+                    <div class="col-8 d-flex align-items-center">
+                      <span class="ml-1">{{
+                        "dashboard.T_DJANGO" | translate
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+  <div
+    class="row w-100 mx-0 py-2 pointer"
+    name="manage_templates"
+    (click)="toggleActive('manage_templates')"
+    [ngClass]="{ selected: activeTab === 'manage_templates' }"
+  >
+    <div class="col-12 pt-3">
+      <div class="row">
+        <div class="col-4 d-flex justify-content-end">
+          <mat-icon>save</mat-icon>
+        </div>
+        <div class="col-8 d-flex align-items-center">
+          <span>{{ "dashboard.T_SAVED_TEMPLATES" | translate }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isAdmin"
+    class="row w-100 mx-0 py-2 pointer"
+    name="manage_users"
+    (click)="toggleActive('manage_users')"
+    [ngClass]="{ selected: activeTab === 'manage_users' }"
+  >
+    <div class="col-12 pt-3">
+      <div class="row">
+        <div class="col-4 d-flex justify-content-end">
+          <mat-icon>supervisor_account</mat-icon>
+        </div>
+        <div class="col-8 d-flex align-items-center">
+          <span>{{ "dashboard.T_USERS" | translate }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-nav-list>
