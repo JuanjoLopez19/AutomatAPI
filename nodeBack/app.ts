@@ -15,7 +15,11 @@ const app: Express = express();
 
 app.use(
 	cors({
-		origin: ["http://localhost:4200", "http://192.168.0.55:4200", "http://automatapi.ddns.net:4200"],
+		origin: [
+			"http://localhost:4200",
+			"http://192.168.0.55:4200",
+			"http://automatapi.ddns.net:4200",
+		],
 		credentials: true,
 	})
 );
@@ -64,8 +68,8 @@ app.get(
 app.get(
 	"/api/auth/google/callback",
 	passport.authenticate("google", {
-		failureRedirect: `http://localhost:${config.port}/api/auth/failure`,
-		successRedirect: `http://localhost:${config.port}/api/auth/succes/google`,
+		failureRedirect: `${config.host}:${config.port}/api/auth/failure`,
+		successRedirect: `${config.host}:${config.port}/api/auth/succes/google`,
 	})
 );
 
@@ -77,8 +81,8 @@ app.get(
 app.get(
 	"/api/auth/github/callback",
 	passport.authenticate("github", {
-		failureRedirect: `http://localhost:${config.port}/api/auth/failure`,
-		successRedirect: `http://localhost:${config.port}/api/auth/succes/github`,
+		failureRedirect: `${config.host}:${config.port}/api/auth/failure`,
+		successRedirect: `${config.host}:${config.port}/api/auth/succes/github`,
 	})
 );
 
