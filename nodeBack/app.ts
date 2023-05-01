@@ -19,6 +19,7 @@ app.use(
 			"http://localhost:4200",
 			"http://192.168.0.55:4200",
 			"http://automatapi.ddns.net:4200",
+			"https://automatapi.ddns.net:4200",
 		],
 		credentials: true,
 	})

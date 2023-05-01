@@ -4,14 +4,13 @@ import config from "../../config/config";
 import bcrypt from "bcrypt";
 import User, { role } from "../../database/models/user";
 import { Op, WhereOptions } from "sequelize";
-import jwt from "jsonwebtoken";
 import { generateToken } from "../auxiliaryFunctions";
 
 const google = new googleStrategy(
 	{
 		clientID: config.google.clientID,
 		clientSecret: config.google.clientSecret,
-		callbackURL: `http://localhost:${config.port}${config.google.callbackURL}`,
+		callbackURL: `${config.host}:${config.port}${config.google.callbackURL}`,
 		passReqToCallback: true,
 	},
 	async (
