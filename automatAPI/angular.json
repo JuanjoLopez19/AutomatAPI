@@ -91,7 +91,10 @@
               "browserTarget": "automatAPI:build:development"
             },
             "distri": {
-              "browserTarget": "automatAPI:build:distri"
+              "browserTarget": "automatAPI:build:distri",
+              "ssl": true,
+              "sslKey": "./certificates/privkey1.pem",
+              "sslCert": "./certificates/fullchain1.pem"
             }
           },
           "defaultConfiguration": "development"
