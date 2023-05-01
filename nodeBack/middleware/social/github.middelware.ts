@@ -4,7 +4,6 @@ import bcrypt from "bcrypt";
 import { Op, WhereOptions } from "sequelize";
 import User, { role } from "../../database/models/user";
 import { generateToken } from "../auxiliaryFunctions";
-import jwt from "jsonwebtoken";
 
 const githubStrategy = passportGithub.Strategy;
 const github = new githubStrategy(
