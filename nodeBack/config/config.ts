@@ -50,14 +50,14 @@ const config = {
 			process.env.TWITTER_CALLBACK ||
 			"http://localhost:3000/auth/twitter/callback",
 	},
-	aws:{
+	aws: {
 		accessKey: process.env.AWS_ACCESS_KEY || "accessKey",
 		secretKey: process.env.AWS_SECRET_KEY || "secretKey",
 		region: process.env.AWS_REGION || "region",
 		bucket: process.env.AWS_BUCKET || "bucket",
 		cloudFront: process.env.CLOUDFRONT_URL || "clouddir",
 	},
-	python:{
+	python: {
 		host: process.env.PYTHON_BACKEND_HOST || "localhost",
 		port: process.env.PYTHON_BACKEND_PORT || "5000",
 	},
@@ -65,7 +65,11 @@ const config = {
 		algorithm: process.env.ENC_ALGORITHM || "aes-256-abc",
 		iv: process.env.IV_VECTOR || "iv",
 		key: process.env.CYPHER_KEY || "key",
-	}
+	},
+	ssl: {
+		cert: process.env.SSL_CERT || "cert",
+		key: process.env.SSL_KEY || "key",
+	},
 };
 
 export default config;

@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request } from "express";
 import { v4 as uuidv4 } from "uuid";
 import { S3Client } from "@aws-sdk/client-s3";
 import multer from "multer";
