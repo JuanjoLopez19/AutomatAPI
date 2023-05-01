@@ -61,3 +61,5 @@ nodeBack/dist
 
 # Backend gitignore
 flaskBack/
+
+certificates/
