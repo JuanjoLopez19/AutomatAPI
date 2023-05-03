@@ -5,7 +5,11 @@
     margin: 0;
     cursor: pointer;
   }
-
+  ::ng-deep p-menu {
+    .p-menu {
+      border-radius: 15px;
+    }
+  }
   ::ng-deep p-avatar {
     cursor: pointer;
     .p-avatar-circle {
