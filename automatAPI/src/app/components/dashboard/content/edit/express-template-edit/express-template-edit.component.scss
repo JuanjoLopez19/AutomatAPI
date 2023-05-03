@@ -1,6 +1,10 @@
 @import "src/shared/variables";
 
 :host {
+  h1 {
+    padding: 0 24px;
+    font-weight: 750;
+  }
   .container {
     max-height: fit-content;
   }
@@ -66,13 +70,13 @@
     }
 
     .p-button-danger {
-      background-color:$error-color-dash;
+      background-color: $error-color-dash;
       color: $black-not-black !important;
       border-color: $error-color-dash;
     }
 
     .p-button.p-button-danger:hover {
-      background-color:$error-color-effects-dash;
+      background-color: $error-color-effects-dash;
       color: $black-not-black !important;
       border-color: $error-color-effects-dash;
     }

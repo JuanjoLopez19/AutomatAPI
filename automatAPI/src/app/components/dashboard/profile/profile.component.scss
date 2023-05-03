@@ -1,6 +1,9 @@
 @import "src/shared/variables";
 
 :host {
+  h5{
+    font-weight: 600;
+  }
   .container {
     max-height: fit-content;
   }

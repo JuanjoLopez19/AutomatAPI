@@ -1,6 +1,10 @@
 @import "src/shared/variables";
 
 :host {
+  h1 {
+    padding: 0 24px;
+    font-weight: 750;
+  }
   .container {
     max-height: fit-content;
   }
