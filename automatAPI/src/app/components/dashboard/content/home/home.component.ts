@@ -37,7 +37,7 @@ export class HomeComponent {
   }
 
   chooseLang(): string {
-    return 'es-ES';
+    return navigator.language;
   }
 
   changeView(tech: string): void {

@@ -18,6 +18,12 @@
     }
   }
 
+   ::ng-deep p-divider {
+    .p-divider-content {
+      background-color: $back-modals;
+    }
+  }
+
   ::ng-deep p-dialog {
     .p-dialog {
       border-radius: 20px;

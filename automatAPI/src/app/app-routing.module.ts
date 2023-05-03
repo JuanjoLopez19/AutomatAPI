@@ -1,17 +1,27 @@
 import { NgModule, inject } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserManagementComponent } from './views/user-management/user-management.component';
 import { ActivateUserComponent } from './views/user-management/activate-user/activate-user.component';
 import { RememberPasswordComponent } from './views/user-management/remember-password/remember-password.component';
 import { ChangePasswordComponent } from './views/user-management/change-password/change-password.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { GuardService } from './api/auth/auth/guard/guard.service';
 import { CompleteRegisterComponent } from './views/user-management/complete-register/complete-register.component';
+import { LoginComponent } from './views/user-management/login/login.component';
+import { RegisterComponent } from './views/user-management/register/register.component';
+
 
 const routes: Routes = [
   {
     path: '',
-    component: UserManagementComponent,
+    component: LoginComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
   },
   {
     path: 'remember_password',

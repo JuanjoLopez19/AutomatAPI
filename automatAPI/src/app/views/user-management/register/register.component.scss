@@ -1,6 +1,52 @@
 @import "src/shared/variables";
-
 :host {
+  .login-block {
+    float: left;
+    padding-top: 100px;
+    background: linear-gradient(
+      116.26deg,
+      #4266a5 0.81%,
+      #8baeec 28.7%,
+      #7195d2 67.97%,
+      #204fa1 100%
+    );
+  }
+  h2 {
+    cursor: pointer;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+  .banner-sec {
+    background-color: $light-blue;
+    min-height: 800px;
+    border-radius: 0 10px 10px 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+  .container {
+    background: $orange;
+    border-radius: 10px;
+    box-shadow: 15px 20px 0px rgba(0, 0, 0, 0.1);
+  }
+  .login-sec {
+    padding: 50px 30px;
+    position: relative;
+  }
+  h1 {
+    font-size: 4rem;
+    font-weight: 700;
+  }
+  small {
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .login {
+    height: 600px;
+  }
+
+  @import "src/shared/variables";
+
   h3 {
     font-size: 1.25rem;
     font-weight: 600;
