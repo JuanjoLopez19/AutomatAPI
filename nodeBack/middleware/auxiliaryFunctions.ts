@@ -3,6 +3,8 @@ import AWS from "aws-sdk";
 import config from "../config/config";
 import * as crypto from "crypto";
 import User from "../database/models/user";
+import { activateAccountTemplate } from "../emails_templates/activate_account";
+import { remPwdTemplate } from "../emails_templates/forget_pwd";
 
 // Access and password token generator
 export const generateToken = (length: number) => {
@@ -26,22 +28,7 @@ export const sendActivationEmail = async (
 		from: config.smtp.email,
 		to: userEmail,
 		subject: "AutomatAPI - Account activation",
-		html:
-			"<h1> Welcome to AutomatAPI!</h1></br>" +
-			username +
-			', here is the link for activating your user account: <a href="' +
-			config.front +
-			config.activateRoute +
-			"?token=" +
-			accessToken +
-			'">Activate account</a>.</br> <div>' +
-			username +
-			", if you cannot use previous link, please just acccess this url: <span> " +
-			config.front +
-			config.activateRoute +
-			"?token=" +
-			accessToken +
-			"</span></div>",
+		html: activateAccountTemplate(username, accessToken),
 	};
 
 	const emailResponse: any = await sendMail(options);
@@ -60,22 +47,7 @@ export const sendPasswordResetEmail = async (
 		from: config.smtp.email,
 		to: userEmail,
 		subject: "AutomatAPI - Password reset",
-		html:
-			"<h1> Hello again, " +
-			username +
-			'!</h1></br> We are sorry to hear you have forgotten your password, to reset it click here: <a href="' +
-			config.front +
-			config.resetRoute +
-			"?token=" +
-			passwordToken +
-			'">Reset password</a>.</br> <div>' +
-			username +
-			", if you cannot use previous link, please just acccess this url: <span> " +
-			config.front +
-			config.resetRoute +
-			"?token=" +
-			passwordToken +
-			"</span></div>",
+		html: remPwdTemplate(username, passwordToken),
 	};
 
 	const emailResponse: any = await sendMail(options);
@@ -140,7 +112,7 @@ export const deleteItemsAWS = (certs: string[], template: string) => {
 };
 
 export const deleteItem = (key: string, type: string | null = null) => {
-AWS.config.update({
+	AWS.config.update({
 		accessKeyId: config.aws.accessKey,
 		secretAccessKey: config.aws.secretKey,
 		region: config.aws.region,
@@ -148,24 +120,24 @@ AWS.config.update({
 
 	const s3 = new AWS.S3();
 	let params: AWS.S3.DeleteObjectRequest;
-	if(type){
+	if (type) {
 		params = {
 			Bucket: config.aws.bucket,
 			Key: `${type}/${decryptData(key)}`,
 		};
-	}else{
+	} else {
 		params = {
 			Bucket: config.aws.bucket,
 			Key: decryptData(key),
 		};
 	}
-	
+
 	s3.deleteObject(params, function (err, data) {
 		if (err) console.log("Error", err, err.stack);
 		// an error occurred
 		else console.log("Success", data); // successful response
 	});
-}
+};
 
 export const formatSessionObject = (user: User | null) => {
 	let sessionObject = {};
