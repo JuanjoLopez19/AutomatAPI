@@ -210,7 +210,7 @@
     "T_EMAIL_REQ": "The email is required",
     "T_EMAIL_INVALID": "The email is invalid",
     "T_PWD_REQ": "The password is required",
-    "T_PWD_INVALID": "The password is invalid",
+    "T_PWD_INVALID": "The password has an invalid format",
     "T_PWD_NOT_MATCH": "The passwords don't match",
     "T_DATE_REQ": "The date is required",
     "T_DATE_INVALID": "The date is invalid",

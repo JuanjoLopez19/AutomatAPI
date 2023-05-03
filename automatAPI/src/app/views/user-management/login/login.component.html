@@ -1,0 +1,231 @@
+<div class="login-block h-100 w-100">
+  <div class="container">
+    <div class="row">
+      <div
+        class="login-sec"
+        [ngClass]="{
+          'col-7': currentSize === sizes.XL || currentSize === sizes.LG
+        }"
+      >
+        <h1 class="text-center">{{ "T_AUTOMATAPI" | translate }}</h1>
+        <div class="row">
+          <div class="col-12">
+            <div class="row pb-5">
+              <div class="container-fluid">
+                <div class="row justify-content-center">
+                  <div class="col-10">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="row">
+                          <span class="text-center col-12">
+                            <h3>{{ "T_SIGN_IN_NOW" | translate }}</h3>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <form
+                      class="row"
+                      (ngSubmit)="onLoginSubmit()"
+                      [formGroup]="loginForm"
+                    >
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="row">
+                            <div class="col-5">
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="row justify-content-center">
+                                    <span class="col-10">
+                                      <h3>{{ "T_EMAIL" | translate }}</h3>
+                                    </span>
+                                  </div>
+                                  <div class="row justify-content-center">
+                                    <div class="col-10">
+                                      <span class="p-input-icon-right field">
+                                        <i class="pi pi-user"></i>
+                                        <input
+                                          formControlName="email"
+                                          type="email"
+                                          id="email"
+                                          placeholder="{{
+                                            'T_EMAIL_PLACEHOLDER' | translate
+                                          }}"
+                                          pInputText
+                                        />
+                                      </span>
+
+                                      <div class="row">
+                                        <small
+                                          id="email-help"
+                                          class="p-error block mt-2"
+                                          *ngIf="loginForm.get('email').errors?.[ 'required' ] && loginForm.get('email').touched"
+                                          >{{ "error.T_EMAIL_REQ" | translate }}
+                                        </small>
+                                        <small
+                                          id="email-help"
+                                          class="p-error block"
+                                          *ngIf="loginForm.get('email').errors?.[ 'email' ]"
+                                        >
+                                          {{
+                                            "error.T_EMAIL_INVALID" | translate
+                                          }}
+                                        </small>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row mt-3">
+                                <div class="col-12">
+                                  <div class="row justify-content-center">
+                                    <span class="col-10">
+                                      <h3>{{ "T_PWD" | translate }}</h3>
+                                    </span>
+                                  </div>
+                                  <div class="row justify-content-center">
+                                    <div class="col-10 field">
+                                      <p-password
+                                        formControlName="password"
+                                        placeholder="{{
+                                          'T_PWD_PLACEHOLDER' | translate
+                                        }}"
+                                        id="password"
+                                        [toggleMask]="true"
+                                        [feedback]="false"
+                                      ></p-password>
+                                      <small
+                                        id="password-help"
+                                        class="p-error block mt-2"
+                                        *ngIf="loginForm.get('password').errors?.[ 'required' ] && loginForm.get('password').touched"
+                                        >{{ "error.T_PWD_REQ" | translate }}
+                                      </small>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row mt-3">
+                                <div class="col-12">
+                                  <div class="row justify-content-center">
+                                    <div class="col-10">
+                                      <button
+                                        [ngClass]="{
+                                          error:
+                                            icon ===
+                                            'pi pi-exclamation-triangle'
+                                        }"
+                                        pButton
+                                        pRipple
+                                        [icon]="icon"
+                                        iconPos="right"
+                                        [label]="'T_SIGN_IN' | translate"
+                                        type="submit"
+                                        [loading]="waitingState"
+                                        class="p-button-info"
+                                      ></button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-2">
+                              <p-divider layout="vertical">
+                                <b>{{ "T_OR" | translate }}</b>
+                              </p-divider>
+                            </div>
+                            <div class="col-5">
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="row justify-content-center">
+                                    <span class="col-8">
+                                      <h3>{{ "T_LOGIN_WITH" | translate }}</h3>
+                                    </span>
+                                  </div>
+                                  <div class="row justify-content-center py-3">
+                                    <span class="col-4">
+                                      <p-button
+                                        icon="pi pi-google"
+                                        styleClass="p-button-rounded p-button-info p-button-text p-button-raised"
+                                        (onClick)="loginWithGoogle()"
+                                      ></p-button>
+                                    </span>
+                                  </div>
+
+                                  <div class="row justify-content-center py-3">
+                                    <span class="col-4">
+                                      <p-button
+                                        icon="pi pi-github"
+                                        styleClass="p-button-rounded p-button-info p-button-text p-button-raised"
+                                        (onClick)="loginWithGithub()"
+                                      ></p-button>
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="row mb-2">
+              <div class="text-center">
+                <span
+                  >{{ "T_NO_ACCOUNT" | translate }}
+                  <h2 (click)="active = 'sign_up'" class="d-inline">
+                    {{ "T_REGISTER_NOW" | translate }}
+                  </h2>
+                </span>
+              </div>
+            </div>
+            <div class="row mx-0">
+              <div class="col-1"></div>
+              <div class="col-10 px-0">
+                <div class="row w-100">
+                  <app-selector
+                    class="d-flex justify-content-end"
+                    [active]="'sign_in'"
+                    (activeChange)="onActiveChange($event)"
+                  ></app-selector>
+                </div>
+              </div>
+              <div class="col-1"></div>
+            </div>
+            <div class="row mt-2">
+              <div class="text-center">
+                <small (click)="goToRemPwd()" class="d-inline">
+                  {{ "T_REM_PWD" | translate }}
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="currentSize === sizes.XL"
+        class="banner-sec"
+        [ngClass]="{
+          'col-5': currentSize === sizes.XL
+        }"
+      >
+        <div class="row">
+          <div class="col-12">
+            <div class="row py-5">
+              <div class="col-3"></div>
+              <div class="col-6">
+                <img [src]="chooseQuote()" alt="Quote" />
+              </div>
+              <div class="col-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

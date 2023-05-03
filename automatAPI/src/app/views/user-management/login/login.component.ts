@@ -1,53 +1,50 @@
 import { Component, HostListener } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/api/auth/auth/auth.service';
 import { Sizes } from 'src/app/common/enums/enums';
-import {
-  httpResponse,
-  rememberPasswordParams,
-} from 'src/app/common/interfaces/interfaces';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-
+import { httpResponse } from 'src/app/common/interfaces/interfaces';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { environment } from 'src/environments/env';
+import { LoginService } from 'src/app/api/auth/login/login.service';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
-  selector: 'app-remember-password',
-  templateUrl: './remember-password.component.html',
-  styleUrls: ['./remember-password.component.scss'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
-export class RememberPasswordComponent {
-  remPasswordForm: FormGroup;
-  params: rememberPasswordParams;
+export class LoginComponent {
+  loginForm: FormGroup;
+  waitingState: boolean = false;
   readonly sizes: typeof Sizes = Sizes;
   currentSize!: string;
-  waitingState: boolean = false;
-  showDialog: boolean = false;
-  statusCode: number;
-  message: string;
-
+  active: string;
+  icon: string = 'pi pi-send';
   constructor(
     private router: Router,
     private translate: TranslateService,
-    private authService: AuthService
+    private authService: AuthService,
+    private loginService: LoginService
   ) {
     this.translate.addLangs(['en', 'es-ES']);
-
-    this.remPasswordForm = new FormGroup({
+    this.loginForm = new FormGroup({
       email: new FormControl(undefined, {
         validators: [Validators.required, Validators.email],
         updateOn: 'submit',
       }),
-      username: new FormControl(undefined, {
+      password: new FormControl(undefined, {
         validators: [Validators.required],
         updateOn: 'submit',
       }),
     });
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.chooseSize(window.innerWidth);
     this.chooseLanguage(navigator.language);
+    this.checkSession();
   }
+
   // Resize Methods
   @HostListener('window:resize')
   onResize() {
@@ -77,51 +74,61 @@ export class RememberPasswordComponent {
     this.translate.use(language);
   }
 
-  goToRegister() {
-    this.router.navigate(['register'], {
-      skipLocationChange: false,
+  onActiveChange(active: string) {
+    this.router.navigate(['register'], {});
+  }
+
+  goToRemPwd() {
+    this.router.navigate(['remember_password'], {});
+  }
+
+  checkSession() {
+    this.authService.generateSession().subscribe({
+      next: (response: httpResponse) => {
+        this.router.navigate(['/home'], {
+          state: { data: response.data },
+        });
+      },
+      error: (error) => {},
     });
   }
 
-  goToLogin() {
-    this.router.navigate(['login'], {
-      skipLocationChange: false,
-    });
-  }
-
-  remPasswordSubmit() {
-    if (this.remPasswordForm.invalid) {
+  onLoginSubmit(): void {
+    if (this.loginForm.invalid) {
       return;
     } else {
       this.waitingState = true;
-      this.params = {
-        email: this.remPasswordForm.value.email,
-        username: this.remPasswordForm.value.username,
-      };
-      this.authService.rememberPassword(this.params).subscribe({
+      this.loginService.login(this.loginForm.value).subscribe({
         next: (response: httpResponse) => {
           setTimeout(() => {
-            this.waitingState = false;
-            this.statusCode = response.status;
-            this.message = response.message;
-            this.showDialog = true;
+            this.router.navigate(['/home'], {
+              state: { data: response.data },
+            });
           }, 1500);
         },
         error: (error: HttpErrorResponse) => {
           setTimeout(() => {
             this.waitingState = false;
-            this.statusCode = error.status;
-            this.message = error.error.message;
-            this.showDialog = true;
+            this.icon = 'pi pi-exclamation-triangle';
+            alert("Couldn't login, please try again");
           }, 1500);
         },
       });
     }
   }
 
-  manageHide(event: boolean) {
-    this.showDialog = false;
-    this.router.navigate([''], { state: { active: 'sign_in' } });
+  loginWithGoogle(): void {
+    window.open(
+      `${environment.apiHost}${environment.apiPort}${environment.googleRoute}`,
+      '_self'
+    );
+  }
+
+  loginWithGithub(): void {
+    window.open(
+      `${environment.apiHost}${environment.apiPort}${environment.githubRoute}`,
+      '_self'
+    );
   }
 
   chooseQuote() {

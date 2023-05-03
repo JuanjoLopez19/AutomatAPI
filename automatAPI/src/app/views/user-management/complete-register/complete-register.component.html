@@ -117,7 +117,7 @@
                                 [label]="'T_COMPLETE_REGISTER' | translate"
                                 type="submit"
                                 [loading]="waitingState"
-                                class=" p-button-info"
+                                class="p-button-info"
                               ></button>
                             </div>
                           </div>
@@ -139,7 +139,31 @@
                               id="password"
                               [toggleMask]="true"
                               [feedback]="false"
-                            ></p-password>
+                              [weakLabel]="'T_WEAK_PWD' | translate"
+                              [mediumLabel]="'T_MEDIUM_PWD' | translate"
+                              [strongLabel]="'T_STRONG_PWD' | translate"
+                              [promptLabel]="'T_PICK_PWD' | translate"
+                            >
+                              <ng-template pTemplate="header">
+                                <h6>{{ "T_PICK_PWD" | translate }}</h6>
+                              </ng-template>
+                              <ng-template pTemplate="footer">
+                                <p-divider></p-divider>
+                                <p class="mt-2">
+                                  {{ "T_REQ" | translate }}
+                                </p>
+                                <ul
+                                  class="pl-2 ml-2 mt-0"
+                                  style="line-height: 1.5"
+                                >
+                                  <li>{{ "T_LOWER" | translate }}</li>
+                                  <li>{{ "T_UPPER" | translate }}</li>
+                                  <li>{{ "T_NUMBER" | translate }}</li>
+                                  <li>{{ "T_SYMBOL" | translate }}</li>
+                                  <li>{{ "T_8_CHAR" | translate }}</li>
+                                </ul>
+                              </ng-template>
+                            </p-password>
 
                             <div class="row">
                               <small
@@ -171,9 +195,31 @@
                                 'T_PWD_PLACEHOLDER' | translate
                               }}"
                               id="password"
-                              [toggleMask]="true"
-                              [feedback]="false"
-                            ></p-password>
+                              [weakLabel]="'T_WEAK_PWD' | translate"
+                              [mediumLabel]="'T_MEDIUM_PWD' | translate"
+                              [strongLabel]="'T_STRONG_PWD' | translate"
+                              [promptLabel]="'T_PICK_PWD' | translate"
+                            >
+                              <ng-template pTemplate="header">
+                                <h6>{{ "T_PICK_PWD" | translate }}</h6>
+                              </ng-template>
+                              <ng-template pTemplate="footer">
+                                <p-divider></p-divider>
+                                <p class="mt-2">
+                                  {{ "T_REQ" | translate }}
+                                </p>
+                                <ul
+                                  class="pl-2 ml-2 mt-0"
+                                  style="line-height: 1.5"
+                                >
+                                  <li>{{ "T_LOWER" | translate }}</li>
+                                  <li>{{ "T_UPPER" | translate }}</li>
+                                  <li>{{ "T_NUMBER" | translate }}</li>
+                                  <li>{{ "T_SYMBOL" | translate }}</li>
+                                  <li>{{ "T_8_CHAR" | translate }}</li>
+                                </ul>
+                              </ng-template>
+                            </p-password>
                             <div class="row">
                               <small
                                 id="email-help"
@@ -209,7 +255,7 @@
                           [label]="'T_COMPLETE_REGISTER' | translate"
                           type="submit"
                           [loading]="waitingState"
-                          class=" p-button-info"
+                          class="p-button-info"
                         ></button>
                       </div>
                       <div class="col-3"></div>
@@ -240,7 +286,7 @@
             <div class="row py-5">
               <div class="col-3"></div>
               <div class="col-6">
-                <img src="assets/icons/Quote.svg" alt="Quote" />
+                <img [src]="chooseQuote()" alt="Quote" />
               </div>
               <div class="col-3"></div>
             </div>
