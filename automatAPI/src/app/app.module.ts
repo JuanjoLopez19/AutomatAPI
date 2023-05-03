@@ -10,10 +10,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Custom components and views
-import { UserManagementComponent } from './views/user-management/user-management.component';
-import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './views/user-management/register/register.component';
+import { LoginComponent } from './views/user-management/login/login.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
-import { RegisterComponent } from './components/register/register.component';
 import { SelectorComponent } from './components/basics/selector/selector.component';
 import { ActivateUserComponent } from './views/user-management/activate-user/activate-user.component';
 import { RememberPasswordComponent } from './views/user-management/remember-password/remember-password.component';
@@ -87,7 +86,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    UserManagementComponent,
     LoginComponent,
     DashboardComponent,
     RegisterComponent,

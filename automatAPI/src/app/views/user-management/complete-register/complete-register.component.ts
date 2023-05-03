@@ -195,4 +195,10 @@ export class CompleteRegisterComponent {
     this.showDialog = false;
     this.router.navigate([''], { state: { active: 'sign_in' } });
   }
+
+  chooseQuote() {
+    return navigator.language === 'es-ES'
+      ? 'assets/icons/Quote_ES.svg'
+      : 'assets/icons/Quote.svg';
+  }
 }

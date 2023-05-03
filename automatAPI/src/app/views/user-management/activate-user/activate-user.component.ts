@@ -96,6 +96,6 @@ export class ActivateUserComponent implements OnInit {
 
   manageHide(event: boolean) {
     this.showDialog = false;
-    this.router.navigate([''], { state: { active: 'sign_in' } });
+    this.router.navigate(['']);
   }
 }

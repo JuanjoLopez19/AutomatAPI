@@ -128,21 +128,25 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   goToRegister() {
-    this.router.navigate([''], {
+    this.router.navigate(['register'], {
       skipLocationChange: false,
-      state: { active: 'sign_up' },
     });
   }
 
   goToLogin() {
-    this.router.navigate([''], {
+    this.router.navigate(['login'], {
       skipLocationChange: false,
-      state: { active: 'sign_in' },
     });
   }
 
   manageHide(event: boolean) {
     this.showDialog = false;
     this.router.navigate([''], { state: { active: 'sign_in' } });
+  }
+
+  chooseQuote() {
+    return navigator.language === 'es-ES'
+      ? 'assets/icons/Quote_ES.svg'
+      : 'assets/icons/Quote.svg';
   }
 }
