@@ -5,7 +5,7 @@
   },
   "info": {
     "title": "express API",
-    "version": "0.0",
+    "version": "0.5",
     "contact": {
       "name": "Juanjo Lopez",
       "email": "juanjoselopez@usal.es",
@@ -333,7 +333,7 @@
       },
       "parameters": []
     },
-    "/api/auth/logout": {
+    "/api/auth/signout": {
       "post": {
         "tags": [
           "Auth"
@@ -389,7 +389,8 @@
             "description": "JWT toke that allow the platform to authenticate the user"
           }
         ]
-      }
+      },
+      "parameters": []
     },
     "/api/auth/remember_password": {
       "get": {
@@ -772,6 +773,178 @@
             "description": "JWT token"
           }
         ]
+      }
+    },
+    "/api/auth/complete_registration": {
+      "post": {
+        "summary": "",
+        "operationId": "post-api-auth-complete_registration",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/auth/authorize": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-api-auth-authorize"
+      }
+    },
+    "/api/auth/generate_session": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-api-auth-generate_session"
+      }
+    },
+    "/users/": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-users"
+      }
+    },
+    "/users/delete": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-users-delete"
+      }
+    },
+    "/users/deleteAccount": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-users-deleteAccount"
+      }
+    },
+    "/users/editAccount": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-users-editAccount"
+      }
+    },
+    "/users/editPassword": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-users-editPassword"
+      }
+    },
+    "/users/editPasswordAdmin": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-users-editPasswordAdmin"
+      }
+    },
+    "/users/getUserInfo": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-users-getUserInfo"
+      }
+    },
+    "/templates/flask": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-templates-flask"
+      }
+    },
+    "/templates/express": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-templates-express"
+      }
+    },
+    "/templates/django": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-templates-django"
+      }
+    },
+    "/templates/": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-templates"
+      }
+    },
+    "/templates/deleteTemplate": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-templates-deleteTemplate"
+      }
+    },
+    "/templates/deleteTemplateAdmin": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-templates-deleteTemplateAdmin"
+      }
+    },
+    "/templates/getToken": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-template-getToken"
+      },
+      "parameters": []
+    },
+    "/templates/getTemplateStats": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-templates-getTemplateStats"
+      }
+    },
+    "/templates/getUserTemplateStats": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-templates-getUserTemplateStats"
+      }
+    },
+    "/templates/getTemplateConfig": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-templates-getTemplateConfig"
+      }
+    },
+    "/templates/editTemplate": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-templates-editTemplate"
       }
     }
   },
