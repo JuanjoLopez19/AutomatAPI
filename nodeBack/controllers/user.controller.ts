@@ -29,7 +29,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 	if (req.body.user_id !== undefined) {
 		User.findByPk(req.body.user_id).then((user) => {
 			if (user == null) {
-				res.status(404).json({ message: "User not found", status: 404 });
+				res.status(404).json({ message: "T_USER_NOT_FOUND", status: 404 });
 				return;
 			}
 			Templates.findAll({
@@ -47,7 +47,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 							})
 							.catch((err) => {
 								console.log(err);
-								res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR" });
+								res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 								return;
 							});
 					} else {
@@ -76,13 +76,13 @@ export const deleteUser = async (req: Request, res: Response) => {
 							});
 						} catch (err) {
 							console.log(err);
-							res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR" });
+							res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 						}
 					}
 				})
 				.catch((err) => {
 					console.log(err);
-					res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR" });
+					res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 					return;
 				});
 		});
