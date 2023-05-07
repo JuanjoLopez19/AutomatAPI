@@ -9,7 +9,9 @@ users = Blueprint("users", __name__, url_prefix="/users")
 @users.route("/<int:user_id>/delete", methods=["DELETE"])
 def get_templates(user_id):
     """
-    Deletes a user from the database and his templates with it.
+    Delete: Delete a user from the database and his templates with it.
+        Query Parameters:
+            user_id: The id of the user to be deleted.
     """
 
     try:

@@ -19,10 +19,17 @@ templates = Blueprint("templates", __name__, url_prefix="/templates")
 @templates.route("", methods=["GET", "POST"])
 def get_templates():
     """
-    Method Get: Return all templates the user has access to, if user is admin return all templates
-        Body: user_id
-    Method Post: Create a new template
-        Body: user_id, template_data, tech, tech_type
+    Get: Return all templates the user has access to, if user is admin return all templates
+        Body:
+            user_id: The id of the user to be deleted.
+    Post: Create a new template
+        Body:
+            user_id: The id of the user to be deleted.
+            template_data: The data of the template to be created
+            tech: The technology of the template to be created
+            tech_type: The use of the technology of the template to be created
+            aws_key_cert: The certificate key of the aws account to be used (optional)
+            aws_key_key: The private key of the aws account to be used (optional)
     """
 
     if request.method == "GET":
@@ -243,21 +250,18 @@ def get_templates():
 @templates.route("/<int:template_id>", methods=["GET"])
 def get_template(template_id):
     """
-    Method Get: Return the template with the given id
-        Body: user_id
+    Get: Return the template with the given id
+        Body: 
+            user_id: The id of the user to be deleted.
     """
     try:
         body = dict(request.get_json(force=True))
     except Exception:
-        return make_response(
-            jsonify({"status": "error", "message": "T_BAD_REQ"}), 400
-        )
+        return make_response(jsonify({"status": "error", "message": "T_BAD_REQ"}), 400)
 
     if not body:
         return make_response(
-            jsonify(
-                {"status": "error", "message": "T_BODY_EMPTY"}, 400
-            )
+            jsonify({"status": "error", "message": "T_BODY_EMPTY"}, 400)
         )
 
     user_id = body.get("user_id")
@@ -289,7 +293,10 @@ def get_template(template_id):
         if temp:
             temp.pop("_id")
         close_connection(mongo_client)
-        return make_response(jsonify({"status": "ok", "template": temp, "messages": "T_TEMPLATE_FOUND"}), 200)
+        return make_response(
+            jsonify({"status": "ok", "template": temp, "messages": "T_TEMPLATE_FOUND"}),
+            200,
+        )
 
     except Exception as e:
         print(e)
@@ -307,15 +314,18 @@ def get_template(template_id):
 @templates.route("/<int:template_id>/update", methods=["PUT"])
 def update_template(template_id):
     """
-    Method Update: Update the template with the given id with request body data
-        Body: user_id, template_data, create_temp
+    Update: Update the template with the given id with request body data
+        Body: 
+            user_id: The id of the user to be deleted.
+            template_data: The data of the template to be created
+            tech_type: The use of the technology of the template to be created
+            aws_key_cert: The certificate key of the aws account to be used (optional)
+            aws_key_key: The private key of the aws account to be used (optional)
     """
     try:
         body = dict(request.get_json(force=True))
     except Exception:
-        return make_response(
-            jsonify({"status": "error", "message": "T_BAD_REQ"}), 400
-        )
+        return make_response(jsonify({"status": "error", "message": "T_BAD_REQ"}), 400)
 
     if not body:
         return make_response(
@@ -342,9 +352,7 @@ def update_template(template_id):
         template_data = body.get("template_data")
         if not template_data:
             return make_response(
-                jsonify(
-                    {"status": "error", "message": "T_TEMPLATE_DATA_REQ"}
-                ),
+                jsonify({"status": "error", "message": "T_TEMPLATE_DATA_REQ"}),
                 400,
             )
 
@@ -370,7 +378,6 @@ def update_template(template_id):
             mongo_collection, ObjectId(ref.replace(" ", "")), template_data
         )
 
-        print(template_data)
         if temp.acknowledged:
             setattr(template, "last_updated", db.func.current_timestamp())
             setattr(template, "app_name", template_data["app_name"])
@@ -440,8 +447,9 @@ def update_template(template_id):
 @templates.route("/<int:template_id>/delete", methods=["DELETE"])
 def delete_template(template_id):
     """
-    Method Delete: Delete the template with the given id
-        Body: user_id
+    Delete: Delete the template with the given id
+        Body:
+            user_id: The id of the user to be deleted.
     """
 
     try:
@@ -540,8 +548,9 @@ def delete_template(template_id):
 @templates.route("/<int:template_id>/create", methods=["POST"])
 def create_template(template_id):
     """
-    Method Post: Create the template with the given id
-        Body: user_id
+    Post: Create the template with the given id
+        Body:
+            user_id: The id of the user to be deleted.
     """
     try:
         body = dict(request.get_json(force=True))
@@ -648,6 +657,12 @@ def create_template(template_id):
 
 @templates.route("/getTemplateConfig", methods=["POST"])
 def get_config():
+    """
+    Post: Return the template config with the given id
+        Body:
+            user_id: The id of the user to be deleted.
+            template_id: The id of the template to be created
+    """
     try:
         body = dict(request.get_json(force=True))
     except Exception:

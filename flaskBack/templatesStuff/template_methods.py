@@ -24,6 +24,8 @@ def temp_creator(
     @param: template_args -> Dictionary with the arguments to create the template
     @param: tech -> The tecnology of the template
     @param: type -> The type of the template
+    @param: cert_key -> The key to the certificate stored in the S3 bucket
+    @param: private_key -> The key to the private key stored in the S3 bucket
 
     @return: The path to the zip file that contains the filled template
 
@@ -111,8 +113,7 @@ def temp_creator(
         os.makedirs(output_path)
 
     # Create the cookiecutter.json file in the template path
-    cookiecutteJsonFile = add_base_path(
-        cookiecutter_template_path, "cookiecutter.json")
+    cookiecutteJsonFile = add_base_path(cookiecutter_template_path, "cookiecutter.json")
     with open(cookiecutteJsonFile, "w") as f:
         json.dump(args, f)
 
@@ -174,8 +175,7 @@ def temp_creator(
                 for key, value in app.items():
                     value.update({"subapp_name": key})
                     # Create the sub apps and added to the folder
-                    create_sub_app(value, template_path,
-                                   template_args.get("type"))
+                    create_sub_app(value, template_path, template_args.get("type"))
         for endpoint in endpoints:
             endpoint_creator(
                 endpoint,
@@ -300,8 +300,7 @@ def endpoint_creator(
         )
     except exceptions.OutputDirExistsException as e:
         # In fact this exception is never raised because of the uuid but I will leave it here just in case
-        config["file_folder_name"] = config["file_folder_name"] + \
-            str(uuid.uuid4())
+        config["file_folder_name"] = config["file_folder_name"] + str(uuid.uuid4())
         aux_path = cookiecutter(
             temp_path, no_input=True, extra_context=config, output_dir=output_path
         )
@@ -344,8 +343,7 @@ def add_app_run(
     output_path = add_base_path(
         DEFAULT_CONFIG["cookiecutter"]["aux_stuff"]["output_path"]
     )
-    app_run_args["run_folder_name"] = app_run_args["app_name"] + \
-        str(uuid.uuid4())
+    app_run_args["run_folder_name"] = app_run_args["app_name"] + str(uuid.uuid4())
     template_path = add_base_path(template_path)
     # Create the cookiecutter.json file
     cookiecutteJsonFile = os.path.join(template_path, "cookiecutter.json")
@@ -393,8 +391,8 @@ def create_blueprint(
     """
     @param: args -> Dictionary with the arguments to create the blueprint template
     @param: main_template_path -> Path to the main template to add the blueprint
-    @param: endpoint_type: Type of endpoint to create
-    @param: endpoint_use: Use of the endpoint to create
+    @param: endpoint_type -> Type of endpoint to create
+    @param: endpoint_use -> Use of the endpoint to create
 
     @return: None
     """
@@ -427,8 +425,7 @@ def create_blueprint(
         )
     except exceptions.OutputDirExistsException as e:
         # In fact this exception is never raised because of the uuid but I will leave it here just in case
-        aux_dict["bp_folder_name"] = aux_dict["bp_folder_name"] + \
-            str(uuid.uuid4())
+        aux_dict["bp_folder_name"] = aux_dict["bp_folder_name"] + str(uuid.uuid4())
         template = cookiecutter(
             blueprint_path,
             no_input=True,
@@ -449,8 +446,7 @@ def create_blueprint(
             )  # Create the endpoint
 
     # Move the blueprint to the main template folder
-    shutil.move("{}/{}.py".format(template,
-                aux_dict["bp_name"]), main_template_path)
+    shutil.move("{}/{}.py".format(template, aux_dict["bp_name"]), main_template_path)
 
     remove_temp_files(template)  # Remove the temp files
 
@@ -481,8 +477,8 @@ def create_controllers(
     strict_mode: str = None,
 ) -> None:
     """
-    @param: args -> Dictionary with the arguments to create the controller template
-    @param: template_path -> Path to the base folder
+    @param: controller_args -> Dictionary with the arguments to create the controller template
+    @param: main_template_path -> Path to the base folder
     @param: endpoint_type -> Type of endpoint to create
     @param: endpoint_use -> Use of the endpoint to create
     @param: strict_mode -> Strict mode for the controller
@@ -545,8 +541,7 @@ def create_controllers(
 
     with open(template + "/" + aux_dict.get("controller_name") + ".js", "a+") as f:
         f.write("\n")
-        f.write("""module.exports = {}""".format(
-            aux_dict.get("controller_name")))
+        f.write("""module.exports = {}""".format(aux_dict.get("controller_name")))
 
     shutil.move(
         "{}/{}.js".format(template, aux_dict["controller_name"]),
@@ -570,11 +565,9 @@ def add_app_listen(args: dict = None, main_template_path: str = None) -> None:
     output_path = add_base_path(
         DEFAULT_CONFIG["cookiecutter"]["aux_stuff"]["output_path"]
     )
-    aux_path = add_base_path(
-        DEFAULT_CONFIG["cookiecutter"]["aux_stuff"]["app_listen"])
+    aux_path = add_base_path(DEFAULT_CONFIG["cookiecutter"]["aux_stuff"]["app_listen"])
 
-    args["listen_folder_name"] = "{}_{}".format(
-        args.get("app_name"), str(uuid.uuid4()))
+    args["listen_folder_name"] = "{}_{}".format(args.get("app_name"), str(uuid.uuid4()))
     args["listen_name"] = args.get("app_name")
 
     # Create the cookiecutter.json file
@@ -589,8 +582,7 @@ def add_app_listen(args: dict = None, main_template_path: str = None) -> None:
         )
     except exceptions.OutputDirExistsException as e:
         # In fact this exception is never raised because of the uuid but I will leave it here just in case
-        args["listen_folder_name"] = args["listen_folder_name"] + \
-            str(uuid.uuid4())
+        args["listen_folder_name"] = args["listen_folder_name"] + str(uuid.uuid4())
         template = cookiecutter(
             aux_path, no_input=True, extra_context=args, output_dir=output_path
         )
@@ -651,8 +643,7 @@ def create_sub_app(
     if (
         type == "app_web"
     ):  # If the template is a web app, add the endpoint to the subapp views.py
-        endpoint_creator(
-            subapp_args, "{}/views.py".format(temp_path), "django")
+        endpoint_creator(subapp_args, "{}/views.py".format(temp_path), "django")
 
 
 if __name__ == "__main__":
