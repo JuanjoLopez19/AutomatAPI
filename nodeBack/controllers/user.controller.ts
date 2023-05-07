@@ -112,7 +112,7 @@ export const deleteAccount = async (req: Request, res: Response) => {
 						})
 						.catch((err) => {
 							console.log(err);
-							res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR" });
+							res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 							return;
 						});
 				} else {
@@ -141,13 +141,13 @@ export const deleteAccount = async (req: Request, res: Response) => {
 						});
 					} catch (err) {
 						console.log(err);
-						res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR" });
+						res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 					}
 				}
 			})
 			.catch((err) => {
 				console.log(err);
-				res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR" });
+				res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 				return;
 			});
 	});
@@ -164,7 +164,7 @@ export const editAccount = async (req: Request, res: Response) => {
 		User.findByPk(user_id)
 			.then((user: User | null) => {
 				if (user == null) {
-					res.status(404).json({ message: "T_NOT_FOUND", status: 404 });
+					res.status(404).json({ message: "T_USER_NOT_FOUND", status: 404 });
 					return;
 				}
 				user
@@ -195,7 +195,7 @@ export const editAccount = async (req: Request, res: Response) => {
 				return;
 			});
 	} else {
-		res.status(400).json({ message: "T_BAD_REQ", status: 400 });
+		res.status(400).json({ message: "T_BAD_REQUEST", status: 400 });
 	}
 };
 
@@ -208,7 +208,7 @@ export const editPassword = async (req: Request, res: Response) => {
 		const user_id = await jwt.decode(req.cookies["jwt"]).id;
 		User.findByPk(user_id).then((user: User | null) => {
 			if (user == null) {
-				res.status(404).json({ message: "T_NOT_FOUND", status: 404 });
+				res.status(404).json({ message: "T_USER_NOT_FOUND", status: 404 });
 				return;
 			}
 			bcrypt.compare(
@@ -270,7 +270,7 @@ export const editPassword = async (req: Request, res: Response) => {
 			);
 		});
 	} else {
-		res.status(400).json({ message: "T_BAD_REQ", status: 400 });
+		res.status(400).json({ message: "T_BAD_REQUEST", status: 400 });
 		return;
 	}
 };
@@ -328,7 +328,7 @@ export const editPasswordAdmin = async (req: Request, res: Response) => {
 		const { newPassword, user_id } = req.body;
 		User.findByPk(user_id).then((user: User | null) => {
 			if (user == null) {
-				res.status(404).json({ message: "T_NOT_FOUND", status: 404 });
+				res.status(404).json({ message: "T_USER_NOT_FOUND", status: 404 });
 				return;
 			}
 			bcrypt.genSalt(config.saltRounds, (err, salt) => {
@@ -372,7 +372,7 @@ export const editPasswordAdmin = async (req: Request, res: Response) => {
 			});
 		});
 	} else {
-		res.status(400).json({ message: "T_BAD_REQ", status: 400 });
+		res.status(400).json({ message: "T_BAD_REQUEST", status: 400 });
 		return;
 	}
 };
@@ -383,7 +383,7 @@ export const getUserInfo = async (req: Request, res: Response) => {
 	User.findByPk(user_id)
 		.then((user: User | null) => {
 			if (user == null) {
-				res.status(404).json({ message: "T_NOT_FOUND", status: 404 });
+				res.status(404).json({ message: "T_USER_NOT_FOUND", status: 404 });
 				return;
 			} else {
 				const sessionObject = formatSessionObject(user);

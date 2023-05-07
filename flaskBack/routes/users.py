@@ -44,5 +44,5 @@ def get_templates(user_id):
     except Exception as e:
         print(e.with_traceback("User not found"))
         return make_response(
-            jsonify({"message": "T_USER_FOUND", "status": "error"}), 404
+            jsonify({"message": "T_NOT_USER_FOUND", "status": "error"}), 404
         )
