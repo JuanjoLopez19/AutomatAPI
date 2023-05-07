@@ -15,7 +15,7 @@
   },
   "servers": [
     {
-      "url": "https://automatapi.ddns.net:34",
+      "url": "https://automatapi.ddns.net:3486",
       "description": "Node Backend"
     }
   ],
