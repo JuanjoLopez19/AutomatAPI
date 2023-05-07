@@ -25,11 +25,11 @@
       "description": " "
     },
     {
-      "name": "Login",
+      "name": "Templates",
       "description": " "
     },
     {
-      "name": "Register",
+      "name": "Users",
       "description": " "
     }
   ],
@@ -37,8 +37,7 @@
     "/api/auth/signin": {
       "post": {
         "tags": [
-          "Auth",
-          "Login"
+          "Auth"
         ],
         "summary": "Validate an user",
         "operationId": "post-auth-signin",
@@ -238,8 +237,7 @@
     "/api/auth/signup": {
       "post": {
         "tags": [
-          "Auth",
-          "Register"
+          "Auth"
         ],
         "summary": "Create New User",
         "operationId": "post-user",
@@ -743,38 +741,12 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Auth"
+        ]
       },
       "parameters": []
-    },
-    "/api/auth/checkToken": {
-      "get": {
-        "summary": "",
-        "operationId": "getapi-auth-checkToken",
-        "responses": {
-          "200": {
-            "description": "The session is correct, the user data will be send",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          }
-        },
-        "description": "Used to check if the session has expired, or if the request is valid",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "cookie",
-            "name": "JWT",
-            "description": "JWT token"
-          }
-        ]
-      }
     },
     "/api/auth/complete_registration": {
       "post": {
@@ -784,13 +756,18 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "tags": [
+          "Auth"
+        ]
       }
     },
     "/api/auth/authorize": {
       "get": {
         "summary": "Your GET endpoint",
-        "tags": [],
+        "tags": [
+          "Auth"
+        ],
         "responses": {},
         "operationId": "get-api-auth-authorize"
       }
@@ -798,154 +775,261 @@
     "/api/auth/generate_session": {
       "get": {
         "summary": "Your GET endpoint",
-        "tags": [],
+        "tags": [
+          "Auth"
+        ],
         "responses": {},
         "operationId": "get-api-auth-generate_session"
       }
     },
-    "/users/": {
+    "/api/users/": {
       "get": {
         "summary": "Your GET endpoint",
-        "tags": [],
+        "tags": [
+          "Users"
+        ],
         "responses": {},
         "operationId": "get-users"
-      }
-    },
-    "/users/delete": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-users-delete"
-      }
-    },
-    "/users/deleteAccount": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-users-deleteAccount"
-      }
-    },
-    "/users/editAccount": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-users-editAccount"
-      }
-    },
-    "/users/editPassword": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-users-editPassword"
-      }
-    },
-    "/users/editPasswordAdmin": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-users-editPasswordAdmin"
-      }
-    },
-    "/users/getUserInfo": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-users-getUserInfo"
-      }
-    },
-    "/templates/flask": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-templates-flask"
-      }
-    },
-    "/templates/express": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-templates-express"
-      }
-    },
-    "/templates/django": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-templates-django"
-      }
-    },
-    "/templates/": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-templates"
-      }
-    },
-    "/templates/deleteTemplate": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-templates-deleteTemplate"
-      }
-    },
-    "/templates/deleteTemplateAdmin": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-templates-deleteTemplateAdmin"
-      }
-    },
-    "/templates/getToken": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-template-getToken"
       },
       "parameters": []
     },
-    "/templates/getTemplateStats": {
+    "/api/users/delete": {
+      "parameters": [],
+      "delete": {
+        "summary": "",
+        "operationId": "delete-api-users-delete",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/api/users/deleteAccount": {
+      "parameters": [],
+      "delete": {
+        "summary": "",
+        "operationId": "delete-api-users-deleteAccount",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/api/users/editAccount": {
+      "parameters": [],
+      "put": {
+        "summary": "",
+        "operationId": "put-api-users-editAccount",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/api/users/editPassword": {
+      "parameters": [],
+      "put": {
+        "summary": "",
+        "operationId": "put-api-users-editPassword",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/api/users/editPasswordAdmin": {
+      "parameters": [],
+      "put": {
+        "summary": "",
+        "operationId": "put-api-users-editPasswordAdmin",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/api/users/getUserInfo": {
       "get": {
         "summary": "Your GET endpoint",
-        "tags": [],
+        "tags": [
+          "Users"
+        ],
+        "responses": {},
+        "operationId": "get-users-getUserInfo"
+      },
+      "parameters": []
+    },
+    "/api/templates/": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [
+          "Templates"
+        ],
+        "responses": {},
+        "operationId": "get-templates"
+      },
+      "parameters": []
+    },
+    "/api/templates/flask": {
+      "parameters": [],
+      "post": {
+        "summary": "",
+        "operationId": "post-api-templates-flask",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Templates"
+        ]
+      }
+    },
+    "/api/templates/express": {
+      "parameters": [],
+      "post": {
+        "summary": "",
+        "operationId": "post-api-templates-express",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Templates"
+        ]
+      }
+    },
+    "/api/templates/django": {
+      "parameters": [],
+      "post": {
+        "summary": "",
+        "operationId": "post-api-templates-django",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Templates"
+        ]
+      }
+    },
+    "/api/templates/deleteTemplate": {
+      "parameters": [],
+      "delete": {
+        "summary": "",
+        "operationId": "delete-api-templates-deleteTemplate",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Templates"
+        ]
+      }
+    },
+    "/api/templates/deleteTemplateAdmin": {
+      "parameters": [],
+      "delete": {
+        "summary": "",
+        "operationId": "delete-api-templates-deleteTemplateAdmin",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Templates"
+        ]
+      }
+    },
+    "/api/templates/getToken": {
+      "parameters": [],
+      "post": {
+        "summary": "",
+        "operationId": "post-api-templates-getToken",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Templates"
+        ]
+      }
+    },
+    "/api/templates/getTemplateStats": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [
+          "Templates"
+        ],
         "responses": {},
         "operationId": "get-templates-getTemplateStats"
-      }
+      },
+      "parameters": []
     },
-    "/templates/getUserTemplateStats": {
+    "/api/templates/getUserTemplateStats": {
       "get": {
         "summary": "Your GET endpoint",
-        "tags": [],
+        "tags": [
+          "Templates"
+        ],
         "responses": {},
         "operationId": "get-templates-getUserTemplateStats"
+      },
+      "parameters": []
+    },
+    "/api/templates/getTemplateConfig": {
+      "parameters": [],
+      "post": {
+        "summary": "",
+        "operationId": "post-api-templates-getTemplateConfig",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Templates"
+        ]
       }
     },
-    "/templates/getTemplateConfig": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-templates-getTemplateConfig"
-      }
-    },
-    "/templates/editTemplate": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-templates-editTemplate"
+    "/api/templates/editTemplate": {
+      "parameters": [],
+      "put": {
+        "summary": "",
+        "operationId": "put-api-templates-editTemplate",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Templates"
+        ]
       }
     }
   },
