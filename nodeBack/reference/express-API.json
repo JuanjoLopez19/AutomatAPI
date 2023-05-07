@@ -337,7 +337,7 @@
       "parameters": []
     },
     "/api/auth/signout": {
-      "post": {
+      "get": {
         "tags": [
           "Auth"
         ],
