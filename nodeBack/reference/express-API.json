@@ -17,6 +17,10 @@
     {
       "url": "https://automatapi.ddns.net:3486",
       "description": "Node Backend"
+    },
+    {
+      "url": "http://localhost:3486",
+      "description": "Node Local Backend"
     }
   ],
   "tags": [
@@ -333,7 +337,7 @@
       "parameters": []
     },
     "/api/auth/signout": {
-      "post": {
+      "get": {
         "tags": [
           "Auth"
         ],
@@ -754,12 +758,153 @@
         "operationId": "post-api-auth-complete_registration",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Register completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_REGISTER_SUCCESS",
+                      "status": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USERNAME_USED",
+                      "status": 400
+                    }
+                  },
+                  "Example 2": {
+                    "value": {
+                      "message": "T_EMAIL_USED",
+                      "status": 400
+                    }
+                  },
+                  "Example 3": {
+                    "value": {
+                      "message": "T_BAD_REQUEST",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "rwat3n01yrqkq"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorize"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
           "Auth"
-        ]
+        ],
+        "description": "Endpoint that complete the register when a user choose to register with Google or Github",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwtSocialAuth",
+            "description": "Cookie that stores the id, and last only 10 minutes",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "38l7c5p41e58m"
+                    }
+                  },
+                  "password": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "6f3yrznir5wz4"
+                    }
+                  },
+                  "access_token": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "sif57a7gwg98x"
+                    }
+                  },
+                  "email": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "40g3n7ma0ain8"
+                    }
+                  }
+                },
+                "required": [
+                  "username",
+                  "password",
+                  "access_token"
+                ]
+              }
+            }
+          },
+          "description": "Contains the info of the user to complete the register with social auth"
+        }
       }
     },
     "/api/auth/authorize": {
@@ -768,8 +913,75 @@
         "tags": [
           "Auth"
         ],
-        "responses": {},
-        "operationId": "get-api-auth-authorize"
+        "responses": {
+          "200": {
+            "description": "The token is valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "x-stoplight": {
+                        "id": "ivfb0pmotpqxz"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "status": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The token is not valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "dyq1yhwppad2t"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "operationId": "get-api-auth-authorize",
+        "requestBody": {
+          "content": {},
+          "description": ""
+        },
+        "description": "Endpoint used as the guard to access to the main view ",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt token generated when log in"
+          }
+        ]
       }
     },
     "/api/auth/generate_session": {
@@ -778,8 +990,111 @@
         "tags": [
           "Auth"
         ],
-        "responses": {},
-        "operationId": "get-api-auth-generate_session"
+        "responses": {
+          "200": {
+            "description": "Jwt valid and generate a the data from the requested user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_SESSION_GENERATED",
+                      "status": 200,
+                      "data": {
+                        "id": 0,
+                        "username": "nombre de usuario",
+                        "firstName": "nombre",
+                        "lastName": "apellidos",
+                        "email": "prueba@prueba.com",
+                        "role": "client",
+                        "date": "10-12-2001",
+                        "birthdate": "10-12-2001",
+                        "image": "",
+                        "template_count": 4
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "messge": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "ehdbzc8tjlicf"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "messge": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_NOT_FOUND",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-api-auth-generate_session",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt token containing the id"
+          }
+        ],
+        "description": "Enpoint that allow the auto login when a valid cookie is present and access the landing page of the frontend"
       }
     },
     "/api/users/": {
@@ -788,8 +1103,117 @@
         "tags": [
           "Users"
         ],
-        "responses": {},
-        "operationId": "get-users"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USERS_FOUND",
+                      "status": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "b93wl2fuain9j"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_FORBIDDEN",
+                      "status": 403
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_NOT_FOUND",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-users",
+        "description": "List all of the users of the platform if the requester user is an admin",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt token that stores the id"
+          }
+        ]
       },
       "parameters": []
     },
@@ -800,12 +1224,152 @@
         "operationId": "delete-api-users-delete",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_DELETED",
+                      "status": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_BAD_REQUEST",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "messge": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "tmv0x5md6p1fz"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "messge": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_FORBIDDEN",
+                      "status": 403
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_NOT_FOUND",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
           "Users"
-        ]
+        ],
+        "description": "Delete an user from an admin account",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt token that stores the id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_id": {
+                    "type": "integer",
+                    "x-stoplight": {
+                      "id": "y2qliisn0fno8"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/users/deleteAccount": {
@@ -815,11 +1379,98 @@
         "operationId": "delete-api-users-deleteAccount",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_DELETE",
+                      "status": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "nupetsi7o12q3"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_NOT_FOUND",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
           "Users"
+        ],
+        "description": "Endpoint to delete an account requested by the account's owner",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt token that stores the id"
+          }
         ]
       }
     },
@@ -830,12 +1481,279 @@
         "operationId": "put-api-users-editAccount",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_UPDATED",
+                      "status": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USERNAME_USED",
+                      "status": 400
+                    }
+                  },
+                  "Example 2": {
+                    "value": {
+                      "message": "T_EMAIL_USED",
+                      "status": 400
+                    }
+                  },
+                  "Example 3": {
+                    "value": {
+                      "message": "T_BAD_REQUEST",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "4nnw04ocvnyjm"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_NOT_FOUND",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
           "Users"
-        ]
+        ],
+        "description": "Endpoint to edit the account requested by the account's owner",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt token that stores the token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/editAccountAdmin": {
+      "parameters": [],
+      "put": {
+        "summary": "",
+        "operationId": "put-api-users-editAccount",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_UPDATED",
+                      "status": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USERNAME_USED",
+                      "status": 400
+                    }
+                  },
+                  "Example 2": {
+                    "value": {
+                      "message": "T_EMAIL_USED",
+                      "status": 400
+                    }
+                  },
+                  "Example 3": {
+                    "value": {
+                      "message": "T_BAD_REQUEST",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "4nnw04ocvnyjm"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_NOT_FOUND",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users"
+        ],
+        "description": "Endpoint to edit the account requested by an admin",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt token that stores the token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }
       }
     },
     "/api/users/editPassword": {
@@ -845,27 +1763,276 @@
         "operationId": "put-api-users-editPassword",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_UPDATE",
+                      "status": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_BAD_REQUEST",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_UNAUTHORIZED",
+                      "status": 401
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_NOT_FOUND",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
           "Users"
-        ]
+        ],
+        "description": "Endpoint to change the password requested by the account's owner",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The token that stores the id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "newPassword": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "zyfsi454y7qcq"
+                    }
+                  },
+                  "currentPassword": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "f6uqp3goji5jm"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/users/editPasswordAdmin": {
       "parameters": [],
       "put": {
         "summary": "",
-        "operationId": "put-api-users-editPasswordAdmin",
+        "operationId": "put-api-users-editPassword",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_UPDATE",
+                      "status": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_BAD_REQUEST",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "pqh6krvwmwnem"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_NOT_FOUND",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
           "Users"
-        ]
+        ],
+        "description": "Endpoint to change the password requested by and admin",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The token that stores the id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "newPassword": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "9np81nc5nan54"
+                    }
+                  },
+                  "user_id": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "t9cdbncagm0u3"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/users/getUserInfo": {
@@ -874,8 +2041,114 @@
         "tags": [
           "Users"
         ],
-        "responses": {},
-        "operationId": "get-users-getUserInfo"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_INFO",
+                      "status": 200,
+                      "data": {
+                        "id": 0,
+                        "username": "nombre de usuario",
+                        "firstName": "nombre",
+                        "lastName": "apellidos",
+                        "email": "prueba@prueba.com",
+                        "role": "client",
+                        "date": "10-12-2001",
+                        "birthdate": "10-12-2001",
+                        "image": "",
+                        "template_count": 4
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "ftldf31fpucle"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_NOT_FOUND",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-users-getUserInfo",
+        "description": "Obtain the user information requested by the id of the jwt",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt token that stores the id"
+          }
+        ],
+        "requestBody": {
+          "content": {}
+        }
       },
       "parameters": []
     },
@@ -1050,6 +2323,9 @@
           }
         },
         "description": "User model that identifies it by role",
+        "x-stoplight": {
+          "id": "7v8y864cukbqy"
+        },
         "properties": {
           "id": {
             "type": "integer",
@@ -1090,6 +2366,13 @@
               "id": "88cfi4yo2pyyk"
             },
             "description": "Role that is used to navigate on the platform"
+          },
+          "birthDate": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "ttgj3gsuojllj"
+            },
+            "format": "date"
           }
         },
         "required": [
@@ -1100,10 +2383,7 @@
           "date",
           "username",
           "role"
-        ],
-        "x-stoplight": {
-          "id": "7v8y864cukbqy"
-        }
+        ]
       },
       "Response": {
         "title": "Response",
