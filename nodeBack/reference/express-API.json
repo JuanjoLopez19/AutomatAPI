@@ -17,6 +17,10 @@
     {
       "url": "https://automatapi.ddns.net:3486",
       "description": "Node Backend"
+    },
+    {
+      "url": "http://localhost:3486",
+      "description": "Node Local Backend"
     }
   ],
   "tags": [
