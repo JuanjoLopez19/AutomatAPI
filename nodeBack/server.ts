@@ -1,5 +1,6 @@
 import app from "./app";
 import https from "https";
+import http from "http";
 import debug from "debug";
 import config from "./config/config";
 import fs from "fs";
@@ -23,12 +24,18 @@ function normalizePort(val: string) {
 	return false;
 }
 
-const server = https.createServer({
-    key: fs.readFileSync(config.ssl.key, 'utf8'),
-    cert: fs.readFileSync(config.ssl.cert, 'utf8')
-
-}, app)
-
+let server: http.Server | https.Server;
+if (fs.existsSync(config.ssl.key) && fs.existsSync(config.ssl.cert)) {
+	server = https.createServer(
+		{
+			key: fs.readFileSync(config.ssl.key, "utf8"),
+			cert: fs.readFileSync(config.ssl.cert, "utf8"),
+		},
+		app
+	);
+} else {
+	server = http.createServer(app);
+}
 
 server.listen(port, () => {
 	console.log(`Server running on port ${port}`);
