@@ -37,7 +37,7 @@ def get_templates():
             body = dict(request.get_json(force=True))
         except Exception:
             return make_response(
-                jsonify({"status": "error", "message": "T_BAD_REQ"}), 400
+                jsonify({"status": "error", "message": "T_BAD_REQUEST"}), 400
             )
 
         if not body:
@@ -212,7 +212,7 @@ def get_templates():
                 return make_response(
                     jsonify(
                         {
-                            "status": "ok",
+                            "status": "201",
                             "message": "T_TEMPLATE_CREATED",
                             "data": template_path,
                             "template_id": template.id,
