@@ -2158,8 +2158,108 @@
         "tags": [
           "Templates"
         ],
-        "responses": {},
-        "operationId": "get-templates"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_SUCCESS",
+                      "status": 200,
+                      "data": [
+                        {}
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "08mgsbr9tixae"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_NOT_FOUND",
+                      "status": 404
+                    }
+                  },
+                  "Example 2": {
+                    "value": {
+                      "message": "T_NO_TEMPLATES",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-templates",
+        "description": "This endpoint fetch the templates created by the requester or all the templates if the requester is an admin ",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt token that stores the id"
+          }
+        ]
       },
       "parameters": []
     },
@@ -2169,13 +2269,151 @@
         "summary": "",
         "operationId": "post-api-templates-flask",
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_TEMPLATE_CREATED",
+                      "status": 0,
+                      "data": "template_path",
+                      "template_id": -1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_BAD_REQUEST",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "z8633zz63dhsl"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
           "Templates"
-        ]
+        ],
+        "description": "Endpoint that creates a flask template for the requester user",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt token that stores the id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tech": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "a7ttlhtsxtzjq"
+                    }
+                  },
+                  "tech_type": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "aq3rhufh5yjp9"
+                    }
+                  },
+                  "template_data": {
+                    "type": "object",
+                    "x-stoplight": {
+                      "id": "zv8d6nc5eaq3w"
+                    }
+                  },
+                  "cert": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "m5mq1ayqspwip"
+                    },
+                    "description": "In fact is the public certificate of the ssl"
+                  },
+                  "key": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "nl8x0y1aq755w"
+                    },
+                    "description": "In fact is the private key for the ssl"
+                  }
+                },
+                "required": [
+                  "tech",
+                  "tech_type",
+                  "template_data"
+                ]
+              }
+            }
+          },
+          "description": "Body of the request"
+        }
       }
     },
     "/api/templates/express": {
@@ -2184,13 +2422,151 @@
         "summary": "",
         "operationId": "post-api-templates-express",
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_TEMPLATE_CREATED",
+                      "status": 0,
+                      "data": "template_path",
+                      "template_id": -1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_BAD_REQUEST",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "z8633zz63dhsl"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
           "Templates"
-        ]
+        ],
+        "description": "Endpoint that creates a express template for the requester user",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt token that stores the id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tech": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "a7ttlhtsxtzjq"
+                    }
+                  },
+                  "tech_type": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "aq3rhufh5yjp9"
+                    }
+                  },
+                  "template_data": {
+                    "type": "object",
+                    "x-stoplight": {
+                      "id": "zv8d6nc5eaq3w"
+                    }
+                  },
+                  "cert": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "m5mq1ayqspwip"
+                    },
+                    "description": "In fact is the public certificate of the ssl"
+                  },
+                  "key": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "nl8x0y1aq755w"
+                    },
+                    "description": "In fact is the private key for the ssl"
+                  }
+                },
+                "required": [
+                  "tech",
+                  "tech_type",
+                  "template_data"
+                ]
+              }
+            }
+          },
+          "description": "Body of the request"
+        }
       }
     },
     "/api/templates/django": {
@@ -2199,13 +2575,151 @@
         "summary": "",
         "operationId": "post-api-templates-django",
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_TEMPLATE_CREATED",
+                      "status": 0,
+                      "data": "template_path",
+                      "template_id": -1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_BAD_REQUEST",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "z8633zz63dhsl"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
           "Templates"
-        ]
+        ],
+        "description": "Endpoint that creates a django template for the requester user",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt token that stores the id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tech": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "a7ttlhtsxtzjq"
+                    }
+                  },
+                  "tech_type": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "aq3rhufh5yjp9"
+                    }
+                  },
+                  "template_data": {
+                    "type": "object",
+                    "x-stoplight": {
+                      "id": "zv8d6nc5eaq3w"
+                    }
+                  },
+                  "cert": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "m5mq1ayqspwip"
+                    },
+                    "description": "In fact is the public certificate of the ssl"
+                  },
+                  "key": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "nl8x0y1aq755w"
+                    },
+                    "description": "In fact is the private key for the ssl"
+                  }
+                },
+                "required": [
+                  "tech",
+                  "tech_type",
+                  "template_data"
+                ]
+              }
+            }
+          },
+          "description": "Body of the request"
+        }
       }
     },
     "/api/templates/deleteTemplate": {
