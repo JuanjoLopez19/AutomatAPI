@@ -399,7 +399,7 @@ def update_template(template_id):
                 return make_response(
                     jsonify(
                         {
-                            "status": "ok",
+                            "status": 200,
                             "message": "T_TEMPLATE_CREATED",
                             "data": path,
                         }
