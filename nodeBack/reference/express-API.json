@@ -639,7 +639,7 @@
     "/api/auth/activate_account": {
       "put": {
         "summary": "Activate account",
-        "operationId": "putapi-auth-activate_account",
+        "operationId": "put-api-auth-activate_account",
         "responses": {
           "200": {
             "description": "The account has been activated",
@@ -909,7 +909,7 @@
     },
     "/api/auth/authorize": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Guard endpoint",
         "tags": [
           "Auth"
         ],
@@ -986,7 +986,7 @@
     },
     "/api/auth/generate_session": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Generate session",
         "tags": [
           "Auth"
         ],
@@ -1099,7 +1099,7 @@
     },
     "/api/users/": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Retreive users",
         "tags": [
           "Users"
         ],
@@ -1216,263 +1216,6 @@
         ]
       },
       "parameters": []
-    },
-    "/api/users/delete": {
-      "parameters": [],
-      "delete": {
-        "summary": "",
-        "operationId": "delete-api-users-delete",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                },
-                "examples": {
-                  "Example 1": {
-                    "value": {
-                      "message": "T_USER_DELETED",
-                      "status": 200
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                },
-                "examples": {
-                  "Example 1": {
-                    "value": {
-                      "message": "T_BAD_REQUEST",
-                      "status": 400
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "messge": {
-                      "type": "string",
-                      "x-stoplight": {
-                        "id": "tmv0x5md6p1fz"
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "Example 1": {
-                    "value": {
-                      "messge": "unauthorized"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                },
-                "examples": {
-                  "Example 1": {
-                    "value": {
-                      "message": "T_FORBIDDEN",
-                      "status": 403
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                },
-                "examples": {
-                  "Example 1": {
-                    "value": {
-                      "message": "T_USER_NOT_FOUND",
-                      "status": 404
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                },
-                "examples": {
-                  "Example 1": {
-                    "value": {
-                      "message": "T_INTERNAL_SERVER_ERROR",
-                      "status": 500
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Users"
-        ],
-        "description": "Delete an user from an admin account",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "cookie",
-            "name": "jwt",
-            "description": "The jwt token that stores the id"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "user_id": {
-                    "type": "integer",
-                    "x-stoplight": {
-                      "id": "y2qliisn0fno8"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/users/deleteAccount": {
-      "parameters": [],
-      "delete": {
-        "summary": "",
-        "operationId": "delete-api-users-deleteAccount",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                },
-                "examples": {
-                  "Example 1": {
-                    "value": {
-                      "message": "T_USER_DELETE",
-                      "status": 200
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "x-stoplight": {
-                        "id": "nupetsi7o12q3"
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "Example 1": {
-                    "value": {
-                      "message": "unauthorized"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                },
-                "examples": {
-                  "Example 1": {
-                    "value": {
-                      "message": "T_USER_NOT_FOUND",
-                      "status": 404
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                },
-                "examples": {
-                  "Example 1": {
-                    "value": {
-                      "message": "T_INTERNAL_SERVER_ERROR",
-                      "status": 500
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Users"
-        ],
-        "description": "Endpoint to delete an account requested by the account's owner",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "cookie",
-            "name": "jwt",
-            "description": "The jwt token that stores the id"
-          }
-        ]
-      }
     },
     "/api/users/editAccount": {
       "parameters": [],
@@ -1594,147 +1337,6 @@
           "Users"
         ],
         "description": "Endpoint to edit the account requested by the account's owner",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "cookie",
-            "name": "jwt",
-            "description": "The jwt token that stores the token"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/users/editAccountAdmin": {
-      "parameters": [],
-      "put": {
-        "summary": "",
-        "operationId": "put-api-users-editAccount",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                },
-                "examples": {
-                  "Example 1": {
-                    "value": {
-                      "message": "T_USER_UPDATED",
-                      "status": 200
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                },
-                "examples": {
-                  "Example 1": {
-                    "value": {
-                      "message": "T_USERNAME_USED",
-                      "status": 400
-                    }
-                  },
-                  "Example 2": {
-                    "value": {
-                      "message": "T_EMAIL_USED",
-                      "status": 400
-                    }
-                  },
-                  "Example 3": {
-                    "value": {
-                      "message": "T_BAD_REQUEST",
-                      "status": 400
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "x-stoplight": {
-                        "id": "4nnw04ocvnyjm"
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "Example 1": {
-                    "value": {
-                      "message": "unauthorized"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                },
-                "examples": {
-                  "Example 1": {
-                    "value": {
-                      "message": "T_USER_NOT_FOUND",
-                      "status": 404
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                },
-                "examples": {
-                  "Example 1": {
-                    "value": {
-                      "message": "T_INTERNAL_SERVER_ERROR",
-                      "status": 500
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Users"
-        ],
-        "description": "Endpoint to edit the account requested by an admin",
         "parameters": [
           {
             "schema": {
@@ -1892,6 +1494,249 @@
         }
       }
     },
+    "/api/users/deleteAccount": {
+      "parameters": [],
+      "delete": {
+        "summary": "",
+        "operationId": "delete-api-users-deleteAccount",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_DELETE",
+                      "status": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "nupetsi7o12q3"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_NOT_FOUND",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users"
+        ],
+        "description": "Endpoint to delete an account requested by the account's owner",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt token that stores the id"
+          }
+        ]
+      }
+    },
+    "/api/users/editAccountAdmin": {
+      "parameters": [],
+      "put": {
+        "summary": "",
+        "operationId": "put-api-users-editAccount",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_UPDATED",
+                      "status": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USERNAME_USED",
+                      "status": 400
+                    }
+                  },
+                  "Example 2": {
+                    "value": {
+                      "message": "T_EMAIL_USED",
+                      "status": 400
+                    }
+                  },
+                  "Example 3": {
+                    "value": {
+                      "message": "T_BAD_REQUEST",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "4nnw04ocvnyjm"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_NOT_FOUND",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users"
+        ],
+        "description": "Endpoint to edit the account requested by an admin",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt token that stores the token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/users/editPasswordAdmin": {
       "parameters": [],
       "put": {
@@ -2035,9 +1880,164 @@
         }
       }
     },
+    "/api/users/delete": {
+      "parameters": [],
+      "delete": {
+        "summary": "",
+        "operationId": "delete-api-users-delete",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_DELETED",
+                      "status": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_BAD_REQUEST",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "messge": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "tmv0x5md6p1fz"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "messge": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_FORBIDDEN",
+                      "status": 403
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_USER_NOT_FOUND",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Users"
+        ],
+        "description": "Delete an user from an admin account",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt token that stores the id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_id": {
+                    "type": "integer",
+                    "x-stoplight": {
+                      "id": "y2qliisn0fno8"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/users/getUserInfo": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Get user info",
         "tags": [
           "Users"
         ],
@@ -2154,7 +2154,7 @@
     },
     "/api/templates/": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Retrieves templates",
         "tags": [
           "Templates"
         ],
@@ -2722,6 +2722,164 @@
         }
       }
     },
+    "/api/templates/editTemplate": {
+      "parameters": [],
+      "put": {
+        "summary": "",
+        "operationId": "put-api-templates-editTemplate",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_TEMPLATE_CREATED",
+                      "status": 200,
+                      "data": "template_key"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_BAD_REQUEST",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "7gtw7ev4gznz3"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Templates"
+        ],
+        "description": "Endpoint that allow the user to edit a template with the data given on the request body",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt that stores the user id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tech": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "a7ttlhtsxtzjq"
+                    }
+                  },
+                  "tech_type": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "aq3rhufh5yjp9"
+                    }
+                  },
+                  "template_data": {
+                    "type": "object",
+                    "x-stoplight": {
+                      "id": "zv8d6nc5eaq3w"
+                    }
+                  },
+                  "cert": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "m5mq1ayqspwip"
+                    },
+                    "description": "In fact is the public certificate of the ssl"
+                  },
+                  "key": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "nl8x0y1aq755w"
+                    },
+                    "description": "In fact is the private key for the ssl"
+                  },
+                  "delete_certs": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "qd98soxqh38s3"
+                    }
+                  }
+                },
+                "required": [
+                  "tech",
+                  "tech_type",
+                  "template_data"
+                ]
+              }
+            }
+          },
+          "description": "Body of the request"
+        }
+      }
+    },
     "/api/templates/deleteTemplate": {
       "parameters": [],
       "delete": {
@@ -2734,7 +2892,8 @@
         },
         "tags": [
           "Templates"
-        ]
+        ],
+        "description": "Endoint that deletes the template that is owned by the requester user"
       }
     },
     "/api/templates/deleteTemplateAdmin": {
@@ -2749,7 +2908,24 @@
         },
         "tags": [
           "Templates"
-        ]
+        ],
+        "description": "Endpoint that allow an admin to delete any template stored"
+      }
+    },
+    "/api/templates/getTemplateConfig": {
+      "parameters": [],
+      "post": {
+        "summary": "",
+        "operationId": "post-api-templates-getTemplateConfig",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Templates"
+        ],
+        "description": "Endpoint that retrieves the data from a template"
       }
     },
     "/api/templates/getToken": {
@@ -2764,60 +2940,33 @@
         },
         "tags": [
           "Templates"
-        ]
+        ],
+        "description": "Endpoint that retrieves the token of the template to be downloaded from the s3"
       }
     },
     "/api/templates/getTemplateStats": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Retrieve the template count overall",
         "tags": [
           "Templates"
         ],
         "responses": {},
-        "operationId": "get-templates-getTemplateStats"
+        "operationId": "get-templates-getTemplateStats",
+        "description": "Endpoint that is used by an admin in order to display the graphics in the home"
       },
       "parameters": []
     },
     "/api/templates/getUserTemplateStats": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Retrieve the user template count",
         "tags": [
           "Templates"
         ],
         "responses": {},
-        "operationId": "get-templates-getUserTemplateStats"
+        "operationId": "get-templates-getUserTemplateStats",
+        "description": "Endpoint that retrieves the stats of the requester user"
       },
       "parameters": []
-    },
-    "/api/templates/getTemplateConfig": {
-      "parameters": [],
-      "post": {
-        "summary": "",
-        "operationId": "post-api-templates-getTemplateConfig",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "Templates"
-        ]
-      }
-    },
-    "/api/templates/editTemplate": {
-      "parameters": [],
-      "put": {
-        "summary": "",
-        "operationId": "put-api-templates-editTemplate",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "Templates"
-        ]
-      }
     }
   },
   "components": {
