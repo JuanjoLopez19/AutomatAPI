@@ -1,20 +1,28 @@
-# AutomatAPI 
-## Final degree project for the Computer Science Degree in Salamanca's University <br>
-The project consists on an application web that generates API templates of the most used technologies (flask, django, express) from parameters introduce in the application web <br><br>
-The project is developed in three parts:
-- FrontEnd 
-	- Dashboard with template and users CRUD, with administration role
-		- Technologies used --> AngularJS, Bootstrap
-- FrontEnd BackEnd 
-	- API
-		- Express web service API to communicate with the front, the back and the relational database
-	- Aux Tools
-		- Passport --> useful to make the login and session
-- BackEnd
-	- Databases
-		- PostgresSQL --> Relational database used to save the users and user templates' references
-		- MongoDB --> Non-Relational database for a flexible template management
-	- API 
-		- Flask web service api for the connection between databases and FrontEnd API
-	- Cookiecutter
-		-  As engine for the template creation
+# AutomatAPI Node Backend
+This project use Node Version 16.13.2 with Typescript 4.9.5
+
+## Installation
+```bash
+cd nodeBack
+npm install
+```
+This will download all the neccessary packages to run the project
+
+## Usage
+
+### "Production"
+In production, you will have your server without hotreload, in order to do this, first is needed to compile TS files to JS files and then run the server.<br> <br>
+It's important to fill the <a href="https://github.com/JuanjoLopez19/automatAPI-Template/blob/main/nodeBack/temp.env">.env</a> file with the parameters, to avoid errors, if will be running on https is needed to specify the path to the certificates
+else if will be running on http, change the server to http in <a href="https://github.com/JuanjoLopez19/automatAPI-Template/blob/main/nodeBack/server.ts"> server.ts </a>
+```bash
+npm run build
+npm start
+```
+
+### Development
+This will be compiled and launched in hot reload. <br>
+It's important to fill the <a href="https://github.com/JuanjoLopez19/automatAPI-Template/blob/main/nodeBack/temp.env">.env</a> file with the parameters, to avoid errors, if will be running on https is needed to specify the path to the certificates
+else if will be running on http, change the server to http in <a href="https://github.com/JuanjoLopez19/automatAPI-Template/blob/main/nodeBack/server.ts"> server.ts </a>
+```bash
+npm run dev
+```
