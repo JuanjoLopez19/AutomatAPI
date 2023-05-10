@@ -728,7 +728,7 @@ def get_config():
             return make_response(
                 jsonify(
                     {
-                        "status": "ok",
+                        "status": 200,
                         "message": "T_FOUND",
                         "data": {
                             "technology": str(template["technology"]),

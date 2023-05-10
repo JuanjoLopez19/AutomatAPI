@@ -54,7 +54,9 @@ export const makeFlaskTemplate = async (req: any, res: Response) => {
 					if (!token) {
 						if (req.aws_key_cert) deleteItem(req.aws_key_cert, "certs");
 						if (req.aws_key_key) deleteItem(req.aws_key_key, "certs");
-						res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
+						res
+							.status(500)
+							.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 					}
 					res.status(response.status).json(response.data);
 				})
@@ -62,7 +64,9 @@ export const makeFlaskTemplate = async (req: any, res: Response) => {
 					console.log(err);
 					if (req.aws_key_cert) deleteItem(req.aws_key_cert, "certs");
 					if (req.aws_key_key) deleteItem(req.aws_key_key, "certs");
-					res.status(500).json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
+					res
+						.status(500)
+						.json({ message: "T_INTERNAL_SERVER_ERROR", status: 500 });
 				});
 		} catch (err) {
 			console.log(err);
@@ -644,7 +648,7 @@ export const getUserTemplatesStats = async (req: Request, res: Response) => {
 								res.status(200).json({
 									data: temp,
 									status: 200,
-									message: "Success",
+									message: "T_SUCCESS",
 								});
 							});
 					});
