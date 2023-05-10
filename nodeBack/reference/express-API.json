@@ -2887,29 +2887,297 @@
         "operationId": "delete-api-templates-deleteTemplate",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_TEMPLATE_DELETED",
+                      "status": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_BAD_REQUEST",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "xrwi071c3dl69"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_TEMPLATE_NOT_FOUND",
+                      "status": 404
+                    }
+                  },
+                  "Example 2": {
+                    "value": {
+                      "message": "T_TOKEN_NOT_FOUND",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
           "Templates"
         ],
-        "description": "Endoint that deletes the template that is owned by the requester user"
+        "description": "Endoint that deletes the template that is owned by the requester user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "template_id": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "sountjizplj6x"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/templates/deleteTemplateAdmin": {
       "parameters": [],
       "delete": {
         "summary": "",
-        "operationId": "delete-api-templates-deleteTemplateAdmin",
+        "operationId": "delete-api-templates-deleteTemplate",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_TEMPLATE_DELETED",
+                      "status": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_BAD_REQUEST",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "xrwi071c3dl69"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_FORBIDDEN",
+                      "status": 403
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_TEMPLATE_NOT_FOUND",
+                      "status": 404
+                    }
+                  },
+                  "Example 2": {
+                    "value": {
+                      "message": "T_TOKEN_NOT_FOUND",
+                      "status": 404
+                    }
+                  },
+                  "Example 3": {
+                    "value": {
+                      "message": "T_USER_NOT_FOUND",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
           "Templates"
         ],
-        "description": "Endpoint that allow an admin to delete any template stored"
+        "description": "Endoint that deletes the template requested by an admin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "template_id": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "sountjizplj6x"
+                    }
+                  },
+                  "user_id": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "muo8ww2m87n7c"
+                    }
+                  }
+                },
+                "required": [
+                  "template_id",
+                  "user_id"
+                ]
+              }
+            }
+          }
+        }
       }
     },
     "/api/templates/getTemplateConfig": {
@@ -2919,13 +3187,121 @@
         "operationId": "post-api-templates-getTemplateConfig",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_FOUND",
+                      "status": 200,
+                      "data": {
+                        "technology": "django",
+                        "tech_type": "app_web",
+                        "template_args": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_BAD_REQUEST",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "zyux2o9hitsr3"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
           "Templates"
         ],
-        "description": "Endpoint that retrieves the data from a template"
+        "description": "Endpoint that retrieves the data from a template",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt token that stores the user id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "template_id": {
+                    "type": "integer",
+                    "x-stoplight": {
+                      "id": "69mbxfc42i4km"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/templates/getToken": {
@@ -2935,13 +3311,132 @@
         "operationId": "post-api-templates-getToken",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_SUCCESS",
+                      "status": 200,
+                      "data": "decrypted token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_BAD_REQUEST",
+                      "status": 400
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "0gdgcxaeiz1y6"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_TEMPLATE_NOT_FOUND",
+                      "status": 404
+                    }
+                  },
+                  "Example 2": {
+                    "value": {
+                      "message": "T_TOKEN_NOT_FOUND",
+                      "status": 404
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
           "Templates"
         ],
-        "description": "Endpoint that retrieves the token of the template to be downloaded from the s3"
+        "description": "Endpoint that retrieves the token of the template to be downloaded from the s3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "template_id": {
+                    "type": "integer",
+                    "x-stoplight": {
+                      "id": "98af9pxe0lda0"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        }
       }
     },
     "/api/templates/getTemplateStats": {
@@ -2950,21 +3445,193 @@
         "tags": [
           "Templates"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_TEMPLATE_STATS_SUCCESS",
+                      "status": 200,
+                      "data": {
+                        "flask": {
+                          "services": 0,
+                          "app_web": 0
+                        },
+                        "express": {
+                          "services": 0,
+                          "app_web": 0
+                        },
+                        "django": {
+                          "services": 0,
+                          "app_web": 0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "7ipay8hst32m4"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "operationId": "get-templates-getTemplateStats",
-        "description": "Endpoint that is used by an admin in order to display the graphics in the home"
+        "description": "Endpoint that is used by an admin in order to display the graphics in the home",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt token that stores the user id"
+          }
+        ]
       },
       "parameters": []
     },
     "/api/templates/getUserTemplateStats": {
       "get": {
-        "summary": "Retrieve the user template count",
+        "summary": "Retrieve the template count overall",
         "tags": [
           "Templates"
         ],
-        "responses": {},
-        "operationId": "get-templates-getUserTemplateStats",
-        "description": "Endpoint that retrieves the stats of the requester user"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_TEMPLATE_STATS_SUCCESS",
+                      "status": 200,
+                      "data": {
+                        "flask": {
+                          "services": 0,
+                          "app_web": 0
+                        },
+                        "express": {
+                          "services": 0,
+                          "app_web": 0
+                        },
+                        "django": {
+                          "services": 0,
+                          "app_web": 0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "7ipay8hst32m4"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "T_INTERNAL_SERVER_ERROR",
+                      "status": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-templates-getTemplateStats",
+        "description": "Endpoint that retrieved the count of templates that the user has, classified by technology and use",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "cookie",
+            "name": "jwt",
+            "description": "The jwt token that stores the user id"
+          }
+        ]
       },
       "parameters": []
     }
