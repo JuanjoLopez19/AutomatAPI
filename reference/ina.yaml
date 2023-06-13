@@ -1,0 +1,1066 @@
+openapi: 3.0.0
+x-stoplight:
+  id: 6us9a4jlojkue
+info:
+  title: ina
+  version: '1.0'
+servers: []
+tags:
+  - name: user
+    description: Endpoints related to the users authorization
+  - name: Tags
+    description: Endpoints related to the tags CRUD
+  - name: Task
+    description: Endpoints related to the tasks CRUD
+paths:
+  /api/auth/signup:
+    post:
+      summary: ''
+      operationId: post-api-auth-signup
+      responses:
+        '200':
+          description: Nee user created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request. Invalid parameters
+        '404':
+          description: User already registered in the system
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - user
+      description: Creates a new user in the syste
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSignUpForm'
+  /api/auth/signin:
+    post:
+      summary: ''
+      operationId: post-api-auth-signin
+      responses:
+        '200':
+          description: User logged in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: The username or the password is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - user
+      description: Starts a new login session in the system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLoginForm'
+  /api/auth/delete:
+    delete:
+      summary: ''
+      operationId: delete-api-auth-delete
+      responses:
+        '200':
+          description: User deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - user
+      description: Deleting an existing user record
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+        - schema:
+            type: string
+          in: query
+          name: id
+          description: Id of the use to be deleted
+      requestBody:
+        content: {}
+  /api/auth/update:
+    put:
+      summary: ''
+      operationId: put-api-auth-update
+      responses:
+        '200':
+          description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - user
+      description: Updates an existing user record
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+          description: Token to identify the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+  /api/auth/findAll:
+    get:
+      summary: Your GET endpoint
+      responses:
+        '200':
+          description: Users found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Users not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-api-auth-findAll
+      description: List all of the users in the system
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+      requestBody:
+        content: {}
+      tags:
+        - user
+  /api/auth/findOne:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - user
+      responses:
+        '200':
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-api-auth
+      description: Get the information of the user requested
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+        - schema:
+            type: string
+          in: query
+          name: id
+          description: Id of the user
+    parameters: []
+  /api/auth/sendPasswordResetEmail:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - user
+      responses:
+        '200':
+          description: Email sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-api-auth-sendPasswordResetEmail
+      description: Send the email to recover the account's password
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: email
+          description: Email to send the link
+        - schema:
+            type: string
+          in: query
+          name: username
+          description: Username of the account
+  /api/auth/updatePassword:
+    put:
+      summary: ''
+      operationId: put-api-auth-updatePassword
+      responses:
+        '200':
+          description: Password updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updatePasswordForm'
+  /api/task/findAll:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Task
+      responses:
+        '200':
+          description: Tasks found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Task not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-api-task-findAll
+      description: Retrieve all of the task in the system
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+  /api/task/create:
+    post:
+      summary: ''
+      operationId: post-api-task-create
+      responses:
+        '200':
+          description: Task created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Task
+      description: 'Create a task --> used in development, not in production'
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+  /api/task/checkTask:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Task
+      responses:
+        '200':
+          description: Task check
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  x-stoplight:
+                    id: ak0qaeur9vgcs
+                  type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-api-auth-2
+      description: Polling system to check if the avatar's tasks have finished
+    parameters: []
+  /api/tag/create:
+    post:
+      summary: ''
+      operationId: post-api-tag-create
+      responses:
+        '200':
+          description: Tag created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag_category'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Tags
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+      description: Allow the creation of a Tag
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_user:
+                  type: integer
+                  x-stoplight:
+                    id: x3gcgw2cnggzo
+                tag_category:
+                  type: object
+                  x-stoplight:
+                    id: iqd8jjmldit2r
+                  properties:
+                    text:
+                      type: string
+                      x-stoplight:
+                        id: 2lmyz41lwqeg7
+                    color:
+                      type: string
+                      x-stoplight:
+                        id: 252m7dewrylu3
+                    tag_subcategories:
+                      type: array
+                      x-stoplight:
+                        id: 9ko0ivqgm14o0
+                      items:
+                        $ref: '#/components/schemas/Tag_subcategoryForm'
+        description: ''
+  /api/tag/update:
+    put:
+      summary: ''
+      operationId: put-api-tag-update
+      responses:
+        '200':
+          description: Tag updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Tags
+      description: Allow the update of an exisiting tag
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tag_category:
+                  type: object
+                  x-stoplight:
+                    id: 85lh9qk33y6uh
+                  properties:
+                    id:
+                      type: integer
+                      x-stoplight:
+                        id: pep463l0llipv
+                    text:
+                      type: string
+                      x-stoplight:
+                        id: 3sxm0xn088syr
+                    color:
+                      type: string
+                      x-stoplight:
+                        id: vuc362mlc8oqn
+                    tag_subcategories:
+                      type: array
+                      x-stoplight:
+                        id: i4h6ekv35i9vy
+                      items:
+                        $ref: '#/components/schemas/Tag_subcategory'
+  /api/tag/delete:
+    delete:
+      summary: ''
+      operationId: delete-api-tag-delete
+      responses:
+        '200':
+          description: Tag deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Tags
+      description: 'Delete an existing tag '
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+        - schema:
+            type: string
+          in: query
+          name: id
+  /api/tag/findAll:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Tags
+      responses:
+        '200':
+          description: Tags retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  x-stoplight:
+                    id: lgdjhrp3xr3rh
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      x-stoplight:
+                        id: vmcu68qijh3q8
+                    text:
+                      type: string
+                      x-stoplight:
+                        id: 74m1db7hwgt5v
+                    color:
+                      type: string
+                      x-stoplight:
+                        id: vrqq7x042p0dx
+                    tag_subcategories:
+                      type: array
+                      x-stoplight:
+                        id: ozk6iah552lec
+                      items:
+                        $ref: '#/components/schemas/Tag_subcategory'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-api-tag-findAll
+      description: Get all of the categories in the system
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+  /api/tag/findByUser:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Tags
+      responses:
+        '200':
+          description: Tags retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  x-stoplight:
+                    id: 8ztjhokqc3zps
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      x-stoplight:
+                        id: fzwybfe2a85je
+                    text:
+                      type: string
+                      x-stoplight:
+                        id: pckoz3cpj4fn0
+                    color:
+                      type: string
+                      x-stoplight:
+                        id: 07yoj4sqamba2
+                    tag_subcategories:
+                      type: array
+                      x-stoplight:
+                        id: t3om58xp1zyv6
+                      items:
+                        $ref: '#/components/schemas/Tag_subcategory'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-api-tag-findByUser
+      description: Retrieved the tags that the user has created
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+        - schema:
+            type: string
+          in: query
+          name: id_user
+  /api/tag/findOne:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Tags
+      responses:
+        '200':
+          description: Tag retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    x-stoplight:
+                      id: r1n8dbgj07ku8
+                  text:
+                    type: string
+                    x-stoplight:
+                      id: pjzykwbvkw1oa
+                  color:
+                    type: string
+                    x-stoplight:
+                      id: 9ri5qj6a9gacr
+                  tag_subcategories:
+                    type: array
+                    x-stoplight:
+                      id: pjr5cg6p9e9ch
+                    items:
+                      $ref: '#/components/schemas/Tag_subcategory'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-api-tag-findOne
+      description: Retrieve the information of only one category
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+        - schema:
+            type: string
+          in: query
+          name: id_tag
+      requestBody:
+        content: {}
+      x-internal: false
+components:
+  schemas:
+    UserSignUpForm:
+      title: UserSignUpForm
+      x-stoplight:
+        id: nevmwscgdjttn
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: kivy9tdz7il54
+        active:
+          type: boolean
+          x-stoplight:
+            id: rlz1d112hbspx
+        surname:
+          type: string
+          x-stoplight:
+            id: 5m68jmhbew7ra
+        username:
+          type: string
+          x-stoplight:
+            id: 8pxcxps3pt1p8
+        email:
+          type: string
+          x-stoplight:
+            id: 8ehyukfujpgxa
+        password:
+          type: string
+          x-stoplight:
+            id: 589xnm6gs5zbu
+    UserLoginForm:
+      title: UserLoginForm
+      x-stoplight:
+        id: 2oqzbbj49qs3j
+      type: object
+      properties:
+        username:
+          type: string
+          x-stoplight:
+            id: 4qcxrqdfbdku6
+        password:
+          type: string
+          x-stoplight:
+            id: yznmb22dyhmjj
+    User:
+      title: User
+      x-stoplight:
+        id: 1wa83acdkanym
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: dip9x8akc0f9s
+        name:
+          type: string
+          x-stoplight:
+            id: noiszl62vnp21
+        surname:
+          type: string
+          x-stoplight:
+            id: 9vxm645r303x1
+        username:
+          type: string
+          x-stoplight:
+            id: ujtizf8wxqvdp
+        email:
+          type: string
+          x-stoplight:
+            id: wl0zrn6s0qjy8
+        access_token:
+          type: string
+          x-stoplight:
+            id: oiws9bmg7fkcq
+        role:
+          type: string
+          x-stoplight:
+            id: ed242cfz6bjw5
+    UserUpdate:
+      title: UserUpdate
+      x-stoplight:
+        id: v2dmiqiw5994a
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: d4752fpu07xaq
+        name:
+          type: string
+          x-stoplight:
+            id: g3r7oz6svvxfw
+        surname:
+          type: string
+          x-stoplight:
+            id: n1178flp88px4
+        username:
+          type: string
+          x-stoplight:
+            id: b53c5ffpbeocm
+        email:
+          type: string
+          x-stoplight:
+            id: nunulvcovse13
+    Error:
+      title: Error
+      x-stoplight:
+        id: 8yv3rjywjk8fa
+      type: object
+      properties:
+        message:
+          type: string
+          x-stoplight:
+            id: od86ncx5q7j9t
+    updatePasswordForm:
+      title: updatePasswordForm
+      x-stoplight:
+        id: 2vtf2y3bw6nuo
+      type: object
+      properties:
+        token:
+          type: string
+          x-stoplight:
+            id: 80vwf953u8jqg
+        password:
+          type: string
+          x-stoplight:
+            id: dm12ipvvlz4u4
+    Task:
+      title: Task
+      x-stoplight:
+        id: w52hblv9fmh3i
+      type: object
+      x-tags:
+        - Task
+      properties:
+        task_id:
+          type: string
+          x-stoplight:
+            id: ssid4tm4eh5bm
+        name:
+          type: string
+          x-stoplight:
+            id: ugd0y87t27zr2
+        created_at:
+          type: string
+          x-stoplight:
+            id: pay36qaioglxt
+          format: date-time
+          pattern: 'YYYY-MM-DD HH:mm:ss'
+        finished_at:
+          type: string
+          x-stoplight:
+            id: 7l6niukuni4rr
+        status:
+          type: string
+          x-stoplight:
+            id: wdmhfupw1o9kk
+        method:
+          type: string
+          x-stoplight:
+            id: 03k09rfwe9p2w
+        service:
+          type: string
+          x-stoplight:
+            id: ce77qc79ao1ea
+        url:
+          type: string
+          x-stoplight:
+            id: k5yxjzpxqvn3g
+        params:
+          type: object
+          x-stoplight:
+            id: xzjd9i9uxgug1
+        result:
+          type: object
+          x-stoplight:
+            id: 61hwaj16whykq
+        retries:
+          type: integer
+          x-stoplight:
+            id: ke65x6fqqbq85
+        error:
+          type: string
+          x-stoplight:
+            id: 52094maz0ktqa
+        id_avatar:
+          type: integer
+          x-stoplight:
+            id: tbgzvp7sa1ooo
+        priority:
+          type: integer
+          x-stoplight:
+            id: qsayae0243s3z
+    Tag_subcategory:
+      title: Tag_subcategory
+      x-stoplight:
+        id: nfd7oqqk1f43a
+      type: object
+      properties:
+        id:
+          type: integer
+          x-stoplight:
+            id: tsj6soqtzby42
+        created_at:
+          type: string
+          x-stoplight:
+            id: nvot64g6ai8ht
+        text:
+          type: string
+          x-stoplight:
+            id: 107572etqxmdc
+        keyword_related:
+          type: string
+          x-stoplight:
+            id: inq5bdp6dahba
+        id_tag_category:
+          type: string
+          x-stoplight:
+            id: dhj3qhc4nr2el
+    Tag_category:
+      title: Tag_category
+      x-stoplight:
+        id: z1i7ntyi4mdeg
+      type: object
+      properties:
+        id:
+          type: integer
+          x-stoplight:
+            id: uo1nov5bwa6e7
+        created_at:
+          type: string
+          x-stoplight:
+            id: p5aozke02uvuw
+          format: date
+        text:
+          type: string
+          x-stoplight:
+            id: 7wvas7cdy0tvf
+        color:
+          type: string
+          x-stoplight:
+            id: 21r5g6o6p5di5
+    Tag_subcategoryForm:
+      title: Tag_subcategoryForm
+      x-stoplight:
+        id: 3bigqzest2wmy
+      type: object
+      properties:
+        text:
+          type: string
+          x-stoplight:
+            id: tlgfosvyflq3f
+        keyword_related:
+          type: string
+          x-stoplight:
+            id: k0kzm6moghswq
+    Tag_categoryForm:
+      title: Tag_categoryForm
+      x-stoplight:
+        id: 3p9eni9s2nkg6
+      type: object
+      properties:
+        text:
+          type: string
+          x-stoplight:
+            id: zzflh3ngvgs5n
+        color:
+          type: string
+          x-stoplight:
+            id: 17enmrws4t99u
