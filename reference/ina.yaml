@@ -6,7 +6,14 @@ info:
   version: '1.0'
 servers: []
 tags:
+  - name: activity
+  - name: Avatar
   - name: Context
+  - name: Ideology
+  - name: Monitoring
+  - name: Relation subcategory user
+  - name: religion
+  - name: rrss
   - name: Social account
   - name: Social content
   - name: subcategory
@@ -1692,6 +1699,416 @@ paths:
             type: string
           in: query
           name: id
+  /api/rrss/findAll:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - rrss
+      responses:
+        '200':
+          description: Rrss found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/rrss'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-api-rrss-findAll
+      description: Get all of the rrss registerd in the system
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+  /api/religion/findAll:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - religion
+      responses:
+        '200':
+          description: Religions found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/religion'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-api-religion-findAll
+      description: Get all of the religions stored in the system
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+  /api/relation_subcategory_user/findAll:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Relation subcategory user
+      responses:
+        '200':
+          description: Relations retrieve
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/subcatUser'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-api-relation_subcategory_user-findAll
+      description: Get all of the relations between the subcategories and the users
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+  /api/relation/findAll:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Relation subcategory avatar rrss
+      responses:
+        '200':
+          description: Relations retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/relationRrssAvatar'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-api-relation-findAll
+      description: 'Get all of the relations between the avatars, the rrss and the social accounts'
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+  /api/relation/create:
+    post:
+      summary: ''
+      operationId: post-api-relation-create
+      responses:
+        '200':
+          description: Relation created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/socialAccount'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Relation subcategory avatar rrss
+      description: Create the relation between the avatars and the social accounts registered in the system
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/relationRrssAvatarForm'
+  /api/monitoring/getPostsHistory:
+    get:
+      summary: Get Post history
+      tags:
+        - Monitoring
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/history'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-api-monitoring-getPostsHistory
+      description: Get the history of the posts created by an avatar
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+        - schema:
+            type: string
+          in: query
+          name: id_avatar
+        - schema:
+            type: string
+          in: query
+          name: id_rrss
+  /api/ideology/findAll:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Ideology
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/religion'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-api-ideology-findAll
+      description: Get all of the ideologies that are stored in the system
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+  /api/avatar/create:
+    post:
+      summary: Create avatar
+      operationId: post-api-avatar-create
+      responses:
+        '200':
+          description: Avatar created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  captcha:
+                    type: string
+                    x-stoplight:
+                      id: 0iwgpa0w4n7d0
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - Avatar
+      description: Allow the user to create an avatar
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/avatarsForm'
+        description: ''
+  /api/avatar/findAll:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Avatar
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  avatars:
+                    $ref: '#/components/schemas/avatar'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-api-avatar-findAll
+      description: Get all of the avatars created in the system
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+  /api/avatar/findOne:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: Avatar found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/avatar'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: get-api-avatar-findOne
+      description: Retrieve the information of the avatar given
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: x-access-token
+        - schema:
+            type: string
+          in: query
+          name: id
+      requestBody:
+        content: {}
 components:
   schemas:
     UserSignUpForm:
@@ -2074,3 +2491,316 @@ components:
           type: integer
           x-stoplight:
             id: 5jl3gbnoip7b4
+    rrss:
+      title: rrss
+      x-stoplight:
+        id: 54sh2hm8lrf9d
+      type: object
+      properties:
+        id:
+          type: integer
+          x-stoplight:
+            id: huuyoq3awl3nx
+        name:
+          type: string
+          x-stoplight:
+            id: zyf73wcwc0298
+    rrssForm:
+      title: rrssForm
+      x-stoplight:
+        id: fdobm3od08nnb
+      type: object
+      properties:
+        id:
+          type: integer
+          x-stoplight:
+            id: 563295umvcxbg
+    religion:
+      title: religion
+      x-stoplight:
+        id: appg90e7pbm35
+      type: object
+      properties:
+        id:
+          type: integer
+          x-stoplight:
+            id: obpbonre7qums
+        created_at:
+          type: string
+          x-stoplight:
+            id: xssme1wbiz6iz
+        name:
+          type: string
+          x-stoplight:
+            id: jzyxn3yvd14w7
+    religionForm:
+      title: religionForm
+      x-stoplight:
+        id: wjtc6yfq3r1o4
+      type: object
+      properties:
+        id:
+          type: integer
+          x-stoplight:
+            id: cza0980f076vt
+    subcatUser:
+      title: subcatUser
+      x-stoplight:
+        id: wb7c4zq1t27fk
+      type: object
+      properties:
+        id:
+          type: integer
+          x-stoplight:
+            id: ehpqeeuv0701v
+        created_at:
+          type: string
+          x-stoplight:
+            id: 1h7tarx3girad
+        id_tag_subcategory:
+          type: integer
+          x-stoplight:
+            id: s6p7h0g1e09yt
+        id_user:
+          type: integer
+          x-stoplight:
+            id: 3jjm5c552eyjf
+    relationRrssAvatar:
+      title: relationRrssAvatar
+      x-stoplight:
+        id: dxp06av4zestn
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: yeay33kx6rdag
+        created_at:
+          type: string
+          x-stoplight:
+            id: n1t5jlwxvq0cn
+        id_rrss:
+          type: integer
+          x-stoplight:
+            id: 7o2wtm4umsx98
+        id_social_account:
+          type: integer
+          x-stoplight:
+            id: 6h6l1n27trvwj
+        id_relation_subcategory_avatar:
+          type: integer
+          x-stoplight:
+            id: tdbglm2fq8sh2
+    relationRrssAvatarForm:
+      title: relationRrssAvatarForm
+      x-stoplight:
+        id: futoisws1skwf
+      type: object
+      properties:
+        relation:
+          type: object
+          x-stoplight:
+            id: 31z2aahfvwv3t
+          properties:
+            social_accounts:
+              type: array
+              x-stoplight:
+                id: gop58twjk4cun
+              items:
+                x-stoplight:
+                  id: 3drkxbkvzl68c
+                type: string
+            avatar_subcategories:
+              type: array
+              x-stoplight:
+                id: 3osw53sso8fh9
+              items:
+                $ref: '#/components/schemas/avatarSubcategoriesForm'
+            rrss:
+              type: array
+              x-stoplight:
+                id: fhy4zr1lteuc7
+              items:
+                x-stoplight:
+                  id: 358vlkx31w8vz
+                type: integer
+    history:
+      title: history
+      x-stoplight:
+        id: peez8oa6360m1
+      type: object
+      properties:
+        date:
+          type: string
+          x-stoplight:
+            id: 30gx25vhbjy6u
+        value:
+          type: integer
+          x-stoplight:
+            id: s0qukp5l4uwqg
+    avatar:
+      title: avatar
+      x-stoplight:
+        id: w9p45zamyro3e
+      type: object
+      properties:
+        id:
+          type: integer
+          x-stoplight:
+            id: jncda3t5lrwq3
+        created_at:
+          type: string
+          x-stoplight:
+            id: e4y20a0g411ju
+        name:
+          type: string
+          x-stoplight:
+            id: wsegf9qi1r7yy
+        address:
+          type: string
+          x-stoplight:
+            id: 0ay1bm1j1h7w0
+        formation:
+          type: string
+          x-stoplight:
+            id: es5bhmvkg7utb
+        ocupation:
+          type: string
+          x-stoplight:
+            id: dcueoneu84q1m
+        hobbites:
+          type: string
+          x-stoplight:
+            id: 3tx0lpx71etjl
+        others:
+          type: string
+          x-stoplight:
+            id: npv7630ha2bvt
+        id_user:
+          type: integer
+          x-stoplight:
+            id: 5a9xxkayvob8v
+        tags:
+          type: string
+          x-stoplight:
+            id: n6irpv9im5hoe
+        is_automatic:
+          type: boolean
+          x-stoplight:
+            id: jq1zs6nhcsneb
+        personality:
+          type: integer
+          x-stoplight:
+            id: ncuxb02ulwnfu
+        id_ideology:
+          type: integer
+          x-stoplight:
+            id: hv5guivjkq4bj
+        id_religion:
+          type: integer
+          x-stoplight:
+            id: uqzdh34dl7ic1
+        email:
+          type: string
+          x-stoplight:
+            id: wld9fx4h6az2t
+        nickname:
+          type: string
+          x-stoplight:
+            id: 7o0rwxmnjanzu
+        operation_mode:
+          type: string
+          x-stoplight:
+            id: o9eac9w1pw8le
+        status:
+          type: string
+          x-stoplight:
+            id: nghjueengjpbh
+    avatarsForm:
+      title: avatarsForm
+      x-stoplight:
+        id: jjb2y09aa5wua
+      type: object
+      properties:
+        id_user:
+          type: string
+          x-stoplight:
+            id: 17z5mlsnrkeu6
+        avatar:
+          type: object
+          x-stoplight:
+            id: l660h64eq5j3c
+          properties:
+            name:
+              type: string
+              x-stoplight:
+                id: efk19ypsozkx5
+            nickname:
+              type: string
+              x-stoplight:
+                id: 81wkobhapj9lw
+            email:
+              type: string
+              x-stoplight:
+                id: 1lwkueg3q0cb2
+            address:
+              type: string
+              x-stoplight:
+                id: egw54ihnc64rt
+            formation:
+              type: string
+              x-stoplight:
+                id: 2wee4bzu8381z
+            ocupation:
+              type: string
+              x-stoplight:
+                id: bsnmeubw3n8pv
+            id_idelogy:
+              type: string
+              x-stoplight:
+                id: bht7zydxn5izy
+            id_religion:
+              type: string
+              x-stoplight:
+                id: 34ix1sdbv2gy2
+            personality:
+              type: string
+              x-stoplight:
+                id: i3iidf1vhg73z
+            hobbies:
+              type: string
+              x-stoplight:
+                id: cuhffnziirjyd
+            others:
+              type: string
+              x-stoplight:
+                id: qkywja0g8jdmn
+            tagas:
+              type: string
+              x-stoplight:
+                id: gn2ohou78qsk3
+            subcategories:
+              type: string
+              x-stoplight:
+                id: tx84j41mgh9tm
+        social_network_auth:
+          type: array
+          x-stoplight:
+            id: gved32kla6gj0
+          items:
+            x-stoplight:
+              id: spiiy6ynb9k8b
+            type: object
+            properties:
+              id_rrss:
+                type: string
+                x-stoplight:
+                  id: 9f3xj5i4jx801
+              username:
+                type: string
+                x-stoplight:
+                  id: mga3k3n6xl2uc
+              password:
+                type: string
+                x-stoplight:
+                  id: 7b1kpwokw3xib
