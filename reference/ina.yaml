@@ -1,30 +1,23 @@
 openapi: 3.0.0
 x-stoplight:
-  id: 6us9a4jlojkue
+  id: a3wdo7b52gz6z
 info:
-  title: ina
   version: '1.0'
-servers: []
-tags:
-  - name: activity
-  - name: Avatar
-  - name: Context
-  - name: Ideology
-  - name: Monitoring
-  - name: Relation subcategory user
-  - name: religion
-  - name: rrss
-  - name: Social account
-  - name: Social content
-  - name: subcategory
-  - name: Tags
-  - name: Task
-  - name: user
+  title: ina
 paths:
   /api/auth/signup:
     post:
-      summary: ''
+      tags:
+        - user
+      summary: Register a new user
+      description: Creates a new user in the system
       operationId: post-api-auth-signup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSignUpForm'
       responses:
         '200':
           description: Nee user created
@@ -46,19 +39,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /api/auth/signin:
+    post:
       tags:
         - user
-      description: Creates a new user in the syste
+      summary: Access to the system
+      description: Starts a new login session in the system
+      operationId: post-api-auth-signin
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserSignUpForm'
-  /api/auth/signin:
-    post:
-      summary: ''
-      operationId: post-api-auth-signin
+              $ref: '#/components/schemas/UserLoginForm'
       responses:
         '200':
           description: User logged in
@@ -90,19 +83,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      tags:
-        - user
-      description: Starts a new login session in the system
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserLoginForm'
   /api/auth/delete:
     delete:
-      summary: ''
+      tags:
+        - user
+      summary: Delete user
+      description: Deleting an existing user record
       operationId: delete-api-auth-delete
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: Id of the use to be deleted
+          schema:
+            type: string
+      requestBody:
+        content: {}
       responses:
         '200':
           description: User deleted
@@ -134,25 +133,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      tags:
-        - user
-      description: Deleting an existing user record
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-        - schema:
-            type: string
-          in: query
-          name: id
-          description: Id of the use to be deleted
-      requestBody:
-        content: {}
   /api/auth/update:
     put:
-      summary: ''
+      tags:
+        - user
+      summary: Update user
+      description: Updates an existing user record
       operationId: put-api-auth-update
+      parameters:
+        - name: x-access-token
+          in: header
+          description: Token to identify the user
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
       responses:
         '200':
           description: User updated
@@ -184,24 +183,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      tags:
-        - user
-      description: Updates an existing user record
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-          description: Token to identify the user
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserUpdate'
   /api/auth/findAll:
     get:
-      summary: Your GET endpoint
+      tags:
+        - user
+      summary: Find all users
+      description: List all of the users in the system
+      operationId: get-api-auth-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content: {}
       responses:
         '200':
           description: Users found
@@ -223,22 +218,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-auth-findAll
-      description: List all of the users in the system
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-      requestBody:
-        content: {}
-      tags:
-        - user
   /api/auth/findOne:
     get:
-      summary: Your GET endpoint
       tags:
         - user
+      summary: Find one user
+      description: Get the information of the user requested
+      operationId: get-api-auth
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: Id of the user
+          schema:
+            type: string
       responses:
         '200':
           description: User found
@@ -264,24 +260,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-auth
-      description: Get the information of the user requested
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-        - schema:
-            type: string
-          in: query
-          name: id
-          description: Id of the user
-    parameters: []
   /api/auth/sendPasswordResetEmail:
     get:
-      summary: Your GET endpoint
       tags:
         - user
+      summary: recover password
+      description: Send the email to recover the account's password
+      operationId: get-api-auth-sendPasswordResetEmail
+      parameters:
+        - name: email
+          in: query
+          description: Email to send the link
+          schema:
+            type: string
+        - name: username
+          in: query
+          description: Username of the account
+          schema:
+            type: string
       responses:
         '200':
           description: Email sent
@@ -307,23 +303,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-auth-sendPasswordResetEmail
-      description: Send the email to recover the account's password
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: email
-          description: Email to send the link
-        - schema:
-            type: string
-          in: query
-          name: username
-          description: Username of the account
   /api/auth/updatePassword:
     put:
-      summary: ''
+      tags:
+        - user
+      summary: Change password
       operationId: put-api-auth-updatePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updatePasswordForm'
       responses:
         '200':
           description: Password updated
@@ -349,18 +339,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      tags:
-        - user
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/updatePasswordForm'
   /api/task/findAll:
     get:
-      summary: Your GET endpoint
       tags:
         - Task
+      summary: Find all tasks
+      description: Retrieve all of the task in the system
+      operationId: get-api-task-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
       responses:
         '200':
           description: Tasks found
@@ -382,17 +372,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-task-findAll
-      description: Retrieve all of the task in the system
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
   /api/task/create:
     post:
-      summary: ''
+      tags:
+        - Task
+      summary: Create task
+      description: 'Create a task --> used in development, not in production'
       operationId: post-api-task-create
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
       responses:
         '200':
           description: Task created
@@ -406,24 +402,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      tags:
-        - Task
-      description: 'Create a task --> used in development, not in production'
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Task'
   /api/task/checkTask:
     get:
-      summary: Your GET endpoint
       tags:
         - Task
+      summary: Check tasks
+      description: Polling system to check if the avatar's tasks have finished
+      operationId: get-api-auth-2
       responses:
         '200':
           description: Task check
@@ -432,8 +417,6 @@ paths:
               schema:
                 type: array
                 items:
-                  x-stoplight:
-                    id: ak0qaeur9vgcs
                   type: string
         '500':
           description: Internal Server Error
@@ -441,13 +424,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-auth-2
-      description: Polling system to check if the avatar's tasks have finished
-    parameters: []
   /api/tag/create:
     post:
-      summary: ''
+      tags:
+        - Tags
+      summary: Create category
+      description: Allow the creation of a Tag
       operationId: post-api-tag-create
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_user:
+                  type: integer
+                tag_category:
+                  type: object
+                  properties:
+                    text:
+                      type: string
+                    color:
+                      type: string
+                    tag_subcategories:
+                      type: array
+                      items:
+                        $ref: '#/%24defs/Tag_subcategoryForm'
       responses:
         '200':
           description: Tag created
@@ -473,48 +481,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /api/tag/update:
+    put:
       tags:
         - Tags
+      summary: Update category
+      description: Allow the update of an exisiting tag
+      operationId: put-api-tag-update
       parameters:
-        - schema:
-            type: string
+        - name: x-access-token
           in: header
-          name: x-access-token
-      description: Allow the creation of a Tag
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                id_user:
-                  type: integer
-                  x-stoplight:
-                    id: x3gcgw2cnggzo
                 tag_category:
                   type: object
-                  x-stoplight:
-                    id: iqd8jjmldit2r
                   properties:
+                    id:
+                      type: integer
                     text:
                       type: string
-                      x-stoplight:
-                        id: 2lmyz41lwqeg7
                     color:
                       type: string
-                      x-stoplight:
-                        id: 252m7dewrylu3
                     tag_subcategories:
                       type: array
-                      x-stoplight:
-                        id: 9ko0ivqgm14o0
                       items:
-                        $ref: '#/components/schemas/Tag_subcategoryForm'
-        description: ''
-  /api/tag/update:
-    put:
-      summary: ''
-      operationId: put-api-tag-update
+                        $ref: '#/%24defs/Tag_subcategory'
       responses:
         '200':
           description: Tag updated
@@ -546,47 +543,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      tags:
-        - Tags
-      description: Allow the update of an exisiting tag
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                tag_category:
-                  type: object
-                  x-stoplight:
-                    id: 85lh9qk33y6uh
-                  properties:
-                    id:
-                      type: integer
-                      x-stoplight:
-                        id: pep463l0llipv
-                    text:
-                      type: string
-                      x-stoplight:
-                        id: 3sxm0xn088syr
-                    color:
-                      type: string
-                      x-stoplight:
-                        id: vuc362mlc8oqn
-                    tag_subcategories:
-                      type: array
-                      x-stoplight:
-                        id: i4h6ekv35i9vy
-                      items:
-                        $ref: '#/components/schemas/Tag_subcategory'
   /api/tag/delete:
     delete:
-      summary: ''
+      tags:
+        - Tags
+      summary: Delete category
+      description: 'Delete an existing tag '
       operationId: delete-api-tag-delete
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: Tag deleted
@@ -606,23 +578,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      tags:
-        - Tags
-      description: 'Delete an existing tag '
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-        - schema:
-            type: string
-          in: query
-          name: id
   /api/tag/findAll:
     get:
-      summary: Your GET endpoint
       tags:
         - Tags
+      summary: Get all categories
+      description: Get all of the categories in the system
+      operationId: get-api-tag-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
       responses:
         '200':
           description: Tags retrieved
@@ -631,28 +598,18 @@ paths:
               schema:
                 type: array
                 items:
-                  x-stoplight:
-                    id: lgdjhrp3xr3rh
                   type: object
                   properties:
                     id:
                       type: integer
-                      x-stoplight:
-                        id: vmcu68qijh3q8
                     text:
                       type: string
-                      x-stoplight:
-                        id: 74m1db7hwgt5v
                     color:
                       type: string
-                      x-stoplight:
-                        id: vrqq7x042p0dx
                     tag_subcategories:
                       type: array
-                      x-stoplight:
-                        id: ozk6iah552lec
                       items:
-                        $ref: '#/components/schemas/Tag_subcategory'
+                        $ref: '#/%24defs/Tag_subcategory'
         '403':
           description: Forbidden
           content:
@@ -665,18 +622,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-tag-findAll
-      description: Get all of the categories in the system
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
   /api/tag/findByUser:
     get:
-      summary: Your GET endpoint
       tags:
         - Tags
+      summary: Get user's categories
+      description: Retrieved the tags that the user has created
+      operationId: get-api-tag-findByUser
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id_user
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: Tags retrieved
@@ -685,28 +646,18 @@ paths:
               schema:
                 type: array
                 items:
-                  x-stoplight:
-                    id: 8ztjhokqc3zps
                   type: object
                   properties:
                     id:
                       type: integer
-                      x-stoplight:
-                        id: fzwybfe2a85je
                     text:
                       type: string
-                      x-stoplight:
-                        id: pckoz3cpj4fn0
                     color:
                       type: string
-                      x-stoplight:
-                        id: 07yoj4sqamba2
                     tag_subcategories:
                       type: array
-                      x-stoplight:
-                        id: t3om58xp1zyv6
                       items:
-                        $ref: '#/components/schemas/Tag_subcategory'
+                        $ref: '#/%24defs/Tag_subcategory'
         '400':
           description: Bad Request. Invalid parameters
           content:
@@ -731,22 +682,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-tag-findByUser
-      description: Retrieved the tags that the user has created
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-        - schema:
-            type: string
-          in: query
-          name: id_user
   /api/tag/findOne:
     get:
-      summary: Your GET endpoint
       tags:
         - Tags
+      summary: Get one category
+      description: Retrieve the information of only one category
+      operationId: get-api-tag-findOne
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id_tag
+          in: query
+          schema:
+            type: string
+      requestBody:
+        content: {}
       responses:
         '200':
           description: Tag retrieved
@@ -757,20 +710,12 @@ paths:
                 properties:
                   id:
                     type: string
-                    x-stoplight:
-                      id: r1n8dbgj07ku8
                   text:
                     type: string
-                    x-stoplight:
-                      id: pjzykwbvkw1oa
                   color:
                     type: string
-                    x-stoplight:
-                      id: 9ri5qj6a9gacr
                   tag_subcategories:
                     type: array
-                    x-stoplight:
-                      id: pjr5cg6p9e9ch
                     items:
                       $ref: '#/components/schemas/Tag_subcategory'
         '403':
@@ -785,25 +730,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-tag-findOne
-      description: Retrieve the information of only one category
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-        - schema:
-            type: string
-          in: query
-          name: id_tag
-      requestBody:
-        content: {}
-      x-internal: false
   /api/subcategory/create:
     post:
-      summary: create subcategories
       tags:
         - subcategory
+      summary: Create subcategories
+      description: Allow the user to create a new record of subcategory
+      operationId: get-api-subcategory-create
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  text:
+                    type: string
+                  keyword_related:
+                    type: string
+                  id_tag_category:
+                    type: integer
       responses:
         '200':
           description: Subcategories created
@@ -837,40 +789,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-subcategory-create
-      description: Allow the user to create a new record of subcategory
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                x-stoplight:
-                  id: m3rred62qm00n
-                type: object
-                properties:
-                  text:
-                    type: string
-                    x-stoplight:
-                      id: ca4wmihmkj6fm
-                  keyword_related:
-                    type: string
-                    x-stoplight:
-                      id: swvwyb0779ifh
-                  id_tag_category:
-                    type: integer
-                    x-stoplight:
-                      id: yrwona4c7yei8
   /api/subcategory/findAll:
     get:
-      summary: Your GET endpoint
       tags:
         - subcategory
+      summary: Find all subcategories
+      description: Retrieve all of the subcategories in the system
+      operationId: get-api-subcategory-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
       responses:
         '200':
           description: Subcategories found
@@ -892,18 +822,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-subcategory-findAll
-      description: Retrieve all of the subcategories in the system
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
   /api/subcategory/findByTagCategory:
     get:
-      summary: Your GET endpoint
       tags:
         - subcategory
+      summary: Find subcategories by category
+      description: Find the subcategories associated to a given category
+      operationId: get-api-subcategory-findByTagCategory
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: Category to search from
+          schema:
+            type: string
       responses:
         '200':
           description: Subcategories found
@@ -925,51 +860,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-subcategory-findByTagCategory
-      description: Find the subcategories associated to a given category
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-        - schema:
-            type: string
-          in: query
-          name: id
-          description: Category to search from
   /api/subcategory/findByTagCategories:
     post:
-      summary: Your GET endpoint
       tags:
         - subcategory
-      responses:
-        '200':
-          description: Subcategories found
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Tag_subcategory'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      operationId: get-api-subcategory-findByTagCategories
+      summary: Find subcategories by categories
       description: Find the subcategories associated to a group of categories given
+      operationId: get-api-subcategory-findByTagCategories
       parameters:
-        - schema:
-            type: string
+        - name: x-access-token
           in: header
-          name: x-access-token
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -978,16 +880,45 @@ paths:
               properties:
                 ids:
                   type: array
-                  x-stoplight:
-                    id: 4q100q2s0o5no
                   items:
-                    x-stoplight:
-                      id: b2qfhngs7pglw
                     type: integer
+      responses:
+        '200':
+          description: Subcategories found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag_subcategory'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /api/subcategory/delete:
     delete:
-      summary: ''
+      tags:
+        - subcategory
+      summary: Delete subcategory
+      description: Delete a subcategory with the given id
       operationId: delete-api-subcategory-delete
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: Subcategory deleted
@@ -1013,22 +944,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      tags:
-        - subcategory
-      description: Delete a subcategory with the given id
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-        - schema:
-            type: string
-          in: query
-          name: id
   /api/context/create:
     post:
-      summary: ''
+      tags:
+        - Context
+      summary: Create context
+      description: Create the context for a list of given avatars
       operationId: post-api-context-create
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                avatars:
+                  type: array
+                  items:
+                    type: integer
       responses:
         '200':
           description: Context created
@@ -1054,35 +991,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /api/social_content/create:
+    post:
       tags:
-        - Context
-      description: Create the context for a list of given avatars
+        - Social content
+      summary: Create post
+      description: 'Allow the user to post content to the avatar''s account '
+      operationId: post-api-socail_content-create
       parameters:
-        - schema:
-            type: string
+        - name: x-access-token
           in: header
-          name: x-access-token
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                avatars:
-                  type: array
-                  x-stoplight:
-                    id: 53qaizspiz5ki
-                  items:
-                    x-stoplight:
-                      id: zkjgw0csmd6re
-                    type: integer
-  /api/social_content/create:
-    post:
-      summary: ''
-      operationId: post-api-socail_content-create
+              $ref: '#/components/schemas/PostForm'
       responses:
-        '200':
-          description: OK
         '400':
           description: Bad Request. Invalid parameters
           content:
@@ -1103,30 +1029,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-        '':
+        '200':
           description: Post created
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /api/social_content/update:
+    put:
       tags:
         - Social content
-      description: 'Allow the user to post content to the avatar''s account '
+      summary: Update post
+      description: |-
+        Allow the update of the content of a post done by an avatar
+        In working process
+      operationId: put-api-social_content-update
       parameters:
-        - schema:
-            type: string
+        - name: x-access-token
           in: header
-          name: x-access-token
+          schema:
+            type: string
       requestBody:
+        description: ''
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostForm'
-    parameters: []
-  /api/social_content/update:
-    put:
-      summary: ''
-      operationId: put-api-social_content-update
+              $ref: '#/components/schemas/PostUpdateForm'
       responses:
         '200':
           description: Post updated
@@ -1158,27 +1086,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      tags:
-        - Social content
-      description: |-
-        Allow the update of the content of a post done by an avatar
-        In working process
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-      x-internal: true
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PostUpdateForm'
-        description: ''
   /api/social_content/delete:
     delete:
-      summary: ''
+      tags:
+        - Social content
+      summary: Delete post
+      description: Allow the deletion of a post created by an avatar
       operationId: delete-api-social_content-delete
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: post_api_id
+          in: query
+          description: id of the post to delete
+          schema:
+            type: string
+        - name: id_avatar
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: Post deleted
@@ -1210,27 +1138,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      tags:
-        - Social content
-      description: Allow the deletion of a post created by an avatar
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-        - schema:
-            type: string
-          in: query
-          name: post_api_id
-          description: id of the post to delete
-        - schema:
-            type: string
-          in: query
-          name: id_avatar
   /api/social_content/bulkDelete:
     delete:
-      summary: ''
+      tags:
+        - Social content
+      summary: Delete posts
+      description: Allow the deletion of the post given
       operationId: delete-api-social_content-bulkDelete
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id_avatar
+          in: query
+          schema:
+            type: string
+      requestBody:
+        description: Send an array of string with the id returned from the rrss where the post where post
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                posts:
+                  type: array
+                  items:
+                    type: string
       responses:
         '200':
           description: Posts deleted
@@ -1262,38 +1196,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      tags:
-        - Social content
-      description: Allow the deletion of the post given
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-        - schema:
-            type: string
-          in: query
-          name: id_avatar
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                posts:
-                  type: array
-                  x-stoplight:
-                    id: ec2gcyi2e8ufy
-                  items:
-                    x-stoplight:
-                      id: xm0rotg0drtpx
-                    type: string
-        description: Send an array of string with the id returned from the rrss where the post where post
   /api/social_content/findAll:
     get:
-      summary: Your GET endpoint
       tags:
         - Social content
+      summary: Find posts
+      description: |-
+        Retrives all the post of the avatar
+        In working progress
+      operationId: get-api-social_content-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id_avatar
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: Posts found
@@ -1321,25 +1241,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-social_content-findAll
-      description: |-
-        Retrives all the post of the avatar
-        In working progress
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-        - schema:
-            type: string
-          in: query
-          name: id_avatar
-      x-internal: true
   /api/social_content/findOne:
     get:
-      summary: Your GET endpoint
       tags:
         - Social content
+      summary: Find one post
+      description: |-
+        Retrieve the information of one post created by an avatar
+        In working progress
+      operationId: get-api-social_content-findOne
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: Post retrieved
@@ -1367,25 +1286,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-social_content-findOne
-      description: |-
-        Retrieve the information of one post created by an avatar
-        In working progress
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-        - schema:
-            type: string
-          in: query
-          name: id
-      x-internal: true
   /api/social_content/findByAvatar:
     get:
-      summary: Your GET endpoint
       tags:
         - Social content
+      summary: Find posts by avatar
+      description: Get the post created by an avatar in the given rrss
+      operationId: get-api-social_content-findByAvatar
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id_avatar
+          in: query
+          schema:
+            type: string
+        - name: id_rrss
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: Posts retrieved
@@ -1417,26 +1337,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-social_content-findByAvatar
-      description: Get the post created by an avatar in the given rrss
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-        - schema:
-            type: string
-          in: query
-          name: id_avatar
-        - schema:
-            type: string
-          in: query
-          name: id_rrss
   /api/social_account/findAll:
     get:
-      summary: Your GET endpoint
       tags:
         - Social account
+      summary: Find all social accounts
+      description: Get all of the social accounts registered in the system
+      operationId: get-api-social_account-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
       responses:
         '200':
           description: Social accounts retrived
@@ -1445,40 +1357,24 @@ paths:
               schema:
                 type: array
                 items:
-                  x-stoplight:
-                    id: c3ntodz2pm2iw
                   type: object
                   properties:
                     id:
                       type: integer
-                      x-stoplight:
-                        id: d31nlxldrlj0r
                     name:
                       type: string
-                      x-stoplight:
-                        id: biksxk90qig3s
                     avatars:
                       type: array
-                      x-stoplight:
-                        id: f8dkhmywcpw29
-                      items: {}
                     rrss:
                       type: array
-                      x-stoplight:
-                        id: 25hxmao7d0p6d
-                      items: {}
                     subcategories:
                       type: array
-                      x-stoplight:
-                        id: 5gclry0wle87h
                       items:
-                        $ref: '#/components/schemas/Tag_subcategory'
+                        $ref: '#/%24defs/Tag_subcategory'
                     categories:
                       type: array
-                      x-stoplight:
-                        id: 5429gst2fsbps
                       items:
-                        $ref: '#/components/schemas/Tag_category'
+                        $ref: '#/%24defs/Tag_category'
         '403':
           description: Forbidden
           content:
@@ -1497,18 +1393,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-social_account-findAll
-      description: Get all of the social accounts registered in the system
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
   /api/social_account/findOne:
     get:
-      summary: Your GET endpoint
       tags:
         - Social account
+      summary: Find one social account
+      description: Retrieve the information of one social account
+      operationId: get-api-social_account-findOne
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          schema:
+            type: integer
       responses:
         '200':
           description: Social account retrieved
@@ -1519,32 +1419,18 @@ paths:
                 properties:
                   id:
                     type: integer
-                    x-stoplight:
-                      id: 9uufjphpta4kl
                   name:
                     type: string
-                    x-stoplight:
-                      id: 57gwshdf9d850
                   avatars:
                     type: array
-                    x-stoplight:
-                      id: 3rhhotyie4rbi
-                    items: {}
                   rrss:
                     type: array
-                    x-stoplight:
-                      id: cr8tx29y34ukp
-                    items: {}
                   subcategories:
                     type: array
-                    x-stoplight:
-                      id: dgenj4h2r4ziw
                     items:
                       $ref: '#/components/schemas/Tag_subcategory'
                   categories:
                     type: array
-                    x-stoplight:
-                      id: j757j4zy1rgpd
                     items:
                       $ref: '#/components/schemas/Tag_category'
         '400':
@@ -1571,20 +1457,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-social_account-findOne
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-        - schema:
-            type: integer
-          in: query
-          name: id
   /api/social_account/update:
     put:
-      summary: ''
+      tags:
+        - Social account
+      summary: Update social account
+      description: 'Update an existing social account '
       operationId: put-api-social_account-update
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                social_account:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    rrss:
+                      type: array
+                      items:
+                        type: integer
+                    avatar_subcategories:
+                      type: array
+                      items:
+                        $ref: '#/%24defs/avatarSubcategoriesForm'
       responses:
         '200':
           description: Relations updated
@@ -1604,7 +1509,6 @@ paths:
             application/json:
               schema:
                 type: object
-                properties: {}
         '404':
           description: Not Found
           content:
@@ -1617,51 +1521,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      tags:
-        - Social account
-      description: 'Update an existing social account '
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                social_account:
-                  type: object
-                  x-stoplight:
-                    id: pz8vtk6li3wn3
-                  properties:
-                    id:
-                      type: integer
-                      x-stoplight:
-                        id: dzvpl74ckbah4
-                    name:
-                      type: string
-                      x-stoplight:
-                        id: 96yjxam5j2p1k
-                    rrss:
-                      type: array
-                      x-stoplight:
-                        id: 7m7uos3ojk6yx
-                      items:
-                        x-stoplight:
-                          id: 17bl02ygy6284
-                        type: integer
-                    avatar_subcategories:
-                      type: array
-                      x-stoplight:
-                        id: 34ov9aev0dm16
-                      items:
-                        $ref: '#/components/schemas/avatarSubcategoriesForm'
   /api/social_account/delete:
     delete:
-      summary: ''
+      tags:
+        - Social account
+      summary: Delete social account
+      description: Delete an existing relation account
       operationId: delete-api-social_account-delete
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: Relation deleted
@@ -1687,23 +1562,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      tags:
-        - Social account
-      description: Delete an existing relation account
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-        - schema:
-            type: string
-          in: query
-          name: id
   /api/rrss/findAll:
     get:
-      summary: Your GET endpoint
       tags:
         - rrss
+      summary: Find all rrss
+      description: Get all of the rrss registerd in the system
+      operationId: get-api-rrss-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
       responses:
         '200':
           description: Rrss found
@@ -1725,18 +1595,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-rrss-findAll
-      description: Get all of the rrss registerd in the system
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
   /api/religion/findAll:
     get:
-      summary: Your GET endpoint
       tags:
         - religion
+      summary: Find all religions
+      description: Get all of the religions stored in the system
+      operationId: get-api-religion-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
       responses:
         '200':
           description: Religions found
@@ -1758,18 +1628,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-religion-findAll
-      description: Get all of the religions stored in the system
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
   /api/relation_subcategory_user/findAll:
     get:
-      summary: Your GET endpoint
       tags:
         - Relation subcategory user
+      summary: Find all relations
+      description: Get all of the relations between the subcategories and the users
+      operationId: get-api-relation_subcategory_user-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
       responses:
         '200':
           description: Relations retrieve
@@ -1791,18 +1661,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-relation_subcategory_user-findAll
-      description: Get all of the relations between the subcategories and the users
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
   /api/relation/findAll:
     get:
-      summary: Your GET endpoint
       tags:
         - Relation subcategory avatar rrss
+      summary: Find all rrss relations
+      description: 'Get all of the relations between the avatars, the rrss and the social accounts'
+      operationId: get-api-relation-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
       responses:
         '200':
           description: Relations retrieved
@@ -1824,17 +1694,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-relation-findAll
-      description: 'Get all of the relations between the avatars, the rrss and the social accounts'
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
   /api/relation/create:
     post:
-      summary: ''
+      tags:
+        - Relation subcategory avatar rrss
+      summary: Create relation
+      description: Create the relation between the avatars and the social accounts registered in the system
       operationId: post-api-relation-create
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/relationRrssAvatarForm'
       responses:
         '200':
           description: Relation created
@@ -1868,24 +1744,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      tags:
-        - Relation subcategory avatar rrss
-      description: Create the relation between the avatars and the social accounts registered in the system
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/relationRrssAvatarForm'
   /api/monitoring/getPostsHistory:
     get:
-      summary: Get Post history
       tags:
         - Monitoring
+      summary: Get Post history
+      description: Get the history of the posts created by an avatar
+      operationId: get-api-monitoring-getPostsHistory
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id_avatar
+          in: query
+          schema:
+            type: string
+        - name: id_rrss
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: OK
@@ -1919,26 +1797,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-monitoring-getPostsHistory
-      description: Get the history of the posts created by an avatar
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-        - schema:
-            type: string
-          in: query
-          name: id_avatar
-        - schema:
-            type: string
-          in: query
-          name: id_rrss
   /api/ideology/findAll:
     get:
-      summary: Your GET endpoint
       tags:
         - Ideology
+      summary: Find all ideologies
+      description: Get all of the ideologies that are stored in the system
+      operationId: get-api-ideology-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
       responses:
         '200':
           description: OK
@@ -1960,17 +1830,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-ideology-findAll
-      description: Get all of the ideologies that are stored in the system
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
   /api/avatar/create:
     post:
+      tags:
+        - Avatar
       summary: Create avatar
+      description: Allow the user to create an avatar
       operationId: post-api-avatar-create
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/avatarsForm'
       responses:
         '200':
           description: Avatar created
@@ -1981,8 +1858,6 @@ paths:
                 properties:
                   captcha:
                     type: string
-                    x-stoplight:
-                      id: 0iwgpa0w4n7d0
         '400':
           description: Bad Request
           content:
@@ -2007,25 +1882,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      tags:
-        - Avatar
-      description: Allow the user to create an avatar
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/avatarsForm'
-        description: ''
   /api/avatar/findAll:
     get:
-      summary: Your GET endpoint
       tags:
         - Avatar
+      summary: Find all avatars
+      description: Get all of the avatars created in the system
+      operationId: get-api-avatar-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
       responses:
         '200':
           description: OK
@@ -2054,17 +1922,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-avatar-findAll
-      description: Get all of the avatars created in the system
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: x-access-token
   /api/avatar/findOne:
     get:
-      summary: Your GET endpoint
-      tags: []
+      tags:
+        - Avatar
+      summary: Find one avatar
+      description: Retrieve the information of the avatar given
+      operationId: get-api-avatar-findOne
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          schema:
+            type: string
+      requestBody:
+        content: {}
       responses:
         '200':
           description: Avatar found
@@ -2096,711 +1971,811 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      operationId: get-api-avatar-findOne
-      description: Retrieve the information of the avatar given
+  /api/avatar/findByUser:
+    get:
+      tags:
+        - Avatar
+      summary: Find avatars by user
+      description: find the avatars linked to the given user
+      operationId: get-api-avatar-findByUser
       parameters:
-        - schema:
-            type: string
+        - name: x-access-token
           in: header
-          name: x-access-token
-        - schema:
+          schema:
             type: string
+        - name: id_user
           in: query
-          name: id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Avatars found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/avatar'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/avatar/update:
+    put:
+      tags:
+        - Avatar
+      summary: Update avatar
+      description: Update the information of the given avatar
+      operationId: get-api-avatar-update
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
       requestBody:
-        content: {}
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                avatar:
+                  $ref: '#/components/schemas/avatarsForm'
+                id_user:
+                  type: integer
+                id_avatar:
+                  type: integer
+                social_network_auth:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id_rrss:
+                        type: integer
+                      username:
+                        type: string
+                      password:
+                        type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/avatar/delete:
+    delete:
+      tags:
+        - Avatar
+      summary: Delete avatar
+      description: Delete from the sytem the avatar given
+      operationId: get-api-avatar-delete
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/avatar/deleteAll:
+    delete:
+      tags:
+        - Avatar
+      summary: Delete all avatars
+      description: Delete all of the avatars in the system
+      operationId: delete-api-avatar-deleteAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/avatar/filterAvatar:
+    post:
+      tags:
+        - Avatar
+      summary: Filter avatars
+      description: Filter the avatars with some of the parameters that defined the avatar
+      operationId: post-api-avatar-filterAvatar
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids_rrrss:
+                  type: array
+                  items:
+                    type: integer
+                ids_ideology:
+                  type: array
+                  items:
+                    type: integer
+                ids_religion:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: Avatars found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/avatar'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/avatar/receiveCaptcha:
+    post:
+      tags:
+        - Avatar
+      summary: Receive captcha
+      description: ' Temporal endpoint to recieve the captcha'
+      operationId: post-api-avatar-receiveCaptcha
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                captcha_data:
+                  type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  captcha_data:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/avatar/updateOperationMode:
+    put:
+      tags:
+        - Avatar
+      summary: Update operation mode
+      description: Update the given avatar with the given operation mode
+      operationId: put-api-avatar-updateOperationMode
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                avatar:
+                  $ref: '#/components/schemas/avatarsForm'
+                id_avatar:
+                  type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/avatar/filterBySubcategory:
+    get:
+      tags:
+        - Avatar
+      summary: Filter by subcategory
+      description: Filters the existing avatar by the subcategories that have linked
+      operationId: get-api-avatar-filterBySubcategory
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subcategories:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: Avatars found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/avatar'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+tags:
+  - name: activity
+  - name: Avatar
+  - name: Context
+  - name: Ideology
+  - name: Monitoring
+  - name: Relation subcategory user
+  - name: religion
+  - name: rrss
+  - name: Social account
+  - name: Social content
+  - name: subcategory
+  - name: Tags
+  - name: Task
+  - name: user
 components:
   schemas:
     UserSignUpForm:
-      title: UserSignUpForm
-      x-stoplight:
-        id: nevmwscgdjttn
       type: object
+      title: UserSignUpForm
       properties:
         name:
           type: string
-          x-stoplight:
-            id: kivy9tdz7il54
         active:
           type: boolean
-          x-stoplight:
-            id: rlz1d112hbspx
         surname:
           type: string
-          x-stoplight:
-            id: 5m68jmhbew7ra
         username:
           type: string
-          x-stoplight:
-            id: 8pxcxps3pt1p8
         email:
           type: string
-          x-stoplight:
-            id: 8ehyukfujpgxa
         password:
           type: string
-          x-stoplight:
-            id: 589xnm6gs5zbu
-    UserLoginForm:
-      title: UserLoginForm
       x-stoplight:
-        id: 2oqzbbj49qs3j
-      type: object
-      properties:
-        username:
-          type: string
-          x-stoplight:
-            id: 4qcxrqdfbdku6
-        password:
-          type: string
-          x-stoplight:
-            id: yznmb22dyhmjj
+        id: ji0oh2nkq797d
     User:
-      title: User
-      x-stoplight:
-        id: 1wa83acdkanym
       type: object
+      title: User
       properties:
         id:
           type: string
-          x-stoplight:
-            id: dip9x8akc0f9s
         name:
           type: string
-          x-stoplight:
-            id: noiszl62vnp21
         surname:
           type: string
-          x-stoplight:
-            id: 9vxm645r303x1
         username:
           type: string
-          x-stoplight:
-            id: ujtizf8wxqvdp
         email:
           type: string
-          x-stoplight:
-            id: wl0zrn6s0qjy8
         access_token:
           type: string
-          x-stoplight:
-            id: oiws9bmg7fkcq
         role:
           type: string
-          x-stoplight:
-            id: ed242cfz6bjw5
-    UserUpdate:
-      title: UserUpdate
       x-stoplight:
-        id: v2dmiqiw5994a
-      type: object
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: d4752fpu07xaq
-        name:
-          type: string
-          x-stoplight:
-            id: g3r7oz6svvxfw
-        surname:
-          type: string
-          x-stoplight:
-            id: n1178flp88px4
-        username:
-          type: string
-          x-stoplight:
-            id: b53c5ffpbeocm
-        email:
-          type: string
-          x-stoplight:
-            id: nunulvcovse13
+        id: 45q3vnk6xlfz6
     Error:
-      title: Error
-      x-stoplight:
-        id: 8yv3rjywjk8fa
       type: object
+      title: Error
       properties:
         message:
           type: string
-          x-stoplight:
-            id: od86ncx5q7j9t
-    updatePasswordForm:
-      title: updatePasswordForm
       x-stoplight:
-        id: 2vtf2y3bw6nuo
+        id: gw1eup1dzs65l
+    UserLoginForm:
       type: object
+      title: UserLoginForm
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      x-stoplight:
+        id: hdxvawrglysdu
+    UserUpdate:
+      type: object
+      title: UserUpdate
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+      x-stoplight:
+        id: 28qsktbjtdkd2
+    updatePasswordForm:
+      type: object
+      title: updatePasswordForm
       properties:
         token:
           type: string
-          x-stoplight:
-            id: 80vwf953u8jqg
         password:
           type: string
-          x-stoplight:
-            id: dm12ipvvlz4u4
-    Task:
-      title: Task
       x-stoplight:
-        id: w52hblv9fmh3i
+        id: 6r5mf9fl5ylas
+    Task:
       type: object
-      x-tags:
-        - Task
+      title: Task
       properties:
         task_id:
           type: string
-          x-stoplight:
-            id: ssid4tm4eh5bm
         name:
           type: string
-          x-stoplight:
-            id: ugd0y87t27zr2
         created_at:
           type: string
-          x-stoplight:
-            id: pay36qaioglxt
           format: date-time
           pattern: 'YYYY-MM-DD HH:mm:ss'
         finished_at:
           type: string
-          x-stoplight:
-            id: 7l6niukuni4rr
         status:
           type: string
-          x-stoplight:
-            id: wdmhfupw1o9kk
         method:
           type: string
-          x-stoplight:
-            id: 03k09rfwe9p2w
         service:
           type: string
-          x-stoplight:
-            id: ce77qc79ao1ea
         url:
           type: string
-          x-stoplight:
-            id: k5yxjzpxqvn3g
         params:
           type: object
-          x-stoplight:
-            id: xzjd9i9uxgug1
         result:
           type: object
-          x-stoplight:
-            id: 61hwaj16whykq
         retries:
           type: integer
-          x-stoplight:
-            id: ke65x6fqqbq85
         error:
           type: string
-          x-stoplight:
-            id: 52094maz0ktqa
         id_avatar:
           type: integer
-          x-stoplight:
-            id: tbgzvp7sa1ooo
         priority:
           type: integer
-          x-stoplight:
-            id: qsayae0243s3z
-    Tag_subcategory:
-      title: Tag_subcategory
       x-stoplight:
-        id: nfd7oqqk1f43a
+        id: d4k22ieqw9eoz
+    Tag_subcategoryForm:
       type: object
+      title: Tag_subcategoryForm
       properties:
-        id:
-          type: integer
-          x-stoplight:
-            id: tsj6soqtzby42
-        created_at:
-          type: string
-          x-stoplight:
-            id: nvot64g6ai8ht
         text:
           type: string
-          x-stoplight:
-            id: 107572etqxmdc
         keyword_related:
           type: string
-          x-stoplight:
-            id: inq5bdp6dahba
-        id_tag_category:
-          type: string
-          x-stoplight:
-            id: dhj3qhc4nr2el
-    Tag_category:
-      title: Tag_category
       x-stoplight:
-        id: z1i7ntyi4mdeg
+        id: 24qbo9gxipnc5
+    Tag_category:
       type: object
+      title: Tag_category
       properties:
         id:
           type: integer
-          x-stoplight:
-            id: uo1nov5bwa6e7
         created_at:
           type: string
-          x-stoplight:
-            id: p5aozke02uvuw
           format: date
         text:
           type: string
-          x-stoplight:
-            id: 7wvas7cdy0tvf
         color:
           type: string
-          x-stoplight:
-            id: 21r5g6o6p5di5
-    Tag_subcategoryForm:
-      title: Tag_subcategoryForm
       x-stoplight:
-        id: 3bigqzest2wmy
+        id: 2r00neyty0zad
+    Tag_subcategory:
       type: object
+      title: Tag_subcategory
       properties:
+        id:
+          type: integer
+        created_at:
+          type: string
         text:
           type: string
-          x-stoplight:
-            id: tlgfosvyflq3f
         keyword_related:
           type: string
-          x-stoplight:
-            id: k0kzm6moghswq
-    Tag_categoryForm:
-      title: Tag_categoryForm
+        id_tag_category:
+          type: string
       x-stoplight:
-        id: 3p9eni9s2nkg6
-      type: object
-      properties:
-        text:
-          type: string
-          x-stoplight:
-            id: zzflh3ngvgs5n
-        color:
-          type: string
-          x-stoplight:
-            id: 17enmrws4t99u
+        id: 4dr2t1tn0u0a4
     PostForm:
-      title: PostForm
-      x-stoplight:
-        id: 9jdtlo1rkvwd8
       type: object
+      title: PostForm
       properties:
         id_avatar:
           type: integer
-          x-stoplight:
-            id: r86nu1diq0rxh
         posts:
           type: array
-          x-stoplight:
-            id: 0heo3gxbbbec3
           items:
-            x-stoplight:
-              id: vgijr3cbvf652
             type: object
             properties:
               content:
                 type: string
-                x-stoplight:
-                  id: qjb3k81dmhucl
         id_rrss:
           type: integer
-          x-stoplight:
-            id: 8ao8m4ciilv9t
-    PostUpdateForm:
-      title: PostUpdateForm
       x-stoplight:
-        id: m659pxutsxxny
+        id: mpizjbz52aboj
+    PostUpdateForm:
       type: object
+      title: PostUpdateForm
       properties:
         id:
           type: integer
-          x-stoplight:
-            id: mz07tn5qa6rrw
         id_avatar:
           type: integer
-          x-stoplight:
-            id: x280uvwmv98iw
         id_rrss:
           type: integer
-          x-stoplight:
-            id: 8prfhr12i7t3w
         content:
           type: string
-          x-stoplight:
-            id: 1n41jns2fijpc
-    Posts:
-      title: Posts
       x-stoplight:
-        id: m48cal1qan71t
+        id: o04ve3al3ri0q
+    Posts:
       type: array
+      title: Posts
       items:
-        x-stoplight:
-          id: pwv2arj36x72n
         type: object
         properties:
           id:
             type: integer
-            x-stoplight:
-              id: 3f0za0rnvko5w
           content:
             type: string
-            x-stoplight:
-              id: 2m95w7eqg9s66
           created_at:
             type: string
-            x-stoplight:
-              id: 552gjl2rrjuw5
-    socialAccountForm:
-      title: socialAccountForm
       x-stoplight:
-        id: zamk95uwdsyms
-      type: object
-      properties:
-        name:
-          type: string
-          x-stoplight:
-            id: z6my01qryxmfa
-    socialAccount:
-      title: socialAccount
-      x-stoplight:
-        id: 9g2r0krbvfdqr
-      type: object
-      properties:
-        id:
-          type: integer
-          x-stoplight:
-            id: gv9r2qe1fsfn2
-        name:
-          type: string
-          x-stoplight:
-            id: din0uok7uwfxw
+        id: fk4fyjqiki6sf
     avatarSubcategoriesForm:
-      title: avatarSubcategoriesForm
-      x-stoplight:
-        id: vq0rbi1su2457
       type: object
+      title: avatarSubcategoriesForm
       properties:
         id_avatar:
           type: integer
-          x-stoplight:
-            id: 5yn6pfywkmec4
         id_subcategory:
           type: integer
-          x-stoplight:
-            id: 5jl3gbnoip7b4
+      x-stoplight:
+        id: nodvyf4q1vith
     rrss:
+      type: object
       title: rrss
-      x-stoplight:
-        id: 54sh2hm8lrf9d
-      type: object
       properties:
         id:
           type: integer
-          x-stoplight:
-            id: huuyoq3awl3nx
         name:
           type: string
-          x-stoplight:
-            id: zyf73wcwc0298
-    rrssForm:
-      title: rrssForm
       x-stoplight:
-        id: fdobm3od08nnb
-      type: object
-      properties:
-        id:
-          type: integer
-          x-stoplight:
-            id: 563295umvcxbg
+        id: le7jdm1z62q2u
     religion:
-      title: religion
-      x-stoplight:
-        id: appg90e7pbm35
       type: object
+      title: religion
       properties:
         id:
           type: integer
-          x-stoplight:
-            id: obpbonre7qums
         created_at:
           type: string
-          x-stoplight:
-            id: xssme1wbiz6iz
         name:
           type: string
-          x-stoplight:
-            id: jzyxn3yvd14w7
-    religionForm:
-      title: religionForm
       x-stoplight:
-        id: wjtc6yfq3r1o4
-      type: object
-      properties:
-        id:
-          type: integer
-          x-stoplight:
-            id: cza0980f076vt
+        id: mnansi5a46278
     subcatUser:
-      title: subcatUser
-      x-stoplight:
-        id: wb7c4zq1t27fk
       type: object
+      title: subcatUser
       properties:
         id:
           type: integer
-          x-stoplight:
-            id: ehpqeeuv0701v
         created_at:
           type: string
-          x-stoplight:
-            id: 1h7tarx3girad
         id_tag_subcategory:
           type: integer
-          x-stoplight:
-            id: s6p7h0g1e09yt
         id_user:
           type: integer
-          x-stoplight:
-            id: 3jjm5c552eyjf
-    relationRrssAvatar:
-      title: relationRrssAvatar
       x-stoplight:
-        id: dxp06av4zestn
+        id: lozsg6vvp0lpn
+    relationRrssAvatar:
       type: object
+      title: relationRrssAvatar
       properties:
         id:
           type: string
-          x-stoplight:
-            id: yeay33kx6rdag
         created_at:
           type: string
-          x-stoplight:
-            id: n1t5jlwxvq0cn
         id_rrss:
           type: integer
-          x-stoplight:
-            id: 7o2wtm4umsx98
         id_social_account:
           type: integer
-          x-stoplight:
-            id: 6h6l1n27trvwj
         id_relation_subcategory_avatar:
           type: integer
-          x-stoplight:
-            id: tdbglm2fq8sh2
-    relationRrssAvatarForm:
-      title: relationRrssAvatarForm
       x-stoplight:
-        id: futoisws1skwf
+        id: h685uph0hdmw9
+    relationRrssAvatarForm:
       type: object
+      title: relationRrssAvatarForm
       properties:
         relation:
           type: object
-          x-stoplight:
-            id: 31z2aahfvwv3t
           properties:
             social_accounts:
               type: array
-              x-stoplight:
-                id: gop58twjk4cun
               items:
-                x-stoplight:
-                  id: 3drkxbkvzl68c
                 type: string
             avatar_subcategories:
               type: array
-              x-stoplight:
-                id: 3osw53sso8fh9
               items:
                 $ref: '#/components/schemas/avatarSubcategoriesForm'
             rrss:
               type: array
-              x-stoplight:
-                id: fhy4zr1lteuc7
               items:
-                x-stoplight:
-                  id: 358vlkx31w8vz
                 type: integer
-    history:
-      title: history
       x-stoplight:
-        id: peez8oa6360m1
+        id: iwnjvdsgayfaz
+    socialAccount:
       type: object
-      properties:
-        date:
-          type: string
-          x-stoplight:
-            id: 30gx25vhbjy6u
-        value:
-          type: integer
-          x-stoplight:
-            id: s0qukp5l4uwqg
-    avatar:
-      title: avatar
-      x-stoplight:
-        id: w9p45zamyro3e
-      type: object
+      title: socialAccount
       properties:
         id:
           type: integer
-          x-stoplight:
-            id: jncda3t5lrwq3
-        created_at:
-          type: string
-          x-stoplight:
-            id: e4y20a0g411ju
         name:
           type: string
-          x-stoplight:
-            id: wsegf9qi1r7yy
-        address:
-          type: string
-          x-stoplight:
-            id: 0ay1bm1j1h7w0
-        formation:
-          type: string
-          x-stoplight:
-            id: es5bhmvkg7utb
-        ocupation:
-          type: string
-          x-stoplight:
-            id: dcueoneu84q1m
-        hobbites:
-          type: string
-          x-stoplight:
-            id: 3tx0lpx71etjl
-        others:
-          type: string
-          x-stoplight:
-            id: npv7630ha2bvt
-        id_user:
-          type: integer
-          x-stoplight:
-            id: 5a9xxkayvob8v
-        tags:
-          type: string
-          x-stoplight:
-            id: n6irpv9im5hoe
-        is_automatic:
-          type: boolean
-          x-stoplight:
-            id: jq1zs6nhcsneb
-        personality:
-          type: integer
-          x-stoplight:
-            id: ncuxb02ulwnfu
-        id_ideology:
-          type: integer
-          x-stoplight:
-            id: hv5guivjkq4bj
-        id_religion:
-          type: integer
-          x-stoplight:
-            id: uqzdh34dl7ic1
-        email:
-          type: string
-          x-stoplight:
-            id: wld9fx4h6az2t
-        nickname:
-          type: string
-          x-stoplight:
-            id: 7o0rwxmnjanzu
-        operation_mode:
-          type: string
-          x-stoplight:
-            id: o9eac9w1pw8le
-        status:
-          type: string
-          x-stoplight:
-            id: nghjueengjpbh
-    avatarsForm:
-      title: avatarsForm
       x-stoplight:
-        id: jjb2y09aa5wua
+        id: 414oxmvgbtauu
+    history:
       type: object
+      title: history
+      properties:
+        date:
+          type: string
+        value:
+          type: integer
+      x-stoplight:
+        id: tmzanyk4xk0zv
+    avatarsForm:
+      type: object
+      title: avatarsForm
       properties:
         id_user:
           type: string
-          x-stoplight:
-            id: 17z5mlsnrkeu6
         avatar:
           type: object
-          x-stoplight:
-            id: l660h64eq5j3c
           properties:
             name:
               type: string
-              x-stoplight:
-                id: efk19ypsozkx5
             nickname:
               type: string
-              x-stoplight:
-                id: 81wkobhapj9lw
             email:
               type: string
-              x-stoplight:
-                id: 1lwkueg3q0cb2
             address:
               type: string
-              x-stoplight:
-                id: egw54ihnc64rt
             formation:
               type: string
-              x-stoplight:
-                id: 2wee4bzu8381z
             ocupation:
               type: string
-              x-stoplight:
-                id: bsnmeubw3n8pv
             id_idelogy:
               type: string
-              x-stoplight:
-                id: bht7zydxn5izy
             id_religion:
               type: string
-              x-stoplight:
-                id: 34ix1sdbv2gy2
             personality:
               type: string
-              x-stoplight:
-                id: i3iidf1vhg73z
             hobbies:
               type: string
-              x-stoplight:
-                id: cuhffnziirjyd
             others:
               type: string
-              x-stoplight:
-                id: qkywja0g8jdmn
             tagas:
               type: string
-              x-stoplight:
-                id: gn2ohou78qsk3
             subcategories:
               type: string
-              x-stoplight:
-                id: tx84j41mgh9tm
         social_network_auth:
           type: array
-          x-stoplight:
-            id: gved32kla6gj0
           items:
-            x-stoplight:
-              id: spiiy6ynb9k8b
             type: object
             properties:
               id_rrss:
                 type: string
-                x-stoplight:
-                  id: 9f3xj5i4jx801
               username:
                 type: string
-                x-stoplight:
-                  id: mga3k3n6xl2uc
               password:
                 type: string
-                x-stoplight:
-                  id: 7b1kpwokw3xib
+      x-stoplight:
+        id: cda5hyx4h8hkq
+    avatar:
+      type: object
+      title: avatar
+      properties:
+        id:
+          type: integer
+        created_at:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
+        formation:
+          type: string
+        ocupation:
+          type: string
+        hobbites:
+          type: string
+        others:
+          type: string
+        id_user:
+          type: integer
+        tags:
+          type: string
+        is_automatic:
+          type: boolean
+        personality:
+          type: integer
+        id_ideology:
+          type: integer
+        id_religion:
+          type: integer
+        email:
+          type: string
+        nickname:
+          type: string
+        operation_mode:
+          type: string
+        status:
+          type: string
+      x-stoplight:
+        id: 6mpxyfl5j373a
