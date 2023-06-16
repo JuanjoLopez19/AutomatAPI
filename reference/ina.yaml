@@ -1,0 +1,2781 @@
+openapi: 3.0.0
+x-stoplight:
+  id: a3wdo7b52gz6z
+info:
+  version: '1.0'
+  title: ina
+paths:
+  /api/auth/signup:
+    post:
+      tags:
+        - user
+      summary: Register a new user
+      description: Creates a new user in the system
+      operationId: post-api-auth-signup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSignUpForm'
+      responses:
+        '200':
+          description: Nee user created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request. Invalid parameters
+        '404':
+          description: User already registered in the system
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/auth/signin:
+    post:
+      tags:
+        - user
+      summary: Access to the system
+      description: Starts a new login session in the system
+      operationId: post-api-auth-signin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLoginForm'
+      responses:
+        '200':
+          description: User logged in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: The username or the password is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/auth/delete:
+    delete:
+      tags:
+        - user
+      summary: Delete user
+      description: Deleting an existing user record
+      operationId: delete-api-auth-delete
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: Id of the use to be deleted
+          schema:
+            type: string
+      requestBody:
+        content: {}
+      responses:
+        '200':
+          description: User deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/auth/update:
+    put:
+      tags:
+        - user
+      summary: Update user
+      description: Updates an existing user record
+      operationId: put-api-auth-update
+      parameters:
+        - name: x-access-token
+          in: header
+          description: Token to identify the user
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+      responses:
+        '200':
+          description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/auth/findAll:
+    get:
+      tags:
+        - user
+      summary: Find all users
+      description: List all of the users in the system
+      operationId: get-api-auth-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content: {}
+      responses:
+        '200':
+          description: Users found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Users not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/auth/findOne:
+    get:
+      tags:
+        - user
+      summary: Find one user
+      description: Get the information of the user requested
+      operationId: get-api-auth
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: Id of the user
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/auth/sendPasswordResetEmail:
+    get:
+      tags:
+        - user
+      summary: recover password
+      description: Send the email to recover the account's password
+      operationId: get-api-auth-sendPasswordResetEmail
+      parameters:
+        - name: email
+          in: query
+          description: Email to send the link
+          schema:
+            type: string
+        - name: username
+          in: query
+          description: Username of the account
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Email sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/auth/updatePassword:
+    put:
+      tags:
+        - user
+      summary: Change password
+      operationId: put-api-auth-updatePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updatePasswordForm'
+      responses:
+        '200':
+          description: Password updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/task/findAll:
+    get:
+      tags:
+        - Task
+      summary: Find all tasks
+      description: Retrieve all of the task in the system
+      operationId: get-api-task-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Tasks found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Task not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/task/create:
+    post:
+      tags:
+        - Task
+      summary: Create task
+      description: 'Create a task --> used in development, not in production'
+      operationId: post-api-task-create
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        '200':
+          description: Task created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/task/checkTask:
+    get:
+      tags:
+        - Task
+      summary: Check tasks
+      description: Polling system to check if the avatar's tasks have finished
+      operationId: get-api-auth-2
+      responses:
+        '200':
+          description: Task check
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/tag/create:
+    post:
+      tags:
+        - Tags
+      summary: Create category
+      description: Allow the creation of a Tag
+      operationId: post-api-tag-create
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_user:
+                  type: integer
+                tag_category:
+                  type: object
+                  properties:
+                    text:
+                      type: string
+                    color:
+                      type: string
+                    tag_subcategories:
+                      type: array
+                      items:
+                        $ref: '#/%24defs/Tag_subcategoryForm'
+      responses:
+        '200':
+          description: Tag created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag_category'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/tag/update:
+    put:
+      tags:
+        - Tags
+      summary: Update category
+      description: Allow the update of an exisiting tag
+      operationId: put-api-tag-update
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tag_category:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    text:
+                      type: string
+                    color:
+                      type: string
+                    tag_subcategories:
+                      type: array
+                      items:
+                        $ref: '#/%24defs/Tag_subcategory'
+      responses:
+        '200':
+          description: Tag updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/tag/delete:
+    delete:
+      tags:
+        - Tags
+      summary: Delete category
+      description: 'Delete an existing tag '
+      operationId: delete-api-tag-delete
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Tag deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/tag/findAll:
+    get:
+      tags:
+        - Tags
+      summary: Get all categories
+      description: Get all of the categories in the system
+      operationId: get-api-tag-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Tags retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    text:
+                      type: string
+                    color:
+                      type: string
+                    tag_subcategories:
+                      type: array
+                      items:
+                        $ref: '#/%24defs/Tag_subcategory'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/tag/findByUser:
+    get:
+      tags:
+        - Tags
+      summary: Get user's categories
+      description: Retrieved the tags that the user has created
+      operationId: get-api-tag-findByUser
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id_user
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Tags retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    text:
+                      type: string
+                    color:
+                      type: string
+                    tag_subcategories:
+                      type: array
+                      items:
+                        $ref: '#/%24defs/Tag_subcategory'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/tag/findOne:
+    get:
+      tags:
+        - Tags
+      summary: Get one category
+      description: Retrieve the information of only one category
+      operationId: get-api-tag-findOne
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id_tag
+          in: query
+          schema:
+            type: string
+      requestBody:
+        content: {}
+      responses:
+        '200':
+          description: Tag retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  text:
+                    type: string
+                  color:
+                    type: string
+                  tag_subcategories:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tag_subcategory'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/subcategory/create:
+    post:
+      tags:
+        - subcategory
+      summary: Create subcategories
+      description: Allow the user to create a new record of subcategory
+      operationId: get-api-subcategory-create
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  text:
+                    type: string
+                  keyword_related:
+                    type: string
+                  id_tag_category:
+                    type: integer
+      responses:
+        '200':
+          description: Subcategories created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag_subcategory'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/subcategory/findAll:
+    get:
+      tags:
+        - subcategory
+      summary: Find all subcategories
+      description: Retrieve all of the subcategories in the system
+      operationId: get-api-subcategory-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Subcategories found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag_subcategory'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/subcategory/findByTagCategory:
+    get:
+      tags:
+        - subcategory
+      summary: Find subcategories by category
+      description: Find the subcategories associated to a given category
+      operationId: get-api-subcategory-findByTagCategory
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: Category to search from
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Subcategories found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag_subcategory'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/subcategory/findByTagCategories:
+    post:
+      tags:
+        - subcategory
+      summary: Find subcategories by categories
+      description: Find the subcategories associated to a group of categories given
+      operationId: get-api-subcategory-findByTagCategories
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: Subcategories found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag_subcategory'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/subcategory/delete:
+    delete:
+      tags:
+        - subcategory
+      summary: Delete subcategory
+      description: Delete a subcategory with the given id
+      operationId: delete-api-subcategory-delete
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Subcategory deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/context/create:
+    post:
+      tags:
+        - Context
+      summary: Create context
+      description: Create the context for a list of given avatars
+      operationId: post-api-context-create
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                avatars:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: Context created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/social_content/create:
+    post:
+      tags:
+        - Social content
+      summary: Create post
+      description: 'Allow the user to post content to the avatar''s account '
+      operationId: post-api-socail_content-create
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostForm'
+      responses:
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Avatar or social account not found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '200':
+          description: Post created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/social_content/update:
+    put:
+      tags:
+        - Social content
+      summary: Update post
+      description: |-
+        Allow the update of the content of a post done by an avatar
+        In working process
+      operationId: put-api-social_content-update
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostUpdateForm'
+      responses:
+        '200':
+          description: Post updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/social_content/delete:
+    delete:
+      tags:
+        - Social content
+      summary: Delete post
+      description: Allow the deletion of a post created by an avatar
+      operationId: delete-api-social_content-delete
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: post_api_id
+          in: query
+          description: id of the post to delete
+          schema:
+            type: string
+        - name: id_avatar
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Post deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/social_content/bulkDelete:
+    delete:
+      tags:
+        - Social content
+      summary: Delete posts
+      description: Allow the deletion of the post given
+      operationId: delete-api-social_content-bulkDelete
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id_avatar
+          in: query
+          schema:
+            type: string
+      requestBody:
+        description: Send an array of string with the id returned from the rrss where the post where post
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                posts:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Posts deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/social_content/findAll:
+    get:
+      tags:
+        - Social content
+      summary: Find posts
+      description: |-
+        Retrives all the post of the avatar
+        In working progress
+      operationId: get-api-social_content-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id_avatar
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Posts found
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/social_content/findOne:
+    get:
+      tags:
+        - Social content
+      summary: Find one post
+      description: |-
+        Retrieve the information of one post created by an avatar
+        In working progress
+      operationId: get-api-social_content-findOne
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Post retrieved
+        '400':
+          description: Bad Request. Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/social_content/findByAvatar:
+    get:
+      tags:
+        - Social content
+      summary: Find posts by avatar
+      description: Get the post created by an avatar in the given rrss
+      operationId: get-api-social_content-findByAvatar
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id_avatar
+          in: query
+          schema:
+            type: string
+        - name: id_rrss
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Posts retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Posts'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/social_account/findAll:
+    get:
+      tags:
+        - Social account
+      summary: Find all social accounts
+      description: Get all of the social accounts registered in the system
+      operationId: get-api-social_account-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Social accounts retrived
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    avatars:
+                      type: array
+                    rrss:
+                      type: array
+                    subcategories:
+                      type: array
+                      items:
+                        $ref: '#/%24defs/Tag_subcategory'
+                    categories:
+                      type: array
+                      items:
+                        $ref: '#/%24defs/Tag_category'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/social_account/findOne:
+    get:
+      tags:
+        - Social account
+      summary: Find one social account
+      description: Retrieve the information of one social account
+      operationId: get-api-social_account-findOne
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Social account retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  avatars:
+                    type: array
+                  rrss:
+                    type: array
+                  subcategories:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tag_subcategory'
+                  categories:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tag_category'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/social_account/update:
+    put:
+      tags:
+        - Social account
+      summary: Update social account
+      description: 'Update an existing social account '
+      operationId: put-api-social_account-update
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                social_account:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    rrss:
+                      type: array
+                      items:
+                        type: integer
+                    avatar_subcategories:
+                      type: array
+                      items:
+                        $ref: '#/%24defs/avatarSubcategoriesForm'
+      responses:
+        '200':
+          description: Relations updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/social_account/delete:
+    delete:
+      tags:
+        - Social account
+      summary: Delete social account
+      description: Delete an existing relation account
+      operationId: delete-api-social_account-delete
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Relation deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/rrss/findAll:
+    get:
+      tags:
+        - rrss
+      summary: Find all rrss
+      description: Get all of the rrss registerd in the system
+      operationId: get-api-rrss-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Rrss found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/rrss'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/religion/findAll:
+    get:
+      tags:
+        - religion
+      summary: Find all religions
+      description: Get all of the religions stored in the system
+      operationId: get-api-religion-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Religions found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/religion'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/relation_subcategory_user/findAll:
+    get:
+      tags:
+        - Relation subcategory user
+      summary: Find all relations
+      description: Get all of the relations between the subcategories and the users
+      operationId: get-api-relation_subcategory_user-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Relations retrieve
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/subcatUser'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/relation/findAll:
+    get:
+      tags:
+        - Relation subcategory avatar rrss
+      summary: Find all rrss relations
+      description: 'Get all of the relations between the avatars, the rrss and the social accounts'
+      operationId: get-api-relation-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Relations retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/relationRrssAvatar'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/relation/create:
+    post:
+      tags:
+        - Relation subcategory avatar rrss
+      summary: Create relation
+      description: Create the relation between the avatars and the social accounts registered in the system
+      operationId: post-api-relation-create
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/relationRrssAvatarForm'
+      responses:
+        '200':
+          description: Relation created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/socialAccount'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/monitoring/getPostsHistory:
+    get:
+      tags:
+        - Monitoring
+      summary: Get Post history
+      description: Get the history of the posts created by an avatar
+      operationId: get-api-monitoring-getPostsHistory
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id_avatar
+          in: query
+          schema:
+            type: string
+        - name: id_rrss
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/history'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/ideology/findAll:
+    get:
+      tags:
+        - Ideology
+      summary: Find all ideologies
+      description: Get all of the ideologies that are stored in the system
+      operationId: get-api-ideology-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/religion'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/avatar/create:
+    post:
+      tags:
+        - Avatar
+      summary: Create avatar
+      description: Allow the user to create an avatar
+      operationId: post-api-avatar-create
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/avatarsForm'
+      responses:
+        '200':
+          description: Avatar created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  captcha:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/avatar/findAll:
+    get:
+      tags:
+        - Avatar
+      summary: Find all avatars
+      description: Get all of the avatars created in the system
+      operationId: get-api-avatar-findAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  avatars:
+                    $ref: '#/components/schemas/avatar'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/avatar/findOne:
+    get:
+      tags:
+        - Avatar
+      summary: Find one avatar
+      description: Retrieve the information of the avatar given
+      operationId: get-api-avatar-findOne
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          schema:
+            type: string
+      requestBody:
+        content: {}
+      responses:
+        '200':
+          description: Avatar found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/avatar'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/avatar/findByUser:
+    get:
+      tags:
+        - Avatar
+      summary: Find avatars by user
+      description: find the avatars linked to the given user
+      operationId: get-api-avatar-findByUser
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id_user
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Avatars found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/avatar'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/avatar/update:
+    put:
+      tags:
+        - Avatar
+      summary: Update avatar
+      description: Update the information of the given avatar
+      operationId: get-api-avatar-update
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                avatar:
+                  $ref: '#/components/schemas/avatarsForm'
+                id_user:
+                  type: integer
+                id_avatar:
+                  type: integer
+                social_network_auth:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id_rrss:
+                        type: integer
+                      username:
+                        type: string
+                      password:
+                        type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/avatar/delete:
+    delete:
+      tags:
+        - Avatar
+      summary: Delete avatar
+      description: Delete from the sytem the avatar given
+      operationId: get-api-avatar-delete
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+        - name: id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/avatar/deleteAll:
+    delete:
+      tags:
+        - Avatar
+      summary: Delete all avatars
+      description: Delete all of the avatars in the system
+      operationId: delete-api-avatar-deleteAll
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/avatar/filterAvatar:
+    post:
+      tags:
+        - Avatar
+      summary: Filter avatars
+      description: Filter the avatars with some of the parameters that defined the avatar
+      operationId: post-api-avatar-filterAvatar
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids_rrrss:
+                  type: array
+                  items:
+                    type: integer
+                ids_ideology:
+                  type: array
+                  items:
+                    type: integer
+                ids_religion:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: Avatars found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/avatar'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/avatar/receiveCaptcha:
+    post:
+      tags:
+        - Avatar
+      summary: Receive captcha
+      description: ' Temporal endpoint to recieve the captcha'
+      operationId: post-api-avatar-receiveCaptcha
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                captcha_data:
+                  type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  captcha_data:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/avatar/updateOperationMode:
+    put:
+      tags:
+        - Avatar
+      summary: Update operation mode
+      description: Update the given avatar with the given operation mode
+      operationId: put-api-avatar-updateOperationMode
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                avatar:
+                  $ref: '#/components/schemas/avatarsForm'
+                id_avatar:
+                  type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/avatar/filterBySubcategory:
+    get:
+      tags:
+        - Avatar
+      summary: Filter by subcategory
+      description: Filters the existing avatar by the subcategories that have linked
+      operationId: get-api-avatar-filterBySubcategory
+      parameters:
+        - name: x-access-token
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subcategories:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: Avatars found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/avatar'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+tags:
+  - name: activity
+  - name: Avatar
+  - name: Context
+  - name: Ideology
+  - name: Monitoring
+  - name: Relation subcategory user
+  - name: religion
+  - name: rrss
+  - name: Social account
+  - name: Social content
+  - name: subcategory
+  - name: Tags
+  - name: Task
+  - name: user
+components:
+  schemas:
+    UserSignUpForm:
+      type: object
+      title: UserSignUpForm
+      properties:
+        name:
+          type: string
+        active:
+          type: boolean
+        surname:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      x-stoplight:
+        id: ji0oh2nkq797d
+    User:
+      type: object
+      title: User
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        access_token:
+          type: string
+        role:
+          type: string
+      x-stoplight:
+        id: 45q3vnk6xlfz6
+    Error:
+      type: object
+      title: Error
+      properties:
+        message:
+          type: string
+      x-stoplight:
+        id: gw1eup1dzs65l
+    UserLoginForm:
+      type: object
+      title: UserLoginForm
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      x-stoplight:
+        id: hdxvawrglysdu
+    UserUpdate:
+      type: object
+      title: UserUpdate
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+      x-stoplight:
+        id: 28qsktbjtdkd2
+    updatePasswordForm:
+      type: object
+      title: updatePasswordForm
+      properties:
+        token:
+          type: string
+        password:
+          type: string
+      x-stoplight:
+        id: 6r5mf9fl5ylas
+    Task:
+      type: object
+      title: Task
+      properties:
+        task_id:
+          type: string
+        name:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          pattern: 'YYYY-MM-DD HH:mm:ss'
+        finished_at:
+          type: string
+        status:
+          type: string
+        method:
+          type: string
+        service:
+          type: string
+        url:
+          type: string
+        params:
+          type: object
+        result:
+          type: object
+        retries:
+          type: integer
+        error:
+          type: string
+        id_avatar:
+          type: integer
+        priority:
+          type: integer
+      x-stoplight:
+        id: d4k22ieqw9eoz
+    Tag_subcategoryForm:
+      type: object
+      title: Tag_subcategoryForm
+      properties:
+        text:
+          type: string
+        keyword_related:
+          type: string
+      x-stoplight:
+        id: 24qbo9gxipnc5
+    Tag_category:
+      type: object
+      title: Tag_category
+      properties:
+        id:
+          type: integer
+        created_at:
+          type: string
+          format: date
+        text:
+          type: string
+        color:
+          type: string
+      x-stoplight:
+        id: 2r00neyty0zad
+    Tag_subcategory:
+      type: object
+      title: Tag_subcategory
+      properties:
+        id:
+          type: integer
+        created_at:
+          type: string
+        text:
+          type: string
+        keyword_related:
+          type: string
+        id_tag_category:
+          type: string
+      x-stoplight:
+        id: 4dr2t1tn0u0a4
+    PostForm:
+      type: object
+      title: PostForm
+      properties:
+        id_avatar:
+          type: integer
+        posts:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+        id_rrss:
+          type: integer
+      x-stoplight:
+        id: mpizjbz52aboj
+    PostUpdateForm:
+      type: object
+      title: PostUpdateForm
+      properties:
+        id:
+          type: integer
+        id_avatar:
+          type: integer
+        id_rrss:
+          type: integer
+        content:
+          type: string
+      x-stoplight:
+        id: o04ve3al3ri0q
+    Posts:
+      type: array
+      title: Posts
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+          content:
+            type: string
+          created_at:
+            type: string
+      x-stoplight:
+        id: fk4fyjqiki6sf
+    avatarSubcategoriesForm:
+      type: object
+      title: avatarSubcategoriesForm
+      properties:
+        id_avatar:
+          type: integer
+        id_subcategory:
+          type: integer
+      x-stoplight:
+        id: nodvyf4q1vith
+    rrss:
+      type: object
+      title: rrss
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      x-stoplight:
+        id: le7jdm1z62q2u
+    religion:
+      type: object
+      title: religion
+      properties:
+        id:
+          type: integer
+        created_at:
+          type: string
+        name:
+          type: string
+      x-stoplight:
+        id: mnansi5a46278
+    subcatUser:
+      type: object
+      title: subcatUser
+      properties:
+        id:
+          type: integer
+        created_at:
+          type: string
+        id_tag_subcategory:
+          type: integer
+        id_user:
+          type: integer
+      x-stoplight:
+        id: lozsg6vvp0lpn
+    relationRrssAvatar:
+      type: object
+      title: relationRrssAvatar
+      properties:
+        id:
+          type: string
+        created_at:
+          type: string
+        id_rrss:
+          type: integer
+        id_social_account:
+          type: integer
+        id_relation_subcategory_avatar:
+          type: integer
+      x-stoplight:
+        id: h685uph0hdmw9
+    relationRrssAvatarForm:
+      type: object
+      title: relationRrssAvatarForm
+      properties:
+        relation:
+          type: object
+          properties:
+            social_accounts:
+              type: array
+              items:
+                type: string
+            avatar_subcategories:
+              type: array
+              items:
+                $ref: '#/components/schemas/avatarSubcategoriesForm'
+            rrss:
+              type: array
+              items:
+                type: integer
+      x-stoplight:
+        id: iwnjvdsgayfaz
+    socialAccount:
+      type: object
+      title: socialAccount
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      x-stoplight:
+        id: 414oxmvgbtauu
+    history:
+      type: object
+      title: history
+      properties:
+        date:
+          type: string
+        value:
+          type: integer
+      x-stoplight:
+        id: tmzanyk4xk0zv
+    avatarsForm:
+      type: object
+      title: avatarsForm
+      properties:
+        id_user:
+          type: string
+        avatar:
+          type: object
+          properties:
+            name:
+              type: string
+            nickname:
+              type: string
+            email:
+              type: string
+            address:
+              type: string
+            formation:
+              type: string
+            ocupation:
+              type: string
+            id_idelogy:
+              type: string
+            id_religion:
+              type: string
+            personality:
+              type: string
+            hobbies:
+              type: string
+            others:
+              type: string
+            tagas:
+              type: string
+            subcategories:
+              type: string
+        social_network_auth:
+          type: array
+          items:
+            type: object
+            properties:
+              id_rrss:
+                type: string
+              username:
+                type: string
+              password:
+                type: string
+      x-stoplight:
+        id: cda5hyx4h8hkq
+    avatar:
+      type: object
+      title: avatar
+      properties:
+        id:
+          type: integer
+        created_at:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
+        formation:
+          type: string
+        ocupation:
+          type: string
+        hobbites:
+          type: string
+        others:
+          type: string
+        id_user:
+          type: integer
+        tags:
+          type: string
+        is_automatic:
+          type: boolean
+        personality:
+          type: integer
+        id_ideology:
+          type: integer
+        id_religion:
+          type: integer
+        email:
+          type: string
+        nickname:
+          type: string
+        operation_mode:
+          type: string
+        status:
+          type: string
+      x-stoplight:
+        id: 6mpxyfl5j373a
