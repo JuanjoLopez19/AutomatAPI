@@ -40,9 +40,7 @@
   "paths": {
     "/api/auth/signin": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Validate an user",
         "operationId": "post-auth-signin",
         "responses": {
@@ -240,9 +238,7 @@
     },
     "/api/auth/signup": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Create New User",
         "operationId": "post-user",
         "responses": {
@@ -338,9 +334,7 @@
     },
     "/api/auth/signout": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Log out an user",
         "operationId": "post-api-auth-logout",
         "responses": {
@@ -397,9 +391,7 @@
     },
     "/api/auth/remember_password": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Remember password",
         "operationId": "getapi-auth-remember_password",
         "responses": {
@@ -630,9 +622,7 @@
             }
           }
         },
-        "tags": [
-          "Auth"
-        ]
+        "tags": ["Auth"]
       },
       "parameters": []
     },
@@ -746,9 +736,7 @@
             }
           }
         },
-        "tags": [
-          "Auth"
-        ]
+        "tags": ["Auth"]
       },
       "parameters": []
     },
@@ -849,9 +837,7 @@
             }
           }
         },
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "description": "Endpoint that complete the register when a user choose to register with Google or Github",
         "parameters": [
           {
@@ -895,11 +881,7 @@
                     }
                   }
                 },
-                "required": [
-                  "username",
-                  "password",
-                  "access_token"
-                ]
+                "required": ["username", "password", "access_token"]
               }
             }
           },
@@ -910,9 +892,7 @@
     "/api/auth/authorize": {
       "get": {
         "summary": "Guard endpoint",
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "responses": {
           "200": {
             "description": "The token is valid",
@@ -987,9 +967,7 @@
     "/api/auth/generate_session": {
       "get": {
         "summary": "Generate session",
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "responses": {
           "200": {
             "description": "Jwt valid and generate a the data from the requested user",
@@ -1100,9 +1078,7 @@
     "/api/users/": {
       "get": {
         "summary": "Retreive users",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "responses": {
           "200": {
             "description": "OK",
@@ -1333,9 +1309,7 @@
             }
           }
         },
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "Endpoint to edit the account requested by the account's owner",
         "parameters": [
           {
@@ -1455,9 +1429,7 @@
             }
           }
         },
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "Endpoint to change the password requested by the account's owner",
         "parameters": [
           {
@@ -1580,9 +1552,7 @@
             }
           }
         },
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "Endpoint to delete an account requested by the account's owner",
         "parameters": [
           {
@@ -1712,9 +1682,7 @@
             }
           }
         },
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "Endpoint to edit the account requested by an admin",
         "parameters": [
           {
@@ -1841,9 +1809,7 @@
             }
           }
         },
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "Endpoint to change the password requested by and admin",
         "parameters": [
           {
@@ -2002,9 +1968,7 @@
             }
           }
         },
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "Delete an user from an admin account",
         "parameters": [
           {
@@ -2038,9 +2002,7 @@
     "/api/users/getUserInfo": {
       "get": {
         "summary": "Get user info",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "responses": {
           "200": {
             "description": "OK",
@@ -2155,9 +2117,7 @@
     "/api/templates/": {
       "get": {
         "summary": "Retrieves templates",
-        "tags": [
-          "Templates"
-        ],
+        "tags": ["Templates"],
         "responses": {
           "200": {
             "description": "OK",
@@ -2171,9 +2131,7 @@
                     "value": {
                       "message": "T_SUCCESS",
                       "status": 200,
-                      "data": [
-                        {}
-                      ]
+                      "data": [{}]
                     }
                   }
                 }
@@ -2351,9 +2309,7 @@
             }
           }
         },
-        "tags": [
-          "Templates"
-        ],
+        "tags": ["Templates"],
         "description": "Endpoint that creates a flask template for the requester user",
         "parameters": [
           {
@@ -2404,11 +2360,7 @@
                     "description": "In fact is the private key for the ssl"
                   }
                 },
-                "required": [
-                  "tech",
-                  "tech_type",
-                  "template_data"
-                ]
+                "required": ["tech", "tech_type", "template_data"]
               }
             }
           },
@@ -2504,9 +2456,7 @@
             }
           }
         },
-        "tags": [
-          "Templates"
-        ],
+        "tags": ["Templates"],
         "description": "Endpoint that creates a express template for the requester user",
         "parameters": [
           {
@@ -2557,11 +2507,7 @@
                     "description": "In fact is the private key for the ssl"
                   }
                 },
-                "required": [
-                  "tech",
-                  "tech_type",
-                  "template_data"
-                ]
+                "required": ["tech", "tech_type", "template_data"]
               }
             }
           },
@@ -2657,9 +2603,7 @@
             }
           }
         },
-        "tags": [
-          "Templates"
-        ],
+        "tags": ["Templates"],
         "description": "Endpoint that creates a django template for the requester user",
         "parameters": [
           {
@@ -2710,11 +2654,7 @@
                     "description": "In fact is the private key for the ssl"
                   }
                 },
-                "required": [
-                  "tech",
-                  "tech_type",
-                  "template_data"
-                ]
+                "required": ["tech", "tech_type", "template_data"]
               }
             }
           },
@@ -2809,9 +2749,7 @@
             }
           }
         },
-        "tags": [
-          "Templates"
-        ],
+        "tags": ["Templates"],
         "description": "Endpoint that allow the user to edit a template with the data given on the request body",
         "parameters": [
           {
@@ -2868,11 +2806,7 @@
                     }
                   }
                 },
-                "required": [
-                  "tech",
-                  "tech_type",
-                  "template_data"
-                ]
+                "required": ["tech", "tech_type", "template_data"]
               }
             }
           },
@@ -2990,9 +2924,7 @@
             }
           }
         },
-        "tags": [
-          "Templates"
-        ],
+        "tags": ["Templates"],
         "description": "Endoint that deletes the template that is owned by the requester user",
         "requestBody": {
           "content": {
@@ -3147,9 +3079,7 @@
             }
           }
         },
-        "tags": [
-          "Templates"
-        ],
+        "tags": ["Templates"],
         "description": "Endoint that deletes the template requested by an admin",
         "requestBody": {
           "content": {
@@ -3170,10 +3100,7 @@
                     }
                   }
                 },
-                "required": [
-                  "template_id",
-                  "user_id"
-                ]
+                "required": ["template_id", "user_id"]
               }
             }
           }
@@ -3271,9 +3198,7 @@
             }
           }
         },
-        "tags": [
-          "Templates"
-        ],
+        "tags": ["Templates"],
         "description": "Endpoint that retrieves the data from a template",
         "parameters": [
           {
@@ -3415,9 +3340,7 @@
             }
           }
         },
-        "tags": [
-          "Templates"
-        ],
+        "tags": ["Templates"],
         "description": "Endpoint that retrieves the token of the template to be downloaded from the s3",
         "requestBody": {
           "content": {
@@ -3442,9 +3365,7 @@
     "/api/templates/getTemplateStats": {
       "get": {
         "summary": "Retrieve the template count overall",
-        "tags": [
-          "Templates"
-        ],
+        "tags": ["Templates"],
         "responses": {
           "200": {
             "description": "OK",
@@ -3540,9 +3461,7 @@
     "/api/templates/getUserTemplateStats": {
       "get": {
         "summary": "Retrieve the template count overall",
-        "tags": [
-          "Templates"
-        ],
+        "tags": ["Templates"],
         "responses": {
           "200": {
             "description": "OK",
@@ -3741,10 +3660,7 @@
             }
           }
         },
-        "required": [
-          "message",
-          "status"
-        ],
+        "required": ["message", "status"],
         "description": "Response model is not a real model just for simplicity"
       }
     }
