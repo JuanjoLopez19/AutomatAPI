@@ -8,9 +8,8 @@ describe('FlaskTemplatesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FlaskTemplatesComponent ]
-    })
-    .compileComponents();
+      declarations: [FlaskTemplatesComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FlaskTemplatesComponent);
     component = fixture.componentInstance;

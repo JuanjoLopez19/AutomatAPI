@@ -59,8 +59,6 @@ export interface flaskBlueprintAux {
   list: any[];
 }
 
-
-
 export interface flaskBlueprint {
   name: string;
   endpoints: flaskEndpointTemplate[];

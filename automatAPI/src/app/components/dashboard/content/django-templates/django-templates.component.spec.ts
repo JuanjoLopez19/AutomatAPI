@@ -8,9 +8,8 @@ describe('DjangoTemplatesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DjangoTemplatesComponent ]
-    })
-    .compileComponents();
+      declarations: [DjangoTemplatesComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DjangoTemplatesComponent);
     component = fixture.componentInstance;

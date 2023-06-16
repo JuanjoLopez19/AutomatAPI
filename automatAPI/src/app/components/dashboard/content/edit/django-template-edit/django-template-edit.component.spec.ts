@@ -8,9 +8,8 @@ describe('DjangoTemplateEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DjangoTemplateEditComponent ]
-    })
-    .compileComponents();
+      declarations: [DjangoTemplateEditComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DjangoTemplateEditComponent);
     component = fixture.componentInstance;

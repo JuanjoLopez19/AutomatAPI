@@ -1,3 +1,1 @@
-export const environment:any = {
-
-};
+export const environment: any = {};

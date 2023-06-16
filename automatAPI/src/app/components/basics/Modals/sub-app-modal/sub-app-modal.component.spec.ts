@@ -8,9 +8,8 @@ describe('SubAppModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SubAppModalComponent ]
-    })
-    .compileComponents();
+      declarations: [SubAppModalComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SubAppModalComponent);
     component = fixture.componentInstance;

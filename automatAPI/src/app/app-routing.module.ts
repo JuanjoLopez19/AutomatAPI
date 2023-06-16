@@ -9,7 +9,6 @@ import { CompleteRegisterComponent } from './views/user-management/complete-regi
 import { LoginComponent } from './views/user-management/login/login.component';
 import { RegisterComponent } from './views/user-management/register/register.component';
 
-
 const routes: Routes = [
   {
     path: '',

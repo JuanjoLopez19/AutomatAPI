@@ -8,9 +8,8 @@ describe('ExpressTemplateEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ExpressTemplateEditComponent ]
-    })
-    .compileComponents();
+      declarations: [ExpressTemplateEditComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ExpressTemplateEditComponent);
     component = fixture.componentInstance;
