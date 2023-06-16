@@ -10,7 +10,7 @@ import { techType } from 'src/app/common/enums/enums';
 })
 export class TemplateCardComponent {
   @Input() template: templates = null;
-  @Input() numTemplates: number = 0;
+  @Input() numTemplates = 0;
   readonly techUse = techUse;
 
   getIcon(): string {

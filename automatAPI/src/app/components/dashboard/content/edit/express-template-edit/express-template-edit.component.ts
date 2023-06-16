@@ -4,6 +4,7 @@ import {
   Output,
   ViewChild,
   Input,
+  OnInit,
 } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
@@ -39,7 +40,7 @@ import { ManageTemplatesService } from 'src/app/api/templates/manageTemplates/ma
   templateUrl: './express-template-edit.component.html',
   styleUrls: ['./express-template-edit.component.scss'],
 })
-export class ExpressTemplateEditComponent {
+export class ExpressTemplateEditComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
 
   @Input() templateId: string = null;
@@ -49,10 +50,10 @@ export class ExpressTemplateEditComponent {
   @Output() changeView: EventEmitter<string> = new EventEmitter<string>();
   @Output() openSidenav: EventEmitter<void> = new EventEmitter<void>();
 
-  showDialog: boolean = false;
-  editMode: boolean = false;
-  loadingSpinner: boolean = false;
-  oldCerts: boolean = false;
+  showDialog = false;
+  editMode = false;
+  loadingSpinner = false;
+  oldCerts = false;
 
   expressServiceData: expressServices = null;
   expressWebAppData: expressWebApp = null;
@@ -60,9 +61,9 @@ export class ExpressTemplateEditComponent {
   private technology: techType = techType.express;
   techUseVar: techUse = techUse.services;
 
-  createTemp: string = 'no';
-  isLinear: boolean = true;
-  useControllers: boolean = false;
+  createTemp = 'no';
+  isLinear = true;
+  useControllers = false;
 
   basicFormGroup: FormGroup;
   apiConfigFormGroup: FormGroup;
@@ -74,12 +75,12 @@ export class ExpressTemplateEditComponent {
   dropdownItems3: dropdownParams[];
   dropdownItems4: dropdownParams[];
 
-  certFileName: string = 'T_CHOSE_CERT_FILE';
-  keyFileName: string = 'T_CHOSE_KEY_FILE';
-  iconCertFile: string = 'pi pi-upload';
-  iconKeyFile: string = 'pi pi-upload';
-  errorFileCert: boolean = false;
-  errorFileKey: boolean = false;
+  certFileName = 'T_CHOSE_CERT_FILE';
+  keyFileName = 'T_CHOSE_KEY_FILE';
+  iconCertFile = 'pi pi-upload';
+  iconKeyFile = 'pi pi-upload';
+  errorFileCert = false;
+  errorFileKey = false;
 
   endpointControllerList: expressEndpointTemplate[] = [];
 
@@ -87,12 +88,12 @@ export class ExpressTemplateEditComponent {
 
   endpointSelection: expressEndpointTemplate = null;
   controllerSelection: any = null;
-  controllerName: string = '';
+  controllerName = '';
 
   endpointList: expressEndpointTemplate[] = [];
 
-  invalidControllerName: boolean = false;
-  duplicatedControllerName: boolean = false;
+  invalidControllerName = false;
+  duplicatedControllerName = false;
 
   firstStepErrors: any = {
     app_name: {
@@ -526,12 +527,12 @@ export class ExpressTemplateEditComponent {
     this.openSidenav.emit();
   }
 
-  onEndpointAdded(event: expressEndpointTemplate, type: boolean = false) {
+  onEndpointAdded(event: expressEndpointTemplate, type = false) {
     if (type) this.endpointList.push(event);
     else this.endpointControllerList.push(event);
   }
 
-  onEndpointEdited(event: expressEndpointTemplate, type: boolean = false) {
+  onEndpointEdited(event: expressEndpointTemplate, type = false) {
     if (type) {
       this.endpointList = this.endpointList.map((endpoint) => {
         if (endpoint.endpoint_name === event.endpoint_name) {
@@ -552,7 +553,7 @@ export class ExpressTemplateEditComponent {
     this.endpointSelection = null;
   }
 
-  deleteEndpoint(type: boolean = false) {
+  deleteEndpoint(type = false) {
     if (type) {
       this.endpointList = this.endpointList.filter(
         (endpoint) => endpoint !== this.endpointSelection
@@ -621,7 +622,7 @@ export class ExpressTemplateEditComponent {
     this.duplicatedControllerName = false;
   }
 
-  getEndpointNameList(type: boolean = false) {
+  getEndpointNameList(type = false) {
     if (type)
       return this.endpointList.map((endpoint) => endpoint.endpoint_name);
     else
@@ -630,7 +631,7 @@ export class ExpressTemplateEditComponent {
       );
   }
 
-  getEndpointUrlList(type: boolean = false) {
+  getEndpointUrlList(type = false) {
     if (type)
       return this.endpointList.map((endpoint) =>
         endpoint.endpoint_url.split('/').pop()
@@ -845,11 +846,11 @@ export class ExpressTemplateEditComponent {
     const aux: any = controllers.reduce((result: any, { name, endpoints }) => {
       result[name] = endpoints;
       return result;
-    }, {}) as Object;
+    }, {}) as object;
 
     const aux2: any[] = [];
-    for (let key in aux) {
-      let obj = { [key]: aux[key] };
+    for (const key in aux) {
+      const obj = { [key]: aux[key] };
       aux2.push(obj);
     }
 

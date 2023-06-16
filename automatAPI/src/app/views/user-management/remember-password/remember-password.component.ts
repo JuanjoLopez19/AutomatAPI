@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -8,20 +8,20 @@ import {
   httpResponse,
   rememberPasswordParams,
 } from 'src/app/common/interfaces/interfaces';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-remember-password',
   templateUrl: './remember-password.component.html',
   styleUrls: ['./remember-password.component.scss'],
 })
-export class RememberPasswordComponent {
+export class RememberPasswordComponent implements OnInit {
   remPasswordForm: FormGroup;
   params: rememberPasswordParams;
   readonly sizes: typeof Sizes = Sizes;
   currentSize!: string;
-  waitingState: boolean = false;
-  showDialog: boolean = false;
+  waitingState = false;
+  showDialog = false;
   statusCode: number;
   message: string;
 
@@ -119,7 +119,7 @@ export class RememberPasswordComponent {
     }
   }
 
-  manageHide(event: boolean) {
+  manageHide() {
     this.showDialog = false;
     this.router.navigate([''], { state: { active: 'sign_in' } });
   }

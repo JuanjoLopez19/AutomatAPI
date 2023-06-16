@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/api/auth/auth/auth.service';
 import { Sizes } from 'src/app/common/enums/enums';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { httpResponse } from 'src/app/common/interfaces/interfaces';
 
 @Component({
@@ -15,10 +15,10 @@ export class ActivateUserComponent implements OnInit {
   private token: string = undefined;
   readonly sizes: typeof Sizes = Sizes;
 
-  waitingState: boolean = false;
+  waitingState = false;
   currentSize!: string;
 
-  showDialog: boolean = false;
+  showDialog = false;
   statusCode: number;
   message: string;
   constructor(
@@ -94,7 +94,7 @@ export class ActivateUserComponent implements OnInit {
     });
   }
 
-  manageHide(event: boolean) {
+  manageHide() {
     this.showDialog = false;
     this.router.navigate(['']);
   }

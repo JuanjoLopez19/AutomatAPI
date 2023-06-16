@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -38,7 +39,7 @@ import { MatStepper } from '@angular/material/stepper';
   templateUrl: './django-template-edit.component.html',
   styleUrls: ['./django-template-edit.component.scss'],
 })
-export class DjangoTemplateEditComponent {
+export class DjangoTemplateEditComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
   @Input() templateId: string = null;
   @Input() userId: string = null;
@@ -52,8 +53,8 @@ export class DjangoTemplateEditComponent {
   techType: techUse = techUse.services;
   techUseVar: techUse = techUse.services;
 
-  createTemp: string = 'no';
-  oldCerts: boolean = false;
+  createTemp = 'no';
+  oldCerts = false;
 
   djangoServiceData!: djangoServices;
   djangoWebAppData!: djangoWebApp;
@@ -67,22 +68,22 @@ export class DjangoTemplateEditComponent {
   dropdownItems2: dropdownParams[];
   dropdownItems3: dropdownParams[];
 
-  certFileName: string = 'T_CHOSE_CERT_FILE';
-  keyFileName: string = 'T_CHOSE_KEY_FILE';
-  iconCertFile: string = 'pi pi-upload';
-  iconKeyFile: string = 'pi pi-upload';
-  errorFileCert: boolean = false;
-  errorFileKey: boolean = false;
+  certFileName = 'T_CHOSE_CERT_FILE';
+  keyFileName = 'T_CHOSE_KEY_FILE';
+  iconCertFile = 'pi pi-upload';
+  iconKeyFile = 'pi pi-upload';
+  errorFileCert = false;
+  errorFileKey = false;
 
-  showModelModal: boolean = false;
-  editModeModel: boolean = false;
+  showModelModal = false;
+  editModeModel = false;
 
-  showSubAppModal: boolean = false;
-  editModeSubApp: boolean = false;
+  showSubAppModal = false;
+  editModeSubApp = false;
 
-  showDialog: boolean = false;
-  editMode: boolean = false;
-  loadingSpinner: boolean = false;
+  showDialog = false;
+  editMode = false;
+  loadingSpinner = false;
 
   firstStepErrors: any = {
     app_name: {
@@ -627,11 +628,11 @@ export class DjangoTemplateEditComponent {
     );
   }
 
-  onEndpointAdded(event: djangoEndpointTemplate, type: boolean = false) {
+  onEndpointAdded(event: djangoEndpointTemplate) {
     this.endpointList.push(event);
   }
 
-  onEndpointEdited(event: djangoEndpointTemplate, type: boolean = false) {
+  onEndpointEdited(event: djangoEndpointTemplate) {
     this.endpointList = this.endpointList.map((endpoint) => {
       if (endpoint.endpoint_name === event.endpoint_name) {
         return event;
@@ -831,8 +832,8 @@ export class DjangoTemplateEditComponent {
     }, {});
 
     const aux2: any[] = [];
-    for (let key in aux) {
-      let obj = { [key]: aux[key] };
+    for (const key in aux) {
+      const obj = { [key]: aux[key] };
       aux2.push(obj);
     }
 
@@ -857,8 +858,8 @@ export class DjangoTemplateEditComponent {
     }, {});
 
     const aux2: any[] = [];
-    for (let key in aux) {
-      let obj = { [key]: aux[key] };
+    for (const key in aux) {
+      const obj = { [key]: aux[key] };
       aux2.push(obj);
     }
 

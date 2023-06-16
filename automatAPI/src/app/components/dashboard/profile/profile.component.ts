@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ManageTemplatesService } from 'src/app/api/templates/manageTemplates/manage-templates.service';
 import {
   httpResponse,
@@ -16,14 +16,14 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./profile.component.scss'],
   providers: [ConfirmationService],
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
   @Input() user: userParams;
   @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
   @Output() openSidenav: EventEmitter<void> = new EventEmitter<void>();
   @Output() userEdited: EventEmitter<userParams> =
     new EventEmitter<userParams>();
 
-  showDialog: boolean = false;
+  showDialog = false;
   letter: string;
   templates: templatesStats = null;
 
@@ -62,7 +62,7 @@ export class ProfileComponent {
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
           this.userService.deleteAccount().subscribe({
-            next: (data: httpResponse) => {
+            next: () => {
               this.router.navigate(['/']);
             },
             error: (err: httpResponse) => {
@@ -72,7 +72,9 @@ export class ProfileComponent {
             },
           });
         },
-        reject: () => {},
+        reject: () => {
+          return;
+        },
       });
     });
   }

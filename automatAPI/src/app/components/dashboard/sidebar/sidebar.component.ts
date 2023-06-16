@@ -6,9 +6,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent {
-  @Input() activeTab: string = 'home';
-  @Input() isAdmin: boolean = false;
-  state: number = -1;
+  @Input() activeTab = 'home';
+  @Input() isAdmin = false;
+  state = -1;
 
   @Output() activeTabChange: EventEmitter<string> = new EventEmitter<string>();
 
@@ -27,7 +27,7 @@ export class SidebarComponent {
     this.activeTabChange.emit(this.activeTab);
   }
 
-  toggleActiveHeader(flag: boolean = false) {
+  toggleActiveHeader(flag = false) {
     if (!flag) this.activeTab = '';
     const target = document.getElementsByName('header');
     const targets = document.getElementsByName('text');

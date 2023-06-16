@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { TranslateService } from '@ngx-translate/core';
@@ -30,23 +36,23 @@ import { Router } from '@angular/router';
   templateUrl: './express-templates.component.html',
   styleUrls: ['./express-templates.component.scss'],
 })
-export class ExpressTemplatesComponent {
+export class ExpressTemplatesComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
 
   @Output() closeSidenav: EventEmitter<void> = new EventEmitter<void>();
   @Output() changeView: EventEmitter<string> = new EventEmitter<string>();
   @Output() openSidenav: EventEmitter<void> = new EventEmitter<void>();
 
-  showDialog: boolean = false;
-  editMode: boolean = false;
-  loading: boolean = false;
+  showDialog = false;
+  editMode = false;
+  loading = false;
 
   expressServiceData!: expressServices;
   expressWebAppData!: expressWebApp;
 
   private technology: techType = techType.express;
-  isLinear: boolean = true;
-  useControllers: boolean = false;
+  isLinear = true;
+  useControllers = false;
   basicFormGroup: FormGroup;
   apiConfigFormGroup: FormGroup;
   controllersFormGroup: FormGroup;
@@ -57,12 +63,12 @@ export class ExpressTemplatesComponent {
   dropdownItems3: dropdownParams[];
   dropdownItems4: dropdownParams[];
 
-  certFileName: string = 'T_CHOSE_CERT_FILE';
-  keyFileName: string = 'T_CHOSE_KEY_FILE';
-  iconCertFile: string = 'pi pi-upload';
-  iconKeyFile: string = 'pi pi-upload';
-  errorFileCert: boolean = false;
-  errorFileKey: boolean = false;
+  certFileName = 'T_CHOSE_CERT_FILE';
+  keyFileName = 'T_CHOSE_KEY_FILE';
+  iconCertFile = 'pi pi-upload';
+  iconKeyFile = 'pi pi-upload';
+  errorFileCert = false;
+  errorFileKey = false;
 
   endpointControllerList: expressEndpointTemplate[] = [];
 
@@ -70,12 +76,12 @@ export class ExpressTemplatesComponent {
 
   endpointSelection: expressEndpointTemplate = null;
   controllerSelection: any = null;
-  controllerName: string = '';
+  controllerName = '';
 
   endpointList: expressEndpointTemplate[] = [];
 
-  invalidControllerName: boolean = false;
-  duplicatedControllerName: boolean = false;
+  invalidControllerName = false;
+  duplicatedControllerName = false;
 
   firstStepErrors: any = {
     app_name: {
@@ -366,12 +372,12 @@ export class ExpressTemplatesComponent {
     this.openSidenav.emit();
   }
 
-  onEndpointAdded(event: expressEndpointTemplate, type: boolean = false) {
+  onEndpointAdded(event: expressEndpointTemplate, type = false) {
     if (type) this.endpointList.push(event);
     else this.endpointControllerList.push(event);
   }
 
-  onEndpointEdited(event: expressEndpointTemplate, type: boolean = false) {
+  onEndpointEdited(event: expressEndpointTemplate, type = false) {
     if (type) {
       this.endpointList = this.endpointList.map((endpoint) => {
         if (endpoint.endpoint_name === event.endpoint_name) {
@@ -392,7 +398,7 @@ export class ExpressTemplatesComponent {
     this.endpointSelection = null;
   }
 
-  deleteEndpoint(type: boolean = false) {
+  deleteEndpoint(type = false) {
     if (type) {
       this.endpointList = this.endpointList.filter(
         (endpoint) => endpoint !== this.endpointSelection
@@ -461,7 +467,7 @@ export class ExpressTemplatesComponent {
     this.duplicatedControllerName = false;
   }
 
-  getEndpointNameList(type: boolean = false) {
+  getEndpointNameList(type = false) {
     if (type)
       return this.endpointList.map((endpoint) => endpoint.endpoint_name);
     else
@@ -470,7 +476,7 @@ export class ExpressTemplatesComponent {
       );
   }
 
-  getEndpointUrlList(type: boolean = false) {
+  getEndpointUrlList(type = false) {
     if (type)
       return this.endpointList.map((endpoint) =>
         endpoint.endpoint_url.split('/').pop()
@@ -657,11 +663,11 @@ export class ExpressTemplatesComponent {
     const aux: any = controllers.reduce((result: any, { name, endpoints }) => {
       result[name] = endpoints;
       return result;
-    }, {}) as Object;
+    }, {}) as object;
 
     const aux2: any[] = [];
-    for (let key in aux) {
-      let obj = { [key]: aux[key] };
+    for (const key in aux) {
+      const obj = { [key]: aux[key] };
       aux2.push(obj);
     }
 

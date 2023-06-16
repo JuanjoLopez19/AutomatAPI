@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ManageTemplatesService } from 'src/app/api/templates/manageTemplates/manage-templates.service';
 import { httpResponse, templates } from 'src/app/common/interfaces/interfaces';
 import { Router } from '@angular/router';
@@ -9,9 +9,9 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   @Input() username: string = null;
-  @Input() isAdmin: boolean = false;
+  @Input() isAdmin = false;
   @Output() changeViewEvent: EventEmitter<string> = new EventEmitter<string>();
   templates: templates[] = [];
 

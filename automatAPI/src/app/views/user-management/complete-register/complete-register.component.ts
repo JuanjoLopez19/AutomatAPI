@@ -1,38 +1,41 @@
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Component, HostListener } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/api/auth/auth/auth.service';
 import { passwordRegex, databaseRegEx } from 'src/app/common/constants';
 import { Sizes } from 'src/app/common/enums/enums';
-import { completeRegisterParams, httpResponse } from 'src/app/common/interfaces/interfaces';
+import {
+  completeRegisterParams,
+  httpResponse,
+} from 'src/app/common/interfaces/interfaces';
 
 @Component({
   selector: 'app-complete-register',
   templateUrl: './complete-register.component.html',
   styleUrls: ['./complete-register.component.scss'],
 })
-export class CompleteRegisterComponent {
+export class CompleteRegisterComponent implements OnInit {
   readonly sizes: typeof Sizes = Sizes;
 
-  token: string = '';
-  type: string = '';
+  token = '';
+  type = '';
 
   completeRegisterForm: FormGroup;
   params: completeRegisterParams;
 
   currentSize!: string;
-  waitingState: boolean = false;
+  waitingState = false;
 
-  showDialog: boolean = false;
+  showDialog = false;
   statusCode: number;
   message: string;
 
-  validUsername: boolean = false;
-  pwdValid: boolean = false;
-  pwdConfirmValid: boolean = false;
-  checkPwd: boolean = false;
+  validUsername = false;
+  pwdValid = false;
+  pwdConfirmValid = false;
+  checkPwd = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -157,7 +160,7 @@ export class CompleteRegisterComponent {
 
   validateUsername(): boolean {
     this.validUsername = false;
-    let result = databaseRegEx.test(this.completeRegisterForm.value.username);
+    const result = databaseRegEx.test(this.completeRegisterForm.value.username);
     if (!result) {
       this.validUsername = true;
     }
@@ -191,9 +194,9 @@ export class CompleteRegisterComponent {
     return result;
   }
 
-  manageHide(event: boolean) {
+  manageHide() {
     this.showDialog = false;
-    this.router.navigate([''], { state: { active: 'sign_in' } });
+    this.router.navigate(['']);
   }
 
   chooseQuote() {

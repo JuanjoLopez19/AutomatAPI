@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/env';
-import { techType } from 'src/app/common/enums/enums';
+
 import { techUse } from 'src/app/common/enums/enums';
 
 @Injectable({

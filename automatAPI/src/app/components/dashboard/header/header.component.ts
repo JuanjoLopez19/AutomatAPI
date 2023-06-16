@@ -1,4 +1,3 @@
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import {
   Component,
   EventEmitter,
@@ -6,6 +5,7 @@ import {
   OnInit,
   Output,
   ElementRef,
+  AfterViewInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -16,9 +16,9 @@ import { LogoutService } from 'src/app/api/auth/logout/logout.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
-  @Input() username: string = 'Username';
-  @Input() userImg: string = null; //'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png';
+export class HeaderComponent implements OnInit, AfterViewInit {
+  @Input() username = 'Username';
+  @Input() userImg: string = null;
   items: any[];
 
   @Output() navigateToProfile: EventEmitter<string> =
@@ -81,10 +81,10 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.logoutService.logout().subscribe({
-      next: (response: HttpResponse<any>) => {
+      next: () => {
         this.router.navigate(['']);
       },
-      error: (error: HttpErrorResponse) => {
+      error: () => {
         this.router.navigate(['']);
       },
     });

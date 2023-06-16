@@ -57,22 +57,22 @@ export class DjangoTemplatesComponent implements OnInit {
   dropdownItems2: dropdownParams[];
   dropdownItems3: dropdownParams[];
 
-  certFileName: string = 'T_CHOSE_CERT_FILE';
-  keyFileName: string = 'T_CHOSE_KEY_FILE';
-  iconCertFile: string = 'pi pi-upload';
-  iconKeyFile: string = 'pi pi-upload';
-  errorFileCert: boolean = false;
-  errorFileKey: boolean = false;
+  certFileName = 'T_CHOSE_CERT_FILE';
+  keyFileName = 'T_CHOSE_KEY_FILE';
+  iconCertFile = 'pi pi-upload';
+  iconKeyFile = 'pi pi-upload';
+  errorFileCert = false;
+  errorFileKey = false;
 
-  showModelModal: boolean = false;
-  editModeModel: boolean = false;
+  showModelModal = false;
+  editModeModel = false;
 
-  showSubAppModal: boolean = false;
-  editModeSubApp: boolean = false;
+  showSubAppModal = false;
+  editModeSubApp = false;
 
-  showDialog: boolean = false;
-  editMode: boolean = false;
-  loading: boolean = false;
+  showDialog = false;
+  editMode = false;
+  loading = false;
 
   firstStepErrors: any = {
     app_name: {
@@ -417,7 +417,7 @@ export class DjangoTemplatesComponent implements OnInit {
   }
 
   onAddSubApp(event: djangoSubAppServicesTemplate) {
-    console.log(event)
+    console.log(event);
     this.subAppsList.push(event);
   }
 
@@ -430,7 +430,7 @@ export class DjangoTemplatesComponent implements OnInit {
   }
 
   onAddSubAppWebApp(event: djangoSubAppWebAppTemplate) {
-    console.log(event)
+    console.log(event);
     this.subAppsListWebApp.push(event);
   }
 
@@ -480,11 +480,11 @@ export class DjangoTemplatesComponent implements OnInit {
     );
   }
 
-  onEndpointAdded(event: djangoEndpointTemplate, type: boolean = false) {
+  onEndpointAdded(event: djangoEndpointTemplate) {
     this.endpointList.push(event);
   }
 
-  onEndpointEdited(event: djangoEndpointTemplate, type: boolean = false) {
+  onEndpointEdited(event: djangoEndpointTemplate) {
     this.endpointList = this.endpointList.map((endpoint) => {
       if (endpoint.endpoint_name === event.endpoint_name) {
         return event;
@@ -657,8 +657,8 @@ export class DjangoTemplatesComponent implements OnInit {
     }, {});
 
     const aux2: any[] = [];
-    for (let key in aux) {
-      let obj = { [key]: aux[key] };
+    for (const key in aux) {
+      const obj = { [key]: aux[key] };
       aux2.push(obj);
     }
 
@@ -683,8 +683,8 @@ export class DjangoTemplatesComponent implements OnInit {
     }, {});
 
     const aux2: any[] = [];
-    for (let key in aux) {
-      let obj = { [key]: aux[key] };
+    for (const key in aux) {
+      const obj = { [key]: aux[key] };
       aux2.push(obj);
     }
 

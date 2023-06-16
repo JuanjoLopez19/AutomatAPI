@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/api/auth/auth/auth.service';
@@ -7,19 +7,19 @@ import { httpResponse } from 'src/app/common/interfaces/interfaces';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { environment } from 'src/environments/env';
 import { LoginService } from 'src/app/api/auth/login/login.service';
-import { HttpErrorResponse } from '@angular/common/http';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  waitingState: boolean = false;
+  waitingState = false;
   readonly sizes: typeof Sizes = Sizes;
   currentSize!: string;
   active: string;
-  icon: string = 'pi pi-send';
+  icon = 'pi pi-send';
   constructor(
     private router: Router,
     private translate: TranslateService,
@@ -74,7 +74,7 @@ export class LoginComponent {
     this.translate.use(language);
   }
 
-  onActiveChange(active: string) {
+  onActiveChange() {
     this.router.navigate(['register'], {});
   }
 
@@ -89,7 +89,9 @@ export class LoginComponent {
           state: { data: response.data },
         });
       },
-      error: (error) => {},
+      error: () => {
+        return;
+      },
     });
   }
 
@@ -106,7 +108,7 @@ export class LoginComponent {
             });
           }, 1500);
         },
-        error: (error: HttpErrorResponse) => {
+        error: () => {
           setTimeout(() => {
             this.waitingState = false;
             this.icon = 'pi pi-exclamation-triangle';

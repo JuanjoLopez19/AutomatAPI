@@ -1259,8 +1259,8 @@
                 [endpointNameList]="getEndpointNameList()"
                 [endpointUrlList]="getEndpointUrlList()"
                 (Hide)="onHideEndp()"
-                (endpointAddedDjango)="onEndpointAdded($event, true)"
-                (endpointEditedDjango)="onEndpointEdited($event, true)"
+                (endpointAddedDjango)="onEndpointAdded($event)"
+                (endpointEditedDjango)="onEndpointEdited($event)"
                 [type]="'django'"
               ></app-endpoint-modal>
               <div class="row pt-3">

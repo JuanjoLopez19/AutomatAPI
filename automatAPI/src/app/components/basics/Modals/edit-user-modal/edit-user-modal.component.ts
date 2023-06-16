@@ -1,11 +1,5 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ManageUsersService } from 'src/app/api/users/manageUsers/manage-users.service';
 import {
@@ -24,9 +18,9 @@ import {
   templateUrl: './edit-user-modal.component.html',
   styleUrls: ['./edit-user-modal.component.scss'],
 })
-export class EditUserModalComponent {
-  @Input() show: boolean = false;
-  @Input() adminMode: boolean = false;
+export class EditUserModalComponent implements OnInit {
+  @Input() show = false;
+  @Input() adminMode = false;
   @Input() userData: userParams = null;
 
   @Output() Hide: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -35,19 +29,19 @@ export class EditUserModalComponent {
   userFormGroup: FormGroup;
   passwordFormGroup: FormGroup;
 
-  passwordInvalid: boolean = false;
+  passwordInvalid = false;
 
-  accountError: boolean = false;
-  accountErrorMsg: string = '';
+  accountError = false;
+  accountErrorMsg = '';
 
-  passwordError: boolean = false;
-  passwordErrorMsg: string = '';
+  passwordError = false;
+  passwordErrorMsg = '';
 
-  successAccount: boolean = false;
-  successAccountMsg: string = '';
+  successAccount = false;
+  successAccountMsg = '';
 
-  successPassword: boolean = false;
-  successPasswordMsg: string = '';
+  successPassword = false;
+  successPasswordMsg = '';
 
   maxDate: Date = new Date();
 
@@ -224,7 +218,7 @@ export class EditUserModalComponent {
     }
   }
 
-  submitForm(type: boolean = false) {
+  submitForm(type = false) {
     if (type) {
       if (this.userFormGroup.valid) {
         if (!this.adminMode) {

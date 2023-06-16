@@ -19,7 +19,7 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe],
 })
 export class ManageTemplatesComponent implements OnInit {
-  @Input() isAdmin: boolean = false;
+  @Input() isAdmin = false;
   @Input() userId: string = null;
   @Output() editTemplate: EventEmitter<{
     id: number;
@@ -92,7 +92,7 @@ export class ManageTemplatesComponent implements OnInit {
     this.getTemplateData();
   }
 
-  filterTable(event: SubmitEvent) {
+  filterTable() {
     if (this.filterForm.invalid) return;
     const auxData: templates[] = [];
     this.backUpData.forEach((template) => {

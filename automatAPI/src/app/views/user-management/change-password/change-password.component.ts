@@ -4,8 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/api/auth/auth/auth.service';
 import { Sizes } from 'src/app/common/enums/enums';
-import { changePasswordParams, httpResponse } from 'src/app/common/interfaces/interfaces';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import {
+  changePasswordParams,
+  httpResponse,
+} from 'src/app/common/interfaces/interfaces';
+import { HttpErrorResponse } from '@angular/common/http';
 import { passwordRegex } from 'src/app/common/constants';
 
 @Component({
@@ -15,13 +18,13 @@ import { passwordRegex } from 'src/app/common/constants';
 })
 export class ChangePasswordComponent implements OnInit {
   params: changePasswordParams;
-  waitingState: boolean = false;
+  waitingState = false;
   changePasswordForm: FormGroup;
-  invalidPasswords: boolean = false;
+  invalidPasswords = false;
   private token: string = undefined;
   readonly sizes: typeof Sizes = Sizes;
   currentSize!: string;
-  showDialog: boolean = false;
+  showDialog = false;
   statusCode: number;
   message: string;
 
@@ -139,7 +142,7 @@ export class ChangePasswordComponent implements OnInit {
     });
   }
 
-  manageHide(event: boolean) {
+  manageHide() {
     this.showDialog = false;
     this.router.navigate([''], { state: { active: 'sign_in' } });
   }

@@ -18,14 +18,14 @@ import { dropdownParams } from 'src/app/common/interfaces/interfaces';
   styleUrls: ['./endpoint-modal.component.scss'],
 })
 export class EndpointModalComponent implements OnInit {
-  @Input() show: boolean = false;
-  @Input() editMode: boolean = false;
+  @Input() show = false;
+  @Input() editMode = false;
   @Input() endpointData: flaskEndpointTemplate = null;
   @Input() endpointDataExpress: expressEndpointTemplate = null;
   @Input() endpointDataDjango: djangoEndpointTemplate = null;
   @Input() endpointNameList: string[] = [];
   @Input() endpointUrlList: string[] = [];
-  @Input() type: string = 'flask';
+  @Input() type = 'flask';
 
   @Output() Hide: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -46,15 +46,15 @@ export class EndpointModalComponent implements OnInit {
 
   addEndpointFormControl: FormGroup;
 
-  duplicatedName: boolean = false;
-  validName: boolean = false;
-  validUrl: boolean = false;
-  noMethodChecked: boolean = false;
-  duplicatedUrl: boolean = false;
+  duplicatedName = false;
+  validName = false;
+  validUrl = false;
+  noMethodChecked = false;
+  duplicatedUrl = false;
 
   httpMethodSelector: dropdownParams[];
 
-  urlBackUp: string = '';
+  urlBackUp = '';
 
   constructor(private translate: TranslateService) {
     this.httpMethodSelector = [

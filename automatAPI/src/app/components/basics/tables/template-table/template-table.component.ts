@@ -15,7 +15,7 @@ export class TemplateTableComponent {
   @Input() templates: templates[] = null;
   @Output() refreshTable: EventEmitter<void> = new EventEmitter();
   @Output() unauthorized: EventEmitter<void> = new EventEmitter();
-  @Output() onEditTemplate: EventEmitter<{
+  @Output() EditTemplate: EventEmitter<{
     id: number;
     userId: number;
     technology: techType.django | techType.express | techType.flask;
@@ -42,7 +42,7 @@ export class TemplateTableComponent {
   }
 
   editTemplate(template: templates) {
-    this.onEditTemplate.emit({
+    this.EditTemplate.emit({
       id: Number(template.id),
       userId: Number(template.user_id),
       technology: template.technology,

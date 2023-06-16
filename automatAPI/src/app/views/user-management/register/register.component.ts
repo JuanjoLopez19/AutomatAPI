@@ -1,4 +1,10 @@
-import { Component, EventEmitter, HostListener, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/api/auth/auth/auth.service';
@@ -21,17 +27,17 @@ import { RegisterService } from 'src/app/api/auth/register/register.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   @Output() goToLogin: EventEmitter<string> = new EventEmitter<string>();
 
   registerForm: FormGroup;
 
-  waitingState: boolean = false;
-  invalidPasswords: boolean = false;
+  waitingState = false;
+  invalidPasswords = false;
 
   params: registerParams;
 
-  showDialog: boolean = false;
+  showDialog = false;
   statusCode: number;
   message: string;
 
@@ -113,7 +119,7 @@ export class RegisterComponent {
     this.translate.use(language);
   }
 
-  onActiveChange(active: string) {
+  onActiveChange() {
     this.router.navigate(['login']);
   }
 
@@ -132,11 +138,13 @@ export class RegisterComponent {
           state: { data: response.data },
         });
       },
-      error: (error) => {},
+      error: () => {
+        return;
+      },
     });
   }
 
-  OnRegisterSubmit(event: SubmitEvent): void {
+  OnRegisterSubmit(): void {
     if (this.registerForm.invalid) {
       return;
     } else {
@@ -167,7 +175,6 @@ export class RegisterComponent {
               this.message = response.message;
               this.showDialog = true;
             }, 1000);
-
           },
           error: (error: HttpErrorResponse) => {
             console.log(error);
@@ -177,14 +184,13 @@ export class RegisterComponent {
               this.message = error.error.message;
               this.showDialog = true;
             }, 1500);
-
           },
         });
       }
     }
   }
 
-  manageHide(event: boolean) {
+  manageHide() {
     this.showDialog = false;
     this.router.navigate(['login']);
   }

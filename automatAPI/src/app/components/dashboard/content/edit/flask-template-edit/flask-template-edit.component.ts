@@ -4,6 +4,7 @@ import {
   Output,
   ViewChild,
   Input,
+  OnInit,
 } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
@@ -38,7 +39,7 @@ import { ManageTemplatesService } from 'src/app/api/templates/manageTemplates/ma
   templateUrl: './flask-template-edit.component.html',
   styleUrls: ['./flask-template-edit.component.scss'],
 })
-export class FlaskTemplateEditComponent {
+export class FlaskTemplateEditComponent implements OnInit {
   @ViewChild('stepper') stepper: MatStepper;
 
   @Input() templateId: string = null;
@@ -48,9 +49,9 @@ export class FlaskTemplateEditComponent {
   @Output() changeView: EventEmitter<string> = new EventEmitter<string>();
   @Output() openSidenav: EventEmitter<void> = new EventEmitter<void>();
 
-  showDialog: boolean = false;
-  editMode: boolean = false;
-  loadingSpinner: boolean = false;
+  showDialog = false;
+  editMode = false;
+  loadingSpinner = false;
 
   flaskServicesData: flaskServices = null;
   flaskWebAppData: flaskWebApp = null;
@@ -58,11 +59,11 @@ export class FlaskTemplateEditComponent {
   private technology: techType = techType.flask;
   techUseVar: techUse = techUse.services;
 
-  createTemp: string = 'no';
-  isLinear: boolean = true;
-  oldCerts: boolean = false;
+  createTemp = 'no';
+  isLinear = true;
+  oldCerts = false;
 
-  useBlueprints: boolean = false;
+  useBlueprints = false;
   basicFormGroup: FormGroup;
   apiConfigFormGroup: FormGroup;
   blueprintsFormGroup: FormGroup;
@@ -72,12 +73,12 @@ export class FlaskTemplateEditComponent {
   dropdownItems2: dropdownParams[];
   dropdownItems3: dropdownParams[];
 
-  certFileName: string = 'T_CHOSE_CERT_FILE';
-  keyFileName: string = 'T_CHOSE_KEY_FILE';
-  iconCertFile: string = 'pi pi-upload';
-  iconKeyFile: string = 'pi pi-upload';
-  errorFileCert: boolean = false;
-  errorFileKey: boolean = false;
+  certFileName = 'T_CHOSE_CERT_FILE';
+  keyFileName = 'T_CHOSE_KEY_FILE';
+  iconCertFile = 'pi pi-upload';
+  iconKeyFile = 'pi pi-upload';
+  errorFileCert = false;
+  errorFileKey = false;
 
   endpointBPList: flaskEndpointTemplate[] = [];
 
@@ -85,12 +86,12 @@ export class FlaskTemplateEditComponent {
 
   endpointSelection: flaskEndpointTemplate = null;
   bpSelection: any = null;
-  bpName: string = '';
+  bpName = '';
 
   endpointList: flaskEndpointTemplate[] = [];
 
-  invalidBpName: boolean = false;
-  duplicatedBpName: boolean = false;
+  invalidBpName = false;
+  duplicatedBpName = false;
 
   firstStepErrors: any = {
     app_name: {
@@ -464,12 +465,12 @@ export class FlaskTemplateEditComponent {
     this.openSidenav.emit();
   }
 
-  onEndpointAdded(event: flaskEndpointTemplate, type: boolean = false) {
+  onEndpointAdded(event: flaskEndpointTemplate, type = false) {
     if (type) this.endpointList.push(event);
     else this.endpointBPList.push(event);
   }
 
-  onEndpointEdited(event: flaskEndpointTemplate, type: boolean = false) {
+  onEndpointEdited(event: flaskEndpointTemplate, type = false) {
     if (type) {
       this.endpointList = this.endpointList.map((endpoint) => {
         if (endpoint.endpoint_name === event.endpoint_name) {
@@ -488,7 +489,7 @@ export class FlaskTemplateEditComponent {
     this.endpointSelection = null;
   }
 
-  deleteEndpoint(type: boolean = false) {
+  deleteEndpoint(type = false) {
     if (type) {
       this.endpointList = this.endpointList.filter(
         (endpoint) => endpoint !== this.endpointSelection
@@ -554,13 +555,13 @@ export class FlaskTemplateEditComponent {
     this.duplicatedBpName = false;
   }
 
-  getEndpointNameList(type: boolean = false) {
+  getEndpointNameList(type = false) {
     if (type)
       return this.endpointList.map((endpoint) => endpoint.endpoint_name);
     else return this.endpointBPList.map((endpoint) => endpoint.endpoint_name);
   }
 
-  getEndpointUrlList(type: boolean = false) {
+  getEndpointUrlList(type = false) {
     if (type)
       return this.endpointList.map((endpoint) =>
         endpoint.endpoint_url.split('/').pop()
@@ -769,11 +770,11 @@ export class FlaskTemplateEditComponent {
     const aux: any = bp.reduce((result: any, { name, endpoints }) => {
       result[name] = endpoints;
       return result;
-    }, {}) as Object;
+    }, {}) as object;
 
     const aux2: any[] = [];
-    for (let key in aux) {
-      let obj = { [key]: aux[key] };
+    for (const key in aux) {
+      const obj = { [key]: aux[key] };
       aux2.push(obj);
     }
 

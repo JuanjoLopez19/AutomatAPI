@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,8 +18,8 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./manage-users.component.scss'],
   providers: [DatePipe],
 })
-export class ManageUsersComponent {
-  @Input() isAdmin: boolean = false;
+export class ManageUsersComponent implements OnInit {
+  @Input() isAdmin = false;
   @Input() userId: string = null;
 
   @Output() closeSideNav: EventEmitter<void> = new EventEmitter<void>();
@@ -83,7 +83,7 @@ export class ManageUsersComponent {
     this.getUserData();
   }
 
-  filterTable(event: SubmitEvent) {
+  filterTable() {
     if (this.filterForm.invalid) return;
     const auxData: userParams[] = [];
     if (

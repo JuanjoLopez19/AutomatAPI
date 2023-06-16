@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { techType, techUse } from 'src/app/common/enums/enums';
 import { userParams } from 'src/app/common/interfaces/interfaces';
@@ -10,7 +10,7 @@ import { userParams } from 'src/app/common/interfaces/interfaces';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  activeView: string = 'home';
+  activeView = 'home';
   user: userParams;
   templateId: string = null;
   userId: string = null;

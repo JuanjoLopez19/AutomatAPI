@@ -12,8 +12,8 @@ import { dropdownParams } from 'src/app/common/interfaces/interfaces';
   styleUrls: ['./model-modal.component.scss'],
 })
 export class ModelModalComponent implements OnInit {
-  @Input() show: boolean = false;
-  @Input() editMode: boolean = false;
+  @Input() show = false;
+  @Input() editMode = false;
 
   @Input() fieldData: djangoModelFields = null;
   @Input() fieldNameList: string[] = [];
@@ -26,8 +26,8 @@ export class ModelModalComponent implements OnInit {
     new EventEmitter<djangoModelFields>();
 
   addFieldFormGroup: FormGroup;
-  validName: boolean = false;
-  duplicatedName: boolean = false;
+  validName = false;
+  duplicatedName = false;
 
   djangoFieldTypesSelector: dropdownParams[];
 

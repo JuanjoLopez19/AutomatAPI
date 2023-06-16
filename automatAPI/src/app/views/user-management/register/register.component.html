@@ -24,7 +24,7 @@
                     <form
                       id="form"
                       class="row py-3 px-0"
-                      (ngSubmit)="OnRegisterSubmit($event)"
+                      (ngSubmit)="OnRegisterSubmit()"
                       [formGroup]="registerForm"
                     >
                       <div class="col-12 d-grid justify-content-center">
@@ -384,7 +384,7 @@
                     [show]="showDialog"
                     [status]="statusCode"
                     [message]="message"
-                    (Hide)="manageHide($event)"
+                    (Hide)="manageHide()"
                   ></app-alert>
                 </div>
               </div>
@@ -400,7 +400,7 @@
                   <app-selector
                     class="d-flex justify-content-end"
                     [active]="'sign_up'"
-                    (activeChange)="onActiveChange($event)"
+                    (activeChange)="onActiveChange()"
                   ></app-selector>
                 </div>
               </div>

@@ -12,7 +12,7 @@ export class AlertComponent implements OnInit {
   @Input() message: string;
   @Output() Hide: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  translatedMessage: string = '';
+  translatedMessage = '';
 
   manageHide() {
     this.Hide.emit(false);

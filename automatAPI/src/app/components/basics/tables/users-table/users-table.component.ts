@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ManageUsersService } from 'src/app/api/users/manageUsers/manage-users.service';
 import { httpResponse, userParams } from 'src/app/common/interfaces/interfaces';
 
@@ -25,7 +19,7 @@ export class UsersTableComponent {
   @Output() openSidenav: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private userService: ManageUsersService) {}
-  showDialog: boolean = false;
+  showDialog = false;
   user: userParams = null;
 
   editUser(user: userParams) {

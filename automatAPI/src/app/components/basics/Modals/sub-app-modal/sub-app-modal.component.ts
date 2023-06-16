@@ -17,8 +17,8 @@ import {
   styleUrls: ['./sub-app-modal.component.scss'],
 })
 export class SubAppModalComponent implements OnInit {
-  @Input() show: boolean = false;
-  @Input() editMode: boolean = false;
+  @Input() show = false;
+  @Input() editMode = false;
 
   @Input() subAppData: djangoSubAppServicesTemplate = null;
   @Input() subAppDataApp: djangoSubAppWebAppTemplate = null;
@@ -26,7 +26,7 @@ export class SubAppModalComponent implements OnInit {
   @Input() subAppNameList: string[] = [];
   @Input() modelsNameList: string[] = [];
 
-  @Input() subAppType: string = '';
+  @Input() subAppType = '';
 
   @Output() Hide: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -43,15 +43,15 @@ export class SubAppModalComponent implements OnInit {
   readonly techUse = techUse;
 
   addSubAppFormGroup: FormGroup;
-  validName: boolean = false;
-  duplicatedName: boolean = false;
+  validName = false;
+  duplicatedName = false;
 
-  validModelName: boolean = false;
-  duplicatedModelName: boolean = false;
+  validModelName = false;
+  duplicatedModelName = false;
 
-  validUrl: boolean = false;
+  validUrl = false;
 
-  noMethodChecked: boolean = false;
+  noMethodChecked = false;
 
   ngOnInit(): void {
     if (!this.editMode) {
