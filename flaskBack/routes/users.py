@@ -1,7 +1,8 @@
 from bson import ObjectId
 from flask import Blueprint, jsonify, make_response
 from flaskBack.mongo_db import get_client, get_collection, get_db, delete_many
-from models.model import db, Users, Templates, Tokens
+from models.model import db, Users, Templates
+import sys
 
 users = Blueprint("users", __name__, url_prefix="/users")
 
@@ -42,7 +43,7 @@ def get_templates(user_id):
             jsonify({"message": "T_USER_DELETED", "status": "success"}), 200
         )
     except Exception as e:
-        print(e.with_traceback("User not found"))
+        print(e.with_traceback(sys.exc_info()[2]))
         return make_response(
             jsonify({"message": "T_NOT_USER_FOUND", "status": "error"}), 404
         )

@@ -12,6 +12,7 @@ from mongo_db import (
     delete_one,
 )
 from bson.objectid import ObjectId
+import sys
 
 templates = Blueprint("templates", __name__, url_prefix="/templates")
 
@@ -94,7 +95,7 @@ def get_templates():
             )
 
         except Exception as e:
-            print(e.with_traceback())
+            print(e.with_traceback(sys.exc_info()[2]))
             return make_response(
                 jsonify(
                     {
@@ -235,7 +236,7 @@ def get_templates():
                 )
 
         except Exception as e:
-            print(e.with_traceback())
+            print(e.with_traceback(sys.exc_info()[2]))
             return make_response(
                 jsonify(
                     {
@@ -251,7 +252,7 @@ def get_templates():
 def get_template(template_id):
     """
     Get: Return the template with the given id
-        Body: 
+        Body:
             user_id: The id of the user to be deleted.
     """
     try:
@@ -315,7 +316,7 @@ def get_template(template_id):
 def update_template(template_id):
     """
     Update: Update the template with the given id with request body data
-        Body: 
+        Body:
             user_id: The id of the user to be deleted.
             template_data: The data of the template to be created
             tech_type: The use of the technology of the template to be created
@@ -407,7 +408,7 @@ def update_template(template_id):
                     200,
                 )
             except Exception as e:
-                print(e.with_traceback())
+                print(e.with_traceback(sys.exc_info()[2]))
                 close_connection(mongo_client)
                 return make_response(
                     jsonify(
@@ -432,7 +433,7 @@ def update_template(template_id):
             )
 
     except Exception as e:
-        print(e.with_traceback())
+        print(e.with_traceback(sys.exc_info()[2]))
         return make_response(
             jsonify(
                 {
@@ -534,6 +535,7 @@ def delete_template(template_id):
             )
 
     except Exception as e:
+        print(e.with_traceback(sys.exc_info()[2]))
         return make_response(
             jsonify(
                 {
@@ -643,7 +645,7 @@ def create_template(template_id):
             )
 
     except Exception as e:
-        print("Error", e)
+        print(e.with_traceback(sys.exc_info()[2]))
         return make_response(
             jsonify(
                 {
@@ -750,7 +752,7 @@ def get_config():
                 404,
             )
     except Exception as e:
-        print(e.with_traceback())
+        print(e.with_traceback(sys.exc_info()[2]))
         return make_response(
             jsonify(
                 {

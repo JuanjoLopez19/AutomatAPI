@@ -15,21 +15,14 @@ info:
 servers:
   - url: 'http://localhost:5000'
 tags:
-  - name: Create Templates
-    description: Create Templates tag
-  - name: Delete Templates
-    description: Delete Templates tag
-  - name: List Templates
-    description: List Template tag
-  - name: Update Templates
-    description: Update Templates tag
+  - name: Users
+    description: Users tag
   - name: Templates
     description: Templates tag
 paths:
   /templates:
     get:
       tags:
-        - List Templates
         - Templates
       summary: Get templates from the database
       operationId: getTemplates
@@ -101,7 +94,6 @@ paths:
       x-internal: false
     post:
       tags:
-        - Create Templates
         - Templates
       summary: Create a new template
       operationId: postTemplates
@@ -209,7 +201,6 @@ paths:
     get:
       summary: Your GET endpoint
       tags:
-        - List Templates
         - Templates
       responses:
         '200':
@@ -286,7 +277,6 @@ paths:
         description: Template Id
     put:
       tags:
-        - Update Templates
         - Templates
       summary: Update a template
       operationId: put-templates-templatesId-update
@@ -398,7 +388,6 @@ paths:
         description: Template Id
     delete:
       tags:
-        - Delete Templates
         - Templates
       summary: Delete a template
       operationId: delete-templates-templatesId-delete
@@ -666,7 +655,6 @@ paths:
                   user_id: 3
         description: ''
       tags:
-        - Create Templates
         - Templates
       parameters: []
   '/users/{userId}/delete':
@@ -716,13 +704,24 @@ paths:
                     status: error
       description: Endpoint that allow the deletion of the templates stores in the non relational database and then delete the user
       tags:
-        - users
-        - deleteUser
+        - Users
       parameters: []
   /templates/getTemplateConfig:
-    get:
-      summary: Your GET endpoint
-      tags: []
+    post:
+      summary: Config from template
+      description: Get the config from the given template id and user id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template_id:
+                  type: number
+                user_id:
+                  type: number
+      tags: 
+        - Templates
       responses: {}
       operationId: get-templates-getTemplateConfig
 components:
