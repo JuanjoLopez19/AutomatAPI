@@ -5,7 +5,7 @@ from rest_framework import status, permissions
 
 from .models import {{cookiecutter.model.model_name|capitalize}}
 
-{% if cookiecutter.methods.get_m == "yes"%}
+{% if cookiecutter.methods.get_m == "True"%}
 class {{cookiecutter.model.model_name|capitalize}}ListView(ListView):
     model = {{cookiecutter.model.model_name|capitalize}}
 
@@ -14,7 +14,7 @@ class {{cookiecutter.model.model_name|capitalize}}DetailView(DetailView):
 
 {% endif %}
 
-{%- if cookiecutter.methods.post == "yes"%}
+{%- if cookiecutter.methods.post == "True"%}
 class {{cookiecutter.model.model_name|capitalize}}CreateView(CreateView):
     model = {{cookiecutter.model.model_name|capitalize}}
     {%- if cookiecutter.model.model_fields|length > 0 %}
@@ -26,7 +26,7 @@ class {{cookiecutter.model.model_name|capitalize}}CreateView(CreateView):
     {%- endif %}
 {% endif %}
 
-{%- if cookiecutter.methods.put == "yes"%}
+{%- if cookiecutter.methods.put == "True"%}
 class {{cookiecutter.model.model_name|capitalize}}UpdateView(UpdateView):
     model = {{cookiecutter.model.model_name|capitalize}}
     {%- if cookiecutter.model.model_fields|length > 0 %}
@@ -39,7 +39,7 @@ class {{cookiecutter.model.model_name|capitalize}}UpdateView(UpdateView):
     
 {% endif %}
 
-{%- if cookiecutter.methods.delete == "yes"%}
+{%- if cookiecutter.methods.delete == "True"%}
 class {{cookiecutter.model.model_name|capitalize}}DeleteView(DeleteView):
     model = {{cookiecutter.model.model_name|capitalize}}
     

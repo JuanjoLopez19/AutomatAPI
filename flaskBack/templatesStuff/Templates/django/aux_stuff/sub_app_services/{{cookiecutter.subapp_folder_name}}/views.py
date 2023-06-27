@@ -6,7 +6,7 @@ from .models import {{cookiecutter.model.model_name|capitalize}}
 from .serializers import {{cookiecutter.model.model_name|capitalize}}Seralizer
 
 # Create your views here.
-{%- if cookiecutter.methods.get_m == "yes" or cookiecutter.methods.post == "yes" %}
+{%- if cookiecutter.methods.get_m == "True" or cookiecutter.methods.post == "True" %}
 class {{cookiecutter.model.model_name|capitalize}}View(APIView):
     {%- if cookiecutter.logged_in == "yes" %}
     # Add permission to check only if authenticated 
@@ -23,7 +23,7 @@ class {{cookiecutter.model.model_name|capitalize}}View(APIView):
         serializer = {{cookiecutter.model.model_name|capitalize}}Seralizer({{cookiecutter.model.model_name}}_list, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     {%- endif %}
-    {% if cookiecutter.methods.post == "yes" %}
+    {% if cookiecutter.methods.post == "True" %}
     # 2. Create --> Post method
     def post(self, request, *args, **kwargs):
         '''
@@ -45,7 +45,7 @@ class {{cookiecutter.model.model_name|capitalize}}View(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     {%- endif %}
 {%- endif %}
-{% if cookiecutter.methods.put == "yes" or cookiecutter.methods.delete == "yes" %}
+{% if cookiecutter.methods.put == "True" or cookiecutter.methods.delete == "True" %}
 class {{cookiecutter.model.model_name|capitalize}}DetailView(APIView):
     {%- if cookiecutter.logged_in == "yes" %}
     # Add permission to check only if authenticated 
@@ -75,7 +75,7 @@ class {{cookiecutter.model.model_name|capitalize}}DetailView(APIView):
 
         serializer = {{cookiecutter.model.model_name|capitalize}}Seralizer({{cookiecutter.model.model_name}}_instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    {% if cookiecutter.methods.put == "yes" %}
+    {% if cookiecutter.methods.put == "True" %}
     def put(self, request, {{cookiecutter.model.model_name}}_id, *args, **kwargs):
         '''
             Updates the {{cookiecutter.model.model_name}} item with given {{cookiecutter.model.model_name}}_id if exists
@@ -99,7 +99,7 @@ class {{cookiecutter.model.model_name|capitalize}}DetailView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     {%- endif %}
-    {% if cookiecutter.methods.delete == "yes" %}
+    {% if cookiecutter.methods.delete == "True" %}
     # 5. Delete
     def delete(self, request, {{cookiecutter.model.model_name}}_id, *args, **kwargs):
         '''
