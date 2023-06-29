@@ -251,6 +251,7 @@ export const rememberPassword = async (req: Request, res: Response) => {
         })
       })
       .catch(err => {
+        console.log(err)
         return res.status(500).send({
           message: 'T_INTERNAL_SERVER_ERROR',
           status: 500,

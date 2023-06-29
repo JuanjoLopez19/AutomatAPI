@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiHost: 'http://localhost:',
+  apiHost: 'http://10.8.0.20:',
   apiPort: '3486',
   googleRoute: '/api/auth/google',
   githubRoute: '/api/auth/github',

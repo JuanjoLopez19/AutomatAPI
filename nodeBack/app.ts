@@ -16,6 +16,7 @@ const app: Express = express()
 app.use(
   cors({
     origin: [
+      'http://10.8.0.20:4200',
       'http://localhost:4200',
       'http://192.168.0.55:4200',
       'http://automatapi.ddns.net:4200',
