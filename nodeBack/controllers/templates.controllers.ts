@@ -16,6 +16,12 @@ import {
 } from '../middleware/auxiliaryFunctions'
 import { WhereOptions } from 'sequelize'
 
+/**
+ * Controller of the make flask template route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const makeFlaskTemplate = async (req: any, res: Response) => {
   if (
     req.body.tech !== undefined &&
@@ -81,6 +87,12 @@ export const makeFlaskTemplate = async (req: any, res: Response) => {
   }
 }
 
+/**
+ * Controller of the make express template route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const makeExpressTemplate = async (req: any, res: Response) => {
   if (
     req.body.tech !== undefined &&
@@ -142,6 +154,12 @@ export const makeExpressTemplate = async (req: any, res: Response) => {
   }
 }
 
+/**
+ * Controller of the make django template route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const makeDjangoTemplate = async (req: any, res: Response) => {
   if (
     req.body.tech !== undefined &&
@@ -203,6 +221,12 @@ export const makeDjangoTemplate = async (req: any, res: Response) => {
   }
 }
 
+/**
+ * Controller of the getTemplates route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const getTemplates = async (req: Request, res: Response) => {
   //@ts-ignore
   const user_id = await jwt.decode(req.cookies['jwt']).id
@@ -257,6 +281,12 @@ export const getTemplates = async (req: Request, res: Response) => {
     })
 }
 
+/**
+ * Controller of the deleteTemplate route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const deleteTemplate = async (req: Request, res: Response) => {
   if (req.body.template_id !== undefined) {
     //@ts-ignore
@@ -339,6 +369,12 @@ export const deleteTemplate = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the deleteTemplateAdmin route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const deleteTemplateAdmin = async (req: Request, res: Response) => {
   if (
     req.user &&
@@ -423,6 +459,12 @@ export const deleteTemplateAdmin = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the getToken route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const getToken = async (req: Request, res: Response) => {
   if (req.body.template_id !== undefined) {
     //@ts-ignore
@@ -476,6 +518,12 @@ export const getToken = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the getTemplateStats route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const getTemplatesStats = async (req: Request, res: Response) => {
   const temp = {
     flask: { services: 0, app_web: 0 },
@@ -548,6 +596,12 @@ export const getTemplatesStats = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the getUserTemplateStats route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const getUserTemplatesStats = async (req: Request, res: Response) => {
   //@ts-ignore
   const user_id = await jwt.decode(req.cookies['jwt']).id
@@ -625,6 +679,12 @@ export const getUserTemplatesStats = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the getTemplateConfig route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const getTemplateConfig = async (req: Request, res: Response) => {
   if (req.body.template_id != undefined) {
     //@ts-ignore
@@ -649,6 +709,12 @@ export const getTemplateConfig = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the editTemplate route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const editTemplate = async (req: any, res: Response) => {
   if (
     req.body.template_id != undefined &&

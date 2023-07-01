@@ -13,9 +13,13 @@ import './passport'
 
 const app: Express = express()
 
+/**
+ * Configure the express app to add a withe list of origins 
+ */
 app.use(
   cors({
     origin: [
+      'http://10.8.0.20:4200',
       'http://localhost:4200',
       'http://192.168.0.55:4200',
       'http://automatapi.ddns.net:4200',
@@ -24,6 +28,7 @@ app.use(
     credentials: true,
   })
 )
+
 app.use(morgan('dev'))
 app.use(
   Session({
@@ -40,8 +45,13 @@ app.use(BodyParser.json())
 app.use(passport.initialize())
 app.use(passport.session()) // Need to use session for social auth
 
+/**
+ *  Register the routes for the API documentation and the logic routes
+ */
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerdocs))
 app.use('/api', routes)
+
+
 
 app.use(function (
   err: { message: any; status: any },

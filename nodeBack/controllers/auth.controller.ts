@@ -11,6 +11,12 @@ import {
 } from '../middleware/auxiliaryFunctions'
 import { Op, WhereOptions } from 'sequelize'
 
+/**
+ * Controller of the signup route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const Signup = async (req: Request, res: Response) => {
   if (
     req.body.password != undefined &&
@@ -107,6 +113,12 @@ export const Signup = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the signin route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const Signin = async (req: Request, res: Response) => {
   let user: User
   if (!res.locals.user) {
@@ -150,6 +162,12 @@ export const Signin = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the signout route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const Signout = (req: Request, res: Response) => {
   if (req.cookies.jwt) {
     res
@@ -161,6 +179,12 @@ export const Signout = (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the activateAccount route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const activateAccount = async (req: Request, res: Response) => {
   if (req.body.token != undefined) {
     User.findOne({ where: { access_token: req.body.token } })
@@ -215,6 +239,12 @@ export const activateAccount = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the rememberPassword route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const rememberPassword = async (req: Request, res: Response) => {
   if (req.query.username != undefined && req.query.email != undefined) {
     User.findOne({
@@ -264,6 +294,12 @@ export const rememberPassword = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the resetPassword route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const resetPassword = async (req: Request, res: Response) => {
   if (req.body.token != undefined && req.body.password != undefined) {
     User.findOne({ where: { password_token: req.body.token } })
@@ -330,6 +366,12 @@ export const resetPassword = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the completeRegistration route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const CompleteRegistration = async (req: Request, res: Response) => {
   if (req.body.access_token != undefined && req.body.password != undefined) {
     // @ts-ignore
@@ -455,6 +497,12 @@ export const CompleteRegistration = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the genSession route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const genSession = async (req: Request, res: Response) => {
   // @ts-ignore
   const userId = await jwt.decode(req.cookies['jwt']).id

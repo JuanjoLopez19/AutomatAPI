@@ -20,6 +20,11 @@ const transporter = nodemailer.createTransport({
   },
 })
 
+/**
+ * Send the email to the user with the especified options
+ * @param mailOptions Options of the email to be sent
+ * @returns promise with the status of the email sent
+ */
 export const sendMail = function (mailOptions: mailOptions) {
   return new Promise((resolve, reject) => {
     try {

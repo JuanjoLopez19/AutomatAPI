@@ -1,10 +1,22 @@
 import User from '../database/models/user'
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { Op } from 'sequelize'
 
-export const verifySignUp = (req: Request, res: Response, next: any) => {
+/**
+ * Checks if the username and email are already used
+ * @param {Request} req  Request object of Express
+ * @param {Response} res  Response object of Express
+ * @param {NextFunction} next  Next function of Express
+ * @returns next() if the username and email are not used
+ */
+
+export const verifySignUp = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   // Username Check
   if (req.body.username != undefined && req.body.email != undefined) {
     User.findOne({
@@ -68,7 +80,15 @@ export const verifySignUp = (req: Request, res: Response, next: any) => {
   return
 }
 
-export const verifySignIn = (req: Request, res: Response, next: any) => {
+/**
+ * Checks if the username and the password are correct
+ * @param {Request} req  Request object of Express
+ * @param {Response} res  Response object of Express
+ * @param {NextFunction} next  Next function of Express
+ * @returns next() if the username and the password are correct
+ */
+
+export const verifySignIn = (req: Request, res: Response, next: NextFunction) => {
   if (req.body.email != undefined && req.body.password != undefined) {
     try {
       User.findOne({
@@ -128,7 +148,14 @@ export const verifySignIn = (req: Request, res: Response, next: any) => {
   }
 }
 
-export const isAdmin = async (req: Request, res: Response, next: any) => {
+/**
+ * Checks if the user is an admin
+ * @param {Request} req  Request object of Express
+ * @param {Response} res  Response object of Express
+ * @param {NextFunction} next  Next function of Express
+ * @returns next() if the user is an admin
+ */
+export const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
   // @ts-ignore: Object is possibly 'null'.
   const user_id = await jwt.decode(req.cookies['jwt']).id
   User.findByPk(user_id)
@@ -164,7 +191,14 @@ export const isAdmin = async (req: Request, res: Response, next: any) => {
     })
 }
 
-export const verifyEdit = async (req: Request, res: Response, next: any) => {
+/**
+ * Checks if the username and email are valid
+ * @param {Request} req Request object of Express
+ * @param {Response} res Response object of Express 
+ * @param {NextFunction} next Next function of Express 
+ * @returns next() if the username and email are valid
+ */
+export const verifyEdit = async (req: Request, res: Response, next: NextFunction) => {
   // Username Check
   if (req.body.username != undefined && req.body.email != undefined) {
     let user_id = 0

@@ -1,5 +1,11 @@
 import config from '../config/config'
 
+/**
+ * Configure the email template for the activation of the account 
+ * @param {string} username The username of the user that would be activated
+ * @param {string} accessToken The access token of the user that would be activated
+ * @returns {string} The email template
+ */
 export const activateAccountTemplate = (
   username: string,
   accessToken: string

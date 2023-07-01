@@ -8,6 +8,11 @@ import User, { UserAttributes } from './database/models/user'
 
 const JWTStrategy = passportJWT.Strategy
 
+/**
+ * Extract the jwt from the cookie named jwt
+ * @param req Request object from Express
+ * @returns The jwt from the cookie if exits, null otherwise
+ */
 const cookieExtractorSession = (req: Request) => {
   let jwt = null
 
@@ -18,6 +23,11 @@ const cookieExtractorSession = (req: Request) => {
   return jwt
 }
 
+/**
+ * Extract the jwt from the cookie named socialAuth
+ * @param req Request object from Express
+ * @returns The jwt from the cookie if exits, null otherwise
+ */
 const cookieExtractorSocialAuth = (req: Request) => {
   let jwt = null
 
@@ -28,6 +38,9 @@ const cookieExtractorSocialAuth = (req: Request) => {
   return jwt
 }
 
+/**
+ * PassportJs middleware to validate the jwt from the cookie jwt
+ */
 const jwtSession = new JWTStrategy(
   {
     jwtFromRequest: cookieExtractorSession,
@@ -44,6 +57,9 @@ const jwtSession = new JWTStrategy(
   }
 )
 
+/**
+ * PassportJs middleware to validate the jwt from the cookie socialAuth
+ */
 const jwtSocialAuth = new JWTStrategy(
   {
     jwtFromRequest: cookieExtractorSocialAuth,

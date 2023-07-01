@@ -6,7 +6,11 @@ import User from '../database/models/user'
 import { activateAccountTemplate } from '../emails_templates/activate_account'
 import { remPwdTemplate } from '../emails_templates/forget_pwd'
 
-// Access and password token generator
+/**
+ * Generates a random token of the specified length
+ * @param {number} length legth of the token to be generated
+ * @returns {string} the generated token of the specified length
+ */
 export const generateToken = (length: number) => {
   var result = ''
   var characters =
@@ -18,7 +22,14 @@ export const generateToken = (length: number) => {
   return result
 }
 
-// Send activation email
+
+/**
+ * Send the activation email to the user
+ * @param userEmail email of the user
+ * @param accessToken accesstoken of the user
+ * @param username username of the user to be used in the email
+ * @returns {number} 200 if the email is sent, 500 otherwise
+ */
 export const sendActivationEmail = async (
   userEmail: string,
   accessToken: string,
@@ -37,7 +48,13 @@ export const sendActivationEmail = async (
   } else return 500
 }
 
-// Send password reset email
+/**
+ * Send the password reset email to the user
+ * @param userEmail email of the user
+ * @param passwordToken password token of the user
+ * @param username username of the user to be used in the email
+ * @returns {number} 200 if the email is sent, 500 otherwise
+ */
 export const sendPasswordResetEmail = async (
   userEmail: string,
   passwordToken: string,
@@ -59,6 +76,11 @@ export const sendPasswordResetEmail = async (
 const iv = Buffer.from(config.cypher.iv, 'hex')
 const key = crypto.scryptSync(config.cypher.key, 'salt', 32)
 
+/**
+ * Encrypts the data using the key and the iv specified in the config file
+ * @param data data to be encrypted
+ * @returns {string} the encrypted data
+ */
 export const encryptData = (data: string) => {
   const cipher = crypto.createCipheriv(config.cypher.algorithm, key, iv)
 
@@ -68,6 +90,11 @@ export const encryptData = (data: string) => {
   return encrypted
 }
 
+/**
+ * Decrypts the data using the key and the iv specified in the config file
+ * @param data data to be decrypted
+ * @returns {string} the decrypted data
+ */
 export const decryptData = (data: string) => {
   const decipher = crypto.createDecipheriv(config.cypher.algorithm, key, iv)
 
@@ -77,6 +104,11 @@ export const decryptData = (data: string) => {
   return decrypted
 }
 
+/**
+ * Delete all the certs and the template of the S3 bucket
+ * @param {Array<string>} certs Array with the keys of the certs to be deleted
+ * @param {string} template key of the template to be deleted
+ */
 export const deleteItemsAWS = (certs: string[], template: string) => {
   AWS.config.update({
     accessKeyId: config.aws.accessKey,
@@ -111,6 +143,11 @@ export const deleteItemsAWS = (certs: string[], template: string) => {
   })
 }
 
+/**
+ * Delete the items from the S3 bucket
+ * @param key key of the item to be deleted
+ * @param type type of the item to be deleted
+ */
 export const deleteItem = (key: string, type: string | null = null) => {
   AWS.config.update({
     accessKeyId: config.aws.accessKey,
@@ -139,6 +176,11 @@ export const deleteItem = (key: string, type: string | null = null) => {
   })
 }
 
+/**
+ * Generates the session object to be stored in the session
+ * @param user Data of the user
+ * @returns {object}
+ */
 export const formatSessionObject = (user: User | null) => {
   let sessionObject = {}
   if (user) {

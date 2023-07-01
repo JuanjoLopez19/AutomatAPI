@@ -11,6 +11,12 @@ import {
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
+/**
+ * Controller of the getUsers route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const getUsers = async (req: Request, res: Response) => {
   if (req.user) {
     const users = await User.findAll({
@@ -23,6 +29,12 @@ export const getUsers = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the deleteUser route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const deleteUser = async (req: Request, res: Response) => {
   if (req.body.user_id !== undefined) {
     User.findByPk(req.body.user_id).then(user => {
@@ -93,6 +105,12 @@ export const deleteUser = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the deleteAccount route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const deleteAccount = async (req: Request, res: Response) => {
   //@ts-ignore
   const user_id = await jwt.decode(req.cookies['jwt']).id
@@ -161,6 +179,12 @@ export const deleteAccount = async (req: Request, res: Response) => {
   })
 }
 
+/**
+ * Controller of the editAccount route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const editAccount = async (req: Request, res: Response) => {
   if (
     req.body.firstName !== undefined &&
@@ -207,6 +231,12 @@ export const editAccount = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the editPassword route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const editPassword = async (req: Request, res: Response) => {
   if (
     req.body.newPassword !== undefined &&
@@ -283,6 +313,12 @@ export const editPassword = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the editAccountAdmin route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const editAccountAdmin = async (req: Request, res: Response) => {
   if (
     req.body.firstName !== undefined &&
@@ -331,6 +367,12 @@ export const editAccountAdmin = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the editPasswordAdmin route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const editPasswordAdmin = async (req: Request, res: Response) => {
   if (req.body.newPassword !== undefined && req.body.user_id !== undefined) {
     const { newPassword, user_id } = req.body
@@ -385,6 +427,12 @@ export const editPasswordAdmin = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Controller of the getUserInfo route
+ * @param {Request} req Request object from express
+ * @param {Response} res Response object from express
+ * @returns {Response} Returns a response with the status code and a message
+ */
 export const getUserInfo = async (req: Request, res: Response) => {
   //@ts-ignore
   const user_id = await jwt.decode(req.cookies['jwt']).id

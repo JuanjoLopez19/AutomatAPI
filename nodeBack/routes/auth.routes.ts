@@ -40,7 +40,7 @@ routerAuth.get('/succes/google', (req: Request, res: Response) => {
       User.findOne({ where: { id: id } }).then(user => {
         if (user) {
           if (!user.activeUser) {
-            res
+            return res
               .status(200)
               .cookie('socialAuth', token, { httpOnly: true, secure: false })
               .redirect(
@@ -56,7 +56,7 @@ routerAuth.get('/succes/google', (req: Request, res: Response) => {
                 expiresIn: `${config.expiration}s`,
               }
             )
-            res
+            return res
               .status(200)
               .cookie('jwt', token, { httpOnly: true, secure: false })
               .redirect(config.front)

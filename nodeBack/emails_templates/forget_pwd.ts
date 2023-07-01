@@ -1,5 +1,11 @@
 import config from '../config/config'
 
+/**
+ * Configure the email template for remember password of the account 
+ * @param {string} username The username of the user that has forgotten the password
+ * @param {string} passworToken The password token of the user that has forgotten the password
+ * @returns {string} The email template
+ */
 export const remPwdTemplate = (username: string, passworToken: string) => {
   return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html
