@@ -2,7 +2,18 @@ Flask==2.2.2
 {%- if cookiecutter.connect_DB == "yes" %}
 Flask-SQLAlchemy==3.0.2
 Flask-Migrate==3.1.0
-{% endif %}
+{%- if cookiecutter.db %}
+{%- if cookiecutter.db.db_type == "mysql" %}
+mysqlclient==2.2.0
+{%- elif cookiecutter.db.db_type == "postgresql" %}
+psycopg2==2.9.6
+{%- elif cookiecutter.db.db_type == "oracle" %}
+cx-Oracle==8.3.0
+{%- elif cookiecutter.db.db_type == "mssql" %}
+pyodbc==4.0.39
+{%- endif %}
+{%- endif %}
+{%- endif %}
 {%- if cookiecutter.cors == "yes" %}
 Flask-Cors==3.0.10
 {% endif %}

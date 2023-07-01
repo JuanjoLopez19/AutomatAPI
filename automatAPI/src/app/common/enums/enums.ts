@@ -28,6 +28,9 @@ export enum dataBaseTypes {
   sqlite = 'sqlite',
   oracle = 'oracle',
   mssql = 'mssql',
+  mariadb = 'mariadb',
+  redshift = 'redshift',
+  snowflake = 'snowflake',
 }
 
 export enum viewEngines {

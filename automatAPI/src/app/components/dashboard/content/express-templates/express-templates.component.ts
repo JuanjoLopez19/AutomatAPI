@@ -185,6 +185,18 @@ export class ExpressTemplatesComponent implements OnInit {
             name: dataBaseTypes.mssql,
             value: dataBaseTypes.mssql,
           },
+          {
+            name: dataBaseTypes.mariadb,
+            value: dataBaseTypes.mariadb,
+          },
+          {
+            name: dataBaseTypes.redshift,
+            value: dataBaseTypes.redshift,
+          },
+          {
+            name: dataBaseTypes.snowflake,
+            value: dataBaseTypes.snowflake,
+          }
         ];
 
         this.dropdownItems4 = [

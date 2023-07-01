@@ -7,7 +7,7 @@ django-sslserver==0.22
 {%- if cookiecutter.db and cookiecutter.db != "" %}
 {%- if cookiecutter.db.db_type == "postgresql" %}
 psycopg2==2.9.5
-{%- elif cookiecutter.db.db_type == "mysql" %}
+{%- elif cookiecutter.db.db_type == "mysql" or cookiecutter.db.db_type == "mariadb"  %}
 mysqlclient==2.1.1
 {%- elif cookiecutter.db.db_type == "oracle" %}
 cx-Oracle==8.3.0

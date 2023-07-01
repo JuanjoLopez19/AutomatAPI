@@ -152,8 +152,8 @@ export class DjangoTemplatesComponent implements OnInit {
             value: dataBaseTypes.oracle,
           },
           {
-            name: dataBaseTypes.mssql,
-            value: dataBaseTypes.mssql,
+            name: dataBaseTypes.mariadb,
+            value: dataBaseTypes.mariadb,
           },
         ];
         this.dropdownItems3 = [

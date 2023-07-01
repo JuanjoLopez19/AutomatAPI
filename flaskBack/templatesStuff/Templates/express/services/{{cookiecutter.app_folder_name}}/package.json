@@ -15,7 +15,30 @@
     {%- endif %}
     {%- if cookiecutter.connect_DB == "yes"%}
     "sequelize": "^6.28.0",
+    {%- if cookiecutter.db %}
+    {%- if cookiecutter.db.db_type == "mysql" %}
+    "mysql2": "^3.4.3",
+    {%- elif cookiecutter.db.db_type == "postgresql" %}
+    "pg": "^8.10.0",
+    {%- elif cookiecutter.db.db_type == "oracle" %}
+    "oracledb": "^6.0.2",
+    {%- elif cookiecutter.db.db_type == "mssql" %}
+    "tedious": "^16.1.0",
+    {%- elif cookiecutter.db.db_type == "mariadb" %}
+    "mariadb": "^3.2.0",
+    {%- elif cookiecutter.db.db_type == "redshift" %}
+    "pg": "^8.10.0",
+    {%- elif cookiecutter.db.db_type == "snowflake" %}
+    "snowflake-sdk": "^1.6.23",
+    {%- else -%}
+    "sqlite3": "^5.1.6",
     {%- endif %}
-    "express": "^4.18.2"
+    {%- endif %}
+    {%- endif %}
+    "express": "^4.18.2",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1", 
   }
 }
