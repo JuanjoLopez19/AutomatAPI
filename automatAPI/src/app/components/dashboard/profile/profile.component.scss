@@ -12,7 +12,9 @@
     border-radius: 24px;
     padding: 1rem;
   }
-
+  .username{
+    word-break: break-all
+  }
   p-image {
     ::ng-deep .p-image {
       ::ng-deep img {

@@ -528,6 +528,8 @@
                         <div class="col-8 mt-3">
                           <div
                             *ngIf="
+                              apiConfigFormGroup.get('db.db_type')
+                                      .value &&
                               apiConfigFormGroup.get('db.db_type').value !==
                                 'sqlite' &&
                               apiConfigFormGroup.get('connect_DB').value ===

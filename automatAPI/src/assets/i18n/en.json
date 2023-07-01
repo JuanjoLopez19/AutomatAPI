@@ -240,13 +240,14 @@
     "T_APP_NAME_INVALID": "The app's name is invalid",
     "T_FILE_INVALID": "The file is invalid",
     "T_ENDP_URL_DUPL": "Endpoint path already exists",
-     "T_FIRST_NAME_REQ": "The name is required",
+    "T_FIRST_NAME_REQ": "The name is required",
     "T_LAST_NAME_REQ": "The surname is required",
     "T_FIRST_NAME_INVALID": "The name is invalid",
     "T_LAST_NAME_INVALID": "The surname is invalid",
     "T_MODEL_NAME_REQ": "The model name is required",
     "T_FIELD_DEFAULT_REQ": "The default value is required",
-    "T_MODEL_NAME_DUPL": "The model name already exists"
+    "T_MODEL_NAME_DUPL": "The model name already exists",
+    "T_FIELD_TYPE_REQ": "The field type is required"
   },
   "flask": {
     "T_APP_NAME": "Application name",

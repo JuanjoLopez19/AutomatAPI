@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     new EventEmitter<string>();
 
   letter!: string;
-
+  completeUsername!: string;
   constructor(
     private translate: TranslateService,
     private logoutService: LogoutService,
@@ -58,6 +58,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.letter = null;
     }
     if (this.username.length > 10) {
+      this.completeUsername = this.username;
       this.username = this.username.substring(0, 10) + '...';
     }
   }

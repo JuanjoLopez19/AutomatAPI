@@ -211,6 +211,7 @@
     "T_EMAIL_INVALID": "El correo electrónico no es válido",
     "T_PWD_REQ": "La contraseña es obligatoria",
     "T_PWD_INVALID": "La contraseña no tiene el formato válido",
+    "T_PWD_NOT_MATCH": "Las contraseñas no coinciden",
     "T_DATE_REQ": "La fecha es obligatoria",
     "T_DATE_INVALID": "La fecha es inválida",
     "T_NAME_REQ": "El nombre es obligatorio",
@@ -245,7 +246,8 @@
     "T_LAST_NAME_INVALID": "Los apellidos son inválidos",
     "T_MODEL_NAME_REQ": "El nombre del modelo es obligatorio",
     "T_FIELD_DEFAULT_REQ": "El valor por defecto es obligatorio",
-    "T_MODEL_NAME_DUPL": "El modelo ya existe"
+    "T_MODEL_NAME_DUPL": "El modelo ya existe",
+    "T_FIELD_TYPE_REQ": "El tipo de campos es necesario"
   },
   "flask": {
     "T_APP_NAME": "Nombre de la Aplicación",

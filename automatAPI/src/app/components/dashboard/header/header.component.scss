@@ -7,7 +7,15 @@
   }
   ::ng-deep p-menu {
     .p-menu {
-      border-radius: 15px;
+      border-radius: 10px;
+    }
+    .p-menu .p-menuitem-link:hover {
+      border-radius: 7px 7px 0px 0px;
+      background: $white-not-white;
+    }
+    .p-menu .p-menu-list li:last-child:hover {
+      border-radius: 0px 0px 7px 7px;
+      background: $white-not-white;
     }
   }
   ::ng-deep p-avatar {

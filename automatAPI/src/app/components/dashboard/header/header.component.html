@@ -9,7 +9,8 @@
       ></p-avatar>
     </div>
     <div class="col-3" (click)="menu.toggle($event)">
-      <h1>{{ username }}</h1>
+      <h1 *ngIf="username.length > 10" [pTooltip]="completeUsername">{{ username }}</h1>
+      <h1 *ngIf="username.length <= 10">{{ username }}</h1>
     </div>
   </div>
   <p-menu #menu [model]="items" [popup]="true"></p-menu>

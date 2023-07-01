@@ -5,8 +5,8 @@
     "ng": "ng",
     "start": "ng serve -o --host 0.0.0.0 --configuration=development --disable-host-check",
     "dist": "ng serve --host 0.0.0.0 --configuration=distri --disable-host-check --ssl",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "build": "ng build --configuration=distri",
+    "watch": "ng build --watch --configuration=distri",
     "test": "ng test",
     "lint": "ng lint"
   },

@@ -51,15 +51,15 @@
       box-shadow: 0 0 0 0.2rem $blue-transparent;
     }
 
-    .p-button-danger {
+    .p-button.p-button-danger {
       background-color: $error-color-dash ;
-      color: $black-not-black ;
+      color: $white ;
       border-color: $error-color-dash ;
     }
 
     .p-button.p-button-danger:hover {
       background-color: $error-color-effects-dash ;
-      color: $black-not-black ;
+      color: $white ;
       border-color: $error-color-effects-dash ;
     }
 

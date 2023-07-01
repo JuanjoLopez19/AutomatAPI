@@ -10,6 +10,7 @@ import * as swaggerdocs from './reference/express-API.json'
 import Session from 'express-session'
 import config from './config/config'
 import './passport'
+import path from 'path'
 
 const app: Express = express()
 
@@ -51,7 +52,7 @@ app.use(passport.session()) // Need to use session for social auth
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerdocs))
 app.use('/api', routes)
 
-
+app.use("/", express.static(path.join(__dirname, "/frontend/")))
 
 app.use(function (
   err: { message: any; status: any },
@@ -68,7 +69,7 @@ app.use(function (
 })
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server')
+  res.sendFile(path.join(__dirname, "/frontend/"))
 })
 
 // Google social auth
