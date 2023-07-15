@@ -196,7 +196,7 @@ export class ExpressTemplatesComponent implements OnInit {
           {
             name: dataBaseTypes.snowflake,
             value: dataBaseTypes.snowflake,
-          }
+          },
         ];
 
         this.dropdownItems4 = [
@@ -552,7 +552,7 @@ export class ExpressTemplatesComponent implements OnInit {
         },
         endpoints: [...this.endpointList],
       };
-
+      performance.mark('start');
       this.expressService
         .createTemplateServices(
           this.technology,
@@ -567,6 +567,8 @@ export class ExpressTemplatesComponent implements OnInit {
               data.data,
               this.expressServiceData.app_name
             );
+            performance.mark('end');
+            console.log(performance.measure('start to end', 'start', 'end'));
             setTimeout(() => {
               this.loading = false;
               this.changeView.emit('home');
@@ -623,7 +625,7 @@ export class ExpressTemplatesComponent implements OnInit {
         },
         endpoints: [...this.endpointList],
       };
-
+      performance.mark('start');
       this.expressService
         .createTemplateAppWeb(
           this.technology,
@@ -638,6 +640,8 @@ export class ExpressTemplatesComponent implements OnInit {
               data.data,
               this.expressWebAppData.app_name
             );
+            performance.mark('end');
+            console.log(performance.measure('start to end', 'start', 'end'));
             setTimeout(() => {
               this.loading = false;
               this.changeView.emit('home');

@@ -185,7 +185,6 @@ export class DjangoTemplateEditComponent implements OnInit {
       .getTemplateConfig(this.templateId)
       .subscribe({
         next: (data: httpResponse) => {
-          console.log(data);
           this.techUseVar = data.data.tech_type;
           if (data.data.tech_type === techUse.services) {
             this.djangoServiceData = data.data.template_args;

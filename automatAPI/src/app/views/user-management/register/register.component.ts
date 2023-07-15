@@ -168,7 +168,6 @@ export class RegisterComponent implements OnInit {
 
         this.registerService.register(this.params).subscribe({
           next: (response: httpResponse) => {
-            console.log(response);
             setTimeout(() => {
               this.waitingState = false;
               this.statusCode = response.status;
@@ -177,7 +176,6 @@ export class RegisterComponent implements OnInit {
             }, 1000);
           },
           error: (error: HttpErrorResponse) => {
-            console.log(error);
             setTimeout(() => {
               this.waitingState = false;
               this.statusCode = error.status;

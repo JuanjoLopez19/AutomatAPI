@@ -485,8 +485,8 @@ export class FlaskTemplatesComponent implements OnInit {
         },
         endpoints: [...this.endpointList],
       };
-      console.log(this.flaskServicesData);
 
+      performance.mark('start');
       this.flaskService
         .createTemplateServices(
           this.technology,
@@ -501,6 +501,8 @@ export class FlaskTemplatesComponent implements OnInit {
               data.data,
               this.flaskServicesData.app_name
             );
+            performance.mark('end');
+            console.log(performance.measure('start to end', 'start', 'end'));
             setTimeout(() => {
               this.loading = false;
               this.changeView.emit('home');
@@ -556,7 +558,7 @@ export class FlaskTemplatesComponent implements OnInit {
           ),
         },
       };
-
+      performance.mark('start');
       this.flaskService
         .createTemplateAppWeb(
           this.technology,
@@ -571,6 +573,8 @@ export class FlaskTemplatesComponent implements OnInit {
               data.data,
               this.flaskWebAppData.app_name
             );
+            performance.mark('end');
+            console.log(performance.measure('start to end', 'start', 'end'));
             setTimeout(() => {
               this.loading = false;
               this.changeView.emit('home');

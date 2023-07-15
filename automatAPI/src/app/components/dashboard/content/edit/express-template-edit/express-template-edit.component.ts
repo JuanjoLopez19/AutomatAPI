@@ -208,7 +208,7 @@ export class ExpressTemplateEditComponent implements OnInit {
           {
             name: dataBaseTypes.snowflake,
             value: dataBaseTypes.snowflake,
-          }
+          },
         ];
 
         this.dropdownItems4 = [
@@ -245,7 +245,6 @@ export class ExpressTemplateEditComponent implements OnInit {
       .getTemplateConfig(this.templateId)
       .subscribe({
         next: (data: httpResponse) => {
-          console.log(data);
           this.techUseVar = data.data.tech_type;
           if (data.data.tech_type === techUse.services) {
             this.expressServiceData = data.data.template_args;

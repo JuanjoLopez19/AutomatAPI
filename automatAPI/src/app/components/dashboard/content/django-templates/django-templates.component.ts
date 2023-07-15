@@ -417,7 +417,6 @@ export class DjangoTemplatesComponent implements OnInit {
   }
 
   onAddSubApp(event: djangoSubAppServicesTemplate) {
-    console.log(event);
     this.subAppsList.push(event);
   }
 
@@ -430,7 +429,6 @@ export class DjangoTemplatesComponent implements OnInit {
   }
 
   onAddSubAppWebApp(event: djangoSubAppWebAppTemplate) {
-    console.log(event);
     this.subAppsListWebApp.push(event);
   }
 
@@ -543,7 +541,7 @@ export class DjangoTemplatesComponent implements OnInit {
           ),
         },
       };
-
+      performance.mark('start');
       this.djangoService
         .createTemplateAppWeb(
           this.technology,
@@ -558,6 +556,8 @@ export class DjangoTemplatesComponent implements OnInit {
               data.data,
               this.djangoServiceData.app_name
             );
+            performance.mark('end');
+            console.log(performance.measure('start to end', 'start', 'end'));
             setTimeout(() => {
               this.loading = false;
               this.changeView.emit('home');
@@ -609,7 +609,7 @@ export class DjangoTemplatesComponent implements OnInit {
           ),
         },
       };
-
+      performance.mark('start');
       this.djangoService
         .createTemplateAppWeb(
           this.technology,
@@ -624,6 +624,8 @@ export class DjangoTemplatesComponent implements OnInit {
               data.data,
               this.djangoWebAppData.app_name
             );
+            performance.mark('end');
+            console.log(performance.measure('start to end', 'start', 'end'));
             setTimeout(() => {
               this.loading = false;
               this.changeView.emit('home');

@@ -117,7 +117,6 @@ export class ChartsComponent implements OnInit {
   }
 
   chooseColor(params: any, type: string): string {
-    console.log(params);
     switch (type) {
       case 'flask':
         return '#f7b733';

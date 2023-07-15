@@ -30,7 +30,6 @@ export class TemplateTableComponent {
   downloadTemplate(template: templates) {
     this.templateService.getToken(Number(template.id)).subscribe({
       next: (data: httpResponse) => {
-        console.log(data);
         if (data.status == 200) {
           this.fileDownloaderService.downloadFile(data.data, template.app_name);
         }
@@ -56,7 +55,6 @@ export class TemplateTableComponent {
         .deleteTemplateAdmin(Number(template.user_id), Number(template.id))
         .subscribe({
           next: (data: httpResponse) => {
-            console.log(data);
             if (data.status == 200) this.refreshTable.emit();
           },
           error: (err) => {
@@ -66,7 +64,6 @@ export class TemplateTableComponent {
     } else {
       this.templateService.deleteTemplate(Number(template.id)).subscribe({
         next: (data: httpResponse) => {
-          console.log(data);
           if (data.status == 200) this.refreshTable.emit();
         },
         error: (err) => {

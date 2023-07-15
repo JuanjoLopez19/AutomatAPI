@@ -167,7 +167,6 @@ export class SubAppModalComponent implements OnInit {
   }
 
   closeModal() {
-    console.log(this.addSubAppFormGroup.valid);
     if (
       this.addSubAppFormGroup.valid &&
       this.validateNames() &&

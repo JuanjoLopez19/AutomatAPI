@@ -184,7 +184,6 @@ export class FlaskTemplateEditComponent implements OnInit {
       .getTemplateConfig(this.templateId)
       .subscribe({
         next: (data: httpResponse) => {
-          console.log(data);
           this.techUseVar = data.data.tech_type;
           if (data.data.tech_type === techUse.services) {
             this.flaskServicesData = data.data.template_args;
@@ -641,7 +640,6 @@ export class FlaskTemplateEditComponent implements OnInit {
         endpoints: [...this.endpointList],
       };
 
-      console.log(this.flaskServicesData);
       this.manageTemplates
         .editTemplate(
           this.templateId,
@@ -728,7 +726,6 @@ export class FlaskTemplateEditComponent implements OnInit {
         },
       };
 
-      console.log(this.flaskWebAppData);
       this.manageTemplates
         .editTemplate(
           this.templateId,
